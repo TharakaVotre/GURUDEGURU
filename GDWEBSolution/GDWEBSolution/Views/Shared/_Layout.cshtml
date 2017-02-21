@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+    <!-- Sandstone Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <!-- Bootstrap Datatables -->
+    <link rel="stylesheet" href="~/Content/css/dataTables.bootstrap.min.css">
+    <!-- Bootstrap file input -->
+    <link rel="stylesheet" href="~/Content/css/fileinput.min.css">
+
+    @Styles.Render("~/Content/css")
+
+    @* @Scripts.Render("~/bundles/modernizr")*@
+</head>
+<body>
+    <div class="brand clearfix">
+        <a href="index.html" class="logo">
+            <img src="~/img/logo.jpg" class="img-responsive" alt=""></a>
+        <span class="menu-btn"><i class="fa fa-bars"></i></span>
+        <ul class="ts-profile-nav">
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Settings</a></li>
+            <li class="ts-account">
+                <a href="#">
+                    <img src="~/img/ts-avatar.jpg" class="ts-avatar hidden-side" alt="">
+                    Account <i class="fa fa-angle-down hidden-side"></i></a>
+                <ul>
+                    <li><a href="#">My Account</a></li>
+                    <li><a href="#">Edit Account</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    @*        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>*@
+
+    <div class="ts-main-content">
+        <nav class="ts-sidebar">
+            <ul class="ts-sidebar-menu">
+                <!--<li class="ts-label">Search</li>
+				<li>
+					<input type="text" class="ts-sidebar-search" placeholder="Search here...">
+				</li>-->
+                <li class="ts-label">Main</li>
+                <li><a href="index.html"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                <li><a href="#"><i class="fa fa-desktop"></i>UI Elements</a>
+                    <ul>
+                        <li><a href="panels.html">Panels and Wells</a></li>
+                        <li><a href="buttons.html">Buttons</a></li>
+                        <li><a href="notifications.html">Notifications</a></li>
+                        <li><a href="typography.html">Typography</a></li>
+                        <li><a href="icon.html">Icon</a></li>
+                        <li><a href="grid.html">Grid</a></li>
+                    </ul>
+                </li>
+                <!-- Account from above -->
+                <ul class="ts-profile-nav">
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li class="ts-account">
+                        <a href="#">
+                            <img src="~/img/ts-avatar.jpg" class="ts-avatar hidden-side" alt="">
+                            Account <i class="fa fa-angle-down hidden-side"></i></a>
+                        <ul>
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="#">Edit Account</a></li>
+                            <li><a href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </ul>
+        </nav>
+                <div class="content-wrapper">
+            <div class="container-fluid">
+        @*<div id="body">*@
+        @RenderSection("featured", required: false)
+
+                @RenderBody()
+            </div>
+        </div>
+        @*</div>*@
+    </div>
+    @*        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                </div>
+            </div>
+        </footer>*@
+
+    @* @Scripts.Render("~/bundles/jquery")*@
+    <!-- Loading Scripts -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    @Scripts.Render("~/Scripts/js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
