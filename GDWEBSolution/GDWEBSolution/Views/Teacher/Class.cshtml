@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Teacher Class";
+}
+@model GDWEBSolution.Models.Teacher.ClassTeacherModel
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>Class Teacher</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">Class Teacher</div>
+            <div class="panel-body">
+
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="email">Teacher : </label>
+                        @Html.DropDownListFor(model => model.TeacherId, ViewBag.SchoolTeacher as SelectList, "", new { @class = "form-control", @onchange = "loadTeacherSubjects()" })
+                        @*@Html.LabelFor(m => m.TeacherId)*@
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Grade : </label>
+                         @Html.DropDownListFor(model => model.GradeId, ViewBag.SchoolGrades as SelectList, "", new { @class = "form-control", @onchange = "loadClassList()" })
+                    </div>
+                    <div class="form-group" id="loadgrade">
+                        @*<label for="pwd">Class : </label>
+                        <input type="password" class="form-control" id="pwd">*@
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function myFunction() {
+
+    }
+
+    var AddTSubject = function () {
+        //debugger
+        var myformdata = $("#FrmSUB").serialize();
+
+        //if (!$("#FrmANT").valid()) {
+        //    return false;
+        //}
+
+        $.ajax({
+
+            type: "POST",
+            url: "/Teacher/AddTeacherSubject",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                // $("#myModal").modal("hide");
+                if (result != "Exception" && result != "Exits") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+                    $("#Teacher_ID").val(result);
+
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $('#showsubjects').load('/Teacher/ShowTeacherSubjects?TeacherId=' + result);
+                    $("#SuccesLable").text("Teacher Subject Added");
+                    // $("#btnAddQualification").prop('value', 'Save');
+                    $("#SuccesModel").modal("show");
+                }
+                else if (result == "Exception") {
+                    debugger
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Exception Error Occurd");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+                }
+                else if (result == "Exits") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("This Subject is Already Assigned to this Class");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+                else {
+
+                }
+
+            }
+
+        })
+    }
+
+    var loadClassList = function () {
+        debugger
+        var tid = $('#GradeId').val();
+        $('#loadgrade').load('/Teacher/ShowGradeClassesForTC?GradeId=' + tid);
+        var x = document.getElementById('btnAddClassTeacher');
+        if (x.style.display === 'none') {
+            x.style.display = 'block';
+        }
+
+    }
+
+</script>

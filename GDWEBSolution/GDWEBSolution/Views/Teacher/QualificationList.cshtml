@@ -1,0 +1,40 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Teacher.QualificationModel>
+<div class="row">
+    <div class="col-md-12">
+                        @if (Model.Count() == 0)
+                        {
+                                <div class="col-md-12">
+                                    <div class="well">
+                                        No Qualifications is setted to display
+                                    </div>
+                                </div>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                              
+                            @*<div class="row">*@
+                                <div class="col-md-6">
+                                    <div class="well">
+                                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>                                         
+                                        @Html.DisplayFor(modelItem => item.QualificationName)
+                                        <button type="button" class="close" onclick='DeleteQalification(@item.TeacherId,"@(item.SchoolId)",@item.QualificationId);' >&times;</button>
+                                    </div>
+                                </div>
+
+                            @*</div>*@
+                            }
+                        }
+            </div>
+        </div>
+<script>
+
+    function DeleteQalification(Teacher, School, Qualificationid) {
+        debugger
+        var Url = "/Teacher/DeleteQualification?Teacherid=" + Teacher + "&Schoolid=" + School + "&Qualificationid=" + Qualificationid;
+        $("#DeleteModelBody").load(Url, function () {
+            $("#deleteModel").modal("show");
+        })
+    }
+</script>

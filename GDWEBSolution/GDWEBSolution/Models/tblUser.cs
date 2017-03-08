@@ -131,8 +131,6 @@ namespace GDWEBSolution.Models
             this.tblTimeTables1 = new HashSet<tblTimeTable>();
             this.tblUser1 = new HashSet<tblUser>();
             this.tblUser11 = new HashSet<tblUser>();
-            this.tblUserCategories = new HashSet<tblUserCategory>();
-            this.tblUserCategories1 = new HashSet<tblUserCategory>();
             this.tblUserCategoryFunctions = new HashSet<tblUserCategoryFunction>();
             this.tblUserCategoryFunctions1 = new HashSet<tblUserCategoryFunction>();
         }
@@ -269,9 +267,6 @@ namespace GDWEBSolution.Models
         public virtual tblUser tblUser2 { get; set; }
         public virtual ICollection<tblUser> tblUser11 { get; set; }
         public virtual tblUser tblUser3 { get; set; }
-        public virtual tblUserCategory tblUserCategory { get; set; }
-        public virtual ICollection<tblUserCategory> tblUserCategories { get; set; }
-        public virtual ICollection<tblUserCategory> tblUserCategories1 { get; set; }
         public virtual ICollection<tblUserCategoryFunction> tblUserCategoryFunctions { get; set; }
         public virtual ICollection<tblUserCategoryFunction> tblUserCategoryFunctions1 { get; set; }
     }

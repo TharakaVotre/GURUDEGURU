@@ -1,0 +1,149 @@
+﻿@model IEnumerable<GDWEBSolution.Models.TeacherModel>
+
+@{
+    ViewBag.Title = "Teachers";
+}
+
+
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>Teachers</h3>
+
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default"> 
+            <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            @*<th>
+                                @Html.DisplayNameFor(model => model.TeacherId)
+                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.UserId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            @*<th>
+                                @Html.DisplayNameFor(model => model.Address1)
+                            </th>*@
+                            @*<th>
+                                @Html.DisplayNameFor(model => model.TeacherCategoryName)
+                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.Telephone)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Gender)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EmployeeNo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NIC)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IsActive)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                            <tr>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.TeacherId)
+                                </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.Address1)
+                                    @Html.DisplayFor(modelItem => item.Address2)
+                                    @Html.DisplayFor(modelItem => item.Address3)
+                                </td>*@
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.TeacherCategoryName)
+                                </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Telephone)
+                                </td>
+                                @if(item.Gender == "M"){
+                                <td>MALE</td>
+                                }else{
+                                <td>
+                                   FEMALE
+                                </td>
+                                }
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmployeeNo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NIC)
+                                </td>
+                                @if(item.IsActive == "Y"){
+                                <td>YES</td>
+                                }else{
+                                <td>
+                                   NO
+                                </td>
+                                }
+                                <td>
+                                   <a class="btn btn-info" onclick="EditView(@item.TeacherId)"><span class="fa fa-pencil"></span> Edit </a>
+                                   <a class="btn btn-danger" onclick="DeleteView(@item.TeacherId)"><span class="fa fa-trash"></span> Delete</a>
+                                </td>
+                            </tr>
+    
+                            }
+                        }
+                    </tbody>
+                </table>
+						</div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content"  id="MyModelBody">
+
+    </div>
+
+  </div>
+</div>
+
+@*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
+<script>
+
+    var EditView = function (TeacherID) {
+        debugger
+        var Url = "/Teacher/EditTeacher?TeacherId=" + TeacherID;
+        window.location.href = Url;
+        //$("#MyModelBody").load(Url, function () {
+        //    $("#myModal").modal("show");
+        //})
+    }
+
+    var DeleteView = function (TeacherId) {
+        var Url = "/Teacher/DeleteTeacher?TeacherId=" + TeacherId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+</script>

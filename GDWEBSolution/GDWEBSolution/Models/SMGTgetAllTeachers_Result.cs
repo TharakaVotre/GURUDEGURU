@@ -10,25 +10,16 @@
 namespace GDWEBSolution.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblTeacher
+    public partial class SMGTgetAllTeachers_Result
     {
-        public tblTeacher()
-        {
-            this.tblAssignmentHeaders = new HashSet<tblAssignmentHeader>();
-            this.tblTeacherExtraCurricularActivities = new HashSet<tblTeacherExtraCurricularActivity>();
-            this.tblTeacherQualifications = new HashSet<tblTeacherQualification>();
-            this.tblTeacherSchools = new HashSet<tblTeacherSchool>();
-            this.tblTeacherSubjects = new HashSet<tblTeacherSubject>();
-        }
-    
         public long TeacherId { get; set; }
         public string Name { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string Address3 { get; set; }
         public int TeacherCategoryId { get; set; }
+        public string TeacherCategoryName { get; set; }
         public string Telephone { get; set; }
         public string Gender { get; set; }
         public string Description { get; set; }
@@ -44,14 +35,5 @@ namespace GDWEBSolution.Models
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
-    
-        public virtual ICollection<tblAssignmentHeader> tblAssignmentHeaders { get; set; }
-        public virtual tblTeacherCategory tblTeacherCategory { get; set; }
-        public virtual tblUser tblUser { get; set; }
-        public virtual tblUser tblUser1 { get; set; }
-        public virtual ICollection<tblTeacherExtraCurricularActivity> tblTeacherExtraCurricularActivities { get; set; }
-        public virtual ICollection<tblTeacherQualification> tblTeacherQualifications { get; set; }
-        public virtual ICollection<tblTeacherSchool> tblTeacherSchools { get; set; }
-        public virtual ICollection<tblTeacherSubject> tblTeacherSubjects { get; set; }
     }
 }

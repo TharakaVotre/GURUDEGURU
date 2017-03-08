@@ -15,7 +15,6 @@ namespace GDWEBSolution.Models
     public partial class tblApplicationStatu
     {
         public long StatusCode { get; set; }
-        public string SchoolId { get; set; }
         public string StatusDescription { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
@@ -23,7 +22,6 @@ namespace GDWEBSolution.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
     
-        public virtual tblSchool tblSchool { get; set; }
         public virtual tblUser tblUser { get; set; }
         public virtual tblUser tblUser1 { get; set; }
     }

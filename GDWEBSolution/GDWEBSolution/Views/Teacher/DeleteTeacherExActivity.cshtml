@@ -1,0 +1,61 @@
+﻿@model GDWEBSolution.Models.Teacher.ExtraActivityModel
+
+
+<div>
+    <form id="FormExDelete" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5 class="modal-title">Are you sure you want to Delete this Teacher Exatracurrucular Activity ? @Html.HiddenFor(m=> m.SchoolId)</h5>
+            @Html.HiddenFor(m=> m.TeacherID)
+            @Html.HiddenFor(m=> m.ActivityCode)
+        </div>
+        <div class="modal-footer">
+            
+            <a href="#" id="btnExDeleteSubmit" class="btn btn-primary">YES</a>
+            <a href="#" id="btnNo" class="btn btn-default">NO</a>
+        </div>
+    </form>
+
+@*    <div style="text-align: center; display: none" id="loaderDiv">
+        Loading
+    </div>*@
+
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnExDeleteSubmit").click(function (e) {
+            debugger
+            var myformdata = $("#FormExDelete").serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/Teacher/DeleteExActivity",
+                data: myformdata,
+                success: function (result) {
+                    //$("#loaderDiv").hide();
+                    if (result != "Error") {
+                        debugger
+                        //window.location.href = "/Teacher/Create";
+                       // $("#TeacherID").val(result);
+                       //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                        $('#showexactivity').load('/Teacher/ShowTeacherExActivity?TeacherId=' + result);
+                    }
+                    $("#deleteModel").modal("hide");
+
+
+                }
+
+            })
+        })
+
+        $("#btnNo").click(function (e) {
+            debugger
+            $("#deleteModel").modal("hide");
+        })
+
+    })
+
+
+</script>

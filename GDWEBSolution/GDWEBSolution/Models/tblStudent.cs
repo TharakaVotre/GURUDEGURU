@@ -26,7 +26,7 @@ namespace GDWEBSolution.Models
         public string SchoolId { get; set; }
         public string StudentId { get; set; }
         public string studentName { get; set; }
-        public System.DateTime DateofBirth { get; set; }
+        public Nullable<System.DateTime> DateofBirth { get; set; }
         public string GradeId { get; set; }
         public string ClassId { get; set; }
         public string Gender { get; set; }

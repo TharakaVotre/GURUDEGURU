@@ -4,288 +4,284 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c59e92f76da84f448d19b6982a87fe09" Name="Diagram1">
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblApplicationStatu" Width="1.5" PointX="7.5" PointY="116.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblAssignmentDueDate" Width="1.5" PointX="10.5" PointY="116.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblAssignmentHeader" Width="1.5" PointX="7.5" PointY="109" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblAssignmentQuestionAid" Width="1.5" PointX="24.75" PointY="115" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblAssignmentQuestionAnswer" Width="1.5" PointX="24.75" PointY="120.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblAssignmentQuestionType" Width="1.5" PointX="21.75" PointY="83.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblAssingmentQuestion" Width="1.5" PointX="7.5" PointY="120.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblClass" Width="1.5" PointX="13.5" PointY="115.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblClassTeacher" Width="1.5" PointX="27" PointY="115.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblDistrict" Width="1.5" PointX="3" PointY="116.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblDivision" Width="1.5" PointX="21.75" PointY="86.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblEntranceApplication" Width="1.5" PointX="10.5" PointY="111.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblEvaluationDetail" Width="1.5" PointX="27" PointY="120.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblEvaluationHeader" Width="1.5" PointX="10.5" PointY="121.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblEvaluationResult" Width="1.5" PointX="35.25" PointY="129.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblEvaluationType" Width="1.5" PointX="21.75" PointY="90.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblEventCalendar" Width="1.5" PointX="13.5" PointY="109.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblEventcategory" Width="1.5" PointX="21.75" PointY="94.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblEventParticipant" Width="1.5" PointX="21.75" PointY="111.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblExtraCurricularActivity" Width="1.5" PointX="21.75" PointY="98.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblFunction" Width="1.5" PointX="21.75" PointY="102" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblGrade" Width="1.5" PointX="21.75" PointY="105.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblGradeSubject" Width="1.5" PointX="27" PointY="132.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblHouse" Width="1.5" PointX="13.5" PointY="122.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblMessageType" Width="1.5" PointX="21.75" PointY="115.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblParent" Width="1.5" PointX="33" PointY="122.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblParentObservationType" Width="1.5" PointX="21.75" PointY="119.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblParentStudent" Width="1.5" PointX="35.25" PointY="116.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblParentToSchoolMessageDetail" Width="1.5" PointX="29.25" PointY="109" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblParentToSchoolMessageHeader" Width="1.5" PointX="24" PointY="126.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblProvince" Width="1.5" PointX="0.75" PointY="116.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblQualification" Width="1.5" PointX="21.75" PointY="130.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblRelashionship" Width="1.5" PointX="21.75" PointY="134.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSchool" Width="1.5" PointX="5.25" PointY="111.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSchoolCalendar" Width="1.5" PointX="16.5" PointY="116.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSchoolCategory" Width="1.5" PointX="21.75" PointY="138.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSchoolExtraCurricularActivity" Width="1.5" PointX="10.5" PointY="107.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSchoolGrade" Width="1.5" PointX="16.5" PointY="111.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSchoolGroup" Width="1.5" PointX="21.75" PointY="141.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSchoolRank" Width="1.5" PointX="21.75" PointY="145.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSchoolSubject" Width="1.5" PointX="16.5" PointY="121.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSchoolToParentMessageDetail" Width="1.5" PointX="10.5" PointY="126.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSchoolToParentMessageHeader" Width="1.5" PointX="16.5" PointY="106.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblStudent" Width="1.5" PointX="30" PointY="115.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblStudentExtraCurricularActivity" Width="1.5" PointX="32.25" PointY="113.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblStudentOptionalSubject" Width="1.5" PointX="35.25" PointY="123.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSubject" Width="1.5" PointX="21.75" PointY="149.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblSubjectCategory" Width="1.5" PointX="21.75" PointY="154.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblTeacher" Width="1.5" PointX="24" PointY="132.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblTeacherCategory" Width="1.5" PointX="21.75" PointY="158.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblTeacherExtraCurricularActivity" Width="1.5" PointX="16.5" PointY="126.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblTeacherQualification" Width="1.5" PointX="7.5" PointY="127.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblTeacherSchool" Width="1.5" PointX="13.5" PointY="105.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblTeacherSubject" Width="1.5" PointX="27" PointY="126.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblTimeTable" Width="1.5" PointX="30" PointY="122.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblUser" Width="1.5" PointX="19.5" PointY="104.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblUserCategory" Width="1.5" PointX="21.75" PointY="169.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModelContext.tblUserCategoryFunction" Width="1.5" PointX="27" PointY="111.375" IsExpanded="true" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblApplicationStatus_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblApplicationStatus_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblApplicationStatus_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentDueDate_tblAssignmentHeader" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentDueDate_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentDueDate_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentDueDate_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentHeader_tblAssignmentHeader" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentHeader_tblClass" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentHeader_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentHeader_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentHeader_tblStudent" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentHeader_tblSubject" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentHeader_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentHeader_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentQuestionAid_tblAssignmentHeader" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblQuestionAnswer_tblAssignmentHeader" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentQuestionAid_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentQuestionAid_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssignmentQuestionAid_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblQuestionAnswer_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblQuestionAnswer_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblQuestionAnswer_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssingmentQuestion_tblAssignmentQuestionType" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblQuestionType_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblQuestionType_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssingmentQuestion_tblParentObservationType" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssingmentQuestion_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssingmentQuestion_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblAssingmentQuestion_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblClass_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblClass_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblClass_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblClass_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblClassTeacher_tblClass" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationDetail_tblClass" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageHeader_tblClass" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudent_tblClass" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentOptionalSubject_tblClass" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSubject_tblClass" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTimeTable_tblClass" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblClassTeacher_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblClassTeacher_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblClassTeacher_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblClassTeacher_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblDistrict_tblProvince" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblDistrict_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblDistrict_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchool_tblDistrict" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblDivision_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblDivision_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchool_tblDivision" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEntranceApplication_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEntranceApplication_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEntranceApplication_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationDetail_tblEvaluationHeader" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationDetail_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationDetail_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationDetail_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationDetail_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationResult_tblEvaluationDetail" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationHeader_tblEvaluationType" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationHeader_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationHeader_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationHeader_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationResult_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationResult_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationResult_tblStudent" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationResult_tblSubject" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationResult_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEvaluationResult_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentEvaluationType_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentEvaluationType_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEventCalendar_tblEventcategory" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEventCalendar_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEventCalendar_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEventCalendar_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEventParticipant_tblEventCalendar" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEventcategory_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEventcategory_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEventParticipant_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEventParticipant_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblEventParticipant_tblUser2" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblExtraCurricularActivity_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblExtraCurricularActivity_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentExtraCurricularActivity_tblExtraCurricularActivity" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblFunction_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblFunction_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblUserCategoryFunction_tblFunction" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblGrade_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblGrade_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageHeader_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolGrade_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudent_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentOptionalSubject_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSubject_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTimeTable_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblGradeSubject_tblGrade" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblGradeSubject_tblSubject" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblGradeSubject_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblGradeSubject_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblHouse_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblHouse_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblHouse_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudent_tblHouse" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblMessageType_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblMessageType_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageHeader_tblMessageType" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolToParentMessageHeader_tblSchoolToParentMessageHeader" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParent_tblRelashionship" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParent_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParent_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentStudent_tblParent" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageHeader_tblParentToSchoolMessageHeader" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolToParentMessageDetail_tblParent" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentObservationType_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentObservationType_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentStudent_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentStudent_tblStudent" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentStudent_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentStudent_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageDetail_tblParentToSchoolMessageHeader" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageDetail_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageDetail_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageDetail_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageDetail_tblUser2" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageDetail_tblUser3" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageHeader_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageHeader_tblSubject" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageHeader_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblParentToSchoolMessageHeader_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblProvince_tblProvince" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblProvince_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchool_tblProvince" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblQualification_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblQualification_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherQualification_tblQualification" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblRelashionship_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblRelashionship_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchool_tblSchoolCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchool_tblSchoolGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchool_tblSchoolRank" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchool_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchool_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolCalendar_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolExtraCurricularActivity_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolGrade_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolSubject_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolToParentMessageDetail_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolToParentMessageHeader_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudent_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentExtraCurricularActivity_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentOptionalSubject_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherExtraCurricularActivity_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherExtraCurricularActivity_tblSchool1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherQualification_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSchool_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSubject_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTimeTable_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblUser_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolCalendar_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolCalendar_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolCategory_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolCategory_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolExtraCurricularActivity_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolExtraCurricularActivity_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolGrade_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolGrade_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolGroup_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolGroup_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolRank_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolRank_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolSubject_tblSubject" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolSubject_tblSubjectCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolSubject_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolSubject_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolToParentMessageDetail_tblSchoolToParentMessageHeader" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolToParentMessageDetail_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolToParentMessageDetail_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolToParentMessageHeader_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSchoolToParentMessageHeader_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudent_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudent_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentExtraCurricularActivity_tblStudent" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentOptionalSubject_tblStudent" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentExtraCurricularActivity_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentExtraCurricularActivity_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentOptionalSubject_tblSubject" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentOptionalSubject_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblStudentOptionalSubject_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSubject_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSubject_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSubject_tblSubject" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTimeTable_tblSubject" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSubjectCategory_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblSubjectCategory_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacher_tblTeacherCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacher_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacher_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherExtraCurricularActivity_tblTeacher" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherQualification_tblTeacher" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSchool_tblTeacher" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSubject_tblTeacher" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherCategory_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherCategory_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSchool_tblTeacherCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherExtraCurricularActivity_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherExtraCurricularActivity_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherQualification_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherQualification_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSchool_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSchool_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSubject_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTeacherSubject_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTimeTable_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblTimeTable_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblUser_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblUser_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblUser_tblUserCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblUserCategory_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblUserCategory_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblUserCategoryFunction_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModelContext.FK_tblUserCategoryFunction_tblUser1" ManuallyRouted="false" />
+      <Diagram DiagramId="61fc923fbf004102b3ef4269ba98bf4f" Name="Diagram1">
+        <EntityTypeShape EntityType="SchoolMGTModel.tblApplicationStatu" Width="1.5" PointX="9.75" PointY="162" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentDueDate" Width="1.5" PointX="9.75" PointY="157" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentHeader" Width="1.5" PointX="12" PointY="169.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentQuestionAid" Width="1.5" PointX="23.25" PointY="166.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentQuestionAnswer" Width="1.5" PointX="21.25" PointY="148.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentQuestionType" Width="1.5" PointX="9.75" PointY="165.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssingmentQuestion" Width="1.5" PointX="12" PointY="157.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblClass" Width="1.5" PointX="15" PointY="160.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblClassTeacher" Width="1.5" PointX="21.25" PointY="153.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblDistrict" Width="1.5" PointX="3" PointY="114.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblDivision" Width="1.5" PointX="9.75" PointY="169.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEntranceApplication" Width="1.5" PointX="14.75" PointY="155" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationDetail" Width="1.5" PointX="22.25" PointY="160.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationHeader" Width="1.5" PointX="17" PointY="154.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationResult" Width="1.5" PointX="29.5" PointY="172.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationType" Width="1.5" PointX="9.75" PointY="172.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEventCalendar" Width="1.5" PointX="12" PointY="163.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEventcategory" Width="1.5" PointX="9.75" PointY="176.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEventParticipant" Width="1.5" PointX="14.25" PointY="185.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblExtraCurricularActivity" Width="1.5" PointX="9.75" PointY="180.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblFunction" Width="1.5" PointX="9.75" PointY="184.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblGrade" Width="1.5" PointX="9.75" PointY="188" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblGradeSubject" Width="1.5" PointX="12" PointY="210" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblHouse" Width="1.5" PointX="9.75" PointY="152" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblMessageType" Width="1.5" PointX="9.75" PointY="198.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblParent" Width="1.5" PointX="12" PointY="199.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblParentObservationType" Width="1.5" PointX="9.75" PointY="202" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblParentStudent" Width="1.5" PointX="26.5" PointY="157.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblParentToSchoolMessageDetail" Width="1.5" PointX="25.5" PointY="162.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblParentToSchoolMessageHeader" Width="1.5" PointX="19.25" PointY="171.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblProvince" Width="1.5" PointX="0.75" PointY="114.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblQualification" Width="1.5" PointX="9.75" PointY="213.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblRelashionship" Width="1.5" PointX="9.75" PointY="216.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchool" Width="1.5" PointX="5.25" PointY="109.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolCalendar" Width="1.5" PointX="12.75" PointY="149.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolCategory" Width="1.5" PointX="9.75" PointY="220.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolExtraCurricularActivity" Width="1.5" PointX="15.75" PointY="150.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolGrade" Width="1.5" PointX="18" PointY="164.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolGroup" Width="1.5" PointX="9.75" PointY="224.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolRank" Width="1.5" PointX="9.75" PointY="228" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolSubject" Width="1.5" PointX="15" PointY="175.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolToParentMessageDetail" Width="1.5" PointX="18.75" PointY="149.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolToParentMessageHeader" Width="1.5" PointX="20" PointY="158.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblStudent" Width="1.5" PointX="24.25" PointY="152.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblStudentExtraCurricularActivity" Width="1.5" PointX="29.5" PointY="159" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblStudentOptionalSubject" Width="1.5" PointX="26.5" PointY="170.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSubject" Width="1.5" PointX="9.75" PointY="231.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSubjectCategory" Width="1.5" PointX="9.75" PointY="236.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacher" Width="1.5" PointX="15" PointY="213.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherCategory" Width="1.5" PointX="9.75" PointY="240.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherExtraCurricularActivity" Width="1.5" PointX="14.75" PointY="167" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherQualification" Width="1.5" PointX="17" PointY="169" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherSchool" Width="1.5" PointX="12" PointY="176.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherSubject" Width="1.5" PointX="20.25" PointY="166.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTimeTable" Width="1.5" PointX="22.25" PointY="175.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblUser" Width="1.5" PointX="7.5" PointY="183.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblUserCategory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblUserCategoryFunction" Width="1.5" PointX="12" PointY="195.5" IsExpanded="true" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblApplicationStatus_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblApplicationStatus_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentDueDate_tblAssignmentHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentDueDate_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentDueDate_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentDueDate_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentHeader_tblAssignmentHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentHeader_tblClass" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentHeader_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentHeader_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentHeader_tblStudent" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentHeader_tblSubject" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentHeader_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentHeader_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentQuestionAid_tblAssignmentHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblQuestionAnswer_tblAssignmentHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentQuestionAid_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentQuestionAid_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentQuestionAid_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblQuestionAnswer_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblQuestionAnswer_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblQuestionAnswer_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssingmentQuestion_tblAssignmentQuestionType" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblQuestionType_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblQuestionType_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssingmentQuestion_tblParentObservationType" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssingmentQuestion_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssingmentQuestion_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblAssingmentQuestion_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblClass_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblClass_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblClass_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblClass_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblClassTeacher_tblClass" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationDetail_tblClass" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblClass" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudent_tblClass" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentOptionalSubject_tblClass" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSubject_tblClass" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTimeTable_tblClass" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblClassTeacher_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblClassTeacher_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblClassTeacher_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblClassTeacher_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblDistrict_tblProvince" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblDistrict_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblDistrict_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchool_tblDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblDivision_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblDivision_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchool_tblDivision" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEntranceApplication_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEntranceApplication_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEntranceApplication_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationDetail_tblEvaluationHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationDetail_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationDetail_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationDetail_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationDetail_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationResult_tblEvaluationDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationHeader_tblEvaluationType" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationHeader_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationHeader_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationHeader_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationResult_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationResult_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationResult_tblStudent" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationResult_tblSubject" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationResult_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationResult_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentEvaluationType_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentEvaluationType_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEventCalendar_tblEventcategory" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEventCalendar_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEventCalendar_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEventCalendar_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEventParticipant_tblEventCalendar" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEventcategory_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEventcategory_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEventParticipant_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEventParticipant_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblEventParticipant_tblUser2" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblExtraCurricularActivity_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblExtraCurricularActivity_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentExtraCurricularActivity_tblExtraCurricularActivity" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblFunction_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblFunction_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblUserCategoryFunction_tblFunction" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblGrade_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblGrade_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolGrade_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudent_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentOptionalSubject_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSubject_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTimeTable_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblGradeSubject_tblGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblGradeSubject_tblSubject" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblGradeSubject_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblGradeSubject_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblHouse_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblHouse_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblHouse_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudent_tblHouse" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblMessageType_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblMessageType_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblMessageType" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolToParentMessageHeader_tblSchoolToParentMessageHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParent_tblRelashionship" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParent_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParent_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentStudent_tblParent" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblParentToSchoolMessageHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolToParentMessageDetail_tblParent" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentObservationType_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentObservationType_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentStudent_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentStudent_tblStudent" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentStudent_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentStudent_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageDetail_tblParentToSchoolMessageHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageDetail_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageDetail_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageDetail_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageDetail_tblUser2" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageDetail_tblUser3" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblSubject" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblProvince_tblProvince" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblProvince_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchool_tblProvince" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblQualification_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblQualification_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherQualification_tblQualification" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblRelashionship_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblRelashionship_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchool_tblSchoolCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchool_tblSchoolGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchool_tblSchoolRank" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchool_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchool_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolCalendar_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolExtraCurricularActivity_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolGrade_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolSubject_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolToParentMessageDetail_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolToParentMessageHeader_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudent_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentExtraCurricularActivity_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentOptionalSubject_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherExtraCurricularActivity_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherExtraCurricularActivity_tblSchool1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherQualification_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSchool_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSubject_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTimeTable_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblUser_tblSchool" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolCalendar_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolCalendar_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolCategory_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolCategory_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolExtraCurricularActivity_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolExtraCurricularActivity_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolGrade_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolGrade_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolGroup_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolGroup_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolRank_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolRank_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolSubject_tblSubject" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolSubject_tblSubjectCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolSubject_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolSubject_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolToParentMessageDetail_tblSchoolToParentMessageHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolToParentMessageDetail_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolToParentMessageDetail_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolToParentMessageHeader_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolToParentMessageHeader_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudent_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudent_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentExtraCurricularActivity_tblStudent" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentOptionalSubject_tblStudent" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentExtraCurricularActivity_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentExtraCurricularActivity_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentOptionalSubject_tblSubject" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentOptionalSubject_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblStudentOptionalSubject_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSubject_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSubject_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSubject_tblSubject" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTimeTable_tblSubject" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSubjectCategory_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblSubjectCategory_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacher_tblTeacherCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacher_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacher_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherExtraCurricularActivity_tblTeacher" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherQualification_tblTeacher" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSchool_tblTeacher" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSubject_tblTeacher" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherCategory_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherCategory_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSchool_tblTeacherCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherExtraCurricularActivity_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherExtraCurricularActivity_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherQualification_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherQualification_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSchool_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSchool_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSubject_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSubject_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTimeTable_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblTimeTable_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblUser_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblUser_tblUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblUserCategoryFunction_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolMGTModel.FK_tblUserCategoryFunction_tblUser1" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

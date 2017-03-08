@@ -16,7 +16,6 @@ namespace GDWEBSolution.Models
     {
         public tblSchool()
         {
-            this.tblApplicationStatus = new HashSet<tblApplicationStatu>();
             this.tblAssignmentDueDates = new HashSet<tblAssignmentDueDate>();
             this.tblAssignmentHeaders = new HashSet<tblAssignmentHeader>();
             this.tblAssignmentQuestionAids = new HashSet<tblAssignmentQuestionAid>();
@@ -60,11 +59,11 @@ namespace GDWEBSolution.Models
         public string Email { get; set; }
         public string WebUrl { get; set; }
         public string Fax { get; set; }
-        public int Province { get; set; }
-        public int District { get; set; }
-        public int Division { get; set; }
-        public long SchoolGroup { get; set; }
-        public int SchoolRank { get; set; }
+        public Nullable<int> Province { get; set; }
+        public Nullable<int> District { get; set; }
+        public Nullable<int> Division { get; set; }
+        public Nullable<long> SchoolGroup { get; set; }
+        public Nullable<int> SchoolRank { get; set; }
         public string Description { get; set; }
         public string LogoPath { get; set; }
         public string ImagePath { get; set; }
@@ -76,7 +75,6 @@ namespace GDWEBSolution.Models
         public int SchoolCategory { get; set; }
         public string IsActive { get; set; }
     
-        public virtual ICollection<tblApplicationStatu> tblApplicationStatus { get; set; }
         public virtual ICollection<tblAssignmentDueDate> tblAssignmentDueDates { get; set; }
         public virtual ICollection<tblAssignmentHeader> tblAssignmentHeaders { get; set; }
         public virtual ICollection<tblAssignmentQuestionAid> tblAssignmentQuestionAids { get; set; }

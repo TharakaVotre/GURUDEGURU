@@ -12,6 +12,9 @@ namespace GDWEBSolution.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
+    using System.Linq;
     
     public partial class SchoolMGTEntitiesConnectionString : DbContext
     {
@@ -83,5 +86,107 @@ namespace GDWEBSolution.Models
         public DbSet<tblUser> tblUsers { get; set; }
         public DbSet<tblUserCategory> tblUserCategories { get; set; }
         public DbSet<tblUserCategoryFunction> tblUserCategoryFunctions { get; set; }
+    
+        public virtual ObjectResult<SMGTgetTeacher_Result> SMGTgetTeacher(Nullable<long> teacherID)
+        {
+            var teacherIDParameter = teacherID.HasValue ?
+                new ObjectParameter("TeacherID", teacherID) :
+                new ObjectParameter("TeacherID", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacher_Result>("SMGTgetTeacher", teacherIDParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetTeachers_Result> SMGTgetTeachers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeachers_Result>("SMGTgetTeachers");
+        }
+    
+        public virtual ObjectResult<SMGTgetAllTeachers_Result> SMGTgetAllTeachers(string schoolid, string userId, string isActive)
+        {
+            var schoolidParameter = schoolid != null ?
+                new ObjectParameter("Schoolid", schoolid) :
+                new ObjectParameter("Schoolid", typeof(string));
+    
+            var userIdParameter = userId != null ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetAllTeachers_Result>("SMGTgetAllTeachers", schoolidParameter, userIdParameter, isActiveParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetTeacherQualification_Result> SMGTgetTeacherQualification(Nullable<long> teacherId)
+        {
+            var teacherIdParameter = teacherId.HasValue ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacherQualification_Result>("SMGTgetTeacherQualification", teacherIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetTeacherExActivity_Result> SMGTgetTeacherExActivity(Nullable<long> teacherID)
+        {
+            var teacherIDParameter = teacherID.HasValue ?
+                new ObjectParameter("TeacherID", teacherID) :
+                new ObjectParameter("TeacherID", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacherExActivity_Result>("SMGTgetTeacherExActivity", teacherIDParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetGradeSubjects_Result> SMGTgetGradeSubjects(string gradeId)
+        {
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetGradeSubjects_Result>("SMGTgetGradeSubjects", gradeIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetSchoolGrade_Result> SMGTgetSchoolGrade(string schoolId)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetSchoolGrade_Result>("SMGTgetSchoolGrade", schoolIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetSchoolTeacher_Result> SMGTgetSchoolTeacher(string schoolId)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetSchoolTeacher_Result>("SMGTgetSchoolTeacher", schoolIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetTeacherSubjects_Result> SMGTgetTeacherSubjects(Nullable<long> teacherId)
+        {
+            var teacherIdParameter = teacherId.HasValue ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacherSubjects_Result>("SMGTgetTeacherSubjects", teacherIdParameter);
+        }
+    
+        public virtual int SMGTDeleteTeacherExtraCurricularActivity(Nullable<long> teacherid, string schoolid, string activityCode)
+        {
+            var teacheridParameter = teacherid.HasValue ?
+                new ObjectParameter("Teacherid", teacherid) :
+                new ObjectParameter("Teacherid", typeof(long));
+    
+            var schoolidParameter = schoolid != null ?
+                new ObjectParameter("Schoolid", schoolid) :
+                new ObjectParameter("Schoolid", typeof(string));
+    
+            var activityCodeParameter = activityCode != null ?
+                new ObjectParameter("ActivityCode", activityCode) :
+                new ObjectParameter("ActivityCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTDeleteTeacherExtraCurricularActivity", teacheridParameter, schoolidParameter, activityCodeParameter);
+        }
     }
 }

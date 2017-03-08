@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Errorlog, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Content\dll\Errorlog.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -164,8 +168,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Teacher\TeacherCategoryController.cs" />
+    <Compile Include="Controllers\Teacher\TeacherController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -185,6 +190,33 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetAllTeachers_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetGradeSubjects_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetSchoolGrade_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetSchoolTeacher_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetTeacherExActivity_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetTeacherQualification_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetTeacherSubjects_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetTeachers_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetTeacher_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblApplicationStatu.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
@@ -360,6 +392,12 @@
     <Compile Include="Models\tblUserCategoryFunction.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Teacher\ClassTeacherModel.cs" />
+    <Compile Include="Models\Teacher\ExtraActivityModel.cs" />
+    <Compile Include="Models\Teacher\QualificationModel.cs" />
+    <Compile Include="Models\Teacher\TeacherCategoryModel.cs" />
+    <Compile Include="Models\Teacher\TeacherModel.cs" />
+    <Compile Include="Models\Teacher\TSubjectModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -377,6 +415,7 @@
     <Content Include="Content\css\jquery.dataTables.min.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\style12.css" />
+    <Content Include="Content\dll\Errorlog.dll" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -680,6 +719,7 @@
     <Content Include="Content\scss\_options.scss" />
     <Content Include="img\1.jpg" />
     <Content Include="img\12.jpg" />
+    <Content Include="img\loading_spinner.gif" />
     <Content Include="img\ts-avatar.jpg" />
     <Content Include="img\c.jpg" />
     <Content Include="img\cccc.jpg" />
@@ -736,7 +776,9 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -774,6 +816,26 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\TeacherCategory\Index.cshtml" />
+    <Content Include="Views\TeacherCategory\AddTeacherCategory.cshtml" />
+    <Content Include="Views\TeacherCategory\EditTeacherCategory.cshtml" />
+    <Content Include="Views\TeacherCategory\DeleteTeacherCategory.cshtml" />
+    <Content Include="Views\Teacher\Index.cshtml" />
+    <Content Include="Views\Teacher\Create.cshtml" />
+    <Content Include="Views\Teacher\Qualification.cshtml" />
+    <Content Include="Views\Teacher\QualificationList.cshtml" />
+    <Content Include="Views\Teacher\ExtraCurricularActivity.cshtml" />
+    <Content Include="Views\Teacher\ExtraCurricularActivityList.cshtml" />
+    <Content Include="Views\Teacher\Subject.cshtml" />
+    <Content Include="Views\Teacher\ClassNSubjects.cshtml" />
+    <Content Include="Views\Teacher\TeacherSubjects.cshtml" />
+    <Content Include="Views\Teacher\DeleteTeacherExActivity.cshtml" />
+    <Content Include="Views\Teacher\DeleteTeacherQalification.cshtml" />
+    <Content Include="Views\Teacher\DeleteTeacherSubject.cshtml" />
+    <Content Include="Views\Teacher\DeleteTeacher.cshtml" />
+    <Content Include="Views\Teacher\EditTeacher.cshtml" />
+    <Content Include="Views\Teacher\Class.cshtml" />
+    <Content Include="Views\Teacher\GradeClasses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
