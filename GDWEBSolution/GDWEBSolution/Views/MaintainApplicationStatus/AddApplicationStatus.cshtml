@@ -1,0 +1,101 @@
+﻿@model GDWEBSolution.Models.GDgetApplicationStatus_Result
+
+<div>
+   
+    <form id="myForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add New Application Status</h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.StatusDescription, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.StatusDescription, new { @class = "form-control", @placeholder = "Application Status" })
+                    <span class="help-block m-b-none" id="CategoryNameError"></span>
+                </div>
+            </div>
+           
+            @* @Html.HiddenFor(m=>m.Name)*@
+
+            @*        @Html.DropDownListFor(model => model.DepartmentId, ViewBag.DepartmentList as SelectList, "--select--", new { @class = "form-control" })*@
+
+
+
+            @*        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder ="Address" })*@
+
+            @*<a href="#" id="btnSubmit" class="btn btn-success btn-block">@if(Model.EmployeeId>0){<span>Update</span> }else{<span>Save</span>} </a>*@
+        </div>
+        <div class="modal-footer">
+
+            @*        <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>*@
+            @*<button class="btn btn-default" type="submit">Cancel</button>*@
+            <a href="#" id="btnSubmit" class="btn btn-primary">Save</a>
+        </div>
+    </form>
+
+@*    <div style="text-align: center; display: none" id="loaderDiv">
+        Loading
+    </div>*@
+
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+            var CategoryName = $('#StatusDescription');
+            var CategoryNameError = $('#CategoryNameError');
+
+
+            //var e = document.getElementById("IsActive");
+
+            //var IsActive = e.options[e.selectedIndex].value;
+            //var IsActiveError = $('#IsActiveError');
+
+            // Check if there is an entered value
+            if (!CategoryName.val()) {
+                // Add errors highlight
+                CategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#CategoryNameError").text("Required");
+                // Stop submission of the form
+               // e.preventDefault();
+                return;
+            }
+            //if (IsActive == "") {
+            //    // Add errors highlight
+            //  //  IsActive.closest('.form-group').removeClass('has-success').addClass('has-error');
+            //    $("#IsActiveError").text("Required");
+            //    // Stop submission of the form
+            //  //  e.preventDefault();
+            //    return;
+            //}
+
+            //$("#loaderDiv").show();
+
+            var myformdata = $("#myForm").serialize();
+            //if (!$("#myForm").valid()) {
+
+            //    return false;
+            //}
+            $.ajax({
+
+                type: "POST",
+                url: "/MaintainApplicationStatus/Create",
+                data: myformdata,
+                success: function () {
+                    //$("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/MaintainApplicationStatus/Index";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>

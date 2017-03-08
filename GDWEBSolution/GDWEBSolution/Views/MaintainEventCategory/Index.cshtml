@@ -1,0 +1,113 @@
+﻿@model IEnumerable<GDWEBSolution.Models.GDgetAllEventCategory_Result>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>Event Category</h3>
+
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default">
+            <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EventCategoryId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EventCategoryDesc)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </th>
+                           
+                          
+                            <th>
+                                @Html.DisplayNameFor(model => model.ParentApprovalNeeded)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BroadcastMessage)
+                            </th>
+                           
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                        {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EventCategoryId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EventCategoryDesc)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                                    </td>
+                                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ParentApprovalNeeded)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BroadcastMessage)
+                                    </td>
+                                    
+                                     <td>
+                    <a class="btn btn-info" onclick="EditView(@item.EventCategoryId)"><span class="fa fa-pencil"></span> Edit </a>
+                    <a class="btn btn-danger" onclick="DeleteView(@item.EventCategoryId)"><span class="fa fa-trash"></span> Delete</a>
+                </td>
+            </tr>
+                        }
+                        }
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" id="MyModelBody">
+
+        </div>
+
+    </div>
+</div>
+
+@*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
+<script>
+    var ShowView = function (bookid) {
+        var Url = "/MaintainEventCategory/ShowAddEventCategory?id=" + bookid;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var EditView = function (CategoryId) {
+        var Url = "/MaintainEventCategory/Edit?CategoryId=" + CategoryId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var DeleteView = function (CategoryId) {
+        var Url = "/MaintainEventCategory/Delete?CategoryId=" + CategoryId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+</script>

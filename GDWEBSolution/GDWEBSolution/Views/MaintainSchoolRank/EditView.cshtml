@@ -1,0 +1,82 @@
+﻿@model GDWEBSolution.Models.GDgetAllSchoolRank_Result
+
+
+<div>
+   
+    <form id="myForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit School Rank</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div style="display:none">
+                    @Html.TextBoxFor(model => model.SchoolRankId)
+                    <span class="help-block m-b-none" id="CodeError"></span>
+                </div>
+
+                @Html.LabelFor(m => m.SchoolRankName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.SchoolRankName, new { @class = "form-control", @placeholder = "School Rank" })
+                    <span class="help-block m-b-none" id="CodeError"></span>
+                </div>
+            </div>
+
+        
+
+               </div>
+        <div class="modal-footer">
+
+             <a href="#" id="btnSubmit" class="btn btn-primary">Save</a>
+        </div>
+    </form>
+
+
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+          
+            var Name = $('#SchoolRankName');
+            var NameError = $('#NameError');
+
+
+          
+            // Check if there is an entered value
+            if (!Name.val()) {
+                // Add errors highlight
+                Name.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#NameError").text("Required");
+                // Stop submission of the form
+               // e.preventDefault();
+                return;
+            }
+            // Check if there is an entered value
+           
+           
+
+            var myformdata = $("#myForm").serialize();
+          
+            $.ajax({
+
+                type: "POST",
+                url: "/MaintainSchoolRank/Edit",
+                data: myformdata,
+                success: function () {
+                    //$("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/MaintainSchoolRank/Index";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>
+

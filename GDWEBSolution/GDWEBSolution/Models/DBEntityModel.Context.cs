@@ -53,6 +53,7 @@ namespace GDWEBSolution.Models
         public DbSet<tblGradeSubject> tblGradeSubjects { get; set; }
         public DbSet<tblHouse> tblHouses { get; set; }
         public DbSet<tblMessageType> tblMessageTypes { get; set; }
+        public DbSet<tblParameter> tblParameters { get; set; }
         public DbSet<tblParent> tblParents { get; set; }
         public DbSet<tblParentObservationType> tblParentObservationTypes { get; set; }
         public DbSet<tblParentStudent> tblParentStudents { get; set; }
@@ -87,18 +88,988 @@ namespace GDWEBSolution.Models
         public DbSet<tblUserCategory> tblUserCategories { get; set; }
         public DbSet<tblUserCategoryFunction> tblUserCategoryFunctions { get; set; }
     
-        public virtual ObjectResult<SMGTgetTeacher_Result> SMGTgetTeacher(Nullable<long> teacherID)
+        public virtual int GDdeleteAllApplicationStatus(string isactive, Nullable<long> statusCode, string modyfiedBy)
         {
-            var teacherIDParameter = teacherID.HasValue ?
-                new ObjectParameter("TeacherID", teacherID) :
-                new ObjectParameter("TeacherID", typeof(long));
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacher_Result>("SMGTgetTeacher", teacherIDParameter);
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteAllApplicationStatus", isactiveParameter, statusCodeParameter, modyfiedByParameter);
         }
     
-        public virtual ObjectResult<SMGTgetTeachers_Result> SMGTgetTeachers()
+        public virtual int GDdeleteEvaluationType(string isactive, Nullable<long> statusCode, string modyfiedBy)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeachers_Result>("SMGTgetTeachers");
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteEvaluationType", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteEventCategory(string isactive, Nullable<long> statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteEventCategory", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteExtraCurricularActivity(string isactive, string statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode != null ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(string));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteExtraCurricularActivity", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteFunction(string isactive, string statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode != null ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(string));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteFunction", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteGradeMaintenance(string isactive, string statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode != null ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(string));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteGradeMaintenance", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteMassageType(string isactive, Nullable<long> statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteMassageType", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteParentObservationType(string isactive, Nullable<int> statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(int));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteParentObservationType", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteQualification(string isactive, Nullable<int> statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(int));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteQualification", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteSchoolCategory(string isactive, Nullable<int> statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(int));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteSchoolCategory", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteSchoolGroup(string isactive, Nullable<long> statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteSchoolGroup", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteSchoolRank(string isactive, Nullable<long> statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteSchoolRank", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteStudentEvaluationType(string isactive, Nullable<long> statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteStudentEvaluationType", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteSubject(string isactive, Nullable<int> statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(int));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteSubject", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDdeleteSubjectCategory(string isactive, Nullable<int> statusCode, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(int));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteSubjectCategory", isactiveParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllApplicationStatus_Result> GDgetAllApplicationStatus(string isactive, Nullable<long> id)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllApplicationStatus_Result>("GDgetAllApplicationStatus", isactiveParameter, idParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllEvaluationType_Result> GDgetAllEvaluationType(string isactive)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllEvaluationType_Result>("GDgetAllEvaluationType", isactiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllEventCategory_Result> GDgetAllEventCategory(string isActive)
+        {
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllEventCategory_Result>("GDgetAllEventCategory", isActiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllExtraCurricularActivity_Result> GDgetAllExtraCurricularActivity(string isActive)
+        {
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllExtraCurricularActivity_Result>("GDgetAllExtraCurricularActivity", isActiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllFunction_Result> GDgetAllFunction(string isActive)
+        {
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllFunction_Result>("GDgetAllFunction", isActiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllGradeMaintenance_Result> GDgetAllGradeMaintenance(string isActive)
+        {
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllGradeMaintenance_Result>("GDgetAllGradeMaintenance", isActiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllMassageType_Result> GDgetAllMassageType(string isActive)
+        {
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllMassageType_Result>("GDgetAllMassageType", isActiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllParentObservationType_Result> GDgetAllParentObservationType(string isActive)
+        {
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllParentObservationType_Result>("GDgetAllParentObservationType", isActiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllQualification_Result> GDgetAllQualification(string isActive)
+        {
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllQualification_Result>("GDgetAllQualification", isActiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllSchoolCategory_Result> GDgetAllSchoolCategory(string isactive)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllSchoolCategory_Result>("GDgetAllSchoolCategory", isactiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllSchoolGroup_Result> GDgetAllSchoolGroup(string isactive)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllSchoolGroup_Result>("GDgetAllSchoolGroup", isactiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllSchoolRank_Result> GDgetAllSchoolRank(string isactive)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllSchoolRank_Result>("GDgetAllSchoolRank", isactiveParameter);
+        }
+    
+        public virtual int GDgetAllStudentEvaluationType(string isactive)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDgetAllStudentEvaluationType", isactiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllSubject_Result> GDgetAllSubject(string isactive)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllSubject_Result>("GDgetAllSubject", isactiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllSubjectCategory_Result> GDgetAllSubjectCategory(string isactive)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllSubjectCategory_Result>("GDgetAllSubjectCategory", isactiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllTeacherCategory_Result> GDgetAllTeacherCategory(string isactive)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllTeacherCategory_Result>("GDgetAllTeacherCategory", isactiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetApplicationStatus_Result> GDgetApplicationStatus(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetApplicationStatus_Result>("GDgetApplicationStatus", idParameter);
+        }
+    
+        public virtual int GDModifyAllApplicationStatus(string description, Nullable<long> statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyAllApplicationStatus", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifyEvaluationTypee(string description, Nullable<long> statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyEvaluationTypee", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifyEventCategory(string description, Nullable<long> statusCode, string modyfiedBy, string broadcast, string parentApproval)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            var broadcastParameter = broadcast != null ?
+                new ObjectParameter("Broadcast", broadcast) :
+                new ObjectParameter("Broadcast", typeof(string));
+    
+            var parentApprovalParameter = parentApproval != null ?
+                new ObjectParameter("ParentApproval", parentApproval) :
+                new ObjectParameter("ParentApproval", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyEventCategory", descriptionParameter, statusCodeParameter, modyfiedByParameter, broadcastParameter, parentApprovalParameter);
+        }
+    
+        public virtual int GDModifyExtraCurricularActivit(string description, string statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode != null ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(string));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyExtraCurricularActivit", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifyFunction(string description, string statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode != null ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(string));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyFunction", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifyGrade(string description, string statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode != null ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(string));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyGrade", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifyMassageType(string description, Nullable<long> statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyMassageType", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifyParentObservationType(string description, Nullable<int> statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(int));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyParentObservationType", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifyQualification(string description, Nullable<int> statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(int));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyQualification", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifySchoolCategory(string description, Nullable<int> statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(int));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifySchoolCategory", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifySchoolGroup(string description, Nullable<long> statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifySchoolGroup", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifySchoolRank(string description, Nullable<long> statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifySchoolRank", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifyStudentEvaluationType(string description, Nullable<long> statusCode, string modyfiedBy)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyStudentEvaluationType", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifySubject(string shortName, string subjectName, Nullable<int> statusCode, string modyfiedBy)
+        {
+            var shortNameParameter = shortName != null ?
+                new ObjectParameter("ShortName", shortName) :
+                new ObjectParameter("ShortName", typeof(string));
+    
+            var subjectNameParameter = subjectName != null ?
+                new ObjectParameter("SubjectName", subjectName) :
+                new ObjectParameter("SubjectName", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(int));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifySubject", shortNameParameter, subjectNameParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifySubjectCategory(string subjectName, Nullable<int> statusCode, string modyfiedBy)
+        {
+            var subjectNameParameter = subjectName != null ?
+                new ObjectParameter("SubjectName", subjectName) :
+                new ObjectParameter("SubjectName", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(int));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifySubjectCategory", subjectNameParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDsetApplicationStatus(string description, string createdBy, string isActive)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetApplicationStatus", descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetEvaluationType(string description, string createdBy, string isActive)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetEvaluationType", descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetEventCategory(string description, string broadcast, string approval, string createdBy, string isActive)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var broadcastParameter = broadcast != null ?
+                new ObjectParameter("Broadcast", broadcast) :
+                new ObjectParameter("Broadcast", typeof(string));
+    
+            var approvalParameter = approval != null ?
+                new ObjectParameter("Approval", approval) :
+                new ObjectParameter("Approval", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetEventCategory", descriptionParameter, broadcastParameter, approvalParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetExtraCurricularActivity(string code, string description, string createdBy, string isActive)
+        {
+            var codeParameter = code != null ?
+                new ObjectParameter("Code", code) :
+                new ObjectParameter("Code", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetExtraCurricularActivity", codeParameter, descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetFunction(string id, string description, string createdBy, string isActive)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetFunction", idParameter, descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetGrade(string id, string description, string createdBy, string isActive)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetGrade", idParameter, descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetMassageType(string description, string createdBy, string isActive)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetMassageType", descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetParentObservationType(string description, string createdBy, string isActive)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetParentObservationType", descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetQualification(string description, string createdBy, string isActive)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetQualification", descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetSchoolCategory(string description, string createdBy, string isActive)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetSchoolCategory", descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetSchoolGroup(string description, string createdBy, string isActive)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetSchoolGroup", descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetSchoolRank(string description, string createdBy, string isActive)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetSchoolRank", descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetStudentEvaluationType(string description, string createdBy, string isActive)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetStudentEvaluationType", descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetSubject(string shortName, string subjectName, string createdBy, string isActive)
+        {
+            var shortNameParameter = shortName != null ?
+                new ObjectParameter("ShortName", shortName) :
+                new ObjectParameter("ShortName", typeof(string));
+    
+            var subjectNameParameter = subjectName != null ?
+                new ObjectParameter("SubjectName", subjectName) :
+                new ObjectParameter("SubjectName", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetSubject", shortNameParameter, subjectNameParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetSubjectCategory(string description, string createdBy, string isActive)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetSubjectCategory", descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual ObjectResult<getAllEvaluationType_Result> getAllEvaluationType(string isactive)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllEvaluationType_Result>("getAllEvaluationType", isactiveParameter);
+        }
+    
+        public virtual int SMGTDeleteTeacherExtraCurricularActivity(Nullable<long> teacherid, string schoolid, string activityCode)
+        {
+            var teacheridParameter = teacherid.HasValue ?
+                new ObjectParameter("Teacherid", teacherid) :
+                new ObjectParameter("Teacherid", typeof(long));
+    
+            var schoolidParameter = schoolid != null ?
+                new ObjectParameter("Schoolid", schoolid) :
+                new ObjectParameter("Schoolid", typeof(string));
+    
+            var activityCodeParameter = activityCode != null ?
+                new ObjectParameter("ActivityCode", activityCode) :
+                new ObjectParameter("ActivityCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTDeleteTeacherExtraCurricularActivity", teacheridParameter, schoolidParameter, activityCodeParameter);
         }
     
         public virtual ObjectResult<SMGTgetAllTeachers_Result> SMGTgetAllTeachers(string schoolid, string userId, string isActive)
@@ -116,24 +1087,6 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("IsActive", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetAllTeachers_Result>("SMGTgetAllTeachers", schoolidParameter, userIdParameter, isActiveParameter);
-        }
-    
-        public virtual ObjectResult<SMGTgetTeacherQualification_Result> SMGTgetTeacherQualification(Nullable<long> teacherId)
-        {
-            var teacherIdParameter = teacherId.HasValue ?
-                new ObjectParameter("TeacherId", teacherId) :
-                new ObjectParameter("TeacherId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacherQualification_Result>("SMGTgetTeacherQualification", teacherIdParameter);
-        }
-    
-        public virtual ObjectResult<SMGTgetTeacherExActivity_Result> SMGTgetTeacherExActivity(Nullable<long> teacherID)
-        {
-            var teacherIDParameter = teacherID.HasValue ?
-                new ObjectParameter("TeacherID", teacherID) :
-                new ObjectParameter("TeacherID", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacherExActivity_Result>("SMGTgetTeacherExActivity", teacherIDParameter);
         }
     
         public virtual ObjectResult<SMGTgetGradeSubjects_Result> SMGTgetGradeSubjects(string gradeId)
@@ -163,6 +1116,38 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetSchoolTeacher_Result>("SMGTgetSchoolTeacher", schoolIdParameter);
         }
     
+        public virtual ObjectResult<SMGTgetTeacher_Result> SMGTgetTeacher(Nullable<long> teacherID)
+        {
+            var teacherIDParameter = teacherID.HasValue ?
+                new ObjectParameter("TeacherID", teacherID) :
+                new ObjectParameter("TeacherID", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacher_Result>("SMGTgetTeacher", teacherIDParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetTeacherExActivity_Result> SMGTgetTeacherExActivity(Nullable<long> teacherID)
+        {
+            var teacherIDParameter = teacherID.HasValue ?
+                new ObjectParameter("TeacherID", teacherID) :
+                new ObjectParameter("TeacherID", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacherExActivity_Result>("SMGTgetTeacherExActivity", teacherIDParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetTeacherQualification_Result> SMGTgetTeacherQualification(Nullable<long> teacherId)
+        {
+            var teacherIdParameter = teacherId.HasValue ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacherQualification_Result>("SMGTgetTeacherQualification", teacherIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetTeachers_Result> SMGTgetTeachers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeachers_Result>("SMGTgetTeachers");
+        }
+    
         public virtual ObjectResult<SMGTgetTeacherSubjects_Result> SMGTgetTeacherSubjects(Nullable<long> teacherId)
         {
             var teacherIdParameter = teacherId.HasValue ?
@@ -170,23 +1155,6 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("TeacherId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacherSubjects_Result>("SMGTgetTeacherSubjects", teacherIdParameter);
-        }
-    
-        public virtual int SMGTDeleteTeacherExtraCurricularActivity(Nullable<long> teacherid, string schoolid, string activityCode)
-        {
-            var teacheridParameter = teacherid.HasValue ?
-                new ObjectParameter("Teacherid", teacherid) :
-                new ObjectParameter("Teacherid", typeof(long));
-    
-            var schoolidParameter = schoolid != null ?
-                new ObjectParameter("Schoolid", schoolid) :
-                new ObjectParameter("Schoolid", typeof(string));
-    
-            var activityCodeParameter = activityCode != null ?
-                new ObjectParameter("ActivityCode", activityCode) :
-                new ObjectParameter("ActivityCode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTDeleteTeacherExtraCurricularActivity", teacheridParameter, schoolidParameter, activityCodeParameter);
         }
     }
 }

@@ -16,9 +16,9 @@
 
         <!-- Zero Configuration Table -->
         <div class="panel panel-default"> 
-            <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
+            <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="AddNew()"><span class="fa fa-plus"></span> Add New</button></div>
             <div class="panel-body">
-                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+                <table id="zctb" class="display table table-bordered table-hover">
                     <thead>
                         <tr>
                             @*<th>
@@ -134,6 +134,15 @@
     var EditView = function (TeacherID) {
         debugger
         var Url = "/Teacher/EditTeacher?TeacherId=" + TeacherID;
+        window.location.href = Url;
+        //$("#MyModelBody").load(Url, function () {
+        //    $("#myModal").modal("show");
+        //})
+    }
+
+    var AddNew = function () {
+        debugger
+        var Url = "/Teacher/Create";
         window.location.href = Url;
         //$("#MyModelBody").load(Url, function () {
         //    $("#myModal").modal("show");

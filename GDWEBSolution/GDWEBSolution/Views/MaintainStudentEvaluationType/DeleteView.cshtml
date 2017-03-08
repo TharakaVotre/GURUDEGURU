@@ -1,0 +1,53 @@
+﻿@model GDWEBSolution.Models.GDgetAllEvaluationType1_Result
+
+
+<div>
+    <form id="myForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5 class="modal-title">Are you sure you want to Delete this Evaluation Type ? @Html.HiddenFor(model => model.EvaluationTypeCode)</h5>
+        </div>
+        <div class="modal-footer">
+            
+
+            <a href="#" id="btnSubmit" class="btn btn-primary">YES</a>
+            <a href="#" id="btnNo" class="btn btn-default">NO</a>
+        </div>
+    </form>
+
+@*    <div style="text-align: center; display: none" id="loaderDiv">
+        Loading
+    </div>*@
+
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+            var myformdata = $("#myForm").serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/MaintainStudentEvaluationType/Delete",
+                data: myformdata,
+                success: function () {
+                    //$("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/MaintainStudentEvaluationType/Index";
+
+                }
+
+            })
+        })
+
+        $("#btnNo").click(function (e) {
+            debugger
+            $("#myModal").modal("hide");
+        })
+
+    })
+
+
+</script>

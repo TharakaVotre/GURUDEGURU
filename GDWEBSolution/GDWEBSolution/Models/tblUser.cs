@@ -129,8 +129,6 @@ namespace GDWEBSolution.Models
             this.tblTeacherSubjects1 = new HashSet<tblTeacherSubject>();
             this.tblTimeTables = new HashSet<tblTimeTable>();
             this.tblTimeTables1 = new HashSet<tblTimeTable>();
-            this.tblUser1 = new HashSet<tblUser>();
-            this.tblUser11 = new HashSet<tblUser>();
             this.tblUserCategoryFunctions = new HashSet<tblUserCategoryFunction>();
             this.tblUserCategoryFunctions1 = new HashSet<tblUserCategoryFunction>();
         }
@@ -220,7 +218,6 @@ namespace GDWEBSolution.Models
         public virtual ICollection<tblRelashionship> tblRelashionships1 { get; set; }
         public virtual ICollection<tblSchool> tblSchools { get; set; }
         public virtual ICollection<tblSchool> tblSchools1 { get; set; }
-        public virtual tblSchool tblSchool { get; set; }
         public virtual ICollection<tblSchoolCalendar> tblSchoolCalendars { get; set; }
         public virtual ICollection<tblSchoolCalendar> tblSchoolCalendars1 { get; set; }
         public virtual ICollection<tblSchoolCategory> tblSchoolCategories { get; set; }
@@ -263,10 +260,6 @@ namespace GDWEBSolution.Models
         public virtual ICollection<tblTeacherSubject> tblTeacherSubjects1 { get; set; }
         public virtual ICollection<tblTimeTable> tblTimeTables { get; set; }
         public virtual ICollection<tblTimeTable> tblTimeTables1 { get; set; }
-        public virtual ICollection<tblUser> tblUser1 { get; set; }
-        public virtual tblUser tblUser2 { get; set; }
-        public virtual ICollection<tblUser> tblUser11 { get; set; }
-        public virtual tblUser tblUser3 { get; set; }
         public virtual ICollection<tblUserCategoryFunction> tblUserCategoryFunctions { get; set; }
         public virtual ICollection<tblUserCategoryFunction> tblUserCategoryFunctions1 { get; set; }
     }

@@ -1,0 +1,93 @@
+﻿@model GDWEBSolution.Models.GDgetAllSubject_Result
+
+<div>
+   
+    <form id="myForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add New Subject</h4>
+        </div>
+        <div class="modal-body">
+
+           
+            <div class="form-group">
+                @Html.LabelFor(m => m.ShortName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.ShortName, new { @class = "form-control", @placeholder = "Short Name" })
+                    <span class="help-block m-b-none" id="ShortNameError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.SubjectName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.SubjectName, new { @class = "form-control", @placeholder = "Subject Name" })
+                    <span class="help-block m-b-none" id="NameError"></span>
+                </div>
+            </div>
+
+         </div>
+        <div class="modal-footer">
+           <a href="#" id="btnSubmit" class="btn btn-primary">Save</a>
+        </div>
+    </form>
+
+
+
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+            var Name = $('#SubjectName');
+            var NameError = $('#NameError');
+           
+            var ShortName = $('#ShortName');
+            var ShortNameError = $('#NameError');
+
+
+
+
+           
+            if (!Name.val()) {
+                // Add errors highlight
+                Name.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#NameError").text("Required");
+                // Stop submission of the form
+               // e.preventDefault();
+                return;
+            }
+          
+            if (!ShortName.val()) {
+                // Add errors highlight
+                ShortName.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#ShortNameError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            }
+
+           
+            var myformdata = $("#myForm").serialize();
+           
+            $.ajax({
+
+                type: "POST",
+                url: "/MaintainSubject/Create",
+                data: myformdata,
+                success: function () {
+                    
+                    $("#myModal").modal("hide");
+                    window.location.href = "/MaintainSubject/Index";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>

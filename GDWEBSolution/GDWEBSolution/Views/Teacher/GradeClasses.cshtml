@@ -1,5 +1,7 @@
 ﻿@model GDWEBSolution.Models.Teacher.TSubjectModel    
+<div class="form-group">
 <label for="pwd">Class : </label>
 @Html.DropDownListFor(model => model.ClassId, ViewBag.GradeClassse as SelectList, "", new { @class = "form-control" })
 
-<button type="button" id="btnAddClassTeacher" onclick="AddClassTeacher()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+    </div>
+    <button type="reset" id="btnAddClassTeacher" onclick="AddClassTeacher()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>

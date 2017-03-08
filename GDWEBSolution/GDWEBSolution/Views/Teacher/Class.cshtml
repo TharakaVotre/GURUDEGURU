@@ -22,11 +22,11 @@
                         <label for="pwd">Grade : </label>
                          @Html.DropDownListFor(model => model.GradeId, ViewBag.SchoolGrades as SelectList, "", new { @class = "form-control", @onchange = "loadClassList()" })
                     </div>
-                    <div class="form-group" id="loadgrade">
+                    <div id="loadgrade">
                         @*<label for="pwd">Class : </label>
                         <input type="password" class="form-control" id="pwd">*@
                     </div>
-
+                    @*<button type="submit" class="btn btn-primary">Submit</button>*@
                 </form>
             </div>
         </div>
@@ -34,10 +34,6 @@
 </div>
 
 <script>
-
-    function myFunction() {
-
-    }
 
     var AddTSubject = function () {
         //debugger
@@ -94,10 +90,6 @@
         debugger
         var tid = $('#GradeId').val();
         $('#loadgrade').load('/Teacher/ShowGradeClassesForTC?GradeId=' + tid);
-        var x = document.getElementById('btnAddClassTeacher');
-        if (x.style.display === 'none') {
-            x.style.display = 'block';
-        }
 
     }
 

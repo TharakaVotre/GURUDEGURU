@@ -1,0 +1,115 @@
+﻿@model IEnumerable<GDWEBSolution.Models.GDgetAllSchoolCategory_Result>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>School Category</h3>
+
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default">
+            <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SchoolCategoryId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SchoolCategoryName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedDate)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SchoolCategoryId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SchoolCategoryName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ModifiedBy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-info" onclick='EditView("@item.SchoolCategoryId")'><span class="fa fa-pencil"></span> Edit </a>
+                                        <a class="btn btn-danger" onclick='DeleteView("@item.SchoolCategoryId")'><span class="fa fa-trash"></span> Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" id="MyModelBody">
+
+        </div>
+
+    </div>
+</div>
+
+@*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
+<script>
+    var ShowView = function (bookid) {
+        var Url = "/MaintainSchoolCategory/ShowAddView?code=" + bookid;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var EditView = function (CategoryId) {
+        var Url = "/MaintainSchoolCategory/Edit?Code=" + CategoryId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var DeleteView = function (CategoryId) {
+        var Url = "/MaintainSchoolCategory/Delete?Code=" + CategoryId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+</script>
