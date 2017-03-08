@@ -39,7 +39,7 @@ namespace GDWEBSolution.Models
         public string NIC { get; set; }
         public string UserId { get; set; }
         public string ImgUrl { get; set; }
-        public System.DateTime DateofBirth { get; set; }
+        public Nullable<System.DateTime> DateofBirth { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }

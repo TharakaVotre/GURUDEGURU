@@ -1,0 +1,119 @@
+﻿@model GDWEBSolution.Models.TeacherCategoryModel
+
+
+<div>
+    <form id="myForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Teacher Category</h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                @Html.HiddenFor(m=> m.TeacherCategoryId)
+                @Html.LabelFor(m => m.TeacherCategoryName, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.TeacherCategoryName, new { @class = "form-control", @placeholder = "Teacher Category Name" })
+                    <span class="help-block m-b-none" id="TeacherCategoryNameError"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.IsActive, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @* @Html.DropDownListFor(model => model.IsActive, ViewBag.DepartmentList as SelectList, "", new { @class = "form-control" })*@
+
+                    @Html.CheckBoxFor(m => m.IsActiveBool, new {@class ="checkbox checkbox-primary"})
+
+@*                    @Html.DropDownListFor(model => model.IsActive, new List<SelectListItem>()
+                    {
+                       new SelectListItem() { Text = "Yes", Value = "Y"},
+                       new SelectListItem() { Text = "No", Value = "N"}
+                    },"", new { @id = "IsActive", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IsActive)*@
+
+                    <span class="help-block m-b-none" id="IsActiveError" style="color:red"></span>
+                </div>
+            </div>
+            @* @Html.HiddenFor(m=>m.Name)*@
+
+            @*        @Html.DropDownListFor(model => model.DepartmentId, ViewBag.DepartmentList as SelectList, "--select--", new { @class = "form-control" })*@
+
+
+
+            @*        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder ="Address" })*@
+
+            @*<a href="#" id="btnSubmit" class="btn btn-success btn-block">@if(Model.EmployeeId>0){<span>Update</span> }else{<span>Save</span>} </a>*@
+        </div>
+        <div class="modal-footer">
+
+            @*        <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>*@
+            @*<button class="btn btn-default" type="submit">Cancel</button>*@
+            <a href="#" id="btnSubmit" class="btn btn-primary">Save</a>
+        </div>
+    </form>
+
+@*    <div style="text-align: center; display: none" id="loaderDiv">
+        Loading
+    </div>*@
+
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+            var TeacherCategoryName = $('#TeacherCategoryName');
+            var TeacherCategoryNameError = $('#TeacherCategoryNameError');
+
+
+            //var e = document.getElementById("IsActive");
+
+            //var IsActive = e.options[e.selectedIndex].value;
+            //var IsActiveError = $('#IsActiveError');
+
+            // Check if there is an entered value
+            if (!TeacherCategoryName.val()) {
+                // Add errors highlight
+                TeacherCategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#TeacherCategoryNameError").text("Required");
+                // Stop submission of the form
+               // e.preventDefault();
+                return;
+            }
+            //if (IsActive == "") {
+            //    // Add errors highlight
+            //  //  IsActive.closest('.form-group').removeClass('has-success').addClass('has-error');
+            //    $("#IsActiveError").text("Required");
+            //    // Stop submission of the form
+            //  //  e.preventDefault();
+            //    return;
+            //}
+
+            //$("#loaderDiv").show();
+
+            var myformdata = $("#myForm").serialize();
+            //if (!$("#myForm").valid()) {
+
+            //    return false;
+            //}
+            $.ajax({
+
+                type: "POST",
+                url: "/TeacherCategory/Edit",
+                data: myformdata,
+                success: function () {
+                    //$("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/TeacherCategory/Index";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>
+

@@ -10,16 +10,18 @@
 namespace GDWEBSolution.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblUserCategory
+    public partial class SMGTgetTeacherSubjects_Result
     {
-        public string CategoryId { get; set; }
-        public string CategoryName { get; set; }
-        public string CreatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public long TeacherSubjectSeqNo { get; set; }
+        public string AcedemicYear { get; set; }
+        public long TeacherId { get; set; }
+        public string SchoolIds { get; set; }
+        public string GradeId { get; set; }
+        public string GradeName { get; set; }
+        public string ClassId { get; set; }
+        public int SubjectId { get; set; }
+        public string SubjectName { get; set; }
         public string IsActive { get; set; }
     }
 }

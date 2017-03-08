@@ -10,16 +10,14 @@
 namespace GDWEBSolution.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblUserCategory
+    public partial class SMGTgetTeacherExActivity_Result
     {
-        public string CategoryId { get; set; }
-        public string CategoryName { get; set; }
-        public string CreatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public long TeacherId { get; set; }
+        public string Name { get; set; }
+        public string SchoolId { get; set; }
+        public string ActivityCode { get; set; }
+        public string ActivityName { get; set; }
         public string IsActive { get; set; }
     }
 }
