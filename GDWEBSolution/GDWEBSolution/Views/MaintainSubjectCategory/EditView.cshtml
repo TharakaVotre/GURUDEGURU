@@ -1,0 +1,84 @@
+﻿@model GDWEBSolution.Models.GDgetAllSubjectCategory_Result
+
+
+<div>
+   
+    <form id="myForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Subject</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div style="display:none">
+                    @Html.TextBoxFor(model => model.SubjectCategoryId)
+                </div>
+
+                @Html.LabelFor(m => m.SubjectCategoryName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.SubjectCategoryName, new { @class = "form-control", @placeholder = "Subject Category Name" })
+                    <span class="help-block m-b-none" id="ShortNameError"></span>
+                </div>
+            </div>
+
+        
+
+
+        </div>
+        <div class="modal-footer">
+
+             <a href="#" id="btnSubmit" class="btn btn-primary">Save</a>
+        </div>
+    </form>
+
+
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+          
+        
+            var ShortName = $('#SubjectCategoryName');
+            var ShortNameError = $('#ShortNameError');
+
+
+          
+            // Check if there is an entered value
+           
+            if (!ShortName.val()) {
+                // Add errors highlight
+                ShortName.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#ShortNameError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            }
+            // Check if there is an entered value
+           
+           
+
+            var myformdata = $("#myForm").serialize();
+          
+            $.ajax({
+
+                type: "POST",
+                url: "/MaintainSubjectCategory/Edit",
+                data: myformdata,
+                success: function () {
+                    //$("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/MaintainSubjectCategory/Index";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>
+

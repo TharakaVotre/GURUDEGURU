@@ -47,7 +47,6 @@ namespace GDWEBSolution.Models
             this.tblTeacherSchools = new HashSet<tblTeacherSchool>();
             this.tblTeacherSubjects = new HashSet<tblTeacherSubject>();
             this.tblTimeTables = new HashSet<tblTimeTable>();
-            this.tblUsers = new HashSet<tblUser>();
         }
     
         public string SchoolId { get; set; }
@@ -114,6 +113,5 @@ namespace GDWEBSolution.Models
         public virtual ICollection<tblTeacherSchool> tblTeacherSchools { get; set; }
         public virtual ICollection<tblTeacherSubject> tblTeacherSubjects { get; set; }
         public virtual ICollection<tblTimeTable> tblTimeTables { get; set; }
-        public virtual ICollection<tblUser> tblUsers { get; set; }
     }
 }

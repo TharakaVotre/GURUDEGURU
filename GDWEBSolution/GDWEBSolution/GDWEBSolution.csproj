@@ -169,6 +169,20 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainApplicationStatusController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainEventCategoryController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainExtraCurricularActivityController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainFunctionController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainGradeController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainMessageTypeController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainParentObservationTypeController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainQulificationController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainSchoolCategoryController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainSchoolGroupController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainSchoolRankController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainStudentEvaluationTypeController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainSubjectCategoryController.cs" />
+    <Compile Include="Controllers\Maintenance\MaintainSubjectController.cs" />
     <Compile Include="Controllers\Teacher\TeacherCategoryController.cs" />
     <Compile Include="Controllers\Teacher\TeacherController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -190,6 +204,57 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllApplicationStatus_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllEvaluationType_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllEventCategory_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllExtraCurricularActivity_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllFunction_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllGradeMaintenance_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllMassageType_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllParentObservationType_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllQualification_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllSchoolCategory_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllSchoolGroup_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllSchoolRank_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllSubjectCategory_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllSubject_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllTeacherCategory_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetApplicationStatus_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getAllEvaluationType_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGTgetAllTeachers_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
@@ -291,6 +356,9 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblMessageType.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblParameter.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblParent.cs">
@@ -729,6 +797,16 @@
     <Content Include="img\gurugedara.png" />
     <Content Include="img\login-bg.jpg" />
     <Content Include="img\logo.jpg" />
+    <Content Include="Models\DBEntityModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DBEntityModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -741,18 +819,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBEntityModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\DBEntityModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\DBEntityModel.edmx.diagram">
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\DBEntityModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -836,9 +904,66 @@
     <Content Include="Views\Teacher\EditTeacher.cshtml" />
     <Content Include="Views\Teacher\Class.cshtml" />
     <Content Include="Views\Teacher\GradeClasses.cshtml" />
+    <Content Include="Views\MaintainApplicationStatus\AddApplicationStatus.cshtml" />
+    <Content Include="Views\MaintainApplicationStatus\DeleteApplicationStatus.cshtml" />
+    <Content Include="Views\MaintainApplicationStatus\EditApplicationStatus.cshtml" />
+    <Content Include="Views\MaintainApplicationStatus\Index.cshtml" />
+    <Content Include="Views\MaintainEventCategory\AddEventCategory.cshtml" />
+    <Content Include="Views\MaintainEventCategory\DeleteEventCategory.cshtml" />
+    <Content Include="Views\MaintainEventCategory\EditEventCategory.cshtml" />
+    <Content Include="Views\MaintainEventCategory\Index.cshtml" />
+    <Content Include="Views\MaintainExtraCurricularActivity\AddView.cshtml" />
+    <Content Include="Views\MaintainExtraCurricularActivity\DeleteView.cshtml" />
+    <Content Include="Views\MaintainExtraCurricularActivity\EditView.cshtml" />
+    <Content Include="Views\MaintainExtraCurricularActivity\Index.cshtml" />
+    <Content Include="Views\MaintainFunction\AddView.cshtml" />
+    <Content Include="Views\MaintainFunction\DeleteView.cshtml" />
+    <Content Include="Views\MaintainFunction\EditView.cshtml" />
+    <Content Include="Views\MaintainFunction\Index.cshtml" />
+    <Content Include="Views\MaintainGrade\AddView.cshtml" />
+    <Content Include="Views\MaintainGrade\DeleteView.cshtml" />
+    <Content Include="Views\MaintainGrade\EditView.cshtml" />
+    <Content Include="Views\MaintainGrade\Index.cshtml" />
+    <Content Include="Views\MaintainMessageType\AddView.cshtml" />
+    <Content Include="Views\MaintainMessageType\DeleteView.cshtml" />
+    <Content Include="Views\MaintainMessageType\EditView.cshtml" />
+    <Content Include="Views\MaintainMessageType\Index.cshtml" />
+    <Content Include="Views\MaintainParentObservationType\AddView.cshtml" />
+    <Content Include="Views\MaintainParentObservationType\DeleteView.cshtml" />
+    <Content Include="Views\MaintainParentObservationType\EditView.cshtml" />
+    <Content Include="Views\MaintainParentObservationType\Index.cshtml" />
+    <Content Include="Views\MaintainQulification\AddView.cshtml" />
+    <Content Include="Views\MaintainQulification\DeleteView.cshtml" />
+    <Content Include="Views\MaintainQulification\EditView.cshtml" />
+    <Content Include="Views\MaintainQulification\Index.cshtml" />
+    <Content Include="Views\MaintainSchoolCategory\AddView.cshtml" />
+    <Content Include="Views\MaintainSchoolCategory\DeleteView.cshtml" />
+    <Content Include="Views\MaintainSchoolCategory\EditView.cshtml" />
+    <Content Include="Views\MaintainSchoolCategory\Index.cshtml" />
+    <Content Include="Views\MaintainSchoolGroup\AddView.cshtml" />
+    <Content Include="Views\MaintainSchoolGroup\DeleteView.cshtml" />
+    <Content Include="Views\MaintainSchoolGroup\EditView.cshtml" />
+    <Content Include="Views\MaintainSchoolGroup\Index.cshtml" />
+    <Content Include="Views\MaintainSchoolRank\AddView.cshtml" />
+    <Content Include="Views\MaintainSchoolRank\DeleteView.cshtml" />
+    <Content Include="Views\MaintainSchoolRank\EditView.cshtml" />
+    <Content Include="Views\MaintainSchoolRank\Index.cshtml" />
+    <Content Include="Views\MaintainStudentEvaluationType\AddView.cshtml" />
+    <Content Include="Views\MaintainStudentEvaluationType\DeleteView.cshtml" />
+    <Content Include="Views\MaintainStudentEvaluationType\EditView.cshtml" />
+    <Content Include="Views\MaintainStudentEvaluationType\Index.cshtml" />
+    <Content Include="Views\MaintainSubjectCategory\AddView.cshtml" />
+    <Content Include="Views\MaintainSubjectCategory\DeleteView.cshtml" />
+    <Content Include="Views\MaintainSubjectCategory\EditView.cshtml" />
+    <Content Include="Views\MaintainSubjectCategory\Index.cshtml" />
+    <Content Include="Views\MaintainSubject\AddView.cshtml" />
+    <Content Include="Views\MaintainSubject\DeleteView.cshtml" />
+    <Content Include="Views\MaintainSubject\EditView.cshtml" />
+    <Content Include="Views\MaintainSubject\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\ApplicationStatus\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

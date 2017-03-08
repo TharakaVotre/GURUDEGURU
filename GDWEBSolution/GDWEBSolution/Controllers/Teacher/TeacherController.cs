@@ -19,7 +19,7 @@ namespace GDWEBSolution.Controllers.Teacher
         public ActionResult Index()
         {
             
-            var TeacherList = Connection.SMGTgetAllTeachers("%","%","Y").ToList();
+            var TeacherList = Connection.SMGTgetAllTeachers("CKC","%","Y").ToList();
 
            
 
@@ -254,7 +254,6 @@ namespace GDWEBSolution.Controllers.Teacher
 
                     Connection.tblTeachers.Add(Newt);
                     Connection.SaveChanges();
-
 
                     var TID = Connection.tblTeachers.Where(b => b.UserId == Model.UserId).FirstOrDefault();
 

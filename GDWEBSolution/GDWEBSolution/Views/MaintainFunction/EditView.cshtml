@@ -1,0 +1,101 @@
+﻿@model GDWEBSolution.Models.GDgetAllFunction_Result
+
+
+<div>
+   
+    <form id="myForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Function</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div style="display:none">
+                    @Html.TextBoxFor(model => model.FunctionId, new { @class = "form-control", @placeholder = "Function Id" })
+                   
+                </div>
+
+                @Html.LabelFor(m => m.FunctionId, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.FunctionId, new { @class = "form-control", @placeholder = "Function Id", disabled = "disabled" })
+                    <span class="help-block m-b-none" id="CodeError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+               
+                @Html.LabelFor(m => m.FunctionName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.FunctionName, new { @class = "form-control", @placeholder = "Function Name" })
+                    <span class="help-block m-b-none" id="NameError"></span>
+                </div>
+            </div>
+
+        
+
+               </div>
+        <div class="modal-footer">
+
+             <a href="#" id="btnSubmit" class="btn btn-primary">Save</a>
+        </div>
+    </form>
+
+
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+            var Code = $('#FunctionId');
+            var CodeError = $('#CodeError');
+
+            var Name = $('#FunctionName');
+            var NameError = $('#NameError');
+
+
+          
+            // Check if there is an entered value
+            if (!Name.val()) {
+                // Add errors highlight
+                CategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#NameError").text("Required");
+                // Stop submission of the form
+               // e.preventDefault();
+                return;
+            }
+            // Check if there is an entered value
+            if (!Code.val()) {
+                // Add errors highlight
+                CategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#CodeError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            }
+           
+
+            var myformdata = $("#myForm").serialize();
+          
+            $.ajax({
+
+                type: "POST",
+                url: "/MaintainFunction/Edit",
+                data: myformdata,
+                success: function () {
+                    //$("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/MaintainFunction/Index";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>
+
