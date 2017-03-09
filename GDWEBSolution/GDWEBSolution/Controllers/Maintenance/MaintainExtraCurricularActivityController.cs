@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,13 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
+            try{
             var Activity = Connection.GDgetAllExtraCurricularActivity("Y");
             List<GDgetAllExtraCurricularActivity_Result> Categorylist = Activity.ToList();
 
-            GDgetAllExtraCurricularActivity_Result tcm = new GDgetAllExtraCurricularActivity_Result();
+            ExtraCurricularActivityModel tcm = new ExtraCurricularActivityModel();
 
-            List<GDgetAllExtraCurricularActivity_Result> tcmlist = Categorylist.Select(x => new GDgetAllExtraCurricularActivity_Result
+            List<ExtraCurricularActivityModel> tcmlist = Categorylist.Select(x => new ExtraCurricularActivityModel
             {
                 ActivityCode = x.ActivityCode,
                 ActivityName = x.ActivityName,
@@ -36,6 +38,12 @@ namespace GDWEBSolution.Controllers
 
 
             return View(tcmlist);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
@@ -87,7 +95,8 @@ namespace GDWEBSolution.Controllers
                             validationErrors.Entry.Entity.ToString(),
                             validationError.ErrorMessage);
                         // raise a new exception nesting  
-                        // the current instance as InnerException  
+                        // the current instance as InnerException 
+                        Errorlog.ErrorManager.LogError(dbEx);
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -106,8 +115,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(string Code)
         {
-
-            GDgetAllExtraCurricularActivity_Result TModel = new GDgetAllExtraCurricularActivity_Result();
+            try{
+            ExtraCurricularActivityModel TModel = new ExtraCurricularActivityModel();
 
             tblExtraCurricularActivity TCtable = Connection.tblExtraCurricularActivities.SingleOrDefault(x => x.ActivityCode == Code);
             TModel.IsActive = TCtable.IsActive;
@@ -116,13 +125,19 @@ namespace GDWEBSolution.Controllers
             TModel.ActivityName = TCtable.ActivityName;
            
             return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllExtraCurricularActivity_Result Model)
+        public ActionResult Edit(ExtraCurricularActivityModel Model)
         {
             try
             {
@@ -133,10 +148,12 @@ namespace GDWEBSolution.Controllers
                 Connection.SaveChanges();
 
                 return RedirectToAction("Index");
+            
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
 
@@ -151,7 +168,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(string Code)
         {
-            GDgetAllExtraCurricularActivity_Result TModel = new GDgetAllExtraCurricularActivity_Result();
+            ExtraCurricularActivityModel TModel = new ExtraCurricularActivityModel();
             TModel.ActivityCode = Code;
             return PartialView("DeleteView", TModel);
         }
@@ -160,7 +177,7 @@ namespace GDWEBSolution.Controllers
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllExtraCurricularActivity_Result Model)
+        public ActionResult Delete(ExtraCurricularActivityModel Model)
         {
             try
             {
@@ -171,9 +188,10 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
     }

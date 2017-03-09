@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,30 +14,38 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainSubject/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "SYSTEM";
+        string UserId = "ADMIN";
         public ActionResult Index()
         {
-            var Group = Connection.GDgetAllSubject("Y");
-            List<GDgetAllSubject_Result> Grouplist = Group.ToList();
-
-            GDgetAllSubject_Result tcm = new GDgetAllSubject_Result();
-
-            List<GDgetAllSubject_Result> tcmlist = Grouplist.Select(x => new GDgetAllSubject_Result
+            try
             {
-                SubjectId = x.SubjectId,
-                ShortName = x.ShortName,
-                SubjectName = x.SubjectName,
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate,
-                IsActive = x.IsActive,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate
+                var Group = Connection.GDgetAllSubject("Y");
+                List<GDgetAllSubject_Result> Grouplist = Group.ToList();
 
-            }).ToList();
+                SubjectModel tcm = new SubjectModel();
+
+                List<SubjectModel> tcmlist = Grouplist.Select(x => new SubjectModel
+                {
+                    SubjectId = x.SubjectId,
+                    ShortName = x.ShortName,
+                    SubjectName = x.SubjectName,
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    IsActive = x.IsActive,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate
+
+                }).ToList();
 
 
 
-            return View(tcmlist);
+                return View(tcmlist);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
@@ -107,8 +116,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(int Code)
         {
-
-            GDgetAllSubject_Result TModel = new GDgetAllSubject_Result();
+            try{
+            SubjectModel TModel = new SubjectModel();
 
             tblSubject TCtable = Connection.tblSubjects.SingleOrDefault(x => x.SubjectId == Code);
             TModel.IsActive = TCtable.IsActive;
@@ -118,13 +127,19 @@ namespace GDWEBSolution.Controllers
             TModel.SubjectName = TCtable.SubjectName;
 
             return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllSubject_Result Model)
+        public ActionResult Edit(SubjectModel Model)
         {
             try
             {
@@ -136,9 +151,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
 
@@ -153,16 +169,23 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(int Code)
         {
-            GDgetAllSubject_Result TModel = new GDgetAllSubject_Result();
+            try{
+            SubjectModel TModel = new SubjectModel();
             TModel.SubjectId = Code;
             return PartialView("DeleteView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllSubject_Result Model)
+        public ActionResult Delete(SubjectModel Model)
         {
             try
             {
@@ -173,9 +196,10 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
     }

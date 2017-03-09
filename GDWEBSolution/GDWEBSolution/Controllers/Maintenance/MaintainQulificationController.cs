@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,26 +17,35 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
-            var Qualification = Connection.GDgetAllQualification("Y");
-            List<GDgetAllQualification_Result> Qualificationlist = Qualification.ToList();
-
-            GDgetAllParentObservationType_Result tcm = new GDgetAllParentObservationType_Result();
-
-            List<GDgetAllQualification_Result> tcmlist = Qualificationlist.Select(x => new GDgetAllQualification_Result
+            try
             {
-                QualificationId = x.QualificationId,
-                QualificationName = x.QualificationName,
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate,
-                IsActive = x.IsActive,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate
+                var Qualification = Connection.GDgetAllQualification("Y");
+                List<GDgetAllQualification_Result> Qualificationlist = Qualification.ToList();
 
-            }).ToList();
+                QulificationModel tcm = new QulificationModel();
+
+                List<QulificationModel> tcmlist = Qualificationlist.Select(x => new QulificationModel
+                {
+                    QualificationId = x.QualificationId,
+                    QualificationName = x.QualificationName,
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    IsActive = x.IsActive,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate
+
+                }).ToList();
 
 
 
-            return View(tcmlist);
+                return View(tcmlist);
+         
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
@@ -88,6 +98,7 @@ namespace GDWEBSolution.Controllers
                             validationError.ErrorMessage);
                         // raise a new exception nesting  
                         // the current instance as InnerException  
+                        Errorlog.ErrorManager.LogError(dbEx);
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -106,8 +117,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(int Code)
         {
-
-            GDgetAllQualification_Result TModel = new GDgetAllQualification_Result();
+            try{
+            QulificationModel TModel = new QulificationModel();
 
             tblQualification TCtable = Connection.tblQualifications.SingleOrDefault(x => x.QualificationId == Code);
             TModel.IsActive = TCtable.IsActive;
@@ -116,13 +127,19 @@ namespace GDWEBSolution.Controllers
             TModel.QualificationName = TCtable.QualificationName;
 
             return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllQualification_Result Model)
+        public ActionResult Edit(QulificationModel Model)
         {
             try
             {
@@ -134,9 +151,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
 
@@ -151,16 +169,24 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(int Code)
         {
-            GDgetAllQualification_Result TModel = new GDgetAllQualification_Result();
-            TModel.QualificationId = Code;
-            return PartialView("DeleteView", TModel);
+            try
+            {
+                QulificationModel TModel = new QulificationModel();
+                TModel.QualificationId = Code;
+                return PartialView("DeleteView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllQualification_Result Model)
+        public ActionResult Delete(QulificationModel Model)
         {
             try
             {
@@ -171,9 +197,10 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
     }

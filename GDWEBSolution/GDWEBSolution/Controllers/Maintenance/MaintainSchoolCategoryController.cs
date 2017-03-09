@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,26 +16,34 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
-            var Category = Connection.GDgetAllSchoolCategory("Y");
-            List<GDgetAllSchoolCategory_Result> Categorylist = Category.ToList();
-
-            GDgetAllSchoolCategory_Result tcm = new GDgetAllSchoolCategory_Result();
-
-            List<GDgetAllSchoolCategory_Result> tcmlist = Categorylist.Select(x => new GDgetAllSchoolCategory_Result
+            try
             {
-                SchoolCategoryId = x.SchoolCategoryId,
-                SchoolCategoryName = x.SchoolCategoryName,
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate,
-                IsActive = x.IsActive,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate
+                var Category = Connection.GDgetAllSchoolCategory("Y");
+                List<GDgetAllSchoolCategory_Result> Categorylist = Category.ToList();
 
-            }).ToList();
+                SchoolCategoryModel tcm = new SchoolCategoryModel();
+
+                List<SchoolCategoryModel> tcmlist = Categorylist.Select(x => new SchoolCategoryModel
+                {
+                    SchoolCategoryId = x.SchoolCategoryId,
+                    SchoolCategoryName = x.SchoolCategoryName,
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    IsActive = x.IsActive,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate
+
+                }).ToList();
 
 
 
-            return View(tcmlist);
+                return View(tcmlist);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
@@ -86,7 +95,8 @@ namespace GDWEBSolution.Controllers
                             validationErrors.Entry.Entity.ToString(),
                             validationError.ErrorMessage);
                         // raise a new exception nesting  
-                        // the current instance as InnerException  
+                        // the current instance as InnerException 
+                        Errorlog.ErrorManager.LogError(dbEx);
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -105,8 +115,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(int Code)
         {
-
-            GDgetAllSchoolCategory_Result TModel = new GDgetAllSchoolCategory_Result();
+            try{
+            SchoolCategoryModel TModel = new SchoolCategoryModel();
 
             tblSchoolCategory TCtable = Connection.tblSchoolCategories.SingleOrDefault(x => x.SchoolCategoryId == Code);
             TModel.IsActive = TCtable.IsActive;
@@ -115,13 +125,19 @@ namespace GDWEBSolution.Controllers
             TModel.SchoolCategoryName = TCtable.SchoolCategoryName;
 
             return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllSchoolCategory_Result Model)
+        public ActionResult Edit(SchoolCategoryModel Model)
         {
             try
             {
@@ -133,9 +149,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
 
@@ -150,16 +167,24 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(int Code)
         {
-            GDgetAllSchoolCategory_Result TModel = new GDgetAllSchoolCategory_Result();
-            TModel.SchoolCategoryId = Code;
-            return PartialView("DeleteView", TModel);
+            try
+            {
+                SchoolCategoryModel TModel = new SchoolCategoryModel();
+                TModel.SchoolCategoryId = Code;
+                return PartialView("DeleteView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllSchoolCategory_Result Model)
+        public ActionResult Delete(SchoolCategoryModel Model)
         {
             try
             {
@@ -170,9 +195,10 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
     }

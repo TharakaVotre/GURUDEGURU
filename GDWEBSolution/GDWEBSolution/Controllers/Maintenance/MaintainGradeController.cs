@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,26 +17,34 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
-            var Grade = Connection.GDgetAllGradeMaintenance("Y");
-            List<GDgetAllGradeMaintenance_Result> Gradelist = Grade.ToList();
-
-            GDgetAllGradeMaintenance_Result tcm = new GDgetAllGradeMaintenance_Result();
-
-            List<GDgetAllGradeMaintenance_Result> tcmlist = Gradelist.Select(x => new GDgetAllGradeMaintenance_Result
+            try
             {
-                GradeId = x.GradeId,
-                GradeName = x.GradeName,
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate,
-                IsActive = x.IsActive,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate
+                var Grade = Connection.GDgetAllGradeMaintenance("Y");
+                List<GDgetAllGradeMaintenance_Result> Gradelist = Grade.ToList();
 
-            }).ToList();
+                GradeModel tcm = new GradeModel();
+
+                List<GradeModel> tcmlist = Gradelist.Select(x => new GradeModel
+                {
+                    GradeId = x.GradeId,
+                    GradeName = x.GradeName,
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    IsActive = x.IsActive,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate
+
+                }).ToList();
 
 
 
-            return View(tcmlist);
+                return View(tcmlist);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
@@ -88,6 +97,7 @@ namespace GDWEBSolution.Controllers
                             validationError.ErrorMessage);
                         // raise a new exception nesting  
                         // the current instance as InnerException  
+                        Errorlog.ErrorManager.LogError(dbEx);
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -106,23 +116,30 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(string Code)
         {
+            try
+            {
+                GradeModel TModel = new GradeModel();
 
-            GDgetAllGradeMaintenance_Result TModel = new GDgetAllGradeMaintenance_Result();
+                tblGrade TCtable = Connection.tblGrades.SingleOrDefault(x => x.GradeId == Code);
+                TModel.IsActive = TCtable.IsActive;
 
-            tblGrade TCtable = Connection.tblGrades.SingleOrDefault(x => x.GradeId == Code);
-            TModel.IsActive = TCtable.IsActive;
+                TModel.GradeId = TCtable.GradeId;
+                TModel.GradeName = TCtable.GradeName;
 
-            TModel.GradeId = TCtable.GradeId;
-            TModel.GradeName = TCtable.GradeName;
-
-            return PartialView("EditView", TModel);
+                return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllGradeMaintenance_Result Model)
+        public ActionResult Edit(GradeModel Model)
         {
             try
             {
@@ -134,9 +151,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
 
@@ -151,16 +169,24 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(string Code)
         {
-            GDgetAllGradeMaintenance_Result TModel = new GDgetAllGradeMaintenance_Result();
-            TModel.GradeId = Code;
-            return PartialView("DeleteView", TModel);
+            try
+            {
+                GradeModel TModel = new GradeModel();
+                TModel.GradeId = Code;
+                return PartialView("DeleteView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllGradeMaintenance_Result Model)
+        public ActionResult Delete(GradeModel Model)
         {
             try
             {

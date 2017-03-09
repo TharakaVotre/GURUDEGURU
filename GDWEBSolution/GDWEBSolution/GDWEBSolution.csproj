@@ -190,6 +190,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Maintenance\ApplicationStatusModel.cs" />
     <Compile Include="Models\DBEntityModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -256,6 +257,19 @@
     <Compile Include="Models\getAllEvaluationType_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Maintenance\EventCategoryModel.cs" />
+    <Compile Include="Models\Maintenance\ExtraCurricularActivityModel.cs" />
+    <Compile Include="Models\Maintenance\FunctionModel.cs" />
+    <Compile Include="Models\Maintenance\GradeModel.cs" />
+    <Compile Include="Models\Maintenance\MessageTypeModel.cs" />
+    <Compile Include="Models\Maintenance\ParentObservationTypeModel.cs" />
+    <Compile Include="Models\Maintenance\QulificationModel.cs" />
+    <Compile Include="Models\Maintenance\SchoolCategoryModel.cs" />
+    <Compile Include="Models\Maintenance\SchoolGroupModel.cs" />
+    <Compile Include="Models\Maintenance\SchoolRankModel.cs" />
+    <Compile Include="Models\Maintenance\StudentEvaluationTypeModel.cs" />
+    <Compile Include="Models\Maintenance\SubjectCategoryModel.cs" />
+    <Compile Include="Models\Maintenance\SubjectModel.cs" />
     <Compile Include="Models\SMGTgetAllTeachers_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -883,7 +897,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\TeacherCategory\Index.cshtml" />
     <Content Include="Views\TeacherCategory\AddTeacherCategory.cshtml" />
     <Content Include="Views\TeacherCategory\EditTeacherCategory.cshtml" />
@@ -963,16 +979,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\ApplicationStatus\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

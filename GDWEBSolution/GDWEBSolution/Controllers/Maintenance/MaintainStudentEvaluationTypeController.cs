@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,13 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
+            try{
             var Group = Connection.GDgetAllEvaluationType("Y");
             List<GDgetAllEvaluationType_Result> Grouplist = Group.ToList();
 
-            GDgetAllEvaluationType_Result tcm = new GDgetAllEvaluationType_Result();
+            StudentEvaluationTypeModel tcm = new StudentEvaluationTypeModel();
 
-            List<GDgetAllEvaluationType_Result> tcmlist = Grouplist.Select(x => new GDgetAllEvaluationType_Result
+            List<StudentEvaluationTypeModel> tcmlist = Grouplist.Select(x => new StudentEvaluationTypeModel
             {
               EvaluationTypeCode=x.EvaluationTypeCode,
               EvaluationTypeDesc=x.EvaluationTypeDesc,
@@ -36,6 +38,12 @@ namespace GDWEBSolution.Controllers
 
 
             return View(tcmlist);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
@@ -88,6 +96,7 @@ namespace GDWEBSolution.Controllers
                             validationError.ErrorMessage);
                         // raise a new exception nesting  
                         // the current instance as InnerException  
+                        Errorlog.ErrorManager.LogError(dbEx);
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -106,8 +115,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(long Code)
         {
-
-            GDgetAllEvaluationType_Result TModel = new GDgetAllEvaluationType_Result();
+            try{
+            StudentEvaluationTypeModel TModel = new StudentEvaluationTypeModel();
 
             tblEvaluationType TCtable = Connection.tblEvaluationTypes.SingleOrDefault(x => x.EvaluationTypeCode == Code);
             TModel.IsActive = TCtable.IsActive;
@@ -116,13 +125,19 @@ namespace GDWEBSolution.Controllers
             TModel.EvaluationTypeDesc = TCtable.EvaluationTypeDesc;
 
             return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllEvaluationType_Result Model)
+        public ActionResult Edit(StudentEvaluationTypeModel Model)
         {
             try
             {
@@ -134,9 +149,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
 
@@ -151,16 +167,24 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(long Code)
         {
-            GDgetAllEvaluationType_Result TModel = new GDgetAllEvaluationType_Result();
-            TModel.EvaluationTypeCode = Code;
-            return PartialView("DeleteView", TModel);
+            try
+            {
+                StudentEvaluationTypeModel TModel = new StudentEvaluationTypeModel();
+                TModel.EvaluationTypeCode = Code;
+                return PartialView("DeleteView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllEvaluationType_Result Model)
+        public ActionResult Delete(StudentEvaluationTypeModel Model)
         {
             try
             {
@@ -171,9 +195,10 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
     }

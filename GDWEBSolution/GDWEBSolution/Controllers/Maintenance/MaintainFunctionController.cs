@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,13 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
+            try{
             var Function = Connection.GDgetAllFunction("Y");
             List<GDgetAllFunction_Result> Functionlist = Function.ToList();
 
-            GDgetAllFunction_Result tcm = new GDgetAllFunction_Result();
+            FunctionModel tcm = new FunctionModel();
 
-            List<GDgetAllFunction_Result> tcmlist = Functionlist.Select(x => new GDgetAllFunction_Result
+            List<FunctionModel> tcmlist = Functionlist.Select(x => new FunctionModel
             {
                 FunctionId = x.FunctionId,
                 FunctionName = x.FunctionName,
@@ -36,6 +38,12 @@ namespace GDWEBSolution.Controllers
 
 
             return View(tcmlist);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
@@ -88,6 +96,7 @@ namespace GDWEBSolution.Controllers
                             validationError.ErrorMessage);
                         // raise a new exception nesting  
                         // the current instance as InnerException  
+                        Errorlog.ErrorManager.LogError(dbEx);
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -106,8 +115,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(string Code)
         {
-
-            GDgetAllFunction_Result TModel = new GDgetAllFunction_Result();
+            try{
+            FunctionModel TModel = new FunctionModel();
 
             tblFunction TCtable = Connection.tblFunctions.SingleOrDefault(x => x.FunctionId == Code);
             TModel.IsActive = TCtable.IsActive;
@@ -116,13 +125,19 @@ namespace GDWEBSolution.Controllers
             TModel.FunctionName = TCtable.FunctionName;
 
             return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllFunction_Result Model)
+        public ActionResult Edit(FunctionModel Model)
         {
             try
             {
@@ -134,9 +149,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
 
@@ -151,16 +167,24 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(string Code)
         {
-            GDgetAllFunction_Result TModel = new GDgetAllFunction_Result();
-            TModel.FunctionId = Code;
-            return PartialView("DeleteView", TModel);
+            try
+            {
+                FunctionModel TModel = new FunctionModel();
+                TModel.FunctionId = Code;
+                return PartialView("DeleteView", TModel);
+            }
+            catch (Exception ex)
+            {
+                return PartialView();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllFunction_Result Model)
+        public ActionResult Delete(FunctionModel Model)
         {
             try
             {
@@ -170,10 +194,12 @@ namespace GDWEBSolution.Controllers
 
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
-            }
-            catch
+            
+             }
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
     }

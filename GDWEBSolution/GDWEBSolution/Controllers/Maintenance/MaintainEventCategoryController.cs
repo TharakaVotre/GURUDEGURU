@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,28 +19,36 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
-            var Category = Connection.GDgetAllEventCategory("Y");
-            List<GDgetAllEventCategory_Result> Categorylist = Category.ToList();
-
-            GDgetAllEventCategory_Result tcm = new GDgetAllEventCategory_Result();
-
-            List<GDgetAllEventCategory_Result> tcmlist = Categorylist.Select(x => new GDgetAllEventCategory_Result
+            try
             {
-                
-                EventCategoryId = x.EventCategoryId,
-                EventCategoryDesc = x.EventCategoryDesc,
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate,
-                IsActive = x.IsActive,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate,
-                BroadcastMessage=x.BroadcastMessage,
-                ParentApprovalNeeded=x.ParentApprovalNeeded
-            }).ToList();
+                var Category = Connection.GDgetAllEventCategory("Y");
+                List<GDgetAllEventCategory_Result> Categorylist = Category.ToList();
+
+                EventCategoryModel tcm = new EventCategoryModel();
+
+                List<EventCategoryModel> tcmlist = Categorylist.Select(x => new EventCategoryModel
+                {
+
+                    EventCategoryId = x.EventCategoryId,
+                    EventCategoryDesc = x.EventCategoryDesc,
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    IsActive = x.IsActive,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate,
+                    BroadcastMessage = x.BroadcastMessage,
+                    ParentApprovalNeeded = x.ParentApprovalNeeded
+                }).ToList();
 
 
 
-            return View(tcmlist);
+                return View(tcmlist);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
@@ -95,6 +104,7 @@ namespace GDWEBSolution.Controllers
                             validationError.ErrorMessage);
                         // raise a new exception nesting  
                         // the current instance as InnerException  
+                        Errorlog.ErrorManager.LogError(dbEx);
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -113,25 +123,32 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(long CategoryId)
         {
-            
-            GDgetAllEventCategory_Result TModel = new GDgetAllEventCategory_Result();
+            try
+            {
+                EventCategoryModel TModel = new EventCategoryModel();
 
-            tblEventcategory TCtable = Connection.tblEventcategories.SingleOrDefault(x => x.EventCategoryId == CategoryId);
-            TModel.IsActive = TCtable.IsActive;
+                tblEventcategory TCtable = Connection.tblEventcategories.SingleOrDefault(x => x.EventCategoryId == CategoryId);
+                TModel.IsActive = TCtable.IsActive;
 
-            TModel.EventCategoryId = TCtable.EventCategoryId;
-            TModel.EventCategoryDesc = TCtable.EventCategoryDesc;
-            TModel.BroadcastMessage = TCtable.BroadcastMessage;
-            TModel.ParentApprovalNeeded = TCtable.ParentApprovalNeeded;
+                TModel.EventCategoryId = TCtable.EventCategoryId;
+                TModel.EventCategoryDesc = TCtable.EventCategoryDesc;
+                TModel.BroadcastMessage = TCtable.BroadcastMessage;
+                TModel.ParentApprovalNeeded = TCtable.ParentApprovalNeeded;
 
-            return PartialView("EditEventCategory", TModel);
+                return PartialView("EditEventCategory", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllEventCategory_Result Model)
+        public ActionResult Edit(EventCategoryModel Model)
         {
             try
             {
@@ -143,9 +160,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
 
@@ -160,16 +178,24 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(long CategoryId)
         {
-            GDgetAllEventCategory_Result TModel = new GDgetAllEventCategory_Result();
-            TModel.EventCategoryId = CategoryId;
-            return PartialView("DeleteEventCategory", TModel);
+            try
+            {
+                EventCategoryModel TModel = new EventCategoryModel();
+                TModel.EventCategoryId = CategoryId;
+                return PartialView("DeleteEventCategory", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllEventCategory_Result Model)
+        public ActionResult Delete(EventCategoryModel Model)
         {
             try
             {
@@ -180,9 +206,10 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
     }

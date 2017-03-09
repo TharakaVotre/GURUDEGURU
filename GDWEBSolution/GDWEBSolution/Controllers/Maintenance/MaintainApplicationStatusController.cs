@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,26 +19,33 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
-            var status=Connection.GDgetAllApplicationStatus("Y",0);
-            List<GDgetAllApplicationStatus_Result> Categorylist = status.ToList();
-
-            GDgetAllApplicationStatus_Result tcm = new GDgetAllApplicationStatus_Result();
-
-            List<GDgetAllApplicationStatus_Result> tcmlist = Categorylist.Select(x => new GDgetAllApplicationStatus_Result
+            try
             {
-                StatusCode = x.StatusCode,
-                StatusDescription = x.StatusDescription,
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate,
-                IsActive = x.IsActive,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate
+                var status = Connection.GDgetAllApplicationStatus("Y", 0);
+                List<GDgetAllApplicationStatus_Result> Categorylist = status.ToList();
 
-            }).ToList();
+                ApplicationStatusModel tcm = new ApplicationStatusModel();
+
+                List<ApplicationStatusModel> tcmlist = Categorylist.Select(x => new ApplicationStatusModel
+                {
+                    StatusCode = x.StatusCode,
+                    StatusDescription = x.StatusDescription,
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    IsActive = x.IsActive,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate
+
+                }).ToList();
 
 
 
-            return View(tcmlist);
+                return View(tcmlist);
+            }
+            catch (Exception ex) {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
@@ -91,6 +99,9 @@ namespace GDWEBSolution.Controllers
                         // raise a new exception nesting  
                         // the current instance as InnerException  
                         raise = new InvalidOperationException(message, raise);
+
+                        Errorlog.ErrorManager.LogError(dbEx);
+         
                     }
                 }
                 throw raise;
@@ -107,22 +118,30 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(long typeId)
         {
-            GDgetAllApplicationStatus_Result TModel = new GDgetAllApplicationStatus_Result();
+            try
+            {
+                ApplicationStatusModel TModel = new ApplicationStatusModel();
 
-            tblApplicationStatu TCtable = Connection.tblApplicationStatus.SingleOrDefault(x => x.StatusCode == typeId);
-            TModel.IsActive = TCtable.IsActive;
+                tblApplicationStatu TCtable = Connection.tblApplicationStatus.SingleOrDefault(x => x.StatusCode == typeId);
+                TModel.IsActive = TCtable.IsActive;
 
-            TModel.StatusDescription = TCtable.StatusDescription;
-            TModel.StatusCode = TCtable.StatusCode;
+                TModel.StatusDescription = TCtable.StatusDescription;
+                TModel.StatusCode = TCtable.StatusCode;
 
-            return PartialView("EditApplicationStatus", TModel);
+                return PartialView("EditApplicationStatus", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllApplicationStatus_Result Model)
+        public ActionResult Edit(ApplicationStatusModel Model)
         {
             try
             {
@@ -135,9 +154,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
 
@@ -151,16 +171,24 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(long CategoryId)
         {
-            GDgetAllApplicationStatus_Result TModel = new GDgetAllApplicationStatus_Result();
-            TModel.StatusCode = CategoryId;
-            return PartialView("DeleteApplicationStatus", TModel);
+            try
+            {
+                ApplicationStatusModel TModel = new ApplicationStatusModel();
+                TModel.StatusCode = CategoryId;
+                return PartialView("DeleteApplicationStatus", TModel);
+            }
+            catch (Exception ex)
+            {
+                return View();
+                Errorlog.ErrorManager.LogError(ex);
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllApplicationStatus_Result Model)
+        public ActionResult Delete(ApplicationStatusModel Model)
         {
             try
             {
@@ -171,9 +199,10 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
+                Errorlog.ErrorManager.LogError(ex);
             }
         }
     }
