@@ -45,10 +45,21 @@
             var NameError = $('#NameError');
            
             var ShortName = $('#ShortName');
-            var ShortNameError = $('#NameError');
+            var ShortNameError = $('#ShortNameError');
 
 
 
+            if (!ShortName.val()) {
+                // Add errors highlight
+                ShortName.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#ShortNameError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            } else {
+                ShortName.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#ShortNameError").text("");
+            }
 
            
             if (!Name.val()) {
@@ -58,16 +69,13 @@
                 // Stop submission of the form
                // e.preventDefault();
                 return;
+            } else {
+                Name.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#NameError").text(" ");
             }
+
           
-            if (!ShortName.val()) {
-                // Add errors highlight
-                ShortName.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#ShortNameError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            }
+           
 
            
             var myformdata = $("#myForm").serialize();

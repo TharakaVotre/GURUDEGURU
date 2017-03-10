@@ -42,8 +42,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
 
@@ -130,8 +131,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
 
@@ -153,8 +155,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
 
@@ -177,8 +180,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
 
@@ -197,8 +201,9 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                Errorlog.ErrorManager.LogError(ex);
                 return View();
             }
         }

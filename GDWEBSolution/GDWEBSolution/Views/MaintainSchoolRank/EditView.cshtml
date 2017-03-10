@@ -13,13 +13,13 @@
             <div class="form-group">
                 <div style="display:none">
                     @Html.TextBoxFor(model => model.SchoolRankId)
-                    <span class="help-block m-b-none" id="CodeError"></span>
+                   
                 </div>
 
                 @Html.LabelFor(m => m.SchoolRankName, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-8">
                     @Html.TextBoxFor(model => model.SchoolRankName, new { @class = "form-control", @placeholder = "School Rank" })
-                    <span class="help-block m-b-none" id="CodeError"></span>
+                    <span class="help-block m-b-none" id="NameError"></span>
                 </div>
             </div>
 

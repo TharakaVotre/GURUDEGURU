@@ -41,8 +41,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
 
@@ -116,6 +117,7 @@ namespace GDWEBSolution.Controllers
         public ActionResult Edit(string Code)
         {
             try{
+                string url = Request.Url.AbsoluteUri;
             FunctionModel TModel = new FunctionModel();
 
             tblFunction TCtable = Connection.tblFunctions.SingleOrDefault(x => x.FunctionId == Code);
@@ -128,8 +130,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
 
@@ -151,8 +154,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
 
@@ -175,8 +179,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return PartialView();
                 Errorlog.ErrorManager.LogError(ex);
+                return PartialView();
+                
             }
         }
 
@@ -198,8 +203,9 @@ namespace GDWEBSolution.Controllers
              }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
     }

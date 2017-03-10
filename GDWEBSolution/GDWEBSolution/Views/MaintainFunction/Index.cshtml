@@ -112,4 +112,14 @@
             $("#myModal").modal("show");
         })
     }
+
+
+
+
+    function RestrictSpace() {
+        if (event.keyCode == 32) {
+            event.returnValue = false;
+            return false;
+        }
+    }
 </script>

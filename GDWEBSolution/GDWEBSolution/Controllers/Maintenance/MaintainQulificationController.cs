@@ -43,8 +43,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
 
@@ -130,8 +131,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
 
@@ -153,8 +155,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
 
@@ -177,8 +180,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
 
@@ -199,8 +203,9 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-                return View();
                 Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
             }
         }
     }

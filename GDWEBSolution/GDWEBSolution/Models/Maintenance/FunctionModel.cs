@@ -11,8 +11,7 @@ namespace GDWEBSolution.Models.Maintenance
         [Display(Name = "Code")]
         public string FunctionId { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Event Function")]
-        [Display(Name = "Function")]
+         [Display(Name = "Function")]
         public string FunctionName { get; set; }
 
         [Display(Name = "Created By")]
