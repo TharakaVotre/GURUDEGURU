@@ -1,7 +1,19 @@
-﻿@model GDWEBSolution.Models.Teacher.TSubjectModel    
+﻿@model GDWEBSolution.Models.Teacher.ClassTeacherModel 
 <div class="form-group">
-<label for="pwd">Class : </label>
-@Html.DropDownListFor(model => model.ClassId, ViewBag.GradeClassse as SelectList, "", new { @class = "form-control" })
+    <label class="col-sm-2 control-label">Grade : </label>
+    <div class="col-sm-7">
+        @Html.DropDownListFor(model => model.ClassId, ViewBag.GradeClassse as SelectList, "", new { @class = "form-control" })
 
     </div>
-    <button type="reset" id="btnAddClassTeacher" onclick="AddClassTeacher()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+    <div class="col-sm-3">
+        @Html.ValidationMessageFor(model => model.ClassId, null, new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-8 col-sm-offset-2">
+        @*<button class="btn btn-default" type="submit">Cancel</button>*@
+        @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
+        <button type="reset" id="btnAddClassTeacher" onclick="AddTSubject()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save <span style="text-align: center; display: none" id="loaderDiv"><img  src="~/img/ellipsis.gif"/></span></button>
+    </div>
+
+</div>

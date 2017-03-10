@@ -297,8 +297,12 @@ namespace GDWEBSolution.Controllers.Teacher
             }
         }
 
+        
         //
         // GET: /Teacher/Edit/5
+
+
+
 
         [AllowAnonymous]
         public JsonResult AddQualification(QualificationModel Model)
@@ -435,6 +439,57 @@ namespace GDWEBSolution.Controllers.Teacher
             catch (Exception Ex)
             {
                 Errorlog.ErrorManager.LogError("Teacher Controller - AddTeacherSubject(TSubjectModel Model)", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        [AllowAnonymous]
+        public JsonResult AddClassTeacher(ClassTeacherModel Model)
+        {
+            try
+            {
+                string result = "Error";
+
+                var TCount = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId && u.AccedamicYear == Model.AccedamicYear && u.SchoolId == Model.SchoolId);
+
+                var Ccount = Connection.tblClassTeachers.Count(u => u.ClassId == Model.ClassId 
+                    && u.AccedamicYear == Model.AccedamicYear && u.GradeId == Model.GradeId && u.SchoolId == Model.SchoolId );
+
+                if (TCount != 0)
+                {
+                    result = "TExits";
+                    //ViewBag.TeacherId = Model.TeacherID.ToString();
+                }
+                else if (Ccount != 0)
+                {
+                    result = "CExits";
+                }
+                else
+                {
+                    tblClassTeacher NewQ = new tblClassTeacher();
+
+                    NewQ.CreatedBy = "ADMIN";
+                    NewQ.CreatedDate = DateTime.Now;
+                    NewQ.IsActive = "Y";
+                    NewQ.AccedamicYear = "2017";
+                    NewQ.SchoolId = "CKC";
+                    NewQ.GradeId = Model.GradeId;
+                    NewQ.ClassId = Model.ClassId;
+                    NewQ.TeacherId = Model.TeacherId;
+
+                    Connection.tblClassTeachers.Add(NewQ);
+                    Connection.SaveChanges();
+
+                    result = "Success";
+                }
+                //ShowTeacherQualificatoin();
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("Teacher Controller - AddClassTeacher(ClassTeacherModel Model)", Ex);
                 return Json("Exception", JsonRequestBehavior.AllowGet);
             }
         }

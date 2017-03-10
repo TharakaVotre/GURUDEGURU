@@ -13,6 +13,7 @@
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New Teacher</a></li>
+                    <li class=""><a href="#school" data-toggle="tab" aria-expanded="false">Teacher School</a></li>
                     <li class=""><a href="#qualification" data-toggle="tab" aria-expanded="false">Qualification</a></li>
                     <li class=""><a href="#extra" data-toggle="tab" aria-expanded="false">Extra Curricular</a></li>
                     <li class=""><a href="#subjects" data-toggle="tab" aria-expanded="false">Subjects</a></li>
@@ -167,6 +168,11 @@
 
 
                         </form>
+                    </div>
+                    <div class="tab-pane fade" id="school">
+                        @{Html.RenderPartial("Qualification");}
+
+                        @*@{Html.RenderPartial("Qualification", new { TeacherId = 0 });}*@
                     </div>
                     <div class="tab-pane fade" id="qualification">
                         @{Html.RenderPartial("Qualification");}

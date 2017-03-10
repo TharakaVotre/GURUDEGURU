@@ -801,6 +801,10 @@
     <Content Include="Content\scss\_options.scss" />
     <Content Include="img\1.jpg" />
     <Content Include="img\12.jpg" />
+    <Content Include="img\default.gif" />
+    <Content Include="img\ellipsis.gif" />
+    <Content Include="img\loader.gif" />
+    <Content Include="img\loading.gif" />
     <Content Include="img\loading_spinner.gif" />
     <Content Include="img\ts-avatar.jpg" />
     <Content Include="img\c.jpg" />
@@ -811,6 +815,7 @@
     <Content Include="img\gurugedara.png" />
     <Content Include="img\login-bg.jpg" />
     <Content Include="img\logo.jpg" />
+    <Content Include="img\wheel.gif" />
     <Content Include="Models\DBEntityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
@@ -976,6 +981,7 @@
     <Content Include="Views\MaintainSubject\DeleteView.cshtml" />
     <Content Include="Views\MaintainSubject\EditView.cshtml" />
     <Content Include="Views\MaintainSubject\Index.cshtml" />
+    <Content Include="Views\Teacher\TeacherSchool.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1002,7 +1008,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>23709</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:20867/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
