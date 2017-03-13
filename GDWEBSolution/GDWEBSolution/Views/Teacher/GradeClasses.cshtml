@@ -1,6 +1,6 @@
 ﻿@model GDWEBSolution.Models.Teacher.ClassTeacherModel 
 <div class="form-group">
-    <label class="col-sm-2 control-label">Grade : </label>
+    <label class="col-sm-2 control-label">Class : </label>
     <div class="col-sm-7">
         @Html.DropDownListFor(model => model.ClassId, ViewBag.GradeClassse as SelectList, "", new { @class = "form-control" })
 
@@ -13,7 +13,7 @@
     <div class="col-sm-8 col-sm-offset-2">
         @*<button class="btn btn-default" type="submit">Cancel</button>*@
         @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
-        <button type="reset" id="btnAddClassTeacher" onclick="AddTSubject()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save <span style="text-align: center; display: none" id="loaderDiv"><img  src="~/img/ellipsis.gif"/></span></button>
+        <button type="button" id="btnAddClassTeacher" onclick="AddTCSubject()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save <span style="text-align: center; display: none" id="loaderDiv"><img  src="~/img/ellipsis.gif"/></span></button>
     </div>
 
 </div>

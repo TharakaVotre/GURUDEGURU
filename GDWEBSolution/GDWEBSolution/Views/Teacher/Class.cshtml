@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Teacher : </label>
                         <div class="col-sm-7">
-                            @Html.DropDownListFor(model => model.TeacherId, ViewBag.SchoolTeacher as SelectList, "", new { @class = "form-control", @onchange = "loadTeacherSubjects()" })
+                            @Html.DropDownListFor(model => model.TeacherId, ViewBag.SchoolTeacher as SelectList, "", new { @class = "select2_Teacher form-control" })
                         </div>
                         <div class="col-sm-3">
                             @Html.ValidationMessageFor(model => model.TeacherId, null, new { @class = "text-danger" })
@@ -77,11 +77,27 @@
 </div>
 <script>
 
-    var AddTSubject = function () {
-        //debugger
+    var AddTCSubject = function () {
+        debugger
+        if ($("#TeacherId").val() == "") {
+            $("#ErrorLable").text("Select a Teacher Before Saving");
+            $("#myModal").modal("show");
+            return;
+        }
+        else if ($("#GradeId").val() == "") {
+            $("#ErrorLable").text("Select a Grade Before Saving");
+            $("#myModal").modal("show");
+            return;
+        }
+        else if ($("#ClassId").val() == "") {
+            $("#ErrorLable").text("Select a Class Before Saving");
+            $("#myModal").modal("show");
+            return;
+        }
+
         var myformdata = $("#FrmCT").serialize();
         $("#loaderDiv").show();
-        //if (!$("#FrmANT").valid()) {
+        //if (!$("#FrmCT").valid()) {
         //    return false;
         //}
 
@@ -139,4 +155,12 @@
         //$("#loaderDiv").hide();
     }
 
-</script>
+
+      $(document).ready(function () {
+          $(".select2_Teacher").select2({
+              placeholder: "Select a Teacher",
+              allowClear: true,
+              width: '100%'
+          });
+      });
+  </script>

@@ -53,12 +53,12 @@ namespace GDWEBSolution.Models
         [Display(Name = "NIC *")]
         public string NIC { get; set; }
 
-        [Required(ErrorMessage = "Drivers License Requried")]
-        [Display(Name = "Drivers License *")]
+        //[Required(ErrorMessage = "Drivers License Requried")]
+        [Display(Name = "Drivers License ")]
         public string DrivingLicense { get; set; }
 
-        [Required(ErrorMessage = "Passport Requried")]
-        [Display(Name = "Passport *")]
+        //[Required(ErrorMessage = "Passport Requried")]
+        [Display(Name = "Passport ")]
         public string Passport { get; set; }
 
         [Required(ErrorMessage = "User Name Required")]
