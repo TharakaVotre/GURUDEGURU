@@ -185,6 +185,7 @@
     <Compile Include="Controllers\Maintenance\MaintainSubjectController.cs" />
     <Compile Include="Controllers\Teacher\TeacherCategoryController.cs" />
     <Compile Include="Controllers\Teacher\TeacherController.cs" />
+    <Compile Include="Controllers\User\UserController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -480,6 +481,7 @@
     <Compile Include="Models\Teacher\TeacherCategoryModel.cs" />
     <Compile Include="Models\Teacher\TeacherModel.cs" />
     <Compile Include="Models\Teacher\TSubjectModel.cs" />
+    <Compile Include="Models\User\UserCategoryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -984,6 +986,10 @@
     <Content Include="Views\MaintainSubject\EditView.cshtml" />
     <Content Include="Views\MaintainSubject\Index.cshtml" />
     <Content Include="Views\Teacher\TeacherSchool.cshtml" />
+    <Content Include="Views\User\Category.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\AddCategory.cshtml" />
+    <Content Include="Views\User\EditCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
