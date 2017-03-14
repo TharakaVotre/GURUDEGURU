@@ -1156,5 +1156,14 @@ namespace GDWEBSolution.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetTeacherSubjects_Result>("SMGTgetTeacherSubjects", teacherIdParameter);
         }
+    
+        public virtual ObjectResult<SMGTgetUserCategoryFunction_Result> SMGTgetUserCategoryFunction(string userCategoryId)
+        {
+            var userCategoryIdParameter = userCategoryId != null ?
+                new ObjectParameter("UserCategoryId", userCategoryId) :
+                new ObjectParameter("UserCategoryId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetUserCategoryFunction_Result>("SMGTgetUserCategoryFunction", userCategoryIdParameter);
+        }
     }
 }

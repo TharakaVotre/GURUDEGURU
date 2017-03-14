@@ -1,0 +1,57 @@
+﻿@model GDWEBSolution.Models.User.UCategoryFunctionModel
+
+<div>
+    <form id="FormUCFDelete" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5 class="modal-title">Are You Sure You Want To Delete This User Category Function ? @Html.HiddenFor(m=> m.CategoryId)</h5>
+            @Html.HiddenFor(m=> m.FunctionId)
+        </div>
+        <div class="modal-footer">
+            
+            <a href="#" id="btnUCFDeleteSubmit" class="btn btn-primary">YES</a>
+            <a href="#" id="btnNo" class="btn btn-default">NO</a>
+        </div>
+    </form>
+
+@*    <div style="text-align: center; display: none" id="loaderDiv">
+        Loading
+    </div>*@
+
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnUCFDeleteSubmit").click(function (e) {
+            debugger
+            var myformdata = $("#FormUCFDelete").serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/User/DeleteUCFunction",
+                data: myformdata,
+                success: function (result) {
+                    //$("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    if (result != "Error") {
+                        debugger
+                        window.location.href = "/User/Function";
+                    }
+
+
+
+                }
+
+            })
+        })
+
+        $("#btnNo").click(function (e) {
+            debugger
+            $("#deleteModel").modal("hide");
+        })
+
+    })
+
+
+</script>

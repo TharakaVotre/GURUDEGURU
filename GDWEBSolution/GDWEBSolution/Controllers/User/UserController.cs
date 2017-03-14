@@ -41,6 +41,40 @@ namespace GDWEBSolution.Controllers.User
 
             return View(tcmlist);
         }
+
+        public ActionResult Function() // UserCategoryFunction----
+        {
+            var Flist = Connection.SMGTgetUserCategoryFunction("%").ToList();
+
+            UCategoryFunctionModel tcm = new UCategoryFunctionModel();
+
+            List<UCategoryFunctionModel> tcmlist = Flist.Select(x => new UCategoryFunctionModel
+            {
+                CategoryId = x.CategoryId,
+                CategoryName = x.CategoryName,
+                FunctionId = x.FunctionId,
+                FunctionName = x.FunctionName,
+                CreatedBy = x.CreatedBy,
+                CreatedDate = x.CreatedDate,
+                IsActive = x.IsActive,
+                ModifiedBy = x.ModifiedBy,
+                ModifiedDate = x.ModifiedDate
+
+            }).ToList();
+
+
+
+            return View(tcmlist);
+        }
+
+        private void LoadUCFDropdowns()
+        {
+            List<tblFunction> Funtionlist = Connection.tblFunctions.ToList();
+            ViewBag.FunctionList = new SelectList(Funtionlist, "FunctionId", "FunctionName");
+
+            List<tblUserCategory> UCategorylist = Connection.tblUserCategories.ToList();
+            ViewBag.UCategoryNameList = new SelectList(UCategorylist, "CategoryId", "CategoryName");
+        }
         //
         // GET: /User/Details/5
 
@@ -125,6 +159,65 @@ namespace GDWEBSolution.Controllers.User
             catch
             {
                 return View();
+            }
+        }
+
+        public ActionResult NewUCFunction()
+        {
+            LoadUCFDropdowns();
+            return PartialView("UCFunctions");
+        }
+        [HttpPost]
+        public ActionResult NewUCFunction(UCategoryFunctionModel Model)
+        {
+            try
+            {
+
+                tblUserCategoryFunction Category = new tblUserCategoryFunction();
+
+                Category.CreatedBy = "ADMIN";
+                Category.CreatedDate = DateTime.Now;
+                if (Model.Active == true) { Category.IsActive = "Y"; }
+                else { Category.IsActive = "N"; }
+                Category.CategoryId = Model.CategoryId;
+                Category.FunctionId = Model.FunctionId;
+
+                Connection.tblUserCategoryFunctions.Add(Category);
+                Connection.SaveChanges();
+
+                //return View();
+
+                return RedirectToAction("Category");
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("CreateCategory(UserCategoryModel Model) @ UserController", Ex);
+                return RedirectToAction("Category");
+            }
+        }
+
+        public ActionResult DeleteUCFunction(string CategoryId, string FunctionId)
+        {
+            UCategoryFunctionModel TModel = new UCategoryFunctionModel();
+            TModel.FunctionId = FunctionId;
+            TModel.CategoryId = CategoryId;
+            return PartialView("DeleteUCFunction", TModel);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteUCFunction(UCategoryFunctionModel Model)
+        {
+            try
+            {
+                tblUserCategoryFunction Tble = Connection.tblUserCategoryFunctions.Find(Model.CategoryId, Model.FunctionId);
+                Connection.tblUserCategoryFunctions.Remove(Tble);
+                Connection.SaveChanges();
+
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("Error", JsonRequestBehavior.AllowGet);
             }
         }
         //
