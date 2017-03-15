@@ -997,6 +997,7 @@
     <Content Include="Views\User\Function.cshtml" />
     <Content Include="Views\User\UCFunctions.cshtml" />
     <Content Include="Views\User\DeleteUCFunction.cshtml" />
+    <Content Include="Views\Teacher\EditTeacherDetailsView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

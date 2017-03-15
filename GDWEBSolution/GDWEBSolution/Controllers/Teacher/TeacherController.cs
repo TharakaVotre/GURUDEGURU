@@ -85,6 +85,18 @@ namespace GDWEBSolution.Controllers.Teacher
 
         public ActionResult Create()
         {
+            CQExCViewBags();
+
+
+            SubjctViewBags();
+
+
+
+            return View();
+        }
+
+        private void CQExCViewBags()
+        {
             List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
             ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
 
@@ -95,13 +107,6 @@ namespace GDWEBSolution.Controllers.Teacher
 
             List<tblExtraCurricularActivity> Exlist = Connection.tblExtraCurricularActivities.ToList();
             ViewBag.ExtraActivityList = new SelectList(Exlist, "ActivityCode", "ActivityName");
-
-
-            SubjctViewBags();
-
-
-
-            return View();
         }
 
         private void TeacherDrpList()
@@ -579,10 +584,8 @@ namespace GDWEBSolution.Controllers.Teacher
             }
         }
 
-
-        public ActionResult EditTeacher(long TeacherId)
+        public ActionResult ShowEditTeacher(long TeacherId)
         {
-
             List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
             ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
 
@@ -608,12 +611,19 @@ namespace GDWEBSolution.Controllers.Teacher
 
             TModel.TeacherCategoryId = TCtable.TeacherCategoryId;
 
-            //return View("EditTeacherDetails", TModel);
-            return View(TModel);
-            //return PartialView("EditTeacher",TModel);
+            return PartialView("EditTeacherDetailsView",TModel);
         }
+
+        public ActionResult EditTeacher(long TeacherId)
+        {
+            ViewBag.EditTeacherID = TeacherId;
+            CQExCViewBags();
+            SubjctViewBags();
+            return View();
+        }
+
         [HttpPost]
-        public JsonResult EditTeacher(TeacherModel Model)
+        public JsonResult EditTeacherDetails(TeacherModel Model)
         {
             try
             {
