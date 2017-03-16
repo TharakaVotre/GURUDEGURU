@@ -4,11 +4,10 @@
     <div class="form-group">
         @Html.LabelFor(m => m.TeacherName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
-            @Html.DropDownListFor(model => model.TeacherId, ViewBag.TeacherList as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher" ,@onchange = "loadQualification()"})
+            @Html.DropDownListFor(model => model.Teacher_Id, ViewBag.TeacherList as SelectList, "", new { @class = "select2_Q form-control" ,@onchange = "loadQualification()"})
         </div>
         @Html.LabelFor(m => m.QualificationName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
-            @*@Html.ValidationMessageFor(model => model.TeacherId, null, new { @class = "text-danger" })*@
             @Html.DropDownListFor(model => model.QualificationId, ViewBag.QualificationList as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher" })
         </div>
         <div class="col-sm-2">
@@ -16,9 +15,7 @@
             </div>
     </div>
     <div class="hr-dashed"></div>
-@*     <h4 style="padding-left:120px;">Qualifications</h4>
-    <div class="hr-dashed"></div>*@
-                            
+                          
     </form>
 
 
@@ -26,58 +23,52 @@
 <script>
 
     var AddQualification = function () {
-        //debugger
+        if ($("#Teacher_Id").val() == "") {
+            $("#ErrorLable").text("Select a Teacher Before Saving");
+            $("#myModal").modal("show");
+            return;
+        }
+        if ($("#QualificationId").val() == "") {
+            $("#ErrorLable").text("Select a Qualification Before Saving");
+            $("#myModal").modal("show");
+            return;
+        }
         var myformdata = $("#FrmQA").serialize();
-
-        //if (!$("#FrmANT").valid()) {
-        //    return false;
-        //}
-
         $.ajax({
 
             type: "POST",
             url: "/Teacher/AddQualification",
             data: myformdata,
             success: function (result) {
-                //$("#loaderDiv").hide();
-                // $("#myModal").modal("hide");
                 if (result != "Exception" && result != "Exits") {
-                    debugger
-                    //window.location.href = "/Teacher/Create";
-                    $("#TeacherId").val(result);
-
-                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $("#Teacher_Id").val(result);
                     $('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + result);
                     $("#SuccesLable").text("Qualification Added");
-                   // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
                 }
                 else if (result == "Exception") {
-                    debugger
-                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
                     $("#ErrorLable").text("Exception Error Occurd");
-                    //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
                 }
                 else if (result == "Exits") {
-                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
                     $("#ErrorLable").text("This Qualification is Already Assigned to this Teacher");
-                    //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
-
-
                 }
                 else {
-
+                    $("#ErrorLable").text("An Error Occured ! Please Try Again Later");
+                    $("#myModal").modal("show");
                 }
-
             }
-
         })
     }
-
     var loadQualification = function () {
-        debugger
-        $('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + $('#TeacherId').val());
+        if ($('#Teacher_Id').val() != 0) {
+            $('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + $('#Teacher_Id').val());
+            $('#showqualification').show();
+        }
+        else {
+            $('#showqualification').hide();
+        }
+
     }
 </script>

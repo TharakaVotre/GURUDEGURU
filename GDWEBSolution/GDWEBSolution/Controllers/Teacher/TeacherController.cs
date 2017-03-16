@@ -85,6 +85,18 @@ namespace GDWEBSolution.Controllers.Teacher
 
         public ActionResult Create()
         {
+            CQExCViewBags();
+
+
+            SubjctViewBags();
+
+
+
+            return View();
+        }
+
+        private void CQExCViewBags()
+        {
             List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
             ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
 
@@ -95,13 +107,6 @@ namespace GDWEBSolution.Controllers.Teacher
 
             List<tblExtraCurricularActivity> Exlist = Connection.tblExtraCurricularActivities.ToList();
             ViewBag.ExtraActivityList = new SelectList(Exlist, "ActivityCode", "ActivityName");
-
-
-            SubjctViewBags();
-
-
-
-            return View();
         }
 
         private void TeacherDrpList()
@@ -146,7 +151,7 @@ namespace GDWEBSolution.Controllers.Teacher
             
             List<QualificationModel> List = STQlist.Select(x => new QualificationModel
             {
-                TeacherId = x.TeacherId,
+                Teacher_Id = x.TeacherId,
                 SchoolId = x.SchoolId,
                 QualificationName = x.QualificationName,
                 IsActive = x.IsActive,
@@ -297,8 +302,12 @@ namespace GDWEBSolution.Controllers.Teacher
             }
         }
 
+        
         //
         // GET: /Teacher/Edit/5
+
+
+
 
         [AllowAnonymous]
         public JsonResult AddQualification(QualificationModel Model)
@@ -307,7 +316,7 @@ namespace GDWEBSolution.Controllers.Teacher
             {
                 string result = "Error";
 
-                var count = Connection.tblTeacherQualifications.Count(u => u.TeacherId == Model.TeacherId && u.QualificationId == Model.QualificationId);
+                var count = Connection.tblTeacherQualifications.Count(u => u.TeacherId == Model.Teacher_Id && u.QualificationId == Model.QualificationId);
                 if (count == 0)
                 {
 
@@ -318,14 +327,14 @@ namespace GDWEBSolution.Controllers.Teacher
                     NewQ.IsActive = "Y";
                     NewQ.QualificationId = Model.QualificationId;
                     NewQ.SchoolId = "CKC";
-                    NewQ.TeacherId = Model.TeacherId;
+                    NewQ.TeacherId = Model.Teacher_Id;
 
                     Connection.tblTeacherQualifications.Add(NewQ);
                     Connection.SaveChanges();
 
-                    result = Model.TeacherId.ToString();
+                    result = Model.Teacher_Id.ToString();
 
-                    ViewBag.TeacherId = Model.TeacherId.ToString();
+                    ViewBag.TeacherId = Model.Teacher_Id.ToString();
 
                 }
                 else
@@ -440,6 +449,57 @@ namespace GDWEBSolution.Controllers.Teacher
         }
 
 
+        [AllowAnonymous]
+        public JsonResult AddClassTeacher(ClassTeacherModel Model)
+        {
+            try
+            {
+                string result = "Error";
+
+                var TCount = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId && u.AccedamicYear == Model.AccedamicYear && u.SchoolId == Model.SchoolId);
+
+                var Ccount = Connection.tblClassTeachers.Count(u => u.ClassId == Model.ClassId 
+                    && u.AccedamicYear == Model.AccedamicYear && u.GradeId == Model.GradeId && u.SchoolId == Model.SchoolId );
+
+                if (TCount != 0)
+                {
+                    result = "TExits";
+                    //ViewBag.TeacherId = Model.TeacherID.ToString();
+                }
+                else if (Ccount != 0)
+                {
+                    result = "CExits";
+                }
+                else
+                {
+                    tblClassTeacher NewQ = new tblClassTeacher();
+
+                    NewQ.CreatedBy = "ADMIN";
+                    NewQ.CreatedDate = DateTime.Now;
+                    NewQ.IsActive = "Y";
+                    NewQ.AccedamicYear = "2017";
+                    NewQ.SchoolId = "CKC";
+                    NewQ.GradeId = Model.GradeId;
+                    NewQ.ClassId = Model.ClassId;
+                    NewQ.TeacherId = Model.TeacherId;
+
+                    Connection.tblClassTeachers.Add(NewQ);
+                    Connection.SaveChanges();
+
+                    result = "Success";
+                }
+                //ShowTeacherQualificatoin();
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("Teacher Controller - AddClassTeacher(ClassTeacherModel Model)", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
         public ActionResult DeleteExActivity(int Teacherid,string Schoolid, string Activitycode)
         {
             ExtraActivityModel TModel = new ExtraActivityModel();
@@ -471,7 +531,7 @@ namespace GDWEBSolution.Controllers.Teacher
         public ActionResult DeleteQualification(int Teacherid, string Schoolid, int Qualificationid)
         {
             QualificationModel TModel = new QualificationModel();
-            TModel.TeacherId = Teacherid;
+            TModel.Teacher_Id = Teacherid;
             TModel.SchoolId = Schoolid;
             TModel.QualificationId = Qualificationid;
             return PartialView("DeleteTeacherQalification", TModel);
@@ -482,12 +542,12 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             try
             {
-                tblTeacherQualification Tble = Connection.tblTeacherQualifications.Find(Model.TeacherId, Model.SchoolId, Model.QualificationId);
+                tblTeacherQualification Tble = Connection.tblTeacherQualifications.Find(Model.Teacher_Id, Model.SchoolId, Model.QualificationId);
                 Connection.tblTeacherQualifications.Remove(Tble);
                 Connection.SaveChanges();
 
 
-                return Json(Model.TeacherId, JsonRequestBehavior.AllowGet);
+                return Json(Model.Teacher_Id, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
             catch
@@ -524,10 +584,8 @@ namespace GDWEBSolution.Controllers.Teacher
             }
         }
 
-
-        public ActionResult EditTeacher(long TeacherId)
+        public ActionResult ShowEditTeacher(long TeacherId)
         {
-
             List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
             ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
 
@@ -553,12 +611,20 @@ namespace GDWEBSolution.Controllers.Teacher
 
             TModel.TeacherCategoryId = TCtable.TeacherCategoryId;
 
-            //return View("EditTeacherDetails", TModel);
-            return View(TModel);
-            //return PartialView("EditTeacher",TModel);
+            return PartialView("EditTeacherDetailsView",TModel);
         }
+
+        public ActionResult EditTeacher(long TeacherId,string Name)
+        {
+            ViewBag.EditTeacherID = TeacherId;
+            ViewBag.EditTeacherName = Name;
+            CQExCViewBags();
+            SubjctViewBags();
+            return View();
+        }
+
         [HttpPost]
-        public JsonResult EditTeacher(TeacherModel Model)
+        public JsonResult EditTeacherDetails(TeacherModel Model)
         {
             try
             {

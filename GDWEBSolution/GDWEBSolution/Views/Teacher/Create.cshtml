@@ -1,4 +1,4 @@
-﻿@model GDWEBSolution.Models.TeacherModel
+﻿@model GDWEBSolution.Models.Teacher.TeacherModel
 
 @{
     ViewBag.Title = "Teacher";
@@ -13,20 +13,10 @@
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New Teacher</a></li>
+                    <li class=""><a href="#school" data-toggle="tab" aria-expanded="false">Teacher School</a></li>
                     <li class=""><a href="#qualification" data-toggle="tab" aria-expanded="false">Qualification</a></li>
                     <li class=""><a href="#extra" data-toggle="tab" aria-expanded="false">Extra Curricular</a></li>
                     <li class=""><a href="#subjects" data-toggle="tab" aria-expanded="false">Subjects</a></li>
-                    @*<li class="disabled"><a>Disabled</a></li>
-											<li class="dropdown">
-												<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-											  Dropdown <span class="caret"></span>
-											</a>
-												<ul class="dropdown-menu">
-													<li><a href="#dropdown1" data-toggle="tab">Action</a></li>
-													<li class="divider"></li>
-													<li><a href="#dropdown2" data-toggle="tab">Another action</a></li>
-												</ul>
-											</li>*@
                 </ul>
                 <br>
                 <div id="myTabContent" class="tab-content">
@@ -36,7 +26,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.TeacherCategoryId, new { @class = "col-sm-2 control-label" })
                                 <div class="col-sm-7">
-                                    @Html.DropDownListFor(model => model.TeacherCategoryId, ViewBag.TeacherCategoryDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher" })
+                                    @Html.DropDownListFor(model => model.TeacherCategoryId, ViewBag.TeacherCategoryDrpDown as SelectList, "", new { @class = "form-control"})
                                 </div>
                                 <div class="col-sm-3">
                                     @Html.ValidationMessageFor(model => model.TeacherCategoryId, null, new { @class = "text-danger" })
@@ -46,7 +36,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Name, new { @class = "col-sm-2 control-label" })
                                 <div class="col-sm-7">
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name of the Teacher" })
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name of the Teacher" ,@maxlength = "100" })
                                 </div>
                                 <div class="col-sm-3">
                                     @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
@@ -55,10 +45,9 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.UserId, new { @class = "col-sm-2 control-label" })
                                 <div class="col-sm-6">
-                                    @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @placeholder = "User Name" })
+                                    @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @placeholder = "User Name" ,@maxlength = "20" })
                                 </div>
                                 <div class="col-sm-3">
-                                    @*@Html.ValidationMessageFor(model => model.Name, new { @class = "form-control", @placeholder = "Name of the Teacher" })*@
                                     @Html.ValidationMessageFor(model => model.UserId, null, new { @class = "text-danger" })
 
                                 </div>
@@ -75,9 +64,9 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Address1, new { @class = "col-sm-2 control-label" })
                                 <div class="col-sm-7">
-                                    @Html.TextBoxFor(model => model.Address1, new { @class = "form-control input-lg mb", @placeholder = "Address Line 1" })
-                                    @Html.TextBoxFor(model => model.Address2, new { @class = "form-control mb", @placeholder = "Address Line 2" })
-                                    @Html.TextBoxFor(model => model.Address3, new { @class = "form-control input-sm", @placeholder = "Address Line 3" })
+                                    @Html.TextBoxFor(model => model.Address1, new { @class = "form-control input-lg mb", @placeholder = "Address Line 1" ,@maxlength = "150"})
+                                    @Html.TextBoxFor(model => model.Address2, new { @class = "form-control mb", @placeholder = "Address Line 2" ,@maxlength = "150" })
+                                    @Html.TextBoxFor(model => model.Address3, new { @class = "form-control input-sm", @placeholder = "Address Line 3" ,@maxlength = "150" })
                                 </div>
                                 <div class="col-sm-3">
                                     @Html.ValidationMessageFor(model => model.Address1, null, new { @class = "text-danger" })
@@ -87,7 +76,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Telephone, new { @class = "col-sm-2 control-label" })
                                 <div class="col-sm-7">
-                                    @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control", @placeholder = "Telephone Number" })
+                                    @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control", @placeholder = "Telephone Number",@maxlength = "20" })
                                 </div>
                                 <div class="col-sm-3">
                                     @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
@@ -109,7 +98,6 @@
 															Female
 														</label>
 													</div>
-                                    @*@Html.TextBoxFor(model => model.Gender, new { @class = "form-control", @placeholder = "Gender" })*@
                                 </div>
                                 <div class="col-sm-3">
                                     @Html.ValidationMessageFor(model => model.Gender, null, new { @class = "text-danger" })
@@ -119,7 +107,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Description, new { @class = "col-sm-2 control-label" })
                                 <div class="col-sm-7">
-                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = "Teacher Description" })
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Teacher Description" ,@maxlength = "500" })
                                 </div>
                                 <div class="col-sm-3">
                                     @Html.ValidationMessageFor(model => model.Description, null, new { @class = "text-danger" })
@@ -129,27 +117,26 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.EmployeeNo, new { @class = "col-sm-2 control-label" })
                                 <div class="col-sm-3">
-                                    @Html.TextBoxFor(model => model.EmployeeNo, new { @class = "form-control", @placeholder = "Employee No" })
+                                    @Html.TextBoxFor(model => model.EmployeeNo, new { @class = "form-control", @placeholder = "Employee No", @maxlength = "20" })
                                     @Html.ValidationMessageFor(model => model.EmployeeNo, null, new { @class = "text-danger" })
                                 </div>
                                 @Html.LabelFor(m => m.NIC, new { @class = "col-sm-1 control-label" })
                                 <div class="col-sm-3">
                                     @Html.TextBoxFor(model => model.NIC, new { @class = "form-control", @placeholder = "NIC" })
                                     @Html.ValidationMessageFor(model => model.NIC, null, new { @class = "text-danger" })
-                                    @*@Html.ValidationMessageFor(model => model.Name, new { @class = "form-control", @placeholder = "Name of the Teacher" })*@
+                                
                                 </div>
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(m => m.DrivingLicense, new { @class = "col-sm-2 control-label" })
                                 <div class="col-sm-3">
-                                    @Html.TextBoxFor(model => model.DrivingLicense, new { @class = "form-control", @placeholder = "Drivers License" })
+                                    @Html.TextBoxFor(model => model.DrivingLicense, new { @class = "form-control", @placeholder = "Drivers License",@maxlength = "20"  })
                                     @Html.ValidationMessageFor(model => model.DrivingLicense, null, new { @class = "text-danger" })
                                 </div>
                                 @Html.LabelFor(m => m.Passport, new { @class = "col-sm-1 control-label" })
                                 <div class="col-sm-3">
-                                    @Html.TextBoxFor(model => model.Passport, new { @class = "form-control", @placeholder = "Passport Id" })
+                                    @Html.TextBoxFor(model => model.Passport, new { @class = "form-control", @placeholder = "Passport Id",@maxlength = "20"  })
                                     @Html.ValidationMessageFor(model => model.Passport, null, new { @class = "text-danger" })
-                                    @*@Html.ValidationMessageFor(model => model.Name, new { @class = "form-control", @placeholder = "Name of the Teacher" })*@
                                 </div>
                             </div>
                             <div class="hr-dashed"></div>
@@ -158,9 +145,7 @@
                             <div class="hr-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-8 col-sm-offset-2">
-                                    @*<button class="btn btn-default" type="submit">Cancel</button>*@
-                                    @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
-                                    <button type="reset" value="Save" id="btnCreateTeacher" onclick="CreateTeacher()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                                    <button type="button" value="Save" id="btnCreateTeacher" onclick="CreateTeacher()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save <span style="text-align: center; display: none" id="loaderDiv"><img  src="~/img/ellipsis.gif"/></span></button>
                                 </div>
                             </div>
 
@@ -168,38 +153,27 @@
 
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="qualification">
-                        @{Html.RenderPartial("Qualification");}
+                    <div class="tab-pane fade" id="school">
+                       @* @{Html.RenderPartial("Qualification");}*@
 
                         @*@{Html.RenderPartial("Qualification", new { TeacherId = 0 });}*@
-
+                    </div>
+                    <div class="tab-pane fade" id="qualification">
+                        @{Html.RenderPartial("Qualification");}
                         <div id="showqualification">
-
-                            @*  @{Html.RenderAction("ShowTeacherQualificatoin");}*@
                             @{ Html.RenderAction("ShowTeacherQualification", new { TeacherId = 0 }); }
-
                         </div>
                     </div>
                     <div class="tab-pane fade" id="extra">
                         @{Html.RenderPartial("ExtraCurricularActivity");}
-
-                        @*@{Html.RenderPartial("Qualification", new { TeacherId = 0 });}*@
-
                         <div id="showexactivity">
-
-                            @*  @{Html.RenderAction("ShowTeacherQualificatoin");}*@
                             @{ Html.RenderAction("ShowTeacherExActivity", new { TeacherId = 0 }); }
-
                         </div>
                     </div>
                     <div class="tab-pane fade" id="subjects">
                         @{Html.RenderPartial("Subject");}
-
                         <div id="showsubjects">
-
-                            @*  @{Html.RenderAction("ShowTeacherQualificatoin");}*@
-                            @*   @{ Html.RenderAction("ShowTeacherSubjects", new { TeacherId = 0 }); }*@
-
+                               @{ Html.RenderAction("ShowTeacherSubjects", new { TeacherId = 0 }); }
                         </div>
                     </div>
 
@@ -257,7 +231,25 @@
 
     </div>
 </div>
-
+  <script>
+      $(document).ready(function () {
+          $(".select2_Ex").select2({
+              placeholder: "Select a Teacher",
+              allowClear: true,
+              width: '100%'
+          });
+          $(".select2_Q").select2({
+              placeholder: "Select a Teacher",
+              allowClear: true,
+              width: '100%'
+          });
+          $(".select2_TS").select2({
+              placeholder: "Select a Teacher",
+              allowClear: true,
+              width: '100%'
+          });
+      });
+  </script>
 <!--Notification Modals Ends -->
 
 <script type="text/jscript">
@@ -267,7 +259,6 @@
         debugger
         $.get(url, { input: name }, function (data) {
             if (data == "Have") {
-                //$("#ErrorUName").prop('value', 'User Name Already Exits');
                 $("#ErrorLable").text("User Name Already Exits");
                 $("#btnCreateTeacher").prop('value', 'Save');
                 $("#myModal").modal("show");
@@ -278,31 +269,27 @@
 <script>
 
     var CreateTeacher = function () {
-        //debugger
         var myformdata = $("#FrmANT").serialize();
 
         if (!$("#FrmANT").valid()) {
-            return;
+            return false;
         }
-
-        $("#btnCreateTeacher").prop('value', 'Saving Details ...');
+        $("#loaderDiv").show();
+        $("#btnCreateTeacher").prop('value', 'Saving');
         $.ajax({
 
             type: "POST",
             url: "/Teacher/CreateTeacher",
             data: myformdata,
             success: function (result) {
-                //$("#loaderDiv").hide();
-                // $("#myModal").modal("hide");
+                $("#loaderDiv").hide();
                 if (result == "Success") {
-                    debugger
-                    //window.location.href = "/Teacher/Create";
-                    $('.nav-tabs a[href="#qualification"]').tab('show');
-                    $("#btnCreateTeacher").prop('value', 'Save');
+                    window.location.href = "/Teacher/Index";
+                    //$('#qualification').load();
+                    //$("#btnCreateTeacher").prop('value', 'Save');
+                    //$('.nav-tabs a[href="#qualification"]').tab('show');                    
                 }
                 else if (result == "UserExits") {
-                    debugger
-                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
                     $("#ErrorLable").text("User Name Already Exits");
                     $("#btnCreateTeacher").prop('value', 'Save');
                     $("#myModal").modal("show");

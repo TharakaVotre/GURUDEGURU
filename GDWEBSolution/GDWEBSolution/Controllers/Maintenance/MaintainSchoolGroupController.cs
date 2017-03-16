@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,13 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
+            try{
             var Group = Connection.GDgetAllSchoolGroup("Y");
             List<GDgetAllSchoolGroup_Result> Grouplist = Group.ToList();
 
-            GDgetAllSchoolGroup_Result tcm = new GDgetAllSchoolGroup_Result();
+            SchoolGroupModel tcm = new SchoolGroupModel();
 
-            List<GDgetAllSchoolGroup_Result> tcmlist = Grouplist.Select(x => new GDgetAllSchoolGroup_Result
+            List<SchoolGroupModel> tcmlist = Grouplist.Select(x => new SchoolGroupModel
             {
                 GroupId = x.GroupId,
                 GroupName = x.GroupName,
@@ -36,6 +38,13 @@ namespace GDWEBSolution.Controllers
 
 
             return View(tcmlist);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
+            }
         }
 
         //
@@ -88,6 +97,7 @@ namespace GDWEBSolution.Controllers
                             validationError.ErrorMessage);
                         // raise a new exception nesting  
                         // the current instance as InnerException  
+                        Errorlog.ErrorManager.LogError(dbEx);
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -106,8 +116,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(long Code)
         {
-
-            GDgetAllSchoolGroup_Result TModel = new GDgetAllSchoolGroup_Result();
+            try{
+            SchoolGroupModel TModel = new SchoolGroupModel();
 
             tblSchoolGroup TCtable = Connection.tblSchoolGroups.SingleOrDefault(x => x.GroupId == Code);
             TModel.IsActive = TCtable.IsActive;
@@ -116,13 +126,20 @@ namespace GDWEBSolution.Controllers
             TModel.GroupName = TCtable.GroupName;
 
             return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+              
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllSchoolGroup_Result Model)
+        public ActionResult Edit(SchoolGroupModel Model)
         {
             try
             {
@@ -134,9 +151,11 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                Errorlog.ErrorManager.LogError(ex);
                 return View();
+               
             }
         }
 
@@ -151,16 +170,24 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(long Code)
         {
-            GDgetAllSchoolGroup_Result TModel = new GDgetAllSchoolGroup_Result();
+            try{
+            SchoolGroupModel TModel = new SchoolGroupModel();
             TModel.GroupId = Code;
             return PartialView("DeleteView", TModel);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllSchoolGroup_Result Model)
+        public ActionResult Delete(SchoolGroupModel Model)
         {
             try
             {
@@ -171,9 +198,11 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                Errorlog.ErrorManager.LogError(ex);
                 return View();
+               
             }
         }
     }

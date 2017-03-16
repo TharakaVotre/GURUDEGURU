@@ -1,0 +1,161 @@
+﻿@model GDWEBSolution.Models.Teacher.TeacherModel
+
+
+<form id="FrmEDITT" class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(m => m.TeacherCategoryId, new { @class = "col-sm-2 control-label" })
+        @Html.HiddenFor(m => m.TeacherId)
+        <div class="col-sm-7">
+            @Html.DropDownListFor(model => model.TeacherCategoryId, ViewBag.TeacherCategoryDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(model => model.TeacherCategoryId, null, new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-7">
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name of the Teacher", @maxlength = "100" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserId, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-6">
+            @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @placeholder = "User Name", @readonly = "readonly", @maxlength = "20" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(model => model.UserId, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", @placeholder = "mm/dd/yyyy" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(model => model.DateOfBirth, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address1, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-7">
+            @Html.TextBoxFor(model => model.Address1, new { @class = "form-control input-lg mb", @placeholder = "Address Line 1", @maxlength = "150" })
+            @Html.TextBoxFor(model => model.Address2, new { @class = "form-control mb", @placeholder = "Address Line 2", @maxlength = "150" })
+            @Html.TextBoxFor(model => model.Address3, new { @class = "form-control input-sm", @placeholder = "Address Line 3", @maxlength = "150" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(model => model.Address1, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="hr-dashed"></div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Telephone, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-7">
+            @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control", @placeholder = "Telephone Number", @maxlength = "20" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="hr-dashed"></div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Gender, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-7">
+            <div class="radio radio-inline">
+                @Html.RadioButtonFor(m => m.Gender, "M")
+                <label for="radio1">
+                    Male
+                </label>
+            </div>
+            <div class="radio radio-inline">
+                @Html.RadioButtonFor(m => m.Gender, "F")
+                <label for="radio1">
+                    Female
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(model => model.Gender, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="hr-dashed"></div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-7">
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Teacher Description", @maxlength = "500" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(model => model.Description, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="hr-dashed"></div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.EmployeeNo, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.TextBoxFor(model => model.EmployeeNo, new { @class = "form-control", @placeholder = "Employee No", @maxlength = "20" })
+            @Html.ValidationMessageFor(model => model.EmployeeNo, null, new { @class = "text-danger" })
+        </div>
+        @Html.LabelFor(m => m.NIC, new { @class = "col-sm-1 control-label" })
+        <div class="col-sm-3">
+            @Html.TextBoxFor(model => model.NIC, new { @class = "form-control", @placeholder = "NIC", @maxlength = "20" })
+            @Html.ValidationMessageFor(model => model.NIC, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DrivingLicense, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.TextBoxFor(model => model.DrivingLicense, new { @class = "form-control", @placeholder = "Drivers License", @maxlength = "20" })
+            @Html.ValidationMessageFor(model => model.DrivingLicense, null, new { @class = "text-danger" })
+        </div>
+        @Html.LabelFor(m => m.Passport, new { @class = "col-sm-1 control-label" })
+        <div class="col-sm-3">
+            @Html.TextBoxFor(model => model.Passport, new { @class = "form-control", @placeholder = "Passport Id", @maxlength = "20" })
+            @Html.ValidationMessageFor(model => model.Passport, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="hr-dashed"></div>
+
+
+    <div class="hr-dashed"></div>
+    <div class="form-group">
+        <div class="col-sm-8 col-sm-offset-2">
+            <button type="button" value="Save" id="btnEditTeacher" onclick="EditTeacher()" class="btn btn-primary"><span class="fa fa-bookmark"></span>Save</button>
+        </div>
+    </div>
+
+
+
+</form>
+
+
+<script>
+
+    var EditTeacher = function () {
+        debugger
+        var myformdata = $("#FrmEDITT").serialize();
+        if (!$("#FrmEDITT").valid()) {
+            return;
+        }
+        $("#btnEditTeacher").prop('value', 'Saving Details ...');
+        $.ajax({
+
+            type: "POST",
+            url: "/Teacher/EditTeacherDetails",
+            data: myformdata,
+            success: function (result) {
+                if (result != "Error") {
+                    $("#SuccesLable").text("Teacher Details Changed Succesfully");
+                    $("#SuccesModel").modal("show");
+                }
+                else {
+                    $("#ErrorLable").text("Error Occured When Changing Please Try Again Later");
+                    $("#myModal").modal("show");
+                }
+            }
+        })
+    }
+</script>

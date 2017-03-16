@@ -1,0 +1,89 @@
+﻿@model GDWEBSolution.Models.User.UCategoryFunctionModel
+
+<div>
+    <form id="FrmUCF" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add New User Category</h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.CategoryName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                     @Html.DropDownListFor(model => model.CategoryId, ViewBag.UCategoryNameList as SelectList, "", new { @class = "select2_C form-control" ,@onchange = "loadQualification()"})
+                    <span class="help-block m-b-none" id="CategoryIdError"></span>
+                </div>
+            </div> 
+                        <div class="form-group">
+                @Html.LabelFor(m => m.FunctionName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                     @Html.DropDownListFor(model => model.FunctionId, ViewBag.FunctionList as SelectList, "", new { @class = "select2_F form-control" ,@onchange = "loadQualification()"})
+                    <span class="help-block m-b-none" id="CategoryNameError"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.IsActive, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.CheckBoxFor(m => m.Active, new {@class ="checkbox checkbox-primary"})
+                    <span class="help-block m-b-none" id="IsActiveError" style="color:red"></span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" id="btnSubmit" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save <span style="text-align: center; display: none" id="loaderDiv"><img  src="~/img/ellipsis.gif"/></span></a>
+        </div>
+    </form>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $("#btnSubmit").click(function (e) {
+            debugger
+            if (!$("#CategoryId").val()) {
+                $("#CategoryId").closest('.form-group').addClass('has-error');
+                //$("#CategoryIdError").text("Required");
+                return;
+            }
+            if (!$("#FunctionId").val()) {
+                $("#FunctionId").closest('.form-group').addClass('has-error');
+                //$("#CategoryNameError").text("Required");
+                return;
+            }
+            $("#loaderDiv").show();
+
+            var myformdata = $("#FrmUCF").serialize();
+            //if (!$("#myForm").valid()) {
+
+            //    return false;
+            //}
+            $.ajax({
+
+                type: "POST",
+                url: "/User/NewUCFunction",
+                data: myformdata,
+                success: function () {
+                    $("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/User/Function";
+
+                }
+
+            })
+        })
+
+    })
+
+    $(".select2_C").select2({
+        placeholder: "Select a User Category",
+        allowClear: true,
+        width: '100%'
+    });
+
+    $(".select2_F").select2({
+        placeholder: "Select a Function Name",
+        allowClear: true,
+        width: '100%'
+    });
+</script>
+

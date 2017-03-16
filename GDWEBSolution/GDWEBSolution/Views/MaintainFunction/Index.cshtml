@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GDWEBSolution.Models.GDgetAllFunction_Result>
+﻿@model IEnumerable<GDWEBSolution.Models.Maintenance.FunctionModel>
 
 @{
     ViewBag.Title = "Index";
@@ -111,5 +111,15 @@
         $("#MyModelBody").load(Url, function () {
             $("#myModal").modal("show");
         })
+    }
+
+
+
+
+    function RestrictSpace() {
+        if (event.keyCode == 32) {
+            event.returnValue = false;
+            return false;
+        }
     }
 </script>

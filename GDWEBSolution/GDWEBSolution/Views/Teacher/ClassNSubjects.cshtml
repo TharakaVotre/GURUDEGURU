@@ -2,11 +2,10 @@
 
 @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-2 control-label" })
 <div class="col-sm-3" id="gradeclass">
-    @Html.DropDownListFor(model => model.ClassId, ViewBag.GradeClassse as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher", @onchange = "loadExactivitylist()" })
+    @Html.DropDownListFor(model => model.ClassId, ViewBag.GradeClassse as SelectList, "", new { @class = "form-control", @onchange = "loadExactivitylist()" })
 </div>
 @Html.LabelFor(m => m.SubjectId, new { @class = "col-sm-2 control-label" })
 <div class="col-sm-3" id="gradesubject">
-    @*@Html.ValidationMessageFor(model => model.TeacherId, null, new { @class = "text-danger" })*@
     @Html.DropDownListFor(model => model.SubjectId, ViewBag.GradeSubjectList as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher" })
 </div>
 <div class="col-sm-2">
