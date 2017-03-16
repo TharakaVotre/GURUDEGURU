@@ -31,12 +31,8 @@
                         </div>
                     </div>
                     <div class="hr-dashed"></div>
-                  
                     <div id="loadgrade">
-                        @*<label for="pwd">Class : </label>
-                        <input type="password" class="form-control" id="pwd">*@
                     </div>
-                    @*<button type="submit" class="btn btn-primary">Submit</button>*@
                 </form>
             </div>
         </div>
@@ -44,9 +40,6 @@
 </div>
 <div id="myModal" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
     <div class="modal-dialog">
-
-        <!-- Modal content-->
-
         <div class="modal-content" id="MyModelBody">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -61,9 +54,6 @@
 
 <div id="SuccesModel" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
     <div class="modal-dialog">
-
-        <!-- Modal content-->
-
         <div class="modal-content" id="SuccessModelBody">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -94,13 +84,8 @@
             $("#myModal").modal("show");
             return;
         }
-
         var myformdata = $("#FrmCT").serialize();
         $("#loaderDiv").show();
-        //if (!$("#FrmCT").valid()) {
-        //    return false;
-        //}
-
         $.ajax({
 
             type: "POST",
@@ -108,37 +93,22 @@
             data: myformdata,
             success: function (result) {
                 $("#loaderDiv").hide();
-                // $("#myModal").modal("hide");
                 if (result == "Success") {
-                    debugger
-                    //window.location.href = "/Teacher/Create";
                     $("#Teacher_ID").val(result);
-
-                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    //$('#showsubjects').load('/Teacher/ShowTeacherSubjects?TeacherId=' + result);
                     $("#SuccesLable").text("Class Teacher Added");
-                    // $("#btnAddQualification").prop('value', 'Save');
+
                     $("#SuccesModel").modal("show");
                 }
                 else if (result == "Exception") {
-                    debugger
-                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
                     $("#ErrorLable").text("Exception Error Occurd");
-                    //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
                 }
                 else if (result == "TExits") {
-                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
                     $("#ErrorLable").text("This Teacher is Already Assigned to A Class");
-                    //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
-
-
                 }
                 else {
-                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
                     $("#ErrorLable").text("This Class is Already Assigned to A Another Teacher");
-                    //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
 
                 }
@@ -152,11 +122,8 @@
         debugger
         var tid = $('#GradeId').val();
         $('#loadgrade').load('/Teacher/ShowGradeClassesForTC?GradeId=' + tid);
-        //$("#loaderDiv").hide();
     }
-
-
-      $(document).ready(function () {
+    $(document).ready(function () {
           $(".select2_Teacher").select2({
               placeholder: "Select a Teacher",
               allowClear: true,

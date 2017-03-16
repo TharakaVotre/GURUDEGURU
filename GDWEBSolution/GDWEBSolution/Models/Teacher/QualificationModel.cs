@@ -9,7 +9,7 @@ namespace GDWEBSolution.Models.Teacher
     public class QualificationModel
     {
         [Display(Name = "Teacher Id")]
-        public long TeacherId { get; set; }
+        public long Teacher_Id { get; set; }
 
         [Display(Name = "Teacher Name")]
         public long TeacherName { get; set; }

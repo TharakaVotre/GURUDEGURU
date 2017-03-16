@@ -1,6 +1,4 @@
 ﻿@model GDWEBSolution.Models.TeacherCategoryModel
-
-
 <div>
     <form id="myForm" class="form-horizontal">
         <div class="modal-header">
@@ -12,40 +10,25 @@
             <a href="#" id="btnSubmit" class="btn btn-primary">YES</a>
         </div>
     </form>
-
-@*    <div style="text-align: center; display: none" id="loaderDiv">
-        Loading
-    </div>*@
-
 </div>
 <script>
-
     $(document).ready(function () {
-
         $("#btnSubmit").click(function (e) {
             debugger
             var myformdata = $("#myForm").serialize();
             $.ajax({
-
                 type: "POST",
                 url: "/TeacherCategory/Delete",
                 data: myformdata,
                 success: function () {
-                    //$("#loaderDiv").hide();
                     $("#myModal").modal("hide");
                     window.location.href = "/TeacherCategory/Index";
-
                 }
-
             })
         })
-
         $("#btnNo").click(function (e) {
             debugger
             $("#myModal").modal("hide");
         })
-
     })
-
-
 </script>

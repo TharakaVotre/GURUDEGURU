@@ -22,18 +22,13 @@
                 <tbody>
 
                     @foreach (var item in Model)
-                    {
-                              
-@*<div class="row">*@
-                            
-                            
+                    {             
                         <tr>
-
                             <td>@Html.DisplayFor(modelItem => item.GradeName) </td>
                             <td>@Html.DisplayFor(modelItem => item.ClassId) </td>
-                            <td>@Html.DisplayFor(modelItem => item.SubjectName) <button type="button" class="close" onclick='DeleteTeacherSubject(@item.TeacherSubjectSeqNo,@item.Teacher_ID);' >&times;</button></td>
-                        </tr>
-                            
+                            <td>@Html.DisplayFor(modelItem => item.SubjectName)
+                                <button type="button" class="close" onclick='DeleteTeacherSubject(@item.TeacherSubjectSeqNo,@item.Teacher_ID);' >&times;</button></td>
+                        </tr>                       
                     }
                 </tbody>
             </table>
@@ -41,9 +36,7 @@
     </div>
 </div>
 <script>
-
-    function DeleteTeacherSubject(Tsubject,tid) {
-        debugger
+    function DeleteTeacherSubject(Tsubject, tid) {
         var Url = "/Teacher/DeleteTeacherSubject?TSubjectId=" + Tsubject + "&TeacherId=" + tid;
         $("#DeleteModelBody").load(Url, function () {
             $("#deleteModel").modal("show");

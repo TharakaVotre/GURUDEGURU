@@ -13,17 +13,13 @@
                         {
                             foreach (var item in Model)
                             {
-                              
-                            @*<div class="row">*@
                                 <div class="col-md-6">
                                     <div class="well">
                                         <i class="fa fa-graduation-cap" aria-hidden="true"></i>                                         
                                         @Html.DisplayFor(modelItem => item.QualificationName)
-                                        <button type="button" class="close" onclick='DeleteQalification(@item.TeacherId,"@(item.SchoolId)",@item.QualificationId);' >&times;</button>
+                                        <button type="button" class="close" onclick='DeleteQalification(@item.Teacher_Id,"@(item.SchoolId)",@item.QualificationId);' >&times;</button>
                                     </div>
                                 </div>
-
-                            @*</div>*@
                             }
                         }
             </div>

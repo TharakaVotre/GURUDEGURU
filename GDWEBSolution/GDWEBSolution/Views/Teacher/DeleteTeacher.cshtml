@@ -1,4 +1,4 @@
-﻿@model GDWEBSolution.Models.TeacherModel
+﻿@model GDWEBSolution.Models.Teacher.TeacherModel
 
 
 <div>
@@ -6,7 +6,6 @@
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h5 class="modal-title">Are You Sure You Want To Delete This Teacher ? @Html.HiddenFor(m=> m.TeacherId)</h5>
-
         </div>
         <div class="modal-footer">
             
@@ -14,45 +13,29 @@
             <a href="#" id="btnNo" class="btn btn-default">NO</a>
         </div>
     </form>
-
-@*    <div style="text-align: center; display: none" id="loaderDiv">
-        Loading
-    </div>*@
-
 </div>
 <script>
 
     $(document).ready(function () {
-
         $("#btnTDeleteSubmit").click(function (e) {
-            debugger
             var myformdata = $("#FormTDelete").serialize();
             $.ajax({
-
                 type: "POST",
                 url: "/Teacher/DeleteTeacher",
                 data: myformdata,
                 success: function (result) {
-                    //$("#loaderDiv").hide();
                     $("#myModal").modal("hide");
                     if (result != "Error") {
                         debugger
                         window.location.href = "/Teacher/Index";
                     }
-
-
-
                 }
-
             })
         })
-
         $("#btnNo").click(function (e) {
             debugger
             $("#deleteModel").modal("hide");
         })
 
     })
-
-
 </script>

@@ -3,7 +3,8 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Teacher_ID, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
-            @Html.DropDownListFor(model => model.Teacher_ID, ViewBag.SchoolTeacher as SelectList, "", new { @class = "select2_TS form-control", @onchange = "loadTeacherSubjects()" })
+            <label class="form-control">@ViewBag.EditTeacherName</label>
+            @Html.TextBoxFor(model => model.Teacher_ID, new { style = "display: none;" })
         </div>
         @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
@@ -13,6 +14,7 @@
     <div class="form-group" id="classNsubjects">
     </div>
     <div class="hr-dashed"></div>
+
 </form>
 
 
@@ -33,7 +35,6 @@
                     $("#SuccesModel").modal("show");
                 }
                 else if (result == "Exception") {
-                    debugger
                     $("#ErrorLable").text("Exception Error Occurd");
                     $("#myModal").modal("show");
                 }
@@ -48,7 +49,6 @@
             }
         })
     }
-
     var loadClassList = function () {
         var tid = $('#GradeId').val();
         if (tid != "") {
@@ -69,5 +69,4 @@
             $('#showsubjects').hide();
         }
     }
-
 </script>
