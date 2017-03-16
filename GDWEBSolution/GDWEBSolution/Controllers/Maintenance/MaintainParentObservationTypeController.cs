@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,13 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
+            try{
             var Observation = Connection.GDgetAllParentObservationType("Y");
             List<GDgetAllParentObservationType_Result> Observationlist = Observation.ToList();
 
-            GDgetAllParentObservationType_Result tcm = new GDgetAllParentObservationType_Result();
+            ParentObservationTypeModel tcm = new ParentObservationTypeModel();
 
-            List<GDgetAllParentObservationType_Result> tcmlist = Observationlist.Select(x => new GDgetAllParentObservationType_Result
+            List<ParentObservationTypeModel> tcmlist = Observationlist.Select(x => new ParentObservationTypeModel
             {
                 Description = x.Description,
                 ObTypeId = x.ObTypeId,
@@ -36,6 +38,13 @@ namespace GDWEBSolution.Controllers
 
 
             return View(tcmlist);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
+            }
         }
 
         //
@@ -88,6 +97,7 @@ namespace GDWEBSolution.Controllers
                             validationError.ErrorMessage);
                         // raise a new exception nesting  
                         // the current instance as InnerException  
+                        Errorlog.ErrorManager.LogError(dbEx);
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -106,8 +116,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(int Code)
         {
-
-            GDgetAllParentObservationType_Result TModel = new GDgetAllParentObservationType_Result();
+            try{
+            ParentObservationTypeModel TModel = new ParentObservationTypeModel();
 
             tblParentObservationType TCtable = Connection.tblParentObservationTypes.SingleOrDefault(x => x.ObTypeId == Code);
             TModel.IsActive = TCtable.IsActive;
@@ -116,13 +126,20 @@ namespace GDWEBSolution.Controllers
             TModel.Description = TCtable.Description;
 
             return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllParentObservationType_Result Model)
+        public ActionResult Edit(ParentObservationTypeModel Model)
         {
             try
             {
@@ -134,9 +151,11 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                Errorlog.ErrorManager.LogError(ex);
                 return View();
+                
             }
         }
 
@@ -151,16 +170,25 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(int Code)
         {
-            GDgetAllParentObservationType_Result TModel = new GDgetAllParentObservationType_Result();
-            TModel.ObTypeId = Code;
-            return PartialView("DeleteView", TModel);
+            try
+            {
+                ParentObservationTypeModel TModel = new ParentObservationTypeModel();
+                TModel.ObTypeId = Code;
+                return PartialView("DeleteView", TModel);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllParentObservationType_Result Model)
+        public ActionResult Delete(ParentObservationTypeModel Model)
         {
             try
             {
@@ -171,9 +199,11 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                Errorlog.ErrorManager.LogError(ex);
                 return View();
+                
             }
         }
     }

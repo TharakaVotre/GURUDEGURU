@@ -1,4 +1,4 @@
-﻿@model GDWEBSolution.Models.GDgetAllFunction_Result
+﻿@model GDWEBSolution.Models.Maintenance.FunctionModel
 
 <div>
    
@@ -12,7 +12,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.FunctionId, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.FunctionId, new { @class = "form-control", @placeholder = "Function Id" })
+                    @Html.TextBoxFor(model => model.FunctionId, new { @class = "form-control", @placeholder = "Function Id",onkeypress="return RestrictSpace()"  })
                     <span class="help-block m-b-none" id="CodeError"></span>
                 </div>
             </div>
@@ -35,6 +35,19 @@
 </div>
 <script>
 
+
+
+    function RestrictSpace() {
+        if (event.keyCode == 32) {
+            event.returnValue = false;
+            return false;
+        }
+    }
+
+
+
+
+
     $(document).ready(function () {
 
         $("#btnSubmit").click(function (e) {
@@ -46,7 +59,17 @@
 
 
 
-           
+            if (!Code.val()) {
+                // Add errors highlight
+                Code.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#CodeError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            } else {
+                Code.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#CodeError").text(" ");
+            }
             if (!Name.val()) {
                 // Add errors highlight
                 Name.closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -54,15 +77,11 @@
                 // Stop submission of the form
                // e.preventDefault();
                 return;
+            } else {
+                Name.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#CodeError").text(" ");
             }
-            if (!Code.val()) {
-                // Add errors highlight
-                Name.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#CodeError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            }
+            
            
             var myformdata = $("#myForm").serialize();
            

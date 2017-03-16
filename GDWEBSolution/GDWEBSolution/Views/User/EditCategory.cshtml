@@ -1,0 +1,80 @@
+﻿@model GDWEBSolution.Models.User.UserCategoryModel
+
+<div>
+    <form id="FrmUC" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add New User Category</h4>
+        </div>
+        <div class="modal-body">
+
+            @*<div class="form-group">
+                @Html.LabelFor(m => m.CategoryId, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.CategoryId, new { @class = "form-control", @placeholder = "User Category ID" , @maxlength="5"})
+                    <span class="help-block m-b-none" id="CategoryIdError"></span>
+                </div>
+            </div>*@ @Html.HiddenFor(m=> m.CategoryId)
+                        <div class="form-group">
+                @Html.LabelFor(m => m.CategoryName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.CategoryName, new { @class = "form-control", @placeholder = "User Category Name", @maxlength="30" })
+                    <span class="help-block m-b-none" id="CategoryNameError"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.IsActive, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.CheckBoxFor(m => m.Active, new {@class ="checkbox checkbox-primary"})
+                    <span class="help-block m-b-none" id="IsActiveError" style="color:red"></span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" id="btnSubmit" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save <span style="text-align: center; display: none" id="loaderDiv"><img  src="~/img/ellipsis.gif"/></span></a>
+        </div>
+    </form>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+            //if (!$("#CategoryId").val()) {
+            //    $("#CategoryId").closest('.form-group').addClass('has-error');
+            //    //$("#CategoryIdError").text("Required");
+            //    return;
+            //}
+            if (!$("#CategoryName").val()) {
+                $("#CategoryName").closest('.form-group').addClass('has-error');
+                //$("#CategoryNameError").text("Required");
+                return;
+            }
+            $("#loaderDiv").show();
+
+            var myformdata = $("#FrmUC").serialize();
+            //if (!$("#myForm").valid()) {
+
+            //    return false;
+            //}
+            $.ajax({
+
+                type: "POST",
+                url: "/User/EditCategory",
+                data: myformdata,
+                success: function () {
+                    $("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/User/Category";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>
+

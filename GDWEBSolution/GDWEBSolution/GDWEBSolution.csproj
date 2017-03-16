@@ -183,8 +183,10 @@
     <Compile Include="Controllers\Maintenance\MaintainStudentEvaluationTypeController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainSubjectCategoryController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainSubjectController.cs" />
+    <Compile Include="Controllers\School\SchoolGradeController.cs" />
     <Compile Include="Controllers\Teacher\TeacherCategoryController.cs" />
     <Compile Include="Controllers\Teacher\TeacherController.cs" />
+    <Compile Include="Controllers\User\UserController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -204,6 +206,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DCISgetSchool_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GDgetAllApplicationStatus_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
@@ -256,6 +261,27 @@
     <Compile Include="Models\getAllEvaluationType_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Maintenance\ApplicationStatusModel.cs" />
+    <Compile Include="Models\Maintenance\EventCategoryModel.cs" />
+    <Compile Include="Models\Maintenance\ExtraCurricularActivityModel.cs" />
+    <Compile Include="Models\Maintenance\FunctionModel.cs" />
+    <Compile Include="Models\Maintenance\GradeModel.cs" />
+    <Compile Include="Models\Maintenance\MessageTypeModel.cs" />
+    <Compile Include="Models\Maintenance\ParentObservationTypeModel.cs" />
+    <Compile Include="Models\Maintenance\QulificationModel.cs" />
+    <Compile Include="Models\Maintenance\SchoolCategoryModel.cs" />
+    <Compile Include="Models\Maintenance\SchoolGroupModel.cs" />
+    <Compile Include="Models\Maintenance\SchoolRankModel.cs" />
+    <Compile Include="Models\Maintenance\StudentEvaluationTypeModel.cs" />
+    <Compile Include="Models\Maintenance\SubjectCategoryModel.cs" />
+    <Compile Include="Models\Maintenance\SubjectModel.cs" />
+    <Compile Include="Models\School\SchoolExtraCuricularModel.cs" />
+    <Compile Include="Models\School\SchoolGradeModel.cs" />
+    <Compile Include="Models\School\SchoolModel.cs" />
+    <Compile Include="Models\School\SchoolSubjectModel.cs" />
+    <Compile Include="Models\SMGTgetAllSchoolGrades_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGTgetAllTeachers_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -281,6 +307,9 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGTgetTeacher_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetUserCategoryFunction_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblApplicationStatu.cs">
@@ -466,6 +495,8 @@
     <Compile Include="Models\Teacher\TeacherCategoryModel.cs" />
     <Compile Include="Models\Teacher\TeacherModel.cs" />
     <Compile Include="Models\Teacher\TSubjectModel.cs" />
+    <Compile Include="Models\User\UCategoryFunctionModel.cs" />
+    <Compile Include="Models\User\UserCategoryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -481,6 +512,7 @@
     <Content Include="Content\css\hover-min.css" />
     <Content Include="Content\css\hover.css" />
     <Content Include="Content\css\jquery.dataTables.min.css" />
+    <Content Include="Content\css\select\select2.min.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\style12.css" />
     <Content Include="Content\dll\Errorlog.dll" />
@@ -787,6 +819,10 @@
     <Content Include="Content\scss\_options.scss" />
     <Content Include="img\1.jpg" />
     <Content Include="img\12.jpg" />
+    <Content Include="img\default.gif" />
+    <Content Include="img\ellipsis.gif" />
+    <Content Include="img\loader.gif" />
+    <Content Include="img\loading.gif" />
     <Content Include="img\loading_spinner.gif" />
     <Content Include="img\ts-avatar.jpg" />
     <Content Include="img\c.jpg" />
@@ -797,6 +833,7 @@
     <Content Include="img\gurugedara.png" />
     <Content Include="img\login-bg.jpg" />
     <Content Include="img\logo.jpg" />
+    <Content Include="img\wheel.gif" />
     <Content Include="Models\DBEntityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
@@ -844,6 +881,7 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\select2.full.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -883,7 +921,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\TeacherCategory\Index.cshtml" />
     <Content Include="Views\TeacherCategory\AddTeacherCategory.cshtml" />
     <Content Include="Views\TeacherCategory\EditTeacherCategory.cshtml" />
@@ -960,10 +1000,25 @@
     <Content Include="Views\MaintainSubject\DeleteView.cshtml" />
     <Content Include="Views\MaintainSubject\EditView.cshtml" />
     <Content Include="Views\MaintainSubject\Index.cshtml" />
+    <Content Include="Views\Teacher\TeacherSchool.cshtml" />
+    <Content Include="Views\User\Category.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\AddCategory.cshtml" />
+    <Content Include="Views\User\EditCategory.cshtml" />
+    <Content Include="Views\User\Function.cshtml" />
+    <Content Include="Views\User\UCFunctions.cshtml" />
+    <Content Include="Views\User\DeleteUCFunction.cshtml" />
+    <Content Include="Views\Teacher\EditTeacherDetailsView.cshtml" />
+    <Content Include="Views\School\Create.cshtml" />
+    <Content Include="Views\School\Delete.cshtml" />
+    <Content Include="Views\School\Edit.cshtml" />
+    <Content Include="Views\School\Index.cshtml" />
+    <Content Include="Views\School\SchoolCreate.cshtml" />
+    <Content Include="Views\SchoolGrade\SchoolGradeCreate.cshtml" />
+    <Content Include="Views\SchoolGrade\SchoolGradeIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\ApplicationStatus\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -987,7 +1042,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>23709</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:20867/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

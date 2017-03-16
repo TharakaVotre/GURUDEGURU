@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,26 +16,35 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
-            var Group = Connection.GDgetAllSubjectCategory("Y");
-            List<GDgetAllSubjectCategory_Result> Grouplist = Group.ToList();
-
-            GDgetAllSubjectCategory_Result tcm = new GDgetAllSubjectCategory_Result();
-
-            List<GDgetAllSubjectCategory_Result> tcmlist = Grouplist.Select(x => new GDgetAllSubjectCategory_Result
+            try
             {
-                SubjectCategoryId = x.SubjectCategoryId,
-                SubjectCategoryName = x.SubjectCategoryName,
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate,
-                IsActive = x.IsActive,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate
+                var Group = Connection.GDgetAllSubjectCategory("Y");
+                List<GDgetAllSubjectCategory_Result> Grouplist = Group.ToList();
 
-            }).ToList();
+                SubjectCategoryModel tcm = new SubjectCategoryModel();
+
+                List<SubjectCategoryModel> tcmlist = Grouplist.Select(x => new SubjectCategoryModel
+                {
+                    SubjectCategoryId = x.SubjectCategoryId,
+                    SubjectCategoryName = x.SubjectCategoryName,
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    IsActive = x.IsActive,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate
+
+                }).ToList();
 
 
 
-            return View(tcmlist);
+                return View(tcmlist);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
+            }
         }
 
         //
@@ -86,7 +96,8 @@ namespace GDWEBSolution.Controllers
                             validationErrors.Entry.Entity.ToString(),
                             validationError.ErrorMessage);
                         // raise a new exception nesting  
-                        // the current instance as InnerException  
+                        // the current instance as InnerException 
+                        Errorlog.ErrorManager.LogError(dbEx);
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -105,8 +116,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(int Code)
         {
-
-            GDgetAllSubjectCategory_Result TModel = new GDgetAllSubjectCategory_Result();
+            try{
+            SubjectCategoryModel TModel = new SubjectCategoryModel();
 
             tblSubjectCategory TCtable = Connection.tblSubjectCategories.SingleOrDefault(x => x.SubjectCategoryId == Code);
             TModel.IsActive = TCtable.IsActive;
@@ -115,13 +126,20 @@ namespace GDWEBSolution.Controllers
             TModel.SubjectCategoryName = TCtable.SubjectCategoryName;
 
             return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+               
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllSubjectCategory_Result Model)
+        public ActionResult Edit(SubjectCategoryModel Model)
         {
             try
             {
@@ -133,9 +151,11 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                Errorlog.ErrorManager.LogError(ex);
                 return View();
+               
             }
         }
 
@@ -150,16 +170,24 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(int Code)
         {
-            GDgetAllSubjectCategory_Result TModel = new GDgetAllSubjectCategory_Result();
+            try{
+            SubjectCategoryModel TModel = new SubjectCategoryModel();
             TModel.SubjectCategoryId = Code;
             return PartialView("DeleteView", TModel);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+              
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllSubjectCategory_Result Model)
+        public ActionResult Delete(SubjectCategoryModel Model)
         {
             try
             {
@@ -170,9 +198,11 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                Errorlog.ErrorManager.LogError(ex);
                 return View();
+                
             }
         }
     }

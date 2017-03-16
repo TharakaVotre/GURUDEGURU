@@ -1309,9 +1309,8 @@ span.round-tab:hover {
 }
 
 @media( max-width : 585px ) {
-    .wizard;
-
-{
+    
+.wizard{
     width: 90%;
     height: auto !important;
 }
@@ -1334,4 +1333,9 @@ span.round-tab {
     position: absolute;
     left: 35%;
 }
+}
+
+
+.btn-default {
+    background-color: #656565;
 }

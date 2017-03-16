@@ -1,4 +1,4 @@
-﻿@model GDWEBSolution.Models.GDgetAllSubject_Result
+﻿@model GDWEBSolution.Models.Maintenance.SubjectModel
 
 
 <div>
@@ -60,7 +60,17 @@
             var ShortNameError = $('#ShortNameError');
 
 
-          
+            if (!ShortName.val()) {
+                // Add errors highlight
+                ShortName.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#ShortNameError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            } else {
+                ShortName.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#ShortNameError").text("");
+            }
             // Check if there is an entered value
             if (!Name.val()) {
                 // Add errors highlight
@@ -69,15 +79,11 @@
                 // Stop submission of the form
                // e.preventDefault();
                 return;
+            } else {
+                Name.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#NameError").text("");
             }
-            if (!ShortName.val()) {
-                // Add errors highlight
-                ShortName.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#ShortNameError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            }
+           
             // Check if there is an entered value
            
            

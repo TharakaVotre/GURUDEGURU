@@ -1,4 +1,5 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,26 +16,35 @@ namespace GDWEBSolution.Controllers
         string UserId = "ADMIN";
         public ActionResult Index()
         {
-            var msg = Connection.GDgetAllMassageType("Y");
-            List<GDgetAllMassageType_Result> msglist = msg.ToList();
-
-            GDgetAllMassageType_Result tcm = new GDgetAllMassageType_Result();
-
-            List<GDgetAllMassageType_Result> tcmlist = msglist.Select(x => new GDgetAllMassageType_Result
+            try
             {
-                MessageTypeDescription = x.MessageTypeDescription,
-                MessageTypeId = x.MessageTypeId,
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate,
-                IsActive = x.IsActive,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate
+                var msg = Connection.GDgetAllMassageType("Y");
+                List<GDgetAllMassageType_Result> msglist = msg.ToList();
 
-            }).ToList();
+                MessageTypeModel tcm = new MessageTypeModel();
+
+                List<MessageTypeModel> tcmlist = msglist.Select(x => new MessageTypeModel
+                {
+                    MessageTypeDescription = x.MessageTypeDescription,
+                    MessageTypeId = x.MessageTypeId,
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    IsActive = x.IsActive,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate
+
+                }).ToList();
 
 
 
-            return View(tcmlist);
+                return View(tcmlist);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
+            }
         }
 
         //
@@ -87,6 +97,7 @@ namespace GDWEBSolution.Controllers
                             validationError.ErrorMessage);
                         // raise a new exception nesting  
                         // the current instance as InnerException  
+                        Errorlog.ErrorManager.LogError(dbEx);
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -105,8 +116,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(long Code)
         {
-
-            GDgetAllMassageType_Result TModel = new GDgetAllMassageType_Result();
+            try{
+            MessageTypeModel TModel = new MessageTypeModel();
 
             tblMessageType TCtable = Connection.tblMessageTypes.SingleOrDefault(x => x.MessageTypeId == Code);
             TModel.IsActive = TCtable.IsActive;
@@ -115,13 +126,20 @@ namespace GDWEBSolution.Controllers
             TModel.MessageTypeDescription = TCtable.MessageTypeDescription;
 
             return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
+            }
         }
 
         //
         // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GDgetAllMassageType_Result Model)
+        public ActionResult Edit(MessageTypeModel Model)
         {
             try
             {
@@ -133,9 +151,11 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                Errorlog.ErrorManager.LogError(ex);
                 return View();
+                
             }
         }
 
@@ -150,16 +170,24 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(long Code)
         {
-            GDgetAllMassageType_Result TModel = new GDgetAllMassageType_Result();
+            try{
+            MessageTypeModel TModel = new MessageTypeModel();
             TModel.MessageTypeId = Code;
             return PartialView("DeleteView", TModel);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+                
+            }
         }
 
         //
         // POST: /TeacherCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(GDgetAllMassageType_Result Model)
+        public ActionResult Delete(MessageTypeModel Model)
         {
             try
             {
@@ -170,9 +198,11 @@ namespace GDWEBSolution.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                Errorlog.ErrorManager.LogError(ex);
                 return View();
+                
             }
         }
     }

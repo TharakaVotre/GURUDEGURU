@@ -1,0 +1,124 @@
+﻿@model IEnumerable<GDWEBSolution.Models.User.UserCategoryModel>
+
+@{
+    ViewBag.Title = "User Category";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>User Category</h3>
+
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default"> 
+            <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView()"><span class="fa fa-plus"></span> Add New</button></div>
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CategoryId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CategoryName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IsActive)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CategoryId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CategoryName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModifiedBy)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                </td>
+                                @if(item.IsActive == "Y"){
+                                <td>YES</td>
+                                }else{
+                                <td>
+                                   NO
+                                </td>
+                                }
+                                <td>
+                                   <a class="btn btn-info" onclick='EditView("@(item.CategoryId)");'><span class="fa fa-pencil"></span> Edit </a>
+                                   <a class="btn btn-danger" onclick='DeleteView("@(item.CategoryId)");'><span class="fa fa-trash"></span> Delete</a>
+                                </td>
+                            </tr>
+    
+                            }
+                        }
+                    </tbody>
+                </table>
+						</div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content"  id="MyModelBody">
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+    var ShowView = function (bookid) {
+        var Url = "/User/CreateCategory";
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var EditView = function (CategoryId) {
+        debugger
+        var Url = "/User/EditCategory?CategoryId=" + CategoryId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var DeleteView = function (CategoryId) {
+        //var Url = "/TeacherCategory/Delete?CategoryId=" + CategoryId;
+        //$("#MyModelBody").load(Url, function () {
+        //    $("#myModal").modal("show");
+        //})
+    }
+</script>

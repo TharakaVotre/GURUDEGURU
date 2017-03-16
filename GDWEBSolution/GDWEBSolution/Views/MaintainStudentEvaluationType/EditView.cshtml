@@ -1,4 +1,4 @@
-﻿@model GDWEBSolution.Models.GDgetAllEvaluationType1_Result
+﻿@model GDWEBSolution.Models.Maintenance.StudentEvaluationTypeModel
 
 
 <div>
@@ -12,13 +12,13 @@
             <div class="form-group">
                 <div style="display:none">
                     @Html.TextBoxFor(model => model.EvaluationTypeCode)
-                    <span class="help-block m-b-none" id="CodeError"></span>
+                    
                 </div>
 
                 @Html.LabelFor(m => m.EvaluationTypeDesc, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-8">
                     @Html.TextBoxFor(model => model.EvaluationTypeDesc, new { @class = "form-control", @placeholder = "Evaluation Type" })
-                    <span class="help-block m-b-none" id="CodeError"></span>
+                    <span class="help-block m-b-none" id="NameError"></span>
                 </div>
             </div>
 

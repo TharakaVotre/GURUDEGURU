@@ -1,0 +1,83 @@
+﻿@model GDWEBSolution.Models.TeacherModel
+
+<form id="FrmTS" class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(m => m.TeacherId, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.DropDownListFor(model => model.TeacherId, ViewBag.TeacherList as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher" ,@onchange = "loadQualification()"})
+        </div>
+        @Html.LabelFor(m => m.TeacherId, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @*@Html.ValidationMessageFor(model => model.TeacherId, null, new { @class = "text-danger" })*@
+            @Html.DropDownListFor(model => model.SchoolID, ViewBag.QualificationList as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher" })
+        </div>
+        <div class="col-sm-2">
+        <button type="reset"  id="btnAddTSchool" onclick="AddTSchool()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+            </div>
+    </div>
+    <div class="hr-dashed"></div>
+@*     <h4 style="padding-left:120px;">Qualifications</h4>
+    <div class="hr-dashed"></div>*@
+                            
+    </form>
+
+
+
+<script>
+
+    var AddTSchool = function () {
+        //debugger
+        var myformdata = $("#FrmTS").serialize();
+
+        //if (!$("#FrmANT").valid()) {
+        //    return false;
+        //}
+
+        $.ajax({
+
+            type: "POST",
+            url: "/Teacher/AddQualification",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                // $("#myModal").modal("hide");
+                if (result != "Exception" && result != "Exits") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+                    $("#TeacherId").val(result);
+
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + result);
+                    $("#SuccesLable").text("Qualification Added");
+                   // $("#btnAddQualification").prop('value', 'Save');
+                    $("#SuccesModel").modal("show");
+                }
+                else if (result == "Exception") {
+                    debugger
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Exception Error Occurd");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+                }
+                else if (result == "Exits") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("This Qualification is Already Assigned to this Teacher");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+                else {
+
+                }
+
+            }
+
+        })
+    }
+
+    var loadQualification = function () {
+        debugger
+        $('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + $('#TeacherId').val());
+    }
+</script>

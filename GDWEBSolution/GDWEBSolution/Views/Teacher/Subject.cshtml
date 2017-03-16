@@ -4,7 +4,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Teacher_ID, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
-            @Html.DropDownListFor(model => model.Teacher_ID, ViewBag.SchoolTeacher as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher",@onchange = "loadTeacherSubjects()" })
+            @Html.DropDownListFor(model => model.Teacher_ID, ViewBag.SchoolTeacher as SelectList, "", new { @class = "select2_TS form-control",@onchange = "loadTeacherSubjects()" })
         </div>
         @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
@@ -81,14 +81,25 @@
     var loadClassList = function () {
         debugger
         var tid = $('#GradeId').val();
-        $('#classNsubjects').load('/Teacher/ShowGradeClasses?GradeId=' + tid);
+        if (tid != "") {
+            $('#classNsubjects').load('/Teacher/ShowGradeClasses?GradeId=' + tid);
+            $('#classNsubjects').show();
+        } else {
+            $('#classNsubjects').hide();
+        }
 
     }
 
     var loadTeacherSubjects = function () {
         debugger
         var tid = $('#Teacher_ID').val();
-        $('#showsubjects').load('/Teacher/ShowTeacherSubjects?TeacherId=' + tid);
+        if (tid != 0) {
+            $('#showsubjects').load('/Teacher/ShowTeacherSubjects?TeacherId=' + tid);
+            $('#showsubjects').show();
+        }
+        else {
+            $('#showsubjects').hide();
+        }
 
     }
 
