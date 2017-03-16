@@ -183,6 +183,7 @@
     <Compile Include="Controllers\Maintenance\MaintainStudentEvaluationTypeController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainSubjectCategoryController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainSubjectController.cs" />
+    <Compile Include="Controllers\School\SchoolGradeController.cs" />
     <Compile Include="Controllers\Teacher\TeacherCategoryController.cs" />
     <Compile Include="Controllers\Teacher\TeacherController.cs" />
     <Compile Include="Controllers\User\UserController.cs" />
@@ -205,6 +206,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DCISgetSchool_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GDgetAllApplicationStatus_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
@@ -271,6 +275,13 @@
     <Compile Include="Models\Maintenance\StudentEvaluationTypeModel.cs" />
     <Compile Include="Models\Maintenance\SubjectCategoryModel.cs" />
     <Compile Include="Models\Maintenance\SubjectModel.cs" />
+    <Compile Include="Models\School\SchoolExtraCuricularModel.cs" />
+    <Compile Include="Models\School\SchoolGradeModel.cs" />
+    <Compile Include="Models\School\SchoolModel.cs" />
+    <Compile Include="Models\School\SchoolSubjectModel.cs" />
+    <Compile Include="Models\SMGTgetAllSchoolGrades_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGTgetAllTeachers_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -998,6 +1009,13 @@
     <Content Include="Views\User\UCFunctions.cshtml" />
     <Content Include="Views\User\DeleteUCFunction.cshtml" />
     <Content Include="Views\Teacher\EditTeacherDetailsView.cshtml" />
+    <Content Include="Views\School\Create.cshtml" />
+    <Content Include="Views\School\Delete.cshtml" />
+    <Content Include="Views\School\Edit.cshtml" />
+    <Content Include="Views\School\Index.cshtml" />
+    <Content Include="Views\School\SchoolCreate.cshtml" />
+    <Content Include="Views\SchoolGrade\SchoolGradeCreate.cshtml" />
+    <Content Include="Views\SchoolGrade\SchoolGradeIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
