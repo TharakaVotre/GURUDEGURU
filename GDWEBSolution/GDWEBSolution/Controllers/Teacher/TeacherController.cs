@@ -65,6 +65,12 @@ namespace GDWEBSolution.Controllers.Teacher
             return View();
         }
 
+        public ActionResult Details(long TeacherId)
+        {
+            ViewBag.TeacherDetailsID = TeacherId;
+            return View();
+        }
+
         //
         // GET: /Teacher/Create
        [AllowAnonymous]
@@ -583,7 +589,35 @@ namespace GDWEBSolution.Controllers.Teacher
                 return Json("Error", JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult ShowTeacherDetails(long TeacherId)
+        {
+            List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
+            ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
 
+            TeacherModel TModel = new TeacherModel();
+
+            tblTeacher TCtable = Connection.tblTeachers.SingleOrDefault(x => x.TeacherId == TeacherId);
+            TModel.IsActive = TCtable.IsActive;
+            TModel.Address1 = TCtable.Address1;
+            TModel.Address2 = TCtable.Address2;
+            TModel.Address3 = TCtable.Address3;
+            TModel.DateOfBirth = TCtable.DateOfBirth;
+            TModel.Description = TCtable.Description;
+            TModel.DrivingLicense = TCtable.DrivingLicense;
+            TModel.EmployeeNo = TCtable.EmployeeNo;
+            TModel.Gender = TCtable.Gender;
+            TModel.UserId = TCtable.UserId;
+            TModel.Name = TCtable.Name;
+            TModel.Telephone = TCtable.Telephone;
+            TModel.NIC = TCtable.NIC;
+            TModel.Passport = TCtable.Passport;
+            TModel.DrivingLicense = TCtable.DrivingLicense;
+            TModel.TeacherId = TCtable.TeacherId;
+
+            TModel.TeacherCategoryId = TCtable.TeacherCategoryId;
+
+            return PartialView("TeacherDetailsView", TModel);
+        }
         public ActionResult ShowEditTeacher(long TeacherId)
         {
             List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();

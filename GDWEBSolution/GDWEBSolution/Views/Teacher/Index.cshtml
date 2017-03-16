@@ -8,7 +8,7 @@
         <h3>Teachers</h3>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <button type="button" class="btn btn-primary" onclick="AddNew()"><span class="fa fa-plus"></span>Add New</button></div>
+                <button type="button" class="btn btn-primary" onclick="AddNew()"><span class="fa fa-plus"></span> Add New</button></div>
             <div class="panel-body">
                 <table id="zctb" class="display table table-bordered table-hover">
                     <thead>
@@ -96,9 +96,10 @@
                                     <td>NO
                                     </td>
                                 }
-                                <td>
-                                    <a class="btn btn-info" onclick='EditView(@item.TeacherId,"@item.Name")'><span class="fa fa-pencil"></span>Edit </a>
-                                    <a class="btn btn-danger" onclick="DeleteView(@item.TeacherId)"><span class="fa fa-trash"></span>Delete</a>
+                                <td align="center">
+                                    <a class="btn btn-default" onclick="DetailsView(@item.TeacherId)"><span class="fa fa-info"></span> Detail </a>
+                                    <a class="btn btn-info" onclick='EditView(@item.TeacherId,"@item.Name")'><span class="fa fa-pencil"></span> Edit </a>
+                                    <a class="btn btn-danger" onclick="DeleteView(@item.TeacherId)"><span class="fa fa-trash"></span> Delete</a>
                                 </td>
                             </tr>
     
@@ -118,7 +119,11 @@
     </div>
 </div>
 <script>
-
+    var DetailsView = function (TeacherID) {
+        debugger
+        var Url = "/Teacher/Details?TeacherId=" + TeacherID;
+        window.location.href = Url;
+    }
     var EditView = function (TeacherID, Name) {
         debugger
         var Url = "/Teacher/EditTeacher?TeacherId=" + TeacherID + "&Name=" + Name;

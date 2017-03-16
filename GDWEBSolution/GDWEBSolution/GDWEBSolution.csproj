@@ -1000,7 +1000,6 @@
     <Content Include="Views\MaintainSubject\DeleteView.cshtml" />
     <Content Include="Views\MaintainSubject\EditView.cshtml" />
     <Content Include="Views\MaintainSubject\Index.cshtml" />
-    <Content Include="Views\Teacher\TeacherSchool.cshtml" />
     <Content Include="Views\User\Category.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\AddCategory.cshtml" />
@@ -1020,6 +1019,8 @@
     <Content Include="Views\Teacher\ExtraCurricularActivityEdit.cshtml" />
     <Content Include="Views\Teacher\SubjectEdit.cshtml" />
     <Content Include="Views\Teacher\test.cshtml" />
+    <Content Include="Views\Teacher\TeacherDetailsView.cshtml" />
+    <Content Include="Views\Teacher\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
