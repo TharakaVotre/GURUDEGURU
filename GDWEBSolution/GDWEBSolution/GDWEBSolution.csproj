@@ -1019,6 +1019,7 @@
     <Content Include="Views\Teacher\QualificationEdit.cshtml" />
     <Content Include="Views\Teacher\ExtraCurricularActivityEdit.cshtml" />
     <Content Include="Views\Teacher\SubjectEdit.cshtml" />
+    <Content Include="Views\Teacher\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
