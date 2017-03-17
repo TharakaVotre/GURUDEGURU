@@ -40,10 +40,10 @@ namespace GDWEBSolution.Models.Teacher
         [Display(Name = "Teacher Category Name *")]
         public string TeacherCategoryName { get; set; }
 
-        [Required(ErrorMessage = "Required")]
-      //  [RegularExpression(@"^[0-9a-zA-Z''-'\s]{1,40}$", ErrorMessage = "Special Characters Are Not  Allowed.")]
-        [Display(Name = "Telephone *")]
-        //  [StringLength(20, ErrorMessage = "Telephone Cannot Be Longer Than 20 Characters.")]
+        [Required(ErrorMessage = "Your Must Provide a Phone Number")]
+        [Display(Name = "Phone")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public string Telephone { get; set; }
 
         [Required(ErrorMessage = "Gender Required")]

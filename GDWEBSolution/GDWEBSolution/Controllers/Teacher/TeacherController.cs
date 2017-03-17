@@ -151,7 +151,7 @@ namespace GDWEBSolution.Controllers.Teacher
             
             List<QualificationModel> List = STQlist.Select(x => new QualificationModel
             {
-                TeacherId = x.TeacherId,
+                Teacher_Id = x.TeacherId,
                 SchoolId = x.SchoolId,
                 QualificationName = x.QualificationName,
                 IsActive = x.IsActive,
@@ -316,7 +316,7 @@ namespace GDWEBSolution.Controllers.Teacher
             {
                 string result = "Error";
 
-                var count = Connection.tblTeacherQualifications.Count(u => u.TeacherId == Model.TeacherId && u.QualificationId == Model.QualificationId);
+                var count = Connection.tblTeacherQualifications.Count(u => u.TeacherId == Model.Teacher_Id && u.QualificationId == Model.QualificationId);
                 if (count == 0)
                 {
 
@@ -327,14 +327,14 @@ namespace GDWEBSolution.Controllers.Teacher
                     NewQ.IsActive = "Y";
                     NewQ.QualificationId = Model.QualificationId;
                     NewQ.SchoolId = "CKC";
-                    NewQ.TeacherId = Model.TeacherId;
+                    NewQ.TeacherId = Model.Teacher_Id;
 
                     Connection.tblTeacherQualifications.Add(NewQ);
                     Connection.SaveChanges();
 
-                    result = Model.TeacherId.ToString();
+                    result = Model.Teacher_Id.ToString();
 
-                    ViewBag.TeacherId = Model.TeacherId.ToString();
+                    ViewBag.TeacherId = Model.Teacher_Id.ToString();
 
                 }
                 else
@@ -531,7 +531,7 @@ namespace GDWEBSolution.Controllers.Teacher
         public ActionResult DeleteQualification(int Teacherid, string Schoolid, int Qualificationid)
         {
             QualificationModel TModel = new QualificationModel();
-            TModel.TeacherId = Teacherid;
+            TModel.Teacher_Id = Teacherid;
             TModel.SchoolId = Schoolid;
             TModel.QualificationId = Qualificationid;
             return PartialView("DeleteTeacherQalification", TModel);
@@ -542,12 +542,12 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             try
             {
-                tblTeacherQualification Tble = Connection.tblTeacherQualifications.Find(Model.TeacherId, Model.SchoolId, Model.QualificationId);
+                tblTeacherQualification Tble = Connection.tblTeacherQualifications.Find(Model.Teacher_Id, Model.SchoolId, Model.QualificationId);
                 Connection.tblTeacherQualifications.Remove(Tble);
                 Connection.SaveChanges();
 
 
-                return Json(Model.TeacherId, JsonRequestBehavior.AllowGet);
+                return Json(Model.Teacher_Id, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
             }
             catch
@@ -614,9 +614,10 @@ namespace GDWEBSolution.Controllers.Teacher
             return PartialView("EditTeacherDetailsView",TModel);
         }
 
-        public ActionResult EditTeacher(long TeacherId)
+        public ActionResult EditTeacher(long TeacherId,string Name)
         {
             ViewBag.EditTeacherID = TeacherId;
+            ViewBag.EditTeacherName = Name;
             CQExCViewBags();
             SubjctViewBags();
             return View();

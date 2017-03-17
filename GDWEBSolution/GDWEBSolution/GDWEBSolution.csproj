@@ -1016,6 +1016,9 @@
     <Content Include="Views\School\SchoolCreate.cshtml" />
     <Content Include="Views\SchoolGrade\SchoolGradeCreate.cshtml" />
     <Content Include="Views\SchoolGrade\SchoolGradeIndex.cshtml" />
+    <Content Include="Views\Teacher\QualificationEdit.cshtml" />
+    <Content Include="Views\Teacher\ExtraCurricularActivityEdit.cshtml" />
+    <Content Include="Views\Teacher\SubjectEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

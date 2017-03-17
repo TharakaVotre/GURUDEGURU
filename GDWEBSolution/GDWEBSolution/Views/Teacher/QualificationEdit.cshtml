@@ -1,10 +1,10 @@
 ﻿@model GDWEBSolution.Models.Teacher.QualificationModel
-
 <form id="FrmQA" class="form-horizontal">
     <div class="form-group">
         @Html.LabelFor(m => m.TeacherName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
-            @Html.DropDownListFor(model => model.Teacher_Id, ViewBag.TeacherList as SelectList, "", new { @class = "select2_Q form-control" ,@onchange = "loadQualification()"})
+            <label class="form-control">@ViewBag.EditTeacherName</label>
+            @Html.TextBoxFor(model => model.Teacher_Id, new { style = "display: none;"})
         </div>
         @Html.LabelFor(m => m.QualificationName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
@@ -15,7 +15,6 @@
             </div>
     </div>
     <div class="hr-dashed"></div>
-                          
     </form>
 
 
@@ -47,6 +46,7 @@
                     $("#SuccesModel").modal("show");
                 }
                 else if (result == "Exception") {
+                    debugger
                     $("#ErrorLable").text("Exception Error Occurd");
                     $("#myModal").modal("show");
                 }
@@ -55,12 +55,15 @@
                     $("#myModal").modal("show");
                 }
                 else {
-                    $("#ErrorLable").text("An Error Occured ! Please Try Again Later");
+                    $("#ErrorLable").text("An Error Occured ! Please Try Again Later.");
                     $("#myModal").modal("show");
                 }
+
             }
+
         })
     }
+
     var loadQualification = function () {
         if ($('#Teacher_Id').val() != 0) {
             $('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + $('#Teacher_Id').val());
