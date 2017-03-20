@@ -35,6 +35,7 @@
           <EntitySet Name="tblParent" EntityType="SchoolMGTModel.Store.tblParent" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblParentObservationType" EntityType="SchoolMGTModel.Store.tblParentObservationType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblParentStudent" EntityType="SchoolMGTModel.Store.tblParentStudent" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblParentToSchollMessageAttachments" EntityType="SchoolMGTModel.Store.tblParentToSchollMessageAttachments" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblParentToSchoolMessageDetail" EntityType="SchoolMGTModel.Store.tblParentToSchoolMessageDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblParentToSchoolMessageHeader" EntityType="SchoolMGTModel.Store.tblParentToSchoolMessageHeader" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblProvince" EntityType="SchoolMGTModel.Store.tblProvince" store:Type="Tables" Schema="dbo" />
@@ -457,14 +458,6 @@
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblParentToSchoolMessageDetail" EntitySet="tblParentToSchoolMessageDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblParentToSchoolMessageHeader_tblClass" Association="SchoolMGTModel.Store.FK_tblParentToSchoolMessageHeader_tblClass">
-            <End Role="tblClass" EntitySet="tblClass" />
-            <End Role="tblParentToSchoolMessageHeader" EntitySet="tblParentToSchoolMessageHeader" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblParentToSchoolMessageHeader_tblGrade" Association="SchoolMGTModel.Store.FK_tblParentToSchoolMessageHeader_tblGrade">
-            <End Role="tblGrade" EntitySet="tblGrade" />
-            <End Role="tblParentToSchoolMessageHeader" EntitySet="tblParentToSchoolMessageHeader" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblParentToSchoolMessageHeader_tblMessageType" Association="SchoolMGTModel.Store.FK_tblParentToSchoolMessageHeader_tblMessageType">
             <End Role="tblMessageType" EntitySet="tblMessageType" />
             <End Role="tblParentToSchoolMessageHeader" EntitySet="tblParentToSchoolMessageHeader" />
@@ -475,10 +468,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_tblParentToSchoolMessageHeader_tblSchool" Association="SchoolMGTModel.Store.FK_tblParentToSchoolMessageHeader_tblSchool">
             <End Role="tblSchool" EntitySet="tblSchool" />
-            <End Role="tblParentToSchoolMessageHeader" EntitySet="tblParentToSchoolMessageHeader" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblParentToSchoolMessageHeader_tblSubject" Association="SchoolMGTModel.Store.FK_tblParentToSchoolMessageHeader_tblSubject">
-            <End Role="tblSubject" EntitySet="tblSubject" />
             <End Role="tblParentToSchoolMessageHeader" EntitySet="tblParentToSchoolMessageHeader" />
           </AssociationSet>
           <AssociationSet Name="FK_tblParentToSchoolMessageHeader_tblUser" Association="SchoolMGTModel.Store.FK_tblParentToSchoolMessageHeader_tblUser">
@@ -1382,6 +1371,15 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsActive" Type="varchar" Nullable="false" MaxLength="1" />
         </EntityType>
+        <EntityType Name="tblParentToSchollMessageAttachments">
+          <Key>
+            <PropertyRef Name="SeqNo" />
+          </Key>
+          <Property Name="MessageId" Type="bigint" Nullable="false" />
+          <Property Name="AttachementName" Type="varchar" Nullable="false" MaxLength="250" />
+          <Property Name="AttachementPath" Type="varchar" Nullable="false" MaxLength="500" />
+          <Property Name="SeqNo" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
         <EntityType Name="tblParentToSchoolMessageDetail">
           <Key>
             <PropertyRef Name="SeqNo" />
@@ -1406,20 +1404,18 @@
             <PropertyRef Name="MessageId" />
           </Key>
           <Property Name="SchoolId" Type="varchar" Nullable="false" MaxLength="14" />
-          <Property Name="MessageId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MessageId" Type="bigint" Nullable="false" />
           <Property Name="ParentId" Type="bigint" Nullable="false" />
-          <Property Name="MessageType" Type="bigint" Nullable="false" />
-          <Property Name="Message" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="GradeId" Type="varchar" MaxLength="20" />
-          <Property Name="ClassId" Type="varchar" MaxLength="20" />
-          <Property Name="SubjectId" Type="int" />
-          <Property Name="ExtraActivityId" Type="varchar" MaxLength="6" />
+          <Property Name="MessageType" Type="bigint" />
+          <Property Name="Message" Type="varchar" Nullable="false" MaxLength="300" />
           <Property Name="Status" Type="varchar" Nullable="false" MaxLength="1" />
           <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="20" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsActive" Type="varchar" Nullable="false" MaxLength="1" />
+          <Property Name="Attachments" Type="int" />
+          <Property Name="Subject" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblProvince">
           <Key>
@@ -3058,36 +3054,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblParentToSchoolMessageHeader_tblClass">
-          <End Role="tblClass" Type="SchoolMGTModel.Store.tblClass" Multiplicity="0..1" />
-          <End Role="tblParentToSchoolMessageHeader" Type="SchoolMGTModel.Store.tblParentToSchoolMessageHeader" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblClass">
-              <PropertyRef Name="ClassId" />
-              <PropertyRef Name="GradeId" />
-              <PropertyRef Name="SchoolId" />
-            </Principal>
-            <Dependent Role="tblParentToSchoolMessageHeader">
-              <PropertyRef Name="ClassId" />
-              <PropertyRef Name="GradeId" />
-              <PropertyRef Name="SchoolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblParentToSchoolMessageHeader_tblGrade">
-          <End Role="tblGrade" Type="SchoolMGTModel.Store.tblGrade" Multiplicity="0..1" />
-          <End Role="tblParentToSchoolMessageHeader" Type="SchoolMGTModel.Store.tblParentToSchoolMessageHeader" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblGrade">
-              <PropertyRef Name="GradeId" />
-            </Principal>
-            <Dependent Role="tblParentToSchoolMessageHeader">
-              <PropertyRef Name="GradeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblParentToSchoolMessageHeader_tblMessageType">
-          <End Role="tblMessageType" Type="SchoolMGTModel.Store.tblMessageType" Multiplicity="1" />
+          <End Role="tblMessageType" Type="SchoolMGTModel.Store.tblMessageType" Multiplicity="0..1" />
           <End Role="tblParentToSchoolMessageHeader" Type="SchoolMGTModel.Store.tblParentToSchoolMessageHeader" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblMessageType">
@@ -3119,18 +3087,6 @@
             </Principal>
             <Dependent Role="tblParentToSchoolMessageHeader">
               <PropertyRef Name="SchoolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblParentToSchoolMessageHeader_tblSubject">
-          <End Role="tblSubject" Type="SchoolMGTModel.Store.tblSubject" Multiplicity="0..1" />
-          <End Role="tblParentToSchoolMessageHeader" Type="SchoolMGTModel.Store.tblParentToSchoolMessageHeader" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblSubject">
-              <PropertyRef Name="SubjectId" />
-            </Principal>
-            <Dependent Role="tblParentToSchoolMessageHeader">
-              <PropertyRef Name="SubjectId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4882,6 +4838,9 @@
         <Function Name="SMGTgetGradeSubjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GradeId" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SMGTgetParentToSchoolSentMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ParentId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="SMGTgetSchoolGrade" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
         </Function>
@@ -4945,6 +4904,7 @@
           <EntitySet Name="tblParents" EntityType="SchoolMGTModel.tblParent" />
           <EntitySet Name="tblParentObservationTypes" EntityType="SchoolMGTModel.tblParentObservationType" />
           <EntitySet Name="tblParentStudents" EntityType="SchoolMGTModel.tblParentStudent" />
+          <EntitySet Name="tblParentToSchollMessageAttachments" EntityType="SchoolMGTModel.tblParentToSchollMessageAttachment" />
           <EntitySet Name="tblParentToSchoolMessageDetails" EntityType="SchoolMGTModel.tblParentToSchoolMessageDetail" />
           <EntitySet Name="tblParentToSchoolMessageHeaders" EntityType="SchoolMGTModel.tblParentToSchoolMessageHeader" />
           <EntitySet Name="tblProvinces" EntityType="SchoolMGTModel.tblProvince" />
@@ -5114,10 +5074,6 @@
           <AssociationSet Name="FK_tblEvaluationDetail_tblClass" Association="SchoolMGTModel.FK_tblEvaluationDetail_tblClass">
             <End Role="tblClass" EntitySet="tblClasses" />
             <End Role="tblEvaluationDetail" EntitySet="tblEvaluationDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblParentToSchoolMessageHeader_tblClass" Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblClass">
-            <End Role="tblClass" EntitySet="tblClasses" />
-            <End Role="tblParentToSchoolMessageHeader" EntitySet="tblParentToSchoolMessageHeaders" />
           </AssociationSet>
           <AssociationSet Name="FK_tblStudent_tblClass" Association="SchoolMGTModel.FK_tblStudent_tblClass">
             <End Role="tblClass" EntitySet="tblClasses" />
@@ -5335,10 +5291,6 @@
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblGrade" EntitySet="tblGrades" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblParentToSchoolMessageHeader_tblGrade" Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblGrade">
-            <End Role="tblGrade" EntitySet="tblGrades" />
-            <End Role="tblParentToSchoolMessageHeader" EntitySet="tblParentToSchoolMessageHeaders" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblSchoolGrade_tblGrade" Association="SchoolMGTModel.FK_tblSchoolGrade_tblGrade">
             <End Role="tblGrade" EntitySet="tblGrades" />
             <End Role="tblSchoolGrade" EntitySet="tblSchoolGrades" />
@@ -5481,10 +5433,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_tblParentToSchoolMessageHeader_tblSchool" Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblSchool">
             <End Role="tblSchool" EntitySet="tblSchools" />
-            <End Role="tblParentToSchoolMessageHeader" EntitySet="tblParentToSchoolMessageHeaders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblParentToSchoolMessageHeader_tblSubject" Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblSubject">
-            <End Role="tblSubject" EntitySet="tblSubjects" />
             <End Role="tblParentToSchoolMessageHeader" EntitySet="tblParentToSchoolMessageHeaders" />
           </AssociationSet>
           <AssociationSet Name="FK_tblParentToSchoolMessageHeader_tblUser" Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblUser">
@@ -6217,6 +6165,9 @@
           <FunctionImport Name="SMGTgetGradeSubjects" ReturnType="Collection(SchoolMGTModel.SMGTgetGradeSubjects_Result)">
             <Parameter Name="GradeId" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SMGTgetParentToSchoolSentMail" ReturnType="Collection(SchoolMGTModel.SMGTgetParentToSchoolSentMail_Result)">
+            <Parameter Name="ParentId" Mode="In" Type="Int64" />
+          </FunctionImport>
           <FunctionImport Name="SMGTgetSchoolGrade" ReturnType="Collection(SchoolMGTModel.SMGTgetSchoolGrade_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
@@ -6420,7 +6371,6 @@
           <NavigationProperty Name="tblUser1" Relationship="SchoolMGTModel.FK_tblClass_tblUser1" FromRole="tblClass" ToRole="tblUser" />
           <NavigationProperty Name="tblClassTeachers" Relationship="SchoolMGTModel.FK_tblClassTeacher_tblClass" FromRole="tblClass" ToRole="tblClassTeacher" />
           <NavigationProperty Name="tblEvaluationDetails" Relationship="SchoolMGTModel.FK_tblEvaluationDetail_tblClass" FromRole="tblClass" ToRole="tblEvaluationDetail" />
-          <NavigationProperty Name="tblParentToSchoolMessageHeaders" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblClass" FromRole="tblClass" ToRole="tblParentToSchoolMessageHeader" />
           <NavigationProperty Name="tblStudents" Relationship="SchoolMGTModel.FK_tblStudent_tblClass" FromRole="tblClass" ToRole="tblStudent" />
           <NavigationProperty Name="tblStudentOptionalSubjects" Relationship="SchoolMGTModel.FK_tblStudentOptionalSubject_tblClass" FromRole="tblClass" ToRole="tblStudentOptionalSubject" />
           <NavigationProperty Name="tblTeacherSubjects" Relationship="SchoolMGTModel.FK_tblTeacherSubject_tblClass" FromRole="tblClass" ToRole="tblTeacherSubject" />
@@ -6696,7 +6646,6 @@
           <NavigationProperty Name="tblEvaluationResults" Relationship="SchoolMGTModel.FK_tblEvaluationResult_tblGrade" FromRole="tblGrade" ToRole="tblEvaluationResult" />
           <NavigationProperty Name="tblUser" Relationship="SchoolMGTModel.FK_tblGrade_tblUser" FromRole="tblGrade" ToRole="tblUser" />
           <NavigationProperty Name="tblUser1" Relationship="SchoolMGTModel.FK_tblGrade_tblUser1" FromRole="tblGrade" ToRole="tblUser" />
-          <NavigationProperty Name="tblParentToSchoolMessageHeaders" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblGrade" FromRole="tblGrade" ToRole="tblParentToSchoolMessageHeader" />
           <NavigationProperty Name="tblSchoolGrades" Relationship="SchoolMGTModel.FK_tblSchoolGrade_tblGrade" FromRole="tblGrade" ToRole="tblSchoolGrade" />
           <NavigationProperty Name="tblStudents" Relationship="SchoolMGTModel.FK_tblStudent_tblGrade" FromRole="tblGrade" ToRole="tblStudent" />
           <NavigationProperty Name="tblStudentOptionalSubjects" Relationship="SchoolMGTModel.FK_tblStudentOptionalSubject_tblGrade" FromRole="tblGrade" ToRole="tblStudentOptionalSubject" />
@@ -6837,6 +6786,15 @@
           <NavigationProperty Name="tblUser" Relationship="SchoolMGTModel.FK_tblParentStudent_tblUser" FromRole="tblParentStudent" ToRole="tblUser" />
           <NavigationProperty Name="tblUser1" Relationship="SchoolMGTModel.FK_tblParentStudent_tblUser1" FromRole="tblParentStudent" ToRole="tblUser" />
         </EntityType>
+        <EntityType Name="tblParentToSchollMessageAttachment">
+          <Key>
+            <PropertyRef Name="SeqNo" />
+          </Key>
+          <Property Name="MessageId" Type="Int64" Nullable="false" />
+          <Property Name="AttachementName" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
+          <Property Name="AttachementPath" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="SeqNo" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+        </EntityType>
         <EntityType Name="tblParentToSchoolMessageDetail">
           <Key>
             <PropertyRef Name="SeqNo" />
@@ -6867,27 +6825,22 @@
             <PropertyRef Name="MessageId" />
           </Key>
           <Property Name="SchoolId" Type="String" Nullable="false" MaxLength="14" Unicode="false" FixedLength="false" />
-          <Property Name="MessageId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageId" Type="Int64" Nullable="false" />
           <Property Name="ParentId" Type="Int64" Nullable="false" />
-          <Property Name="MessageType" Type="Int64" Nullable="false" />
-          <Property Name="Message" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="GradeId" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="ClassId" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="SubjectId" Type="Int32" />
-          <Property Name="ExtraActivityId" Type="String" MaxLength="6" Unicode="false" FixedLength="false" />
+          <Property Name="MessageType" Type="Int64" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="300" Unicode="false" FixedLength="false" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="tblClass" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblClass" FromRole="tblParentToSchoolMessageHeader" ToRole="tblClass" />
-          <NavigationProperty Name="tblGrade" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblGrade" FromRole="tblParentToSchoolMessageHeader" ToRole="tblGrade" />
+          <Property Name="Attachments" Type="Int32" />
+          <Property Name="Subject" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="tblMessageType" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblMessageType" FromRole="tblParentToSchoolMessageHeader" ToRole="tblMessageType" />
           <NavigationProperty Name="tblParent" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblParentToSchoolMessageHeader" FromRole="tblParentToSchoolMessageHeader" ToRole="tblParent" />
           <NavigationProperty Name="tblParentToSchoolMessageDetails" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageDetail_tblParentToSchoolMessageHeader" FromRole="tblParentToSchoolMessageHeader" ToRole="tblParentToSchoolMessageDetail" />
           <NavigationProperty Name="tblSchool" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblSchool" FromRole="tblParentToSchoolMessageHeader" ToRole="tblSchool" />
-          <NavigationProperty Name="tblSubject" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblSubject" FromRole="tblParentToSchoolMessageHeader" ToRole="tblSubject" />
           <NavigationProperty Name="tblUser" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblUser" FromRole="tblParentToSchoolMessageHeader" ToRole="tblUser" />
           <NavigationProperty Name="tblUser1" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblUser1" FromRole="tblParentToSchoolMessageHeader" ToRole="tblUser" />
         </EntityType>
@@ -7259,7 +7212,6 @@
           <NavigationProperty Name="tblAssignmentHeaders" Relationship="SchoolMGTModel.FK_tblAssignmentHeader_tblSubject" FromRole="tblSubject" ToRole="tblAssignmentHeader" />
           <NavigationProperty Name="tblEvaluationResults" Relationship="SchoolMGTModel.FK_tblEvaluationResult_tblSubject" FromRole="tblSubject" ToRole="tblEvaluationResult" />
           <NavigationProperty Name="tblGradeSubjects" Relationship="SchoolMGTModel.FK_tblGradeSubject_tblSubject" FromRole="tblSubject" ToRole="tblGradeSubject" />
-          <NavigationProperty Name="tblParentToSchoolMessageHeaders" Relationship="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblSubject" FromRole="tblSubject" ToRole="tblParentToSchoolMessageHeader" />
           <NavigationProperty Name="tblSchoolSubjects" Relationship="SchoolMGTModel.FK_tblSchoolSubject_tblSubject" FromRole="tblSubject" ToRole="tblSchoolSubject" />
           <NavigationProperty Name="tblStudentOptionalSubjects" Relationship="SchoolMGTModel.FK_tblStudentOptionalSubject_tblSubject" FromRole="tblSubject" ToRole="tblStudentOptionalSubject" />
           <NavigationProperty Name="tblUser" Relationship="SchoolMGTModel.FK_tblSubject_tblUser" FromRole="tblSubject" ToRole="tblUser" />
@@ -8042,22 +7994,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblParentToSchoolMessageHeader_tblClass">
-          <End Role="tblClass" Type="SchoolMGTModel.tblClass" Multiplicity="0..1" />
-          <End Role="tblParentToSchoolMessageHeader" Type="SchoolMGTModel.tblParentToSchoolMessageHeader" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblClass">
-              <PropertyRef Name="ClassId" />
-              <PropertyRef Name="GradeId" />
-              <PropertyRef Name="SchoolId" />
-            </Principal>
-            <Dependent Role="tblParentToSchoolMessageHeader">
-              <PropertyRef Name="ClassId" />
-              <PropertyRef Name="GradeId" />
-              <PropertyRef Name="SchoolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblStudent_tblClass">
           <End Role="tblClass" Type="SchoolMGTModel.tblClass" Multiplicity="1" />
           <End Role="tblStudent" Type="SchoolMGTModel.tblStudent" Multiplicity="*" />
@@ -8728,18 +8664,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblParentToSchoolMessageHeader_tblGrade">
-          <End Role="tblGrade" Type="SchoolMGTModel.tblGrade" Multiplicity="0..1" />
-          <End Role="tblParentToSchoolMessageHeader" Type="SchoolMGTModel.tblParentToSchoolMessageHeader" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblGrade">
-              <PropertyRef Name="GradeId" />
-            </Principal>
-            <Dependent Role="tblParentToSchoolMessageHeader">
-              <PropertyRef Name="GradeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblSchoolGrade_tblGrade">
           <End Role="tblGrade" Type="SchoolMGTModel.tblGrade" Multiplicity="1" />
           <End Role="tblSchoolGrade" Type="SchoolMGTModel.tblSchoolGrade" Multiplicity="*" />
@@ -8923,7 +8847,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblParentToSchoolMessageHeader_tblMessageType">
-          <End Role="tblMessageType" Type="SchoolMGTModel.tblMessageType" Multiplicity="1" />
+          <End Role="tblMessageType" Type="SchoolMGTModel.tblMessageType" Multiplicity="0..1" />
           <End Role="tblParentToSchoolMessageHeader" Type="SchoolMGTModel.tblParentToSchoolMessageHeader" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblMessageType">
@@ -9175,18 +9099,6 @@
             </Principal>
             <Dependent Role="tblParentToSchoolMessageHeader">
               <PropertyRef Name="SchoolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblParentToSchoolMessageHeader_tblSubject">
-          <End Role="tblSubject" Type="SchoolMGTModel.tblSubject" Multiplicity="0..1" />
-          <End Role="tblParentToSchoolMessageHeader" Type="SchoolMGTModel.tblParentToSchoolMessageHeader" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblSubject">
-              <PropertyRef Name="SubjectId" />
-            </Principal>
-            <Dependent Role="tblParentToSchoolMessageHeader">
-              <PropertyRef Name="SubjectId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10510,6 +10422,21 @@
           <Property Type="String" Name="SubjectName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
         </ComplexType>
+        <ComplexType Name="SMGTgetParentToSchoolSentMail_Result">
+          <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
+          <Property Type="Int64" Name="MessageId" Nullable="false" />
+          <Property Type="Int64" Name="ParentId" Nullable="false" />
+          <Property Type="Int64" Name="MessageType" Nullable="true" />
+          <Property Type="String" Name="MessageTypeDescription" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+          <Property Type="Int64" Name="SeqNo" Nullable="false" />
+          <Property Type="String" Name="RecepientUser" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Attachments" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="SMGTgetSchoolGrade_Result">
           <Property Type="String" Name="GradeId" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="GradeName" Nullable="false" MaxLength="50" />
@@ -11071,6 +10998,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblParentToSchollMessageAttachments">
+            <EntityTypeMapping TypeName="SchoolMGTModel.tblParentToSchollMessageAttachment">
+              <MappingFragment StoreEntitySet="tblParentToSchollMessageAttachments">
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="AttachementName" ColumnName="AttachementName" />
+                <ScalarProperty Name="AttachementPath" ColumnName="AttachementPath" />
+                <ScalarProperty Name="SeqNo" ColumnName="SeqNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblParentToSchoolMessageDetails">
             <EntityTypeMapping TypeName="SchoolMGTModel.tblParentToSchoolMessageDetail">
               <MappingFragment StoreEntitySet="tblParentToSchoolMessageDetail">
@@ -11098,16 +11035,14 @@
                 <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="MessageType" ColumnName="MessageType" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
-                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
-                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
-                <ScalarProperty Name="ExtraActivityId" ColumnName="ExtraActivityId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Attachments" ColumnName="Attachments" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11958,6 +11893,25 @@
                 <ScalarProperty Name="ShortName" ColumnName="ShortName" />
                 <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGTgetParentToSchoolSentMail" FunctionName="SchoolMGTModel.Store.SMGTgetParentToSchoolSentMail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTgetParentToSchoolSentMail_Result">
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="MessageType" ColumnName="MessageType" />
+                <ScalarProperty Name="MessageTypeDescription" ColumnName="MessageTypeDescription" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SeqNo" ColumnName="SeqNo" />
+                <ScalarProperty Name="RecepientUser" ColumnName="RecepientUser" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Attachments" ColumnName="Attachments" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

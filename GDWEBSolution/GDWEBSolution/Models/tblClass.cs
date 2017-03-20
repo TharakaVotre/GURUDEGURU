@@ -19,7 +19,6 @@ namespace GDWEBSolution.Models
             this.tblAssignmentHeaders = new HashSet<tblAssignmentHeader>();
             this.tblClassTeachers = new HashSet<tblClassTeacher>();
             this.tblEvaluationDetails = new HashSet<tblEvaluationDetail>();
-            this.tblParentToSchoolMessageHeaders = new HashSet<tblParentToSchoolMessageHeader>();
             this.tblStudents = new HashSet<tblStudent>();
             this.tblStudentOptionalSubjects = new HashSet<tblStudentOptionalSubject>();
             this.tblTeacherSubjects = new HashSet<tblTeacherSubject>();
@@ -43,7 +42,6 @@ namespace GDWEBSolution.Models
         public virtual tblUser tblUser1 { get; set; }
         public virtual ICollection<tblClassTeacher> tblClassTeachers { get; set; }
         public virtual ICollection<tblEvaluationDetail> tblEvaluationDetails { get; set; }
-        public virtual ICollection<tblParentToSchoolMessageHeader> tblParentToSchoolMessageHeaders { get; set; }
         public virtual ICollection<tblStudent> tblStudents { get; set; }
         public virtual ICollection<tblStudentOptionalSubject> tblStudentOptionalSubjects { get; set; }
         public virtual ICollection<tblTeacherSubject> tblTeacherSubjects { get; set; }

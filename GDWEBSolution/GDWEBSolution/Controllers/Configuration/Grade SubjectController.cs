@@ -63,13 +63,18 @@ namespace GDWEBSolution.Controllers.Configuration
 
         private void Dropdownlistdata(string AcademicYear,string GradeId)
         {
+
             if (AcademicYear != null)
             {
                 Session["Accyear"] = AcademicYear;
                 Accyear = AcademicYear;
             }
-            else {
-                Accyear = Session["Accyear"].ToString();
+            else
+            {
+                if (Session["Accyear"]!=null)
+                {
+                    Accyear = Session["Accyear"].ToString();
+                }
             }
             if (GradeId != null)
             {
@@ -78,7 +83,10 @@ namespace GDWEBSolution.Controllers.Configuration
             }
             else
             {
-                gradeid = Session["gradeId"].ToString();
+                if (Session["Accyear"] != null)
+                {
+                    gradeid = Session["gradeId"].ToString();
+                }
             }
             List<SelectListItem> Optionallist = new List<SelectListItem>();
             Optionallist.Add(new SelectListItem
@@ -193,6 +201,7 @@ namespace GDWEBSolution.Controllers.Configuration
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
                         IsActive = x.IsActive,
+                        Optional=x.Optional,
                         ModifiedBy = x.ModifiedBy,
                         ModifiedDate = x.ModifiedDate
 
@@ -262,6 +271,9 @@ namespace GDWEBSolution.Controllers.Configuration
              TModel.SubjectCategoryId = Convert.ToInt32(SubjectCategoryId);
              TModel.Optional = Optional;
 
+
+             tblGrade TGtable = Connection.tblGrades.SingleOrDefault(x => x.GradeId == GradeId);
+             TModel.GradeName = TGtable.GradeName;
              return PartialView("Edit", TModel);
          }
 
