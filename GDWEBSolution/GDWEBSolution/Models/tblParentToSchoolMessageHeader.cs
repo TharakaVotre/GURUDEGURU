@@ -22,26 +22,21 @@ namespace GDWEBSolution.Models
         public string SchoolId { get; set; }
         public long MessageId { get; set; }
         public long ParentId { get; set; }
-        public long MessageType { get; set; }
+        public Nullable<long> MessageType { get; set; }
         public string Message { get; set; }
-        public string GradeId { get; set; }
-        public string ClassId { get; set; }
-        public Nullable<int> SubjectId { get; set; }
-        public string ExtraActivityId { get; set; }
         public string Status { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
+        public Nullable<int> Attachments { get; set; }
+        public string Subject { get; set; }
     
-        public virtual tblClass tblClass { get; set; }
-        public virtual tblGrade tblGrade { get; set; }
         public virtual tblMessageType tblMessageType { get; set; }
         public virtual tblParent tblParent { get; set; }
         public virtual ICollection<tblParentToSchoolMessageDetail> tblParentToSchoolMessageDetails { get; set; }
         public virtual tblSchool tblSchool { get; set; }
-        public virtual tblSubject tblSubject { get; set; }
         public virtual tblUser tblUser { get; set; }
         public virtual tblUser tblUser1 { get; set; }
     }

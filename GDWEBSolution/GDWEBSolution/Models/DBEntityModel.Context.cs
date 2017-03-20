@@ -57,6 +57,7 @@ namespace GDWEBSolution.Models
         public DbSet<tblParent> tblParents { get; set; }
         public DbSet<tblParentObservationType> tblParentObservationTypes { get; set; }
         public DbSet<tblParentStudent> tblParentStudents { get; set; }
+        public DbSet<tblParentToSchollMessageAttachment> tblParentToSchollMessageAttachments { get; set; }
         public DbSet<tblParentToSchoolMessageDetail> tblParentToSchoolMessageDetails { get; set; }
         public DbSet<tblParentToSchoolMessageHeader> tblParentToSchoolMessageHeaders { get; set; }
         public DbSet<tblProvince> tblProvinces { get; set; }
@@ -1371,6 +1372,15 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("GradeId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetGradeSubjects_Result>("SMGTgetGradeSubjects", gradeIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetParentToSchoolSentMail_Result> SMGTgetParentToSchoolSentMail(Nullable<long> parentId)
+        {
+            var parentIdParameter = parentId.HasValue ?
+                new ObjectParameter("ParentId", parentId) :
+                new ObjectParameter("ParentId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetParentToSchoolSentMail_Result>("SMGTgetParentToSchoolSentMail", parentIdParameter);
         }
     
         public virtual ObjectResult<SMGTgetSchoolGrade_Result> SMGTgetSchoolGrade(string schoolId)

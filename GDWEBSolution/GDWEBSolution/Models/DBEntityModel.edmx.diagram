@@ -4,66 +4,67 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e531510d06e84b828d7c678537f49101" Name="Diagram1">
-        <EntityTypeShape EntityType="SchoolMGTModel.tblApplicationStatu" Width="1.5" PointX="3" PointY="79.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentDueDate" Width="1.5" PointX="6" PointY="114.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentHeader" Width="1.5" PointX="5.25" PointY="137.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentQuestionAid" Width="1.5" PointX="12.75" PointY="123.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentQuestionAnswer" Width="1.5" PointX="15.75" PointY="124.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentQuestionType" Width="1.5" PointX="3" PointY="93.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblAssingmentQuestion" Width="1.5" PointX="5.25" PointY="118.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblClass" Width="1.5" PointX="8.25" PointY="117.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblClassTeacher" Width="1.5" PointX="10.5" PointY="115.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblDistrict" Width="1.5" PointX="5.25" PointY="127.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblDivision" Width="1.5" PointX="3" PointY="107.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblEntranceApplication" Width="1.5" PointX="15.75" PointY="114.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationDetail" Width="1.5" PointX="13.5" PointY="117.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationHeader" Width="1.5" PointX="18.75" PointY="112.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationResult" Width="1.5" PointX="18.75" PointY="135.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationType" Width="1.5" PointX="3" PointY="111.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblEventCalendar" Width="1.5" PointX="15.75" PointY="108.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblEventcategory" Width="1.5" PointX="3" PointY="114.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblEventParticipant" Width="1.5" PointX="18" PointY="108.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblExtraCurricularActivity" Width="1.5" PointX="3" PointY="118.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblFunction" Width="1.5" PointX="3" PointY="122.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblGrade" Width="1.5" PointX="3" PointY="126.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblGradeSubject" Width="1.5" PointX="8.25" PointY="143.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblHouse" Width="1.5" PointX="21.75" PointY="120.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblMessageType" Width="1.5" PointX="3" PointY="136.375" IsExpanded="true" />
+      <Diagram DiagramId="8367c95ee12d49b6a7a5a2616e169ba0" Name="Diagram1">
+        <EntityTypeShape EntityType="SchoolMGTModel.tblApplicationStatu" Width="1.5" PointX="3" PointY="81.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentDueDate" Width="1.5" PointX="6" PointY="116.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentHeader" Width="1.5" PointX="5.25" PointY="139.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentQuestionAid" Width="1.5" PointX="12.75" PointY="125.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentQuestionAnswer" Width="1.5" PointX="15.75" PointY="126.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssignmentQuestionType" Width="1.5" PointX="3" PointY="96.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblAssingmentQuestion" Width="1.5" PointX="5.25" PointY="121.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblClass" Width="1.5" PointX="8.25" PointY="119.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblClassTeacher" Width="1.5" PointX="10.5" PointY="117.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblDistrict" Width="1.5" PointX="5.25" PointY="129.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblDivision" Width="1.5" PointX="3" PointY="109.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEntranceApplication" Width="1.5" PointX="15.75" PointY="116.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationDetail" Width="1.5" PointX="13.5" PointY="120" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationHeader" Width="1.5" PointX="18.75" PointY="115.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationResult" Width="1.5" PointX="18.75" PointY="137.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEvaluationType" Width="1.5" PointX="3" PointY="113.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEventCalendar" Width="1.5" PointX="18.75" PointY="124.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEventcategory" Width="1.5" PointX="3" PointY="117" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblEventParticipant" Width="1.5" PointX="24" PointY="119.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblExtraCurricularActivity" Width="1.5" PointX="3" PointY="121.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblFunction" Width="1.5" PointX="3" PointY="124.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblGrade" Width="1.5" PointX="3" PointY="128.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblGradeSubject" Width="1.5" PointX="8.25" PointY="145.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblHouse" Width="1.5" PointX="15.75" PointY="111.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblMessageType" Width="1.5" PointX="3" PointY="138.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SchoolMGTModel.tblParameter" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblParent" Width="1.5" PointX="8.25" PointY="132.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblParentObservationType" Width="1.5" PointX="3" PointY="140.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblParentStudent" Width="1.5" PointX="15.75" PointY="119.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblParentToSchoolMessageDetail" Width="1.5" PointX="18.75" PointY="125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblParentToSchoolMessageHeader" Width="1.5" PointX="10.5" PointY="137.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblProvince" Width="1.5" PointX="3" PointY="151.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblQualification" Width="1.5" PointX="3" PointY="155.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblRelashionship" Width="1.5" PointX="3" PointY="159" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSchool" Width="1.5" PointX="10.5" PointY="123.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolCalendar" Width="1.5" PointX="21.75" PointY="124.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolCategory" Width="1.5" PointX="3" PointY="162.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolExtraCurricularActivity" Width="1.5" PointX="21.75" PointY="116.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolGrade" Width="1.5" PointX="21.75" PointY="112.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolGroup" Width="1.5" PointX="3" PointY="166.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolRank" Width="1.5" PointX="3" PointY="170.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolSubject" Width="1.5" PointX="15.75" PointY="144.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolToParentMessageDetail" Width="1.5" PointX="12.75" PointY="129.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolToParentMessageHeader" Width="1.5" PointX="15.75" PointY="129.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblStudent" Width="1.5" PointX="13.5" PointY="110.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblStudentExtraCurricularActivity" Width="1.5" PointX="18.75" PointY="118.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblStudentOptionalSubject" Width="1.5" PointX="15.75" PointY="138.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSubject" Width="1.5" PointX="3" PointY="173.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblSubjectCategory" Width="1.5" PointX="3" PointY="179" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacher" Width="1.5" PointX="5.25" PointY="145.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherCategory" Width="1.5" PointX="3" PointY="182.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherExtraCurricularActivity" Width="1.5" PointX="18.75" PointY="130.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherQualification" Width="1.5" PointX="21.75" PointY="134" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherSchool" Width="1.5" PointX="12.75" PointY="148.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherSubject" Width="1.5" PointX="13.5" PointY="136.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblTimeTable" Width="1.5" PointX="13.5" PointY="142.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblUser" Width="1.5" PointX="0.75" PointY="103.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblUserCategory" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolMGTModel.tblUserCategoryFunction" Width="1.5" PointX="8.25" PointY="113.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblParent" Width="1.5" PointX="8.25" PointY="134.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblParentObservationType" Width="1.5" PointX="3" PointY="142.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblParentStudent" Width="1.5" PointX="15.75" PointY="121.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblParentToSchollMessageAttachment" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblParentToSchoolMessageDetail" Width="1.5" PointX="21.75" PointY="121.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblParentToSchoolMessageHeader" Width="1.5" PointX="21.75" PointY="128.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblProvince" Width="1.5" PointX="3" PointY="153.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblQualification" Width="1.5" PointX="3" PointY="157.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblRelashionship" Width="1.5" PointX="3" PointY="161.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchool" Width="1.5" PointX="10.5" PointY="125.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolCalendar" Width="1.5" PointX="21.75" PointY="116.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolCategory" Width="1.5" PointX="3" PointY="164.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolExtraCurricularActivity" Width="1.5" PointX="21.75" PointY="111.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolGrade" Width="1.5" PointX="12.75" PointY="130.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolGroup" Width="1.5" PointX="3" PointY="168.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolRank" Width="1.5" PointX="3" PointY="172.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolSubject" Width="1.5" PointX="12.75" PointY="143.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolToParentMessageDetail" Width="1.5" PointX="18.75" PointY="130.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSchoolToParentMessageHeader" Width="1.5" PointX="15.75" PointY="131.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblStudent" Width="1.5" PointX="13.5" PointY="112.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblStudentExtraCurricularActivity" Width="1.5" PointX="18.75" PointY="120.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblStudentOptionalSubject" Width="1.5" PointX="15.75" PointY="140.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSubject" Width="1.5" PointX="3" PointY="175.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblSubjectCategory" Width="1.5" PointX="3" PointY="180.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacher" Width="1.5" PointX="5.25" PointY="147.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherCategory" Width="1.5" PointX="3" PointY="184.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherExtraCurricularActivity" Width="1.5" PointX="21.75" PointY="134" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherQualification" Width="1.5" PointX="21.75" PointY="139.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherSchool" Width="1.5" PointX="15.75" PointY="145.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTeacherSubject" Width="1.5" PointX="10.5" PointY="140.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblTimeTable" Width="1.5" PointX="13.5" PointY="137.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblUser" Width="1.5" PointX="0.75" PointY="105.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblUserCategory" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblUserCategoryFunction" Width="1.5" PointX="8.25" PointY="115.75" IsExpanded="true" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblApplicationStatus_tblUser" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblApplicationStatus_tblUser1" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblAssignmentDueDate_tblAssignmentHeader" ManuallyRouted="false" />
@@ -99,7 +100,6 @@
         <AssociationConnector Association="SchoolMGTModel.FK_tblClass_tblUser1" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblClassTeacher_tblClass" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblEvaluationDetail_tblClass" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblClass" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblStudent_tblClass" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblStudentOptionalSubject_tblClass" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblTeacherSubject_tblClass" ManuallyRouted="false" />
@@ -154,7 +154,6 @@
         <AssociationConnector Association="SchoolMGTModel.FK_tblUserCategoryFunction_tblFunction" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblGrade_tblUser" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblGrade_tblUser1" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblGrade" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblSchoolGrade_tblGrade" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblStudent_tblGrade" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblStudentOptionalSubject_tblGrade" ManuallyRouted="false" />
@@ -191,7 +190,6 @@
         <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageDetail_tblUser2" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageDetail_tblUser3" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblSchool" ManuallyRouted="false" />
-        <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblSubject" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblUser" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblParentToSchoolMessageHeader_tblUser1" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblProvince_tblProvince" ManuallyRouted="false" />

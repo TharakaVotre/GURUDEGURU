@@ -1,0 +1,61 @@
+﻿@model GDWEBSolution.Models.Message.PtoSMessageHeaderModel
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">New Message</h4>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="row">
+                    <div class="col-md-6">
+                        @*<div class="form-group">
+                            <label for="name">
+                                Teacher Category</label>
+                            @Html.DropDownListFor(model => model.TeacherCategory, ViewBag.SchoolGrades as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher", @onchange = "loadClassList()" })
+                        </div>*@
+                        <div class="form-group">
+                            <label for="email">
+                                Teacher</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span>
+                                </span>
+                                @Html.DropDownListFor(model => model.RecepientUser, ViewBag.TeacherDropdown as SelectList, "", new { @class = "select2_Teacher form-control" })
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <label for="subject">
+                                Subject</label>
+                            <select id="subject" name="subject" class="form-control" required="required">
+                                <option value="na" selected="">Choose One:</option>
+                                <option value="service">General Customer Service</option>
+                                <option value="suggestions">Suggestions</option>
+                                <option value="product">Product Support</option>
+                            </select>
+                        </div>*@
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">
+                                Message</label>
+                            @Html.TextAreaFor(model => model.Message, new { @class = "form-control" ,rows ="9",cols="25"})
+                            @*<textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required"
+                                placeholder="Message"></textarea>*@
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
+                            Send Message</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+<script>
+    $(document).ready(function () {
+        $(".select2_Teacher").select2({
+            placeholder: "Select a Teacher",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+</script>

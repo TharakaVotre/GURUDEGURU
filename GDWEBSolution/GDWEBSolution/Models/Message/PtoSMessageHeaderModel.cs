@@ -14,6 +14,10 @@ namespace GDWEBSolution.Models.Message
         public string SchoolId { get; set; }
         [Display(Name = "Message Id")]
         public long MessageId { get; set; }
+        [Display(Name = "Message")]
+        public string Message { get; set; }
+        [Display(Name = "Message Type")]
+        public long MessageType { get; set; }
         [Display(Name = "Recepient User")]
         public string RecepientUser { get; set; }
         [Display(Name = "Status")]
@@ -33,6 +37,11 @@ namespace GDWEBSolution.Models.Message
         [Display(Name = "Modified Date")]
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         [Display(Name = "Is Active")]
-        public string IsActive { get; set; }
-    }
+        public string IsActive { get; set;}
+        public string TeacherName {get;set;}
+        public string Subject { get; set; }
+        
+        }
+
+  
 }
