@@ -8,7 +8,8 @@
         <h3>Teachers</h3>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <button type="button" class="btn btn-primary" onclick="AddNew()"><span class="fa fa-plus"></span> Add New</button></div>
+                <button type="button" class="btn btn-primary" onclick="AddNew()"><span class="fa fa-plus"></span>Add New</button>
+            </div>
             <div class="panel-body">
                 <table id="zctb" class="display table table-bordered table-hover">
                     <thead>
@@ -97,9 +98,14 @@
                                     </td>
                                 }
                                 <td align="center">
-                                    <a class="btn btn-default" onclick="DetailsView(@item.TeacherId)"><span class="fa fa-info"></span> Detail </a>
-                                    <a class="btn btn-info" onclick='EditView(@item.TeacherId,"@item.Name")'><span class="fa fa-pencil"></span> Edit </a>
-                                    <a class="btn btn-danger" onclick="DeleteView(@item.TeacherId)"><span class="fa fa-trash"></span> Delete</a>
+                                    @*<div class="btn-group">
+                                        <button type="button" class="btn btn-primary" onclick="DetailsView(@item.TeacherId)"><span class="fa fa-info"></span></button>
+                                        <button type="button" class="btn btn-primary" onclick='EditView(@item.TeacherId,"@item.Name")'><span class="fa fa-pencil"></span></button>
+                                        <button type="button" class="btn btn-primary" onclick="DeleteView(@item.TeacherId)"><span class="fa fa-trash"></span></button>
+                                    </div>*@
+                                    <a href="#" class="hvr-buzz-out" onclick="DetailsView(@item.TeacherId)">Detail </a> |
+                                    <a href="#" class="hvr-buzz-out" onclick='EditView(@item.TeacherId,"@item.Name")'>Edit </a> |
+                                    <a href="#" class="hvr-buzz-out" onclick="DeleteView(@item.TeacherId)">Delete</a>
                                 </td>
                             </tr>
     

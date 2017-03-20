@@ -6,7 +6,7 @@
         @Html.LabelFor(m => m.TeacherCategoryId, new { @class = "col-sm-2 control-label" })
         @Html.HiddenFor(m => m.TeacherId)
         <div class="col-sm-7">
-            @Html.DropDownListFor(model => model.TeacherCategoryId, ViewBag.TeacherCategoryDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher" })
+          @Html.TextBoxFor(model => model.TeacherCategoryName, new { @class = "form-control", @placeholder = "Name of the Teacher", @maxlength = "100", @readonly = "readonly" })
         </div>
         <div class="col-sm-3">
             @Html.ValidationMessageFor(model => model.TeacherCategoryId, null, new { @class = "text-danger" })

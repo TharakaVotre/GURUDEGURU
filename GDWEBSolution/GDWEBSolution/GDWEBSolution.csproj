@@ -185,6 +185,7 @@
     <Compile Include="Controllers\Maintenance\MaintainStudentEvaluationTypeController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainSubjectCategoryController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainSubjectController.cs" />
+    <Compile Include="Controllers\Message\PSMessageController.cs" />
     <Compile Include="Controllers\School\SchoolGradeController.cs" />
     <Compile Include="Controllers\Teacher\TeacherCategoryController.cs" />
     <Compile Include="Controllers\Teacher\TeacherController.cs" />
@@ -285,6 +286,8 @@
     <Compile Include="Models\Maintenance\StudentEvaluationTypeModel.cs" />
     <Compile Include="Models\Maintenance\SubjectCategoryModel.cs" />
     <Compile Include="Models\Maintenance\SubjectModel.cs" />
+    <Compile Include="Models\Message\PtoSMessageDetailModel.cs" />
+    <Compile Include="Models\Message\PtoSMessageHeaderModel.cs" />
     <Compile Include="Models\School\SchoolExtraCuricularModel.cs" />
     <Compile Include="Models\School\SchoolGradeModel.cs" />
     <Compile Include="Models\School\SchoolModel.cs" />
@@ -1037,6 +1040,8 @@
     <Content Include="Views\Grade_Subject\DeleteView.cshtml" />
     <Content Include="Views\Grade_Subject\Edit.cshtml" />
     <Content Include="Views\Grade_Subject\Index.cshtml" />
+    <Content Include="Views\PSMessage\Index.cshtml" />
+    <Content Include="Views\PSMessage\InboxView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

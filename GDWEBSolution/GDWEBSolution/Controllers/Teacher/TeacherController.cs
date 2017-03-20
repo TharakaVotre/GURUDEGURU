@@ -591,12 +591,10 @@ namespace GDWEBSolution.Controllers.Teacher
         }
         public ActionResult ShowTeacherDetails(long TeacherId)
         {
-            List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
-            ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
-
             TeacherModel TModel = new TeacherModel();
 
-            tblTeacher TCtable = Connection.tblTeachers.SingleOrDefault(x => x.TeacherId == TeacherId);
+            var TCtable = Connection.SMGTgetTeacher(TeacherId).First();
+            TModel.TeacherCategoryName = TCtable.TeacherCategoryName;
             TModel.IsActive = TCtable.IsActive;
             TModel.Address1 = TCtable.Address1;
             TModel.Address2 = TCtable.Address2;
