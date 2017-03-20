@@ -168,6 +168,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnnualFunctions\StudentGradeAdvanceController.cs" />
+    <Compile Include="Controllers\Configuration\Grade SubjectController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainApplicationStatusController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainEventCategoryController.cs" />
@@ -192,6 +194,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\AnnualFunctions\StudentGradeAdvanceModel.cs" />
+    <Compile Include="Models\Configuration\Grade SubjectModel.cs" />
     <Compile Include="Models\DBEntityModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -228,6 +232,9 @@
     <Compile Include="Models\GDgetAllGradeMaintenance_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GDgetAllGradeSubject_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GDgetAllMassageType_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -244,6 +251,9 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GDgetAllSchoolRank_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllStudentInGrade_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GDgetAllSubjectCategory_Result.cs">
@@ -1021,6 +1031,12 @@
     <Content Include="Views\Teacher\test.cshtml" />
     <Content Include="Views\Teacher\TeacherDetailsView.cshtml" />
     <Content Include="Views\Teacher\Details.cshtml" />
+    <Content Include="Views\StudentGradeAdvance\Detail.cshtml" />
+    <Content Include="Views\StudentGradeAdvance\Index.cshtml" />
+    <Content Include="Views\Grade_Subject\Create.cshtml" />
+    <Content Include="Views\Grade_Subject\DeleteView.cshtml" />
+    <Content Include="Views\Grade_Subject\Edit.cshtml" />
+    <Content Include="Views\Grade_Subject\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

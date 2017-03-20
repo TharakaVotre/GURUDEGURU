@@ -1,0 +1,54 @@
+﻿@model GDWEBSolution.Models.Configuration.Grade_SubjectModel
+
+
+<div>
+    <form id="myForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5 class="modal-title">Are you sure you want to Delete this subject ? @Html.HiddenFor(model => model.SubjectId)</h5>
+            @Html.HiddenFor(model => model.AcademicYear)
+            @Html.HiddenFor(model => model.GradeId)
+        </div>
+        <div class="modal-footer">
+            <a href="#" id="btnSubmit" class="btn btn-primary">YES</a>
+            <a href="#" id="btnNo" class="btn btn-default">NO</a>
+        </div>
+    </form>
+
+@*    <div style="text-align: center; display: none" id="loaderDiv">
+        Loading
+    </div>*@
+
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+            var myformdata = $("#myForm").serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/Grade_Subject/Delete",
+                data: myformdata,
+                success: function () {
+                    //$("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/Grade_Subject/Detail";
+                    
+
+                }
+
+            })
+        })
+
+        $("#btnNo").click(function (e) {
+            debugger
+            $("#myModal").modal("hide");
+        })
+
+    })
+
+
+</script>
