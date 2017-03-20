@@ -1,0 +1,171 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Configuration.Grade_SubjectModel>
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>Grade Subject</h3>
+
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+@using (Html.BeginForm("Detail", "Grade_Subject", FormMethod.Post))
+{
+    <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="row">
+                        <lable class="col-sm-2 control-label">Academic Year</lable>
+                        <div class="col-sm-2">
+                            @Html.TextBox("AcademicYear")
+                        </div>
+                        <lable class="col-sm-2 control-label">Grade</lable>
+                        <div class="col-sm-2">
+
+                            @Html.DropDownList("GradeId", String.Empty)
+
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary" ><span class="fa fa-search"></span> Search</button>
+                        </div>
+                    </div>
+                </div>
+    </div>
+}
+                <a href="~/Grade_Subject/Index" class="btn btn-primary"><span class="fa fa-plus"></span> Add New</a></div>
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+                    <thead>
+
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AcademicYear)
+                            </th>
+                            
+                            <th>
+                                @Html.DisplayNameFor(model => model.GradeName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShortName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SubjectName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Optional)
+                            </th>
+                            
+                            <th>
+                                @Html.DisplayNameFor(model => model.SubjectCategoryName)
+                            </th>
+                           
+                         
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AcademicYear)
+                                    </td>
+                                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GradeName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ShortName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SubjectName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Optional)
+                                    </td>
+                                    
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SubjectCategoryName)
+                                    </td>
+                                    
+                                       
+                                   
+                                    <td>
+                                        <a class="btn btn-info" onclick='EditView("@item.AcademicYear","@item.GradeId","@item.SubjectId","@item.SubjectCategoryId","@item.Optional")'><span class="fa fa-pencil"></span> Edit </a>
+                                        <a class="btn btn-danger" onclick='DeleteView("@item.AcademicYear","@item.GradeId",@item.SubjectId,"@item.ShortName","@item.SubjectName",@item.SubjectCategoryId,"@item.Optional")'><span class="fa fa-trash"></span> Delete</a>
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" id="MyModelBody">
+
+        </div>
+
+    </div>
+</div>
+<style>
+    #GradeId {
+        border: 1px solid #e0e0e0;
+        padding: 5px 8px;
+        color: #616161;
+        background: #fff;
+        box-shadow: none !important;
+        display: block;
+        width: 100%;
+        height: 32px;
+        font-size: 14px;
+        line-height: 1.45;
+        border-radius: 2px;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    #AcademicYear {
+        border: 1px solid #e0e0e0;
+        padding: 5px 8px;
+        color: #616161;
+        background: #fff;
+        box-shadow: none !important;
+        display: block;
+        width: 80%;
+        height: 32px;
+        font-size: 14px;
+        line-height: 1.45;
+        border-radius: 2px;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+</style>
+<script>
+
+    var EditView = function (AcademicYear,GradeId,SubjectId,SubjectCategoryId,Optional) {
+        var Url = "/Grade_Subject/Edit?AcademicYear=" + AcademicYear + "&GradeId=" + GradeId + "&SubjectId=" + SubjectId + "&SubjectCategoryId=" + SubjectCategoryId + "&Optional=" + Optional;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var DeleteView = function (AcademicYear, GradeId, SubjectId) {
+        var Url = "/Grade_Subject/Delete?AcademicYear=" + AcademicYear + "&GradeId=" + GradeId + "&SubjectId=" + SubjectId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+</script>

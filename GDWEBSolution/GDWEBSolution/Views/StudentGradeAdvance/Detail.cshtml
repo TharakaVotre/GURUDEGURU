@@ -1,0 +1,123 @@
+﻿@model IEnumerable<GDWEBSolution.Models.AnnualFunctions.StudentGradeAdvanceModel>
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Update", "StudentGradeAdvance", FormMethod.Post))
+{
+
+
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <h4 class="modal-title">Student Grade Advance</h4>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="form-group">
+                    <div class="row">
+                        <lable class="col-sm-2 control-label">Selected Grade</lable>
+                        <div class="col-sm-2">
+                            @Html.TextBox("CurentGroup")
+                        </div>
+                        <lable class="col-sm-2 control-label">Advance to Grade</lable>
+                        <div class="col-sm-3">
+
+                            @Html.DropDownList("GradeId", "--Select Grade--")
+
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary"><span class="fa fa-flag"></span> Save</button>
+                        </div>
+                    </div>
+                </div>
+                <a href="~/StudentGradeAdvance/Index" class="btn btn-primary">Go Back</a>
+
+            </div>
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Select
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StudentId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StudentName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ClassName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HouseName)
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="selectedNames" value="@item.StudentId" checked /> <!-- HOW SHOULD THIS BE RENDERED? -->
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StudentId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StudentName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ClassName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.HouseName)
+                                    </td>
+
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+<style>
+    #CurentGroup {
+        border: 1px solid #e0e0e0;
+        padding: 5px 8px;
+        color: #616161;
+        background: #fff;
+        box-shadow: none !important;
+        display: block;
+        width: 80%;
+        height: 32px;
+        font-size: 14px;
+        line-height: 1.45;
+        border-radius: 2px;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+    #GradeId {
+        border: 1px solid #e0e0e0;
+        padding: 5px 8px;
+        color: #616161;
+        background: #fff;
+        box-shadow: none !important;
+        display: block;
+        width: 80%;
+        height: 32px;
+        font-size: 14px;
+        line-height: 1.45;
+        border-radius: 2px;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+</style>

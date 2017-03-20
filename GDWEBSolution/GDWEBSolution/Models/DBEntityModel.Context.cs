@@ -297,6 +297,31 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteGradeMaintenance", isactiveParameter, statusCodeParameter, modyfiedByParameter);
         }
     
+        public virtual int GDdeleteGradeSubject(string academicYear, string gradeId, Nullable<int> subjectId, string isActive, string userId)
+        {
+            var academicYearParameter = academicYear != null ?
+                new ObjectParameter("AcademicYear", academicYear) :
+                new ObjectParameter("AcademicYear", typeof(string));
+    
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            var subjectIdParameter = subjectId.HasValue ?
+                new ObjectParameter("SubjectId", subjectId) :
+                new ObjectParameter("SubjectId", typeof(int));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("isActive", isActive) :
+                new ObjectParameter("isActive", typeof(string));
+    
+            var userIdParameter = userId != null ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteGradeSubject", academicYearParameter, gradeIdParameter, subjectIdParameter, isActiveParameter, userIdParameter);
+        }
+    
         public virtual int GDdeleteMassageType(string isactive, Nullable<long> statusCode, string modyfiedBy)
         {
             var isactiveParameter = isactive != null ?
@@ -508,6 +533,23 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllGradeMaintenance_Result>("GDgetAllGradeMaintenance", isActiveParameter);
         }
     
+        public virtual ObjectResult<GDgetAllGradeSubject_Result> GDgetAllGradeSubject(string academicYear, string gradeId, string isActive)
+        {
+            var academicYearParameter = academicYear != null ?
+                new ObjectParameter("AcademicYear", academicYear) :
+                new ObjectParameter("AcademicYear", typeof(string));
+    
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllGradeSubject_Result>("GDgetAllGradeSubject", academicYearParameter, gradeIdParameter, isActiveParameter);
+        }
+    
         public virtual ObjectResult<GDgetAllMassageType_Result> GDgetAllMassageType(string isActive)
         {
             var isActiveParameter = isActive != null ?
@@ -569,6 +611,23 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("Isactive", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDgetAllStudentEvaluationType", isactiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetAllStudentInGrade_Result> GDgetAllStudentInGrade(string schoolId, string gradeId, string isactive)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("schoolId", schoolId) :
+                new ObjectParameter("schoolId", typeof(string));
+    
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("isactive", isactive) :
+                new ObjectParameter("isactive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllStudentInGrade_Result>("GDgetAllStudentInGrade", schoolIdParameter, gradeIdParameter, isactiveParameter);
         }
     
         public virtual ObjectResult<GDgetAllSubject_Result> GDgetAllSubject(string isactive)
@@ -717,6 +776,35 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyGrade", descriptionParameter, statusCodeParameter, modyfiedByParameter);
         }
     
+        public virtual int GDModifyGradeSubject(string academicYear, string gradeId, Nullable<int> subjectId, Nullable<int> subjectCatId, string option, string userId)
+        {
+            var academicYearParameter = academicYear != null ?
+                new ObjectParameter("AcademicYear", academicYear) :
+                new ObjectParameter("AcademicYear", typeof(string));
+    
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            var subjectIdParameter = subjectId.HasValue ?
+                new ObjectParameter("SubjectId", subjectId) :
+                new ObjectParameter("SubjectId", typeof(int));
+    
+            var subjectCatIdParameter = subjectCatId.HasValue ?
+                new ObjectParameter("SubjectCatId", subjectCatId) :
+                new ObjectParameter("SubjectCatId", typeof(int));
+    
+            var optionParameter = option != null ?
+                new ObjectParameter("option", option) :
+                new ObjectParameter("option", typeof(string));
+    
+            var userIdParameter = userId != null ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyGradeSubject", academicYearParameter, gradeIdParameter, subjectIdParameter, subjectCatIdParameter, optionParameter, userIdParameter);
+        }
+    
         public virtual int GDModifyMassageType(string description, Nullable<long> statusCode, string modyfiedBy)
         {
             var descriptionParameter = description != null ?
@@ -834,6 +922,27 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("ModyfiedBy", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyStudentEvaluationType", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifyStudentGradeAdvance(string schoolId, string studentId, string gradeId, string userId)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("schoolId", schoolId) :
+                new ObjectParameter("schoolId", typeof(string));
+    
+            var studentIdParameter = studentId != null ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(string));
+    
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("gradeId", gradeId) :
+                new ObjectParameter("gradeId", typeof(string));
+    
+            var userIdParameter = userId != null ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyStudentGradeAdvance", schoolIdParameter, studentIdParameter, gradeIdParameter, userIdParameter);
         }
     
         public virtual int GDModifySubject(string shortName, string subjectName, Nullable<int> statusCode, string modyfiedBy)
@@ -994,6 +1103,39 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("IsActive", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetGrade", idParameter, descriptionParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetGradeSubject(string academicYear, string gradeId, Nullable<int> subjectId, Nullable<int> subjectCategoryId, string optional, string createdBy, string isActive)
+        {
+            var academicYearParameter = academicYear != null ?
+                new ObjectParameter("AcademicYear", academicYear) :
+                new ObjectParameter("AcademicYear", typeof(string));
+    
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            var subjectIdParameter = subjectId.HasValue ?
+                new ObjectParameter("SubjectId", subjectId) :
+                new ObjectParameter("SubjectId", typeof(int));
+    
+            var subjectCategoryIdParameter = subjectCategoryId.HasValue ?
+                new ObjectParameter("SubjectCategoryId", subjectCategoryId) :
+                new ObjectParameter("SubjectCategoryId", typeof(int));
+    
+            var optionalParameter = optional != null ?
+                new ObjectParameter("Optional", optional) :
+                new ObjectParameter("Optional", typeof(string));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetGradeSubject", academicYearParameter, gradeIdParameter, subjectIdParameter, subjectCategoryIdParameter, optionalParameter, createdByParameter, isActiveParameter);
         }
     
         public virtual int GDsetMassageType(string description, string createdBy, string isActive)

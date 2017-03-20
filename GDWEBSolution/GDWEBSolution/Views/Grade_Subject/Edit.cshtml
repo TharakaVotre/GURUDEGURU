@@ -1,0 +1,136 @@
+﻿@model GDWEBSolution.Models.Configuration.Grade_SubjectModel
+
+
+<div>
+
+    <form id="myForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Function</h4>
+        </div>
+        <div class="modal-body">
+            @Html.HiddenFor(model => model.AcademicYear)
+            @Html.HiddenFor(model => model.GradeId)
+            @Html.HiddenFor(model => model.SubjectId)
+            <div class="form-group">
+                
+
+                @Html.LabelFor(m => m.AcademicYear, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.AcademicYear, new { @class = "form-control", disabled = "disabled" })
+                    <span class="help-block m-b-none" id="CodeError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+
+                @Html.LabelFor(m => m.GradeName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.GradeName, new { @class = "form-control", disabled = "disabled" })
+                    <span class="help-block m-b-none" id="NameError"></span>
+                </div>
+            </div>
+
+          
+            <div class="form-group">
+
+
+                @Html.LabelFor(m => m.SubjectName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.SubjectName, new { @class = "form-control", @placeholder = "Function Id", disabled = "disabled" })
+                    <span class="help-block m-b-none" id="CodeError"></span>
+                </div>
+            </div>
+            <div class="form-group">
+
+
+                @Html.LabelFor(m => m.ShortName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.ShortName, new { @class = "form-control", @placeholder = "Function Id", disabled = "disabled" })
+                    <span class="help-block m-b-none" id="CodeError"></span>
+                </div>
+            </div>
+            <div class="form-group">
+
+
+                @Html.LabelFor(m => m.SubjectCategoryId, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownList("SubjectCategoryId")
+                    <span class="help-block m-b-none" id="CodeError"></span>
+                </div>
+            </div><div class="form-group">
+
+
+    @Html.LabelFor(m => m.Optional, new { @class = "col-sm-3 control-label" })
+    <div class="col-sm-8">
+        @Html.DropDownList("Optional")
+              <span class="help-block m-b-none" id="CodeError"></span>
+    </div>
+</div>
+          
+
+        </div>
+        <div class="modal-footer">
+
+            <a href="#" id="btnSubmit" class="btn btn-primary">Save</a>
+        </div>
+    </form>
+
+
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+            var Code = $('#FunctionId');
+            var CodeError = $('#CodeError');
+
+            var Name = $('#FunctionName');
+            var NameError = $('#NameError');
+
+
+
+            // Check if there is an entered value
+            if (!Name.val()) {
+                // Add errors highlight
+                //CategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
+               // $("#NameError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+              //  return;
+            }
+            // Check if there is an entered value
+            if (!Code.val()) {
+                // Add errors highlight
+               // CategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
+              //  $("#CodeError").text("Required");
+               
+              //  return;
+            }
+
+
+            var myformdata = $("#myForm").serialize();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Grade_Subject/Edit",
+                data: myformdata,
+                success: function () {
+                    //$("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/Grade_Subject/Detail";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>
+
