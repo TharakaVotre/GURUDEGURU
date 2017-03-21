@@ -15,7 +15,7 @@
     <div class="col-sm-3 col-md-2">
 
         <ul class="nav nav-pills nav-stacked">
-            <li><a href="#"><span class="badge pull-right">0</span> Inbox </a>
+            <li><a href="~/PSMessage/Index"><span class="badge pull-right">0</span> Inbox </a>
             </li>
             <li class="active"><a href="#" onclick="">Sent</a></li>
 
@@ -29,25 +29,64 @@
         <div class="inbox fade in active" id="home">
             <div class="list-group">
                 @if (Model != null)
-                {
-                    foreach (var item in Model)
+                {<table class="table table-inbox table-hover">
+                            <tbody>
+                     
+                    @foreach (var item in Model)
                     {
-                <a href="#" class="list-group-item">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox">
-                        </label>
-                    </div>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="name" style="min-width: 120px; width : 160px; display: inline-block;">@item.TeacherName (@item.RecepientUser)</span>
-                    @*<span class="">--------------------</span>*@
-                    <span class="text-muted" style="font-size: 11px;"> - @item.Message</span>
-                    <span class="badge">@item.CreatedDate</span>
-                    <!--<span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>-->
-                </a>
+                        <tr class="">
+                            <td class="inbox-small-cells">
+                                <input type="checkbox" class="mail-checkbox">
+                            </td>
+                            @*<td class="inbox-small-cells"><i class="fa fa-star"></i></td>*@
+                            @if(item.TeacherName.Length > 30){
+                              <td class="view-message dont-show">@item.TeacherName.Substring(0,26)....</td>
+                            }
+                            else{<td class="view-message dont-show">@item.TeacherName</td>}
+                            @if(item.Subject == null){
+                                if (item.Message.Length > 20)
+                                {
+                                  <td class="view-message">No Subject : @item.Message.Substring(0,20) .... </td>
+                                }
+                                else{
+                                  <td class="view-message">No Subject : @item.Message </td>
+                                }
+                            }else{
+                                if (item.Subject.Length > 20)
+                                {
+                                    if(item.Message.Length > 20){
+                                       <td class="view-message">@item.Subject.Substring(0,20) : @item.Message.Substring(0,20) </td>
+                                    }
+                                    else{
+                                      <td class="view-message">@item.Subject.Substring(0,20) : @item.Message </td>  
+                                    }
+                                }
+                                else{
+                                    if(item.Message.Length > 20){
+                                       <td class="view-message">@item.Subject : @item.Message.Substring(0,20) </td>
+                                    }
+                                    else{
+                                      <td class="view-message">@item.Subject : @item.Message </td>  
+                                    }
+                                }
+                               
+                            }
+                            <td class="view-message inbox-small-cells"></td>
+                            @if (item.CreatedDate.ToString("dd/MM/yyyy").Equals(DateTime.Now.ToString("dd/MM/yyyy"))){
+                            <td class="view-message text-right">@item.CreatedDate.ToString("h:mm tt")</td>
+                            }
+                            else
+                            {
+                                <td class="view-message text-right">@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                            }
+                        </tr>
                     }
+                                </tbody>
+                    </table>
                 }
+
             </div>
+
             <div class="pull-right">
                 <!--<span class="text-muted"><b>1</b>–<b>50</b> of <b>160</b></span>-->
                 <div class="btn-group btn-group-sm">

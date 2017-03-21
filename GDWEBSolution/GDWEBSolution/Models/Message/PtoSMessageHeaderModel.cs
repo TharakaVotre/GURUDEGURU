@@ -16,8 +16,13 @@ namespace GDWEBSolution.Models.Message
         public long MessageId { get; set; }
         [Display(Name = "Message")]
         public string Message { get; set; }
-        [Display(Name = "Message Type")]
+
+        [Display(Name = "Message Type Id")]
         public long MessageType { get; set; }
+
+        [Display(Name = "Message Type")]
+        public string MessageTypeDes { get; set; }
+
         [Display(Name = "Recepient User")]
         public string RecepientUser { get; set; }
         [Display(Name = "Status")]

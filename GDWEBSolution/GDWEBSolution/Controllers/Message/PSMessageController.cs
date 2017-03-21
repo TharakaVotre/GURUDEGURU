@@ -144,17 +144,18 @@ namespace GDWEBSolution.Controllers.Message
 
             List<PtoSMessageHeaderModel> List = STQlist.Select(x => new PtoSMessageHeaderModel
             {
-                SchoolId = x.SchoolId, 
-                MessageId = x.MessageId, 
+                SchoolId = x.SchoolId,
+                MessageId = x.MessageId,
+                MessageTypeDes = x.MessageTypeDescription,
                 //ParentId = x.ParentId, 
-               // MessageType = x.MessageType, 
                 Message= x.Message.Replace("<br />", " "),  
                 Status = x.Status,   
                 IsActive = x.IsActive,
                 SeqNo = x.SeqNo, 
                 RecepientUser = x.RecepientUser,
-                TeacherName = x.Name
-
+                TeacherName = x.Name,
+                Subject = x.Subject,
+                CreatedDate = x.CreatedDate,
 
             }).ToList();
             return PartialView("SentView",List);

@@ -26,5 +26,6 @@ namespace GDWEBSolution.Models
         public string Name { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<int> Attachments { get; set; }
+        public string Subject { get; set; }
     }
 }

@@ -10436,6 +10436,7 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="Attachments" Nullable="true" />
+          <Property Type="String" Name="Subject" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="SMGTgetSchoolGrade_Result">
           <Property Type="String" Name="GradeId" Nullable="false" MaxLength="20" />
@@ -11912,6 +11913,7 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Attachments" ColumnName="Attachments" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
