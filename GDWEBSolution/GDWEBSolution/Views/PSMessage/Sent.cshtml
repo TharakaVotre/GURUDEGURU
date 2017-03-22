@@ -62,6 +62,7 @@
     var ShowViewNewMSG = function (bookid) {
         var Url = "/PSMessage/ShowNewMessage"
         $("#MyModelBody").load(Url, function () {
+            $('#myModal').modal({ backdrop: 'static', keyboard: false })
             $("#myModal").modal("show");
         })
     }

@@ -189,10 +189,14 @@
     <Compile Include="Controllers\School\SchoolGradeController.cs" />
     <Compile Include="Controllers\Teacher\TeacherCategoryController.cs" />
     <Compile Include="Controllers\Teacher\TeacherController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\User\UserController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="MUHandler.ashx.cs">
+      <DependentUpon>MUHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AnnualFunctions\StudentGradeAdvanceModel.cs" />
@@ -878,6 +882,7 @@
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
       <LastGenOutput>DBEntityModel.cs</LastGenOutput>
     </Content>
+    <Content Include="MUHandler.ashx" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -1053,9 +1058,12 @@
     <Content Include="Views\PSMessage\NewMessage.cshtml" />
     <Content Include="Views\PSMessage\SentView.cshtml" />
     <Content Include="Views\PSMessage\Sent.cshtml" />
+    <Content Include="Views\Upload\AsyncUpload.cshtml" />
+    <Content Include="Views\Upload\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

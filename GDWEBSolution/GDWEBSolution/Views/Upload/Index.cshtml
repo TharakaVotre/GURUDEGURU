@@ -1,0 +1,61 @@
+﻿@model GDWEBSolution.Models.Message.PtoSMessageHeaderModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/jquery-ui-1.8.20.js"></script>
+<h2>Index</h2>
+<div class="panel panel-default">
+  <div class="panel-body">
+      <form id="FrmUpload"  enctype="multipart/form-data">
+          @Html.TextBoxFor(c => c.AttachmentFiles, new { type = "file",multiple = "true" })
+          <button id="btnUpload">Upload</button>
+      </form>
+  </div>
+             <div style="width: 300px">
+            <div id="progressbar" style="position: relative; display: none">
+                <span style="position: absolute; left: 35%; top: 20%" id="progressBar-label">
+                    Uploading...
+                </span>
+            </div>
+        </div>
+
+  <div class="panel-footer">Panel Footer</div>
+</div>
+
+     <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnUpload").click(function (event) {
+                var files = $("#AttachmentFiles")[0].files;
+                if (files.length > 0) {
+                    var formData = new FormData();
+                    for (var i = 0; i < files.length; i++) {
+                        formData.append(files[i].name, files[i]);
+                    }
+
+                    var progressbarLabel = $('#progressBar-label');
+                    var progressbarDiv = $('#progressbar');
+
+                    $.ajax({
+                        url: 'MUHandler.ashx',
+                        method: 'post',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function () {
+                            progressbarLabel.text('Complete');
+                            progressbarDiv.fadeOut(2000);
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+
+                    progressbarLabel.text('Uploading...');
+                    progressbarDiv.progressbar({
+                        value: false
+                    }).fadeIn(500);
+                }
+            });
+        });
+    </script>

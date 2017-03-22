@@ -3,6 +3,7 @@ using GDWEBSolution.Models.Message;
 using GDWEBSolution.Models.Teacher;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -67,6 +68,15 @@ namespace GDWEBSolution.Controllers.Message
             List<tblMessageType> MsgTypeList = Connection.tblMessageTypes.ToList();
             ViewBag.MessageTypesDropdown = new SelectList(MsgTypeList, "MessageTypeId", "MessageTypeDescription");
 
+            var MsgId = Connection.tblParameters.Where(x => x.ParameterId == "PSMHS").Select(x => x.ParameterValue).SingleOrDefault();
+            long a = Convert.ToInt64(MsgId) + 1;
+
+            tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "PSMHS");
+            TCtable.ParameterValue = a.ToString();
+            Connection.SaveChanges();
+
+            ViewBag.Message_Id = a.ToString();
+
             return PartialView("NewMessage");
         }
 
@@ -76,12 +86,10 @@ namespace GDWEBSolution.Controllers.Message
             string result = "Success";
             try
             {
-                var MsgId = Connection.tblParentToSchoolMessageHeaders.Count();
-
                 tblParentToSchoolMessageHeader MsgHead = new tblParentToSchoolMessageHeader();
 
                 MsgHead.SchoolId = "CKC";
-                MsgHead.MessageId = MsgId + 1;
+                MsgHead.MessageId = Model.MessageId;
                 MsgHead.ParentId = 1;
                 MsgHead.Message = Model.Message.Replace("\r\n", "<br />");
                 MsgHead.CreatedBy = "ADMIN";
@@ -94,7 +102,7 @@ namespace GDWEBSolution.Controllers.Message
 
                 tblParentToSchoolMessageDetail MsgDetail = new tblParentToSchoolMessageDetail();
                 MsgDetail.SchoolId = "CKC";
-                MsgDetail.MessageId = MsgId + 1;
+                MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
                 MsgDetail.RecepientUser = Model.RecepientUser;
                 MsgDetail.IsActive = "Y";
                 MsgDetail.Status = "N";
@@ -138,6 +146,38 @@ namespace GDWEBSolution.Controllers.Message
             //    return Json("Error", JsonRequestBehavior.AllowGet);
             //}
         }
+
+        [HttpPost]
+        public JsonResult AttachmentUpload(PtoSMessageHeaderModel Model)
+        {
+            var file = Model.Attachment_File;
+            long AttachmentId = 0;
+            tblParentToSchollMessageAttachment Attachmentfile = new tblParentToSchollMessageAttachment();
+
+            if (file != null)
+            {
+                var Atid = Connection.tblParameters.Where(x => x.ParameterId == "PSMAS").Select(x => x.ParameterValue).SingleOrDefault();
+                AttachmentId = Convert.ToInt64(Atid) + 1;
+
+                var fileName = Path.GetFileName(file.FileName);
+                var extention = Path.GetExtension(file.FileName);
+
+
+                Attachmentfile.AttachementName = file.FileName;
+                Attachmentfile.AttachementPath = "/UploadedFiles" + file.FileName;
+                Attachmentfile.MessageId = Model.MessageId;
+                Attachmentfile.SeqNo = AttachmentId;
+
+                Connection.tblParentToSchollMessageAttachments.Add(Attachmentfile);
+                Connection.SaveChanges();
+
+                file.SaveAs(Server.MapPath("/UploadedFiles/" + file.FileName));
+
+            }
+            var result = new { FileName = file.FileName, SeqNo = AttachmentId };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult ShowSentMessages()
         {
             var STQlist = Connection.SMGTgetParentToSchoolSentMail(1).ToList(); //ParentId

@@ -45,7 +45,10 @@ namespace GDWEBSolution.Models.Message
         public string IsActive { get; set;}
         public string TeacherName {get;set;}
         public string Subject { get; set; }
-        
+
+
+        public IEnumerable<HttpPostedFileBase> AttachmentFiles { get; set; }
+        public HttpPostedFileBase Attachment_File { get; set; }
         }
 
   

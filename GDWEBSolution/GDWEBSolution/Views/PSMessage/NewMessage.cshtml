@@ -6,9 +6,10 @@
 </div>
 <div class="modal-body">
     <div class="form-area">
-        <form id="MsgFrm">
+        <form id="MsgFrm" enctype="multipart/form-data">
             <br style="clear: both">
             @*            <h3 style="margin-bottom: 25px; text-align: center;">Contact Form</h3>*@
+            @Html.HiddenFor(model =>model.MessageId ,new {@Value = ViewBag.Message_Id})
             <div class="form-group">
                 @Html.DropDownListFor(model => model.MessageType, ViewBag.MessageTypesDropdown as SelectList, "", new { @class = "select2_MSG form-control" })
             </div>
@@ -26,7 +27,12 @@
                     <p id="Error" style="color:red;"></p>
                 </span>
             </div>
-
+            <div class="form-group">
+                 <input type="file" id="AttachmentFile">
+            </div>
+            <div class="row" id="attachmetnsview">
+							@*<div class="col-sm-12"><div class="well">Look, I'm in a well!</div></div>*@
+			</div>
             <div class="modal-footer">
                 <a href="#" id="btnSubmit" class="btn btn-primary" onclick="SendMessage()">Send</a>
             </div>
@@ -61,6 +67,29 @@
             placeholder: "Select a Message Type",
             allowClear: true,
             width: '100%'
+        });
+
+        $("#AttachmentFile").change(function () {
+            debugger
+            var file = $("#AttachmentFile")[0].files;
+            var data = new FormData;
+            data.append("Attachment_File", file[0]);
+            data.append("MessageId", $("#MessageId").val());
+            
+
+            $.ajax({
+                type: "POST",
+                url: "/PSMessage/AttachmentUpload",
+                data: data,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    $("#attachmetnsview").append('<div class="col-sm-12"><div class="well">' + result.FileName + ' ' + result.SeqNo + '</div></div>')
+                }
+
+
+            })
+
         });
     });
     var SendMessage = function () {
