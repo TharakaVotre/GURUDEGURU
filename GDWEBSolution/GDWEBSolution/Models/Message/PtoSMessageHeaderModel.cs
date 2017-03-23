@@ -43,7 +43,9 @@ namespace GDWEBSolution.Models.Message
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         [Display(Name = "Is Active")]
         public string IsActive { get; set;}
+        [Display(Name = "Recipient Name")]
         public string TeacherName {get;set;}
+        [Display(Name = "Message Subject")]
         public string Subject { get; set; }
 
 

@@ -32,19 +32,26 @@ namespace GDWEBSolution.Controllers.Message
 
         private void Dropdowns()
         {
-            List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
-            ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
-
-            var TeacherList = Connection.SMGTgetAllTeachers("CKC", "%", "Y").ToList(); // Order by teacher category
-            List<TeacherModel> tcmlist = TeacherList.Select(x => new TeacherModel
+            try
             {
-                TeacherCategoryId = x.TeacherCategoryId,
-                UserId = x.UserId,
-                Name = x.Name,
-                TeacherId = x.TeacherId
+                List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
+                ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
 
-            }).ToList();
-            ViewBag.TeacherDropdown = new SelectList(tcmlist, "UserId", "Name");
+                var TeacherList = Connection.SMGTgetAllTeachers("CKC", "%", "Y").ToList(); // Order by teacher category
+                List<TeacherModel> tcmlist = TeacherList.Select(x => new TeacherModel
+                {
+                    TeacherCategoryId = x.TeacherCategoryId,
+                    UserId = x.UserId,
+                    Name = x.Name,
+                    TeacherId = x.TeacherId
+
+                }).ToList();
+                ViewBag.TeacherDropdown = new SelectList(tcmlist, "UserId", "Name");
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("Dropdowns() @PSMessageController", Ex);
+            }
         }
 
         public ActionResult ShowInbox()
@@ -54,28 +61,35 @@ namespace GDWEBSolution.Controllers.Message
 
         public ActionResult ShowNewMessage()
         {
-            var TeacherList = Connection.SMGTgetAllTeachers("CKC", "%", "Y").ToList(); // Order by teacher category
-            List<TeacherModel> tcmlist = TeacherList.Select(x => new TeacherModel
+            try
             {
-                TeacherCategoryId = x.TeacherCategoryId,
-                UserId = x.UserId,
-                Name = x.Name,
-                TeacherId = x.TeacherId
+                var TeacherList = Connection.SMGTgetAllTeachers("CKC", "%", "Y").ToList(); // Order by teacher category
+                List<TeacherModel> tcmlist = TeacherList.Select(x => new TeacherModel
+                {
+                    TeacherCategoryId = x.TeacherCategoryId,
+                    UserId = x.UserId,
+                    Name = x.Name,
+                    TeacherId = x.TeacherId
 
-            }).ToList();
-            ViewBag.TeacherDropdown = new SelectList(tcmlist, "UserId", "Name");
+                }).ToList();
+                ViewBag.TeacherDropdown = new SelectList(tcmlist, "UserId", "Name");
 
-            List<tblMessageType> MsgTypeList = Connection.tblMessageTypes.ToList();
-            ViewBag.MessageTypesDropdown = new SelectList(MsgTypeList, "MessageTypeId", "MessageTypeDescription");
+                List<tblMessageType> MsgTypeList = Connection.tblMessageTypes.ToList();
+                ViewBag.MessageTypesDropdown = new SelectList(MsgTypeList, "MessageTypeId", "MessageTypeDescription");
 
-            var MsgId = Connection.tblParameters.Where(x => x.ParameterId == "PSMHS").Select(x => x.ParameterValue).SingleOrDefault();
-            long a = Convert.ToInt64(MsgId) + 1;
+                var MsgId = Connection.tblParameters.Where(x => x.ParameterId == "PSMHS").Select(x => x.ParameterValue).SingleOrDefault();
+                long a = Convert.ToInt64(MsgId) + 1;
 
-            tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "PSMHS");
-            TCtable.ParameterValue = a.ToString();
-            Connection.SaveChanges();
+                tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "PSMHS");
+                TCtable.ParameterValue = a.ToString();
+                Connection.SaveChanges();
 
-            ViewBag.Message_Id = a.ToString();
+                ViewBag.Message_Id = a.ToString();
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("ShowNewMessage() @PSMessageController", Ex);
+            }
 
             return PartialView("NewMessage");
         }
@@ -125,20 +139,13 @@ namespace GDWEBSolution.Controllers.Message
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", dbEx);
+                return Json("Validation", JsonRequestBehavior.AllowGet); 
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
             }
             //catch (Exception Ex)
             //{
@@ -150,32 +157,48 @@ namespace GDWEBSolution.Controllers.Message
         [HttpPost]
         public JsonResult AttachmentUpload(PtoSMessageHeaderModel Model)
         {
-            var file = Model.Attachment_File;
-            long AttachmentId = 0;
-            tblParentToSchollMessageAttachment Attachmentfile = new tblParentToSchollMessageAttachment();
-
-            if (file != null)
+            try
             {
-                var Atid = Connection.tblParameters.Where(x => x.ParameterId == "PSMAS").Select(x => x.ParameterValue).SingleOrDefault();
-                AttachmentId = Convert.ToInt64(Atid) + 1;
+                var file = Model.Attachment_File;
+                long AttachmentId = 0;
+                tblParentToSchollMessageAttachment Attachmentfile = new tblParentToSchollMessageAttachment();
 
-                var fileName = Path.GetFileName(file.FileName);
-                var extention = Path.GetExtension(file.FileName);
+                if (file != null)
+                {
+                    var Atid = Connection.tblParameters.Where(x => x.ParameterId == "PSMAS").Select(x => x.ParameterValue).SingleOrDefault();
+                    AttachmentId = Convert.ToInt64(Atid);
+                    long Next = AttachmentId + 1;
+
+                    var fileName = Path.GetFileName(file.FileName);
+                    var extention = Path.GetExtension(file.FileName);
 
 
-                Attachmentfile.AttachementName = file.FileName;
-                Attachmentfile.AttachementPath = "/UploadedFiles" + file.FileName;
-                Attachmentfile.MessageId = Model.MessageId;
-                Attachmentfile.SeqNo = AttachmentId;
+                    Attachmentfile.AttachementName = file.FileName;
+                    Attachmentfile.AttachementPath = "/UploadedFiles/" + file.FileName;
+                    Attachmentfile.MessageId = Model.MessageId;
+                    Attachmentfile.SeqNo = AttachmentId;
 
-                Connection.tblParentToSchollMessageAttachments.Add(Attachmentfile);
-                Connection.SaveChanges();
+                    Connection.tblParentToSchollMessageAttachments.Add(Attachmentfile);
+                    Connection.SaveChanges();
 
-                file.SaveAs(Server.MapPath("/UploadedFiles/" + file.FileName));
+                    tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "PSMAS");
 
+                    TCtable.ParameterValue = Next.ToString();
+                    Connection.SaveChanges();
+
+                    file.SaveAs(Server.MapPath("/UploadedFiles/" + file.FileName));
+
+                }
+                var result = new { FileName = file.FileName, SeqNo = AttachmentId };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            var result = new { FileName = file.FileName, SeqNo = AttachmentId };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("AttachmentUpload(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
+                var result = new { FileName = "Error", SeqNo = "Error" };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            
         }
 
         public ActionResult ShowSentMessages()
@@ -199,6 +222,25 @@ namespace GDWEBSolution.Controllers.Message
 
             }).ToList();
             return PartialView("SentView",List);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteAttachment(PtoSMessageHeaderModel Model)
+        {
+            try
+            {
+                tblParentToSchollMessageAttachment Tble = Connection.tblParentToSchollMessageAttachments.Find(Model.SeqNo);
+                Connection.tblParentToSchollMessageAttachments.Remove(Tble);
+                Connection.SaveChanges();
+
+
+                return Json(Model.SeqNo, JsonRequestBehavior.AllowGet);
+                //return RedirectToAction("Index");
+            }
+            catch
+            {
+                return Json("Error", JsonRequestBehavior.AllowGet);
+            }
         }
         //
         // GET: /PSMessage/Details/5

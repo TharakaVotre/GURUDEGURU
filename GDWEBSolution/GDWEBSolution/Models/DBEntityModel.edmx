@@ -1378,7 +1378,7 @@
           <Property Name="MessageId" Type="bigint" Nullable="false" />
           <Property Name="AttachementName" Type="varchar" Nullable="false" MaxLength="250" />
           <Property Name="AttachementPath" Type="varchar" Nullable="false" MaxLength="500" />
-          <Property Name="SeqNo" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SeqNo" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="tblParentToSchoolMessageDetail">
           <Key>
@@ -6793,7 +6793,7 @@
           <Property Name="MessageId" Type="Int64" Nullable="false" />
           <Property Name="AttachementName" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
           <Property Name="AttachementPath" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
-          <Property Name="SeqNo" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="SeqNo" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="tblParentToSchoolMessageDetail">
           <Key>

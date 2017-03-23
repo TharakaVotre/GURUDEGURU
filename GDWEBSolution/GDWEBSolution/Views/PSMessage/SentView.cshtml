@@ -27,7 +27,7 @@
         <!-- Tab panes -->
 
         <div class="inbox fade in active" id="home">
-            <div class="list-group">
+            <div class="">
                 @if (Model != null)
                 {<table class="table table-inbox table-hover">
                             <tbody>
@@ -86,20 +86,17 @@
                 }
 
             </div>
-
-            <div class="pull-right">
-                <!--<span class="text-muted"><b>1</b>–<b>50</b> of <b>160</b></span>-->
-                <div class="btn-group btn-group-sm">
-                    <button type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </button>
-                    <button type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </button>
-                </div>
-            </div>
         </div>
 
 
     </div>
 </div>
+<script src="~/Scripts/paginathing.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+		$('.table tbody').paginathing({
+	    perPage: 40,
+	    insertAfter: '.table'
+		});
+	});
+</script>

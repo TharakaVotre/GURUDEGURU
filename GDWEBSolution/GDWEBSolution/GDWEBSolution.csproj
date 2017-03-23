@@ -195,12 +195,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="MUHandler.ashx.cs">
-      <DependentUpon>MUHandler.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\AnnualFunctions\StudentGradeAdvanceModel.cs" />
-    <Compile Include="Models\Configuration\Grade SubjectModel.cs" />
     <Compile Include="Models\DBEntityModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -276,26 +270,6 @@
     <Compile Include="Models\getAllEvaluationType_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Maintenance\ApplicationStatusModel.cs" />
-    <Compile Include="Models\Maintenance\EventCategoryModel.cs" />
-    <Compile Include="Models\Maintenance\ExtraCurricularActivityModel.cs" />
-    <Compile Include="Models\Maintenance\FunctionModel.cs" />
-    <Compile Include="Models\Maintenance\GradeModel.cs" />
-    <Compile Include="Models\Maintenance\MessageTypeModel.cs" />
-    <Compile Include="Models\Maintenance\ParentObservationTypeModel.cs" />
-    <Compile Include="Models\Maintenance\QulificationModel.cs" />
-    <Compile Include="Models\Maintenance\SchoolCategoryModel.cs" />
-    <Compile Include="Models\Maintenance\SchoolGroupModel.cs" />
-    <Compile Include="Models\Maintenance\SchoolRankModel.cs" />
-    <Compile Include="Models\Maintenance\StudentEvaluationTypeModel.cs" />
-    <Compile Include="Models\Maintenance\SubjectCategoryModel.cs" />
-    <Compile Include="Models\Maintenance\SubjectModel.cs" />
-    <Compile Include="Models\Message\PtoSMessageDetailModel.cs" />
-    <Compile Include="Models\Message\PtoSMessageHeaderModel.cs" />
-    <Compile Include="Models\School\SchoolExtraCuricularModel.cs" />
-    <Compile Include="Models\School\SchoolGradeModel.cs" />
-    <Compile Include="Models\School\SchoolModel.cs" />
-    <Compile Include="Models\School\SchoolSubjectModel.cs" />
     <Compile Include="Models\SMGTgetAllSchoolGrades_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -512,6 +486,32 @@
     <Compile Include="Models\tblUserCategoryFunction.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MUHandler.ashx.cs">
+      <DependentUpon>MUHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\AnnualFunctions\StudentGradeAdvanceModel.cs" />
+    <Compile Include="Models\Configuration\Grade SubjectModel.cs" />
+    <Compile Include="Models\Maintenance\ApplicationStatusModel.cs" />
+    <Compile Include="Models\Maintenance\EventCategoryModel.cs" />
+    <Compile Include="Models\Maintenance\ExtraCurricularActivityModel.cs" />
+    <Compile Include="Models\Maintenance\FunctionModel.cs" />
+    <Compile Include="Models\Maintenance\GradeModel.cs" />
+    <Compile Include="Models\Maintenance\MessageTypeModel.cs" />
+    <Compile Include="Models\Maintenance\ParentObservationTypeModel.cs" />
+    <Compile Include="Models\Maintenance\QulificationModel.cs" />
+    <Compile Include="Models\Maintenance\SchoolCategoryModel.cs" />
+    <Compile Include="Models\Maintenance\SchoolGroupModel.cs" />
+    <Compile Include="Models\Maintenance\SchoolRankModel.cs" />
+    <Compile Include="Models\Maintenance\StudentEvaluationTypeModel.cs" />
+    <Compile Include="Models\Maintenance\SubjectCategoryModel.cs" />
+    <Compile Include="Models\Maintenance\SubjectModel.cs" />
+    <Compile Include="Models\Message\PtoSMessageDetailModel.cs" />
+    <Compile Include="Models\Message\PtoSMessageHeaderModel.cs" />
+    <Compile Include="Models\School\SchoolExtraCuricularModel.cs" />
+    <Compile Include="Models\School\SchoolGradeModel.cs" />
+    <Compile Include="Models\School\SchoolModel.cs" />
+    <Compile Include="Models\School\SchoolSubjectModel.cs" />
     <Compile Include="Models\Teacher\ClassTeacherModel.cs" />
     <Compile Include="Models\Teacher\ExtraActivityModel.cs" />
     <Compile Include="Models\Teacher\QualificationModel.cs" />
@@ -842,6 +842,7 @@
     <Content Include="Content\scss\_options.scss" />
     <Content Include="img\1.jpg" />
     <Content Include="img\12.jpg" />
+    <Content Include="img\circulloading.gif" />
     <Content Include="img\default.gif" />
     <Content Include="img\ellipsis.gif" />
     <Content Include="img\loader.gif" />
@@ -865,6 +866,7 @@
     <Content Include="Scripts\chartData.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\fileinput.js" />
+    <Content Include="MUHandler.ashx" />
     <EntityDeploy Include="Models\DBEntityModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBEntityModel.Designer.cs</LastGenOutput>
@@ -882,7 +884,6 @@
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
       <LastGenOutput>DBEntityModel.cs</LastGenOutput>
     </Content>
-    <Content Include="MUHandler.ashx" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -905,6 +906,7 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\paginathing.js" />
     <Content Include="Scripts\select2.full.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

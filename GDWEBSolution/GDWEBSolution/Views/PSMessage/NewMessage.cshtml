@@ -28,9 +28,10 @@
                 </span>
             </div>
             <div class="form-group">
-                 <input type="file" id="AttachmentFile">
+                 <input type="file" id="AttachmentFile"><span style="text-align: center; display: none" id="loaderDiv">Uploading ... &nbsp;<img  src="~/img/circulloading.gif"/></span>
             </div>
             <div class="row" id="attachmetnsview">
+                
 							@*<div class="col-sm-12"><div class="well">Look, I'm in a well!</div></div>*@
 			</div>
             <div class="modal-footer">
@@ -71,6 +72,7 @@
 
         $("#AttachmentFile").change(function () {
             debugger
+            $("#loaderDiv").show();
             var file = $("#AttachmentFile")[0].files;
             var data = new FormData;
             data.append("Attachment_File", file[0]);
@@ -84,9 +86,11 @@
                 contentType: false,
                 processData: false,
                 success: function (result) {
-                    $("#attachmetnsview").append('<div class="col-sm-12"><div class="well">' + result.FileName + ' ' + result.SeqNo + '</div></div>')
+                    $("#AttachmentFile").val('');
+                    $("#attachmetnsview").append('<div class="col-sm-12" id="' + result.SeqNo + '"><div class="well">' + result.FileName + ' ' + result.SeqNo + '<button type="button" class="close" onclick="DeleteAttachment(' + result.SeqNo + ');">&times;</button></div></div>')
+                    $("#loaderDiv").hide();
                 }
-
+                
 
             })
 
@@ -116,7 +120,7 @@
             url: "/PSMessage/SendParenttoSchoolMsg",
             data: myformdata,
             success: function (result) {
-                if (result != "Exception" && result != "Exits") {
+                if (result != "Exception" && result != "Validation") {
                     //$("#Teacher_Id").val(result);
                     //$('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + result);
                     $("#myModal").modal("hide");
@@ -127,7 +131,7 @@
                 }
                 else if (result == "Exception") {
                     $("#myModal").modal("hide");
-                    $("#ErrorLable").text("Exception Error Occurd");
+                    $("#ErrorLable").text("Exception Error Occurd ! Unable to Complete the Request. Please Try Again Sometime Later");
                     $("#ErrorModel").modal("show");
                 }
                 else {
@@ -137,5 +141,26 @@
                 }
             }
         })
+    }
+
+    function DeleteAttachment(SeqNo) {
+        debugger
+        var data = new FormData;
+        data.append("SeqNo", parseInt(SeqNo));
+
+        $.ajax({
+            type: "POST",
+            url: "/PSMessage/DeleteAttachment",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if (result != "Error") {
+                    //$('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + result);
+                }
+                $("#"+ SeqNo).hide();
+            }
+        })
+        
     }
 </script>

@@ -1,0 +1,12 @@
+Softhound.com
+---------------
+1. Install Program & Close it completely
+2. Run Patch [REiS Recommended]
+3. Click Patch button & follow on screen instriuctions to activate
+4. Enjoy!
+------------
+Links
+------------
+Website : softhound.com
+Request : softhound.com/contact/
+About   : softhound.com/about/
