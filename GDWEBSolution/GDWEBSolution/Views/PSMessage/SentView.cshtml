@@ -79,6 +79,7 @@
                             {
                                 <td class="view-message text-right">@item.CreatedDate.ToString("dd/MM/yyyy")</td>
                             }
+                            <td class="view-message text-right"><a href="#" onclick="ShowSentMsg(@item.MessageId)">View</a></td>
                         </tr>
                     }
                                 </tbody>
@@ -98,5 +99,13 @@
 	    perPage: 40,
 	    insertAfter: '.table'
 		});
-	});
+    });
+
+    var ShowSentMsg = function (msgid) {
+        var Url = "/PSMessage/ViewPSMessage?MessageId=" + msgid;
+        $("#MyModelBody").load(Url, function () {
+            //$('#myModal').modal({ backdrop: 'static', keyboard: false })
+            $("#myModal").modal("show");
+        })
+    }
 </script>

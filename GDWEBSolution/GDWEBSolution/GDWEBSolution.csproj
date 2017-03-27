@@ -282,6 +282,9 @@
     <Compile Include="Models\SMGTgetParentToSchoolSentMail_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGTgetPtoSMessageView_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGTgetSchoolGrade_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -1056,7 +1059,7 @@
     <Content Include="Views\PSMessage\Index.cshtml" />
     <Content Include="Views\PSMessage\InboxView.cshtml" />
     <Content Include="Views\PSMessage\TabView.cshtml" />
-    <Content Include="Views\PSMessage\NewMessageView.cshtml" />
+    <Content Include="Views\PSMessage\ViewMessage.cshtml" />
     <Content Include="Views\PSMessage\NewMessage.cshtml" />
     <Content Include="Views\PSMessage\SentView.cshtml" />
     <Content Include="Views\PSMessage\Sent.cshtml" />

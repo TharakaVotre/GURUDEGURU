@@ -230,9 +230,10 @@ namespace GDWEBSolution.Controllers.Message
             try
             {
                 tblParentToSchollMessageAttachment Tble = Connection.tblParentToSchollMessageAttachments.Find(Model.SeqNo);
+                string path = Tble.AttachementPath;
                 Connection.tblParentToSchollMessageAttachments.Remove(Tble);
                 Connection.SaveChanges();
-
+                System.IO.File.Delete(Server.MapPath(path));
 
                 return Json(Model.SeqNo, JsonRequestBehavior.AllowGet);
                 //return RedirectToAction("Index");
@@ -242,6 +243,42 @@ namespace GDWEBSolution.Controllers.Message
                 return Json("Error", JsonRequestBehavior.AllowGet);
             }
         }
+
+        public ActionResult ViewPSMessage(long MessageId)
+        {
+            PtoSMessageHeaderModel M = new PtoSMessageHeaderModel();
+            try
+            {
+                var H = Connection.SMGTgetPtoSMessageView(MessageId).SingleOrDefault();
+                M.MessageId = H.MessageId;
+                M.Message = H.Message.Replace("<br />", "\r\n"); 
+                M.MessageType = Convert.ToInt64(H.MessageType);
+                M.MessageTypeDes = H.MessageTypeDescription;
+                M.ParentId = H.ParentId;
+                M.ParentName = H.ParentName;
+                M.RecepientUser = H.RecepientUser;
+                M.SchoolId = H.SchoolId;
+                M.SeqNo = H.SeqNo;
+                M.Status = H.Status;
+                M.Subject = H.Subject;
+                M.TeacherName = H.PersonName;
+         
+                List<tblParentToSchollMessageAttachment> AList = Connection.tblParentToSchollMessageAttachments.Where(x => x.MessageId == MessageId).ToList();
+                M.AttachmentList = AList;
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("ActionResult ViewPSMessage(long MessageId) @ PSMessageController", Ex);
+            }
+            return PartialView("ViewMessage", M);
+        }
+        public ActionResult DownloadAttachment(long SeqNo)
+        {
+            var file = Connection.tblParentToSchollMessageAttachments.FirstOrDefault(x => x.SeqNo == SeqNo);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(file.AttachementPath));
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file.AttachementName);
+        }
+
         //
         // GET: /PSMessage/Details/5
 

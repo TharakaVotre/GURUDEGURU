@@ -1471,5 +1471,14 @@ namespace GDWEBSolution.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTsetSchoolGrade", schoolIdParameter, gradeIdParameter, createdByParameter, isActiveParameter);
         }
+    
+        public virtual ObjectResult<SMGTgetPtoSMessageView_Result> SMGTgetPtoSMessageView(Nullable<long> messageId)
+        {
+            var messageIdParameter = messageId.HasValue ?
+                new ObjectParameter("MessageId", messageId) :
+                new ObjectParameter("MessageId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetPtoSMessageView_Result>("SMGTgetPtoSMessageView", messageIdParameter);
+        }
     }
 }
