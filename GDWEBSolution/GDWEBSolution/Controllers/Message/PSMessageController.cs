@@ -104,7 +104,7 @@ namespace GDWEBSolution.Controllers.Message
 
                 MsgHead.SchoolId = "CKC";
                 MsgHead.MessageId = Model.MessageId;
-                MsgHead.ParentId = 1;
+                MsgHead.ParentId = 2;//session parent id
                 MsgHead.Message = Model.Message.Replace("\r\n", "<br />");
                 MsgHead.CreatedBy = "ADMIN";
                 MsgHead.CreatedDate = DateTime.Now;
@@ -203,7 +203,7 @@ namespace GDWEBSolution.Controllers.Message
 
         public ActionResult ShowSentMessages()
         {
-            var STQlist = Connection.SMGTgetParentToSchoolSentMail(1).ToList(); //ParentId
+            var STQlist = Connection.SMGTgetParentToSchoolSentMail(2).ToList(); //ParentId session
 
             List<PtoSMessageHeaderModel> List = STQlist.Select(x => new PtoSMessageHeaderModel
             {

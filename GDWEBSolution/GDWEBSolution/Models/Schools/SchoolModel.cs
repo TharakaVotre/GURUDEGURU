@@ -9,15 +9,31 @@ namespace GDWEBSolution.Models.Schools
     public class SchoolModel
     {
 
-
+        
         [Display(Name = "School Id")]
+        //[Required(ErrorMessage = "Please enter your full SchoolId")]
         public string SchoolId { get; set; }
 
         [Display(Name = "Province")]
-        public string Province { get; set; }
+        public Nullable<int> Province { get; set; }
+
+
+        [Display(Name = "Web Address")]
+        public string WebAddress { get; set; }
+
+        [Display(Name = "Logo Path")]
+        public string LogoPath { get; set; }
+
+        [Display(Name = "Image Path")]
+        public string ImagePath { get; set; }
 
         [Display(Name = "School Category")]
         public int SchoolCategory { get; set; }
+
+        [Display(Name = "School Category")]
+        public string SchoolCategoryName { get; set; }
+
+
         [Display(Name = "Telephone")]
         public string Telephone { get; set; }
         [Display(Name = "Minute for Period")]
@@ -25,32 +41,52 @@ namespace GDWEBSolution.Models.Schools
         [Display(Name = "Fax")]
         public string Fax { get; set; }
         [Display(Name = "Email")]
+        [Required(ErrorMessage = "Email Address is Required")]
         public string Email { get; set; }
         [Display(Name = "Address3")]
         public string Address3 { get; set; }
         [Display(Name = " Address2")]
         public string Address2 { get; set; }
+      
+        
+       
+        [Display(Name = "School Image")]
+    [ValidateFile]
+        public HttpPostedFileBase File { get; set; }
 
-        [Display(Name = "Address1")]
+
+        [Display(Name = "Logo Image")]
+        [ValidateFile]
+        public HttpPostedFileBase LogoFile { get; set; }
+
+
+      
+
+        [Display(Name = "Address")]
+        [Required(ErrorMessage = "Address is required")]
         public string Address1 { get; set; }
 
         [Display(Name = "Description")]
         public string Description { get; set; }
         [Display(Name = "District")]
-        public string District { get; set; }
+        public Nullable<int> District { get; set; }
 
         [Display(Name = "Division")]
-        public string Division { get; set; }
+        public Nullable<int> Division { get; set; }
         [Display(Name = "School Rank")]
-        public string SchoolRank { get; set; }
+        public Nullable <int> SchoolRank { get; set; }
 
         [Display(Name = "School Group")]
-        public string SchoolGroup { get; set; }
+        public Nullable <long> SchoolGroup { get; set; }
+
+        [Display(Name = "School Group")]
+        public string GroupName { get; set; }
  
         [Display(Name = "Teacher Id")]
         public string TeacherId { get; set; }
 
         [Display(Name = "School Name")]
+        [Required(ErrorMessage = "School Name is required")]
         public string SchoolName { get; set; }
 
         [Display(Name = "Grade Id")]

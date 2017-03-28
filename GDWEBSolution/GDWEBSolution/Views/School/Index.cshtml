@@ -9,6 +9,7 @@
         <!-- Zero Configuration Table -->
         <div class="panel panel-default">
             <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
+            @*<div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView2(1)"><span class="fa fa-plus"></span> Add file</button></div>*@
             <div class="panel-body">
                 <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
                     <thead>
@@ -25,11 +26,12 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.CreatedDate)
                             </th>
+                          
                             <th>
-                                @Html.DisplayNameFor(model => model.SchoolGroup)
+                                @Html.DisplayNameFor(model => model.GroupName)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.SchoolCategory)
+                                @Html.DisplayNameFor(model => model.SchoolCategoryName)
                             </th>
                             <th></th>
                         </tr>
@@ -52,14 +54,17 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.CreatedDate)
                                     </td>
+                                 
+
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.SchoolGroup)
+                                        @Html.DisplayFor(modelItem => item.GroupName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.SchoolCategory)
+                                        @Html.DisplayFor(modelItem => item.SchoolCategoryName)
                                     </td>
                                     <td>
                                         <a class="btn btn-info" onclick="EditView('@item.SchoolId')"><span class="fa fa-pencil"></span> Edit </a>
+                                        <a class="btn btn-info" onclick="DetailView('@item.SchoolId')"><span class="fa fa-pencil"></span> Details </a>
                                         <a class="btn btn-danger" onclick="DeleteView('@item.SchoolId')"><span class="fa fa-trash"></span> Delete</a>
                                     </td>
                                 </tr>
@@ -71,6 +76,11 @@
         </div>
     </div>
 </div>
+
+
+
+
+
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -84,16 +94,27 @@
 <script>
     var ShowView = function (bookid) {
         var Url = "/School/Create?id=" + bookid;
-        $("#MyModelBody").load(Url, function () {
-            $("#myModal").modal("show");
-        })
+        window.location.href = Url;
+    }
+
+    var ShowView2 = function (bookid) {
+        var Url = "/School/Create2?id=" + bookid;
+        window.location.href = Url;
     }
 
     var EditView = function (CategoryId) {
         var Url = "/School/Edit?SchoolId=" + CategoryId;
-        $("#MyModelBody").load(Url, function () {
-            $("#myModal").modal("show");
-        })
+        //$("#MyModelBody").load(Url, function () {
+        //    $("#myModal").modal("show");
+        //})
+        window.location.href = Url;
+    }
+    var DetailView = function (CategoryId) {
+        var Url = "/School/Detail?SchoolId=" + CategoryId;
+        //$("#MyModelBody").load(Url, function () {
+        //    $("#myModal").modal("show");
+        //})
+        window.location.href = Url;
     }
 
     var DeleteView = function (CategoryId) {
