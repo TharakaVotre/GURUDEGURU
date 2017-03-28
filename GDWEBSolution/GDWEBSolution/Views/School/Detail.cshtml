@@ -1,0 +1,188 @@
+﻿@model GDWEBSolution.Models.Schools.SchoolModel
+<div class="row">
+    <div class="col-md-12">
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">School Details  </div>
+            <div class="panel-body">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in" id="bio">
+                        @using (Html.BeginForm("Edit", "School",
+    FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+        @Html.AntiForgeryToken()
+        @*<form id="FrmANT" class="form-horizontal">*@
+        <div class="form-horizontal">
+
+
+            @*<form id="FrmANT" action="/School/Create"
+                enctype="multipart/form-data"
+                method="post"
+                >*@
+            <br />
+            <div class="form-group">
+
+                @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.SchoolId, new { @class = "form-control", @placeholder = "School Id" })
+                    <span class="help-block m-b-none" id="CategoryNameError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.SchoolName, new { @class = "form-control", @placeholder = "School Name" })
+                    <span class="help-block m-b-none" id="CategoryNameError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.SchoolCategory, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.SchoolCategory, new { @class = "form-control", @placeholder = "Name of School type" })
+
+
+                </div>
+                <div class="col-sm-2">
+                    @Html.ValidationMessageFor(model => model.SchoolCategory, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Province, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.Province, new { @class = "form-control", @placeholder = "Name of the Provice" })
+
+                </div>
+                <div class="col-sm-2">
+                    @Html.ValidationMessageFor(model => model.Province, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.SchoolGroup, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.Province, new { @class = "form-control", @placeholder = "Name of the Provice" })
+
+
+                </div>
+                <div class="col-sm-2">
+                    @Html.ValidationMessageFor(model => model.SchoolGroup, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.District, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.District, new { @class = "form-control", @placeholder = "Name of the Provice" })
+
+
+
+                </div>
+                <div class="col-sm-2">
+                    @Html.ValidationMessageFor(model => model.SchoolGroup, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Division, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.Division, new { @class = "form-control", @placeholder = "Name of the Provice" })
+
+
+
+                </div>
+                <div class="col-sm-2">
+                    @Html.ValidationMessageFor(model => model.SchoolGroup, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.SchoolRank, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.Division, new { @class = "form-control", @placeholder = "Name of the Provice" })
+
+
+
+                </div>
+                <div class="col-sm-2">
+                    @Html.ValidationMessageFor(model => model.SchoolGroup, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Address1, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(model => model.Address1, new { @class = "form-control input-lg mb", @placeholder = "Address " })
+                    @Html.TextBoxFor(model => model.Address2, new { @class = "form-control mb", @placeholder = "Address **" })
+                    @Html.TextBoxFor(model => model.Address3, new { @class = "form-control input-sm", @placeholder = "Address **" })
+                    <span class="help-block m-b-none" id="CategoryNameError"></span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Telephone, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control", @placeholder = "Telephone No" })
+                    <span class="help-block m-b-none" id="CategoryNameError"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MinuteforPeriod, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.MinuteforPeriod, new { @class = "form-control", @placeholder = "Minutes for a Period" })
+                    <span class="help-block m-b-none" id="CategoryNameError"></span>
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.WebAddress, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(model => model.WebAddress, new { @class = "form-control", @placeholder = "School Website Names" })
+                    <span class="help-block m-b-none" id="CategoryNameError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email Address" })
+                    <span class="help-block m-b-none" id="CategoryNameError"></span>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="form-group">
+
+
+                @* @Html.HiddenFor(m=>m.Name)*@
+                @*        @Html.DropDownListFor(model => model.DepartmentId, ViewBag.DepartmentList as SelectList, "--select--", new { @class = "form-control" })*@
+
+                @*        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder ="Address" })*@
+                @*<a href="#" id="btnSubmit" class="btn btn-success btn-block">@if(Model.EmployeeId>0){<span>Update</span> }else{<span>Save</span>} </a>*@
+            </div>
+
+
+
+
+
+
+        </div>
+        }
+                        @*</form>*@
+                    </div>
+
+                </div>
+</div>
+            </div>
+        </div>
+    </div>

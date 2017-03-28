@@ -70,7 +70,7 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
 
         private List<StudentGradeAdvanceModel> getdataForTable(string GradeId)
         {
-            var Group = Connection.GDgetAllStudentInGrade(SchoolId, GradeId, "Y");
+            var Group = Connection.GDgetAllStudentInGrade("2017",SchoolId, GradeId,"1", "Y");
             List<GDgetAllStudentInGrade_Result> Grouplist = Group.ToList();
 
             StudentGradeAdvanceModel tcm = new StudentGradeAdvanceModel();
@@ -118,7 +118,7 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
                 if (selectedNames != null)
                 {
                     foreach (string studentId in selectedNames)
-                        Connection.GDModifyStudentGradeAdvance(SchoolId, studentId, GradeId, UserId);
+                        Connection.GDModifyStudentGradeAdvance(SchoolId, studentId, GradeId,"", UserId);
                     Connection.SaveChanges();
                 }
                 //return View();

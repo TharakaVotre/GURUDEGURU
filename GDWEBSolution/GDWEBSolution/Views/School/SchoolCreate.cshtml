@@ -1,122 +1,303 @@
 ﻿@model GDWEBSolution.Models.Schools.SchoolModel
 
-<div>
-    <form id="myForm" class="form-horizontal">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Add New School</h4>
+@{
+    ViewBag.Title = "School";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h3>Schools</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">New School | Grade |House|EXtra Curicular|Subject  </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New School</a></li>
+                    <li class=""><a href="#qualification" data-toggle="tab" aria-expanded="false">Grade</a></li>
+                    <li class=""><a href="#Housee" data-toggle="tab" aria-expanded="false">House</a></li>
+                    <li class=""><a href="#subjects" data-toggle="tab" aria-expanded="false">Subjects</a></li>
+                    @*<li class="disabled"><a>Disabled</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                          Dropdown <span class="caret"></span>
+                        </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#dropdown1" data-toggle="tab">Action</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#dropdown2" data-toggle="tab">Another action</a></li>
+                            </ul>
+                        </li>*@
+                </ul>
+                <br>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in" id="bio">
+@using (Html.BeginForm("Create", "School",
+    FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+                        @*<form id="FrmANT" class="form-horizontal">*@
+                            <div class="form-horizontal">
+
+
+                                @*<form id="FrmANT" action="/School/Create"
+                enctype="multipart/form-data"
+                method="post"
+                >*@
+                                <br />
+                                @Html.HiddenFor(model => model.SchoolId)
+                                @*<div class="form-group">
+                                   
+                                    @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.SchoolId, new { @class = "form-control", @placeholder = "School Id" })
+                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                        @Html.ValidationMessageFor(model => model.SchoolId, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.SchoolName, new { @class = "form-control", @placeholder = "School Name" })
+                                         @Html.ValidationMessageFor(model => model.SchoolName, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.SchoolCategory, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(model => model.SchoolCategory, ViewBag.SchoolCategoryDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Name of School type" })
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.SchoolCategory, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Province, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(model => model.Province, ViewBag.ProvinceDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Province" })
+                                    </div>
+                                  
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.SchoolGroup, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(model => model.SchoolGroup, ViewBag.SGroupDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+                                    </div>
+                                   
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.District, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(model => model.District, ViewBag.DistrictDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.District, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Division, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(model => model.Division, ViewBag.DivisionDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.Division, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.SchoolRank, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(model => model.SchoolRank, ViewBag.RankDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.SchoolRank, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Address1, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-6">
+                                        @Html.TextBoxFor(model => model.Address1, new { @class = "form-control input-lg mb", @placeholder = "Address " })
+                                        @Html.TextBoxFor(model => model.Address2, new { @class = "form-control mb", @placeholder = "Address **" })
+                                        @Html.TextBoxFor(model => model.Address3, new { @class = "form-control input-sm", @placeholder = "Address **" })
+                                        
+                                    </div>
+                                     <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.Address1, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Telephone, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-4">
+                                        @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control", @placeholder = "Telephone No" })
+                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.MinuteforPeriod, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-4">
+                                        @Html.TextBoxFor(model => model.MinuteforPeriod, new { @class = "form-control", @placeholder = "Minutes for a Period" })
+                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.File, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(m => m.File, new { type = "file", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.File, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.LogoFile, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(m => m.LogoFile, new { type = "file", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.File, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.WebAddress, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-6">
+                                        @Html.TextBoxFor(model => model.WebAddress, new { @class = "form-control", @placeholder = "School Website Names" })
+                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Email, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-6">
+                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email Address", @data_val = "true", @data_val_required = "Email is required" })
+                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <div class="form-group">
+
+
+                                    @* @Html.HiddenFor(m=>m.Name)*@
+                                    @*        @Html.DropDownListFor(model => model.DepartmentId, ViewBag.DepartmentList as SelectList, "--select--", new { @class = "form-control" })*@
+
+                                    @*        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder ="Address" })*@
+                                    @*<a href="#" id="btnSubmit" class="btn btn-success btn-block">@if(Model.EmployeeId>0){<span>Update</span> }else{<span>Save</span>} </a>*@
+                                </div>
+
+
+
+
+
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        @*<button class="btn btn-default" type="submit">Cancel</button>*@
+                                        @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
+                                        <button type="submit" value="Save" id="btnSubmit" onclick="" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        @*</form>*@
+                    </div>
+                    <div class="tab-pane fade" id="qualification">
+                        @{Html.RenderPartial("Grade");}
+
+                        <div id="showgrade">
+                            @*  @{Html.RenderAction("ShowTeacherQualificatoin");}*@
+                            @{ Html.RenderAction("ShowSchoolGrade", new { ShoolId = "0" }); }
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="Housee">
+                        @{Html.RenderPartial("House");}
+                        <div id="showHouse">
+                              @{Html.RenderAction("ShowSchooHouse", new { ShoolId = "0" });}
+                          
+                        </div>
+                      
+                    </div>
+                    <div class="tab-pane fade" id="subjects">
+                     
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-            <div class="form-group">
-               
-
-                @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.SchoolId, new { @class = "form-control", @placeholder = "School Id" })
-                    <span class="help-block m-b-none" id="CategoryNameError"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.SchoolName, new { @class = "form-control", @placeholder = "School Name" })
-                    <span class="help-block m-b-none" id="CategoryNameError"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.SchoolRank, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.SchoolRank, new { @class = "form-control", @placeholder = "School Rank" })
-                    <span class="help-block m-b-none" id="CategoryNameError"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.SchoolCategory, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-7">
-                    @Html.DropDownListFor(model => model.SchoolCategory, ViewBag.SchoolCategoryDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Name of School type" })
-                </div>
-                <div class="col-sm-2">
-                    @Html.ValidationMessageFor(model => model.SchoolCategory, null, new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.Province, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-7">
-                    @Html.DropDownListFor(model => model.Province, ViewBag.ProvinceDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Province" })
-                </div>
-                <div class="col-sm-2">
-                    @Html.ValidationMessageFor(model => model.Province, null, new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.SchoolGroup, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-7">
-                    @Html.DropDownListFor(model => model.SchoolGroup, ViewBag.SGroupDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
-                </div>
-                <div class="col-sm-2">
-                    @Html.ValidationMessageFor(model => model.SchoolGroup, null, new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.Address1, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.Address1, new { @class = "form-control", @placeholder = "Address " })
-                    <span class="help-block m-b-none" id="CategoryNameError"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Address2, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.Address1, new { @class = "form-control", @placeholder = "Address **" })
-                    <span class="help-block m-b-none" id="CategoryNameError"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Address3, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.Address1, new { @class = "form-control", @placeholder = "Address ***" })
-                    <span class="help-block m-b-none" id="CategoryNameError"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.SchoolGroup, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.SchoolGroup, new { @class = "form-control", @placeholder = "School Group" })
-                    <span class="help-block m-b-none" id="CategoryNameError"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Telephone, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control", @placeholder = "EX:077324234" })
-                    <span class="help-block m-b-none" id="CategoryNameError"></span>
-                </div>
-            </div>
-            <div class="form-group">
-         
-
-            @* @Html.HiddenFor(m=>m.Name)*@
-            @*        @Html.DropDownListFor(model => model.DepartmentId, ViewBag.DepartmentList as SelectList, "--select--", new { @class = "form-control" })*@
-
-            @*        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder ="Address" })*@
-            @*<a href="#" id="btnSubmit" class="btn btn-success btn-block">@if(Model.EmployeeId>0){<span>Update</span> }else{<span>Save</span>} </a>*@
-        </div>
-        <div class="modal-footer">
-            @*        <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>*@
-            @*<button class="btn btn-default" type="submit">Cancel</button>*@
-            <a href="#" id="btnSubmit" class="btn btn-primary">Save</a>
-        </div>
-    </form>
-
+    </div>
 </div>
 
-<script>
+<div id="myModal" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" id="MyModelBody">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Error !</h4>
+            </div>
+            <div class="modal-body">
+                <label id="ErrorLable" class="control-label" style="color: #e83a3a"></label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="SuccesModel" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" id="SuccessModelBody">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Successful !</h4>
+            </div>
+            <div class="modal-body">
+                <label id="SuccesLable" class="control-label" style="color: #3bc91f"></label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" id="DeleteModelBody">
+        </div>
+    </div>
+</div>
+
+@*<script>
+    $(function validateForm() {
+
+        debugger
+        var CategoryName = $('#SchoolId');
+        var CategoryNameError = $('#CategoryNameError');
+
+
+        //var e = document.getElementById("IsActive");
+
+        //var IsActive = e.options[e.selectedIndex].value;
+        //var IsActiveError = $('#IsActiveError');
+
+        // Check if there is an entered value
+        if (!CategoryName.val()) {
+            // Add errors highlight
+            CategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
+            $("#CategoryNameError").text("Requireeed");
+            // Stop submission of the form
+            // e.preventDefault();
+            return;
+        }
+
+    });
 
     $(document).ready(function () {
 
@@ -124,6 +305,9 @@
             debugger
             var CategoryName = $('#SchoolId');
             var CategoryNameError = $('#CategoryNameError');
+
+
+
 
 
             //var e = document.getElementById("IsActive");
@@ -140,6 +324,14 @@
                 // e.preventDefault();
                 return;
             }
+
+            var form = $('#form');
+            $.validator.unobtrusive.parse(form);
+            form.validate();
+
+            if (form.valid()) {
+             
+            }
             //if (IsActive == "") {
             //    // Add errors highlight
             //  //  IsActive.closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -151,27 +343,113 @@
 
             //$("#loaderDiv").show();
 
-            var myformdata = $("#myForm").serialize();
+            var myformdata = $("#FrmANT").serialize();
             //if (!$("#myForm").valid()) {
 
             //    return false;
             //}
+
+
+
+
+
+            //})
+
+
+      
+
+
             $.ajax({
 
                 type: "POST",
                 url: "/School/Create",
                 data: myformdata,
-                success: function () {
+
+                success: function (result) {
                     //$("#loaderDiv").hide();
-                    $("#myModal").modal("hide");
-                    window.location.href = "/School/Index";
+                    // $("#myModal").modal("hide");
+                    if (result == "Success") {
+                        debugger
+                        //window.location.href = "/Teacher/Create";
+                        $('.nav-tabs a[href="#qualification"]').tab('show');
+                        $("#btnSubmit").prop('value', 'Save');
+                    }
+                    else if (result == "UserExits") {
+                        debugger
+                        //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                        $("#ErrorLable").text("User Name Already Exits");
+                        $("#btnSubmit").prop('value', 'Save');
+                        $("#myModal").modal("show");
+                    }
+                    else {
+
+                    }
 
                 }
 
+
+
             })
-        })
+        })})
 
+</script>*@
+
+
+@*<script type="text/jscript">
+    $('#UserId').blur(function () {
+        var url = "/Teacher/IsUserNameExits";
+        var name = $('#UserId').val();
+        debugger
+        $.get(url, { input: name }, function (data) {
+            if (data == "Have") {
+                //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                $("#ErrorLable").text("User Name Already Exits");
+                $("#btnCreateTeacher").prop('value', 'Save');
+                $("#myModal").modal("show");
+            }
+        });
     })
-
-
 </script>
+<script>
+
+    var CreateTeacher = function () {
+        //debugger
+        var myformdata = $("#FrmANT").serialize();
+
+        if (!$("#FrmANT").valid()) {
+            return;
+        }
+
+        $("#btnCreateTeacher").prop('value', 'Saving Details ...');
+        $.ajax({
+
+            type: "POST",
+            url: "/Teacher/CreateTeacher",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                // $("#myModal").modal("hide");
+                if (result == "Success") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+                    $('.nav-tabs a[href="#qualification"]').tab('show');
+                    $("#btnCreateTeacher").prop('value', 'Save');
+                }
+                else if (result == "UserExits") {
+                    debugger
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("User Name Already Exits");
+                    $("#btnCreateTeacher").prop('value', 'Save');
+                    $("#myModal").modal("show");
+                }
+                else {
+
+                }
+
+            }
+
+        })
+    }
+
+
+</script>*@

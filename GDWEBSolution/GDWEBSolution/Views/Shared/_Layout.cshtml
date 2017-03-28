@@ -28,7 +28,7 @@
             <img src="~/img/logo_.png" class="img-responsive" alt=""></a>
         <span class="menu-btn"><i class="fa fa-bars"></i></span>
         <ul class="ts-profile-nav">
-            <li><a href="#">Help</a></li>
+            <li>@Html.ActionLink("Messages", "Sent", "PSMessage")</li>
             <li><a href="#">Settings</a></li>
             <li class="ts-account">
                 <a href="#">
@@ -98,6 +98,13 @@
                         <li><a href="~/MaintainSubjectCategory">Subject Category</a></li>
                     </ul>
                 </li>
+
+                 <li><a href="#"><i class="fa fa-desktop"></i>School</a>
+                    <ul>
+                        <li>@Html.ActionLink("New School", "Index", "School")</li>
+                       
+                    </ul>
+                </li>
                  <li>
                     <a href="#"><i class="fa fa-desktop"></i>Configuration</a>
                     <ul>
@@ -113,7 +120,7 @@
                 <!-- Account from above -->
                 <ul class="ts-profile-nav">
                     <li><a href="#">Help</a></li>
-                    <li><a href="#">Settings</a></li>
+                    
                     <li class="ts-account">
                         <a href="#">
                             <img src="~/img/ts-avatar.jpg" class="ts-avatar hidden-side" alt="">
