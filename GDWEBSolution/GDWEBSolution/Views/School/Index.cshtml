@@ -62,10 +62,10 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.SchoolCategoryName)
                                     </td>
-                                    <td>
-                                        <a class="btn btn-info" onclick="EditView('@item.SchoolId')"><span class="fa fa-pencil"></span> Edit </a>
-                                        <a class="btn btn-info" onclick="DetailView('@item.SchoolId')"><span class="fa fa-pencil"></span> Details </a>
-                                        <a class="btn btn-danger" onclick="DeleteView('@item.SchoolId')"><span class="fa fa-trash"></span> Delete</a>
+                                    <td> <a href="#" class="hvr-buzz-out" onclick="DetailView('@item.SchoolId')"> Details </a>|
+                                        <a href="#" class="hvr-buzz-out" onclick="EditView('@item.SchoolId')"> Edit </a>|
+                                       
+                                        <a href="#" class="hvr-buzz-out" onclick="DeleteView('@item.SchoolId')"> Delete</a>
                                     </td>
                                 </tr>
                             }

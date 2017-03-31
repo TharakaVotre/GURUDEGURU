@@ -5,7 +5,7 @@
     <div class="form-group" >
        
         @Html.HiddenFor(model => model.HouseId)
-        @Html.HiddenFor(model => model.SchoolId)
+        @Html.Hidden("SchoolId")
         @*@Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-4">
             @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolfrhdrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @disabled = "disabled" })
@@ -45,7 +45,7 @@
         debugger
         //$('#Housee').load('/School/Createe?schoolid=' + value);
       //  $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + $('#SchoolId').val());
-        $('#showHouse').load('/School/ShowSchooHouse?SchoolId=121127');
+        $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + $('#SchoolId').val());
     
     
     

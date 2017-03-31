@@ -27,6 +27,7 @@ namespace GDWEBSolution.Controllers
             SchoolModel schl = new SchoolModel();
             List<SchoolModel> tcmlist = Categorylist.Select(x => new SchoolModel
             {
+               
                 SchoolId=x.SchoolId,
                 SchoolName=x.SchoolName,
                 SchoolGroup=x.SchoolGroup,
@@ -37,6 +38,7 @@ namespace GDWEBSolution.Controllers
                 MinuteforPeriod=x.MinuteforPeriod.ToString(),
                SchoolCategoryName= x.SchoolCategoryName,
                GroupName=x.GroupName,
+               CreatedDate=x.CreatedDate,
        
           
                 
@@ -111,7 +113,7 @@ namespace GDWEBSolution.Controllers
         
        {
 
-           ViewBag.Scliddef = Schoold;
+           ViewBag.SchoolId = Schoold;
 
            hsmodel.SchoolId = Schoold;
             List<tblSchoolCategory> SCategorylist = Connection.tblSchoolCategories.ToList();
@@ -126,10 +128,18 @@ namespace GDWEBSolution.Controllers
             ViewBag.DivisionDrpDown = new SelectList(divisionlist, "DivisionId", "DivisionName");
             List<tblSchoolRank> Ranklist = Connection.tblSchoolRanks.ToList();
             ViewBag.RankDrpDown = new SelectList(Ranklist, "SchoolRankId", "SchoolRankName");
+
+            List<tblSubject> sclSublist = Connection.tblSubjects.ToList();
+            ViewBag.SubjectscldrpList = new SelectList(sclSublist, "SubjectId", "SubjectName");
+
+
+            List<tblSubjectCategory> sclSubcatlist = Connection.tblSubjectCategories.ToList();
+            ViewBag.SubcatscldrpList = new SelectList(sclSubcatlist, "SubjectCategoryId", "SubjectCategoryName");
+
             SchoolGradeDrpList();
             SchoolHouseDrpListe(Schoold);
-
-
+            List<tblExtraCurricularActivity> excatlist = Connection.tblExtraCurricularActivities.ToList();
+            ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
           
             return View("SchoolCreate");
         }
@@ -148,6 +158,10 @@ namespace GDWEBSolution.Controllers
             ViewBag.DivisionDrpDown = new SelectList(divisionlist, "DivisionId", "DivisionName");
             List<tblSchoolRank> Ranklist = Connection.tblSchoolRanks.ToList();
             ViewBag.RankDrpDown = new SelectList(Ranklist, "SchoolRankId", "SchoolRankName");
+
+            List<tblExtraCurricularActivity> excatlist = Connection.tblExtraCurricularActivities.ToList();
+            ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
+
             SchoolGradeDrpList();
             SchoolHouseDrpListe(Schoold);
             return PartialView("House");
@@ -212,7 +226,8 @@ namespace GDWEBSolution.Controllers
              {
                  string result = "Error";
                  var count2 = Connection.tblHouses.Count();
-                 Model.HouseId = count2.ToString();
+                 int a = count2 + 10;
+                 Model.HouseId = a.ToString();
                  var count = Connection.tblHouses.Count(u => u.SchoolId == Schoold && u.HouseName == Model.HouseName);
                  if (count == 0)
                  {
@@ -253,6 +268,104 @@ namespace GDWEBSolution.Controllers
          }
 
 
+        [AllowAnonymous]
+        public JsonResult AddSchoolSubjects(SchoolSubjectModel Model)
+        {
+            try
+            {
+                string result = "Error";
+                int subid = Int32.Parse(Model.SubjectId);
+
+
+                var count = Connection.tblSchoolSubjects.Count(u => u.SchoolId == Schoold && u.AcademicYear == Model.AcademicYear && u.SubjectId == subid);
+                if (count == 0)
+                {
+                    Model.SchoolId = Schoold;
+                    tblSchoolSubject newscg = new tblSchoolSubject();
+
+                    newscg.CreatedBy = "User1";
+                    newscg.CreatedDate = DateTime.Now;
+                    newscg.SchoolId = Schoold;
+                    newscg.Optional = "Y";
+
+                    newscg.SubjectId = Int32.Parse(Model.SubjectId);
+                    newscg.SubjectCategoryId =Int32.Parse( Model.SubjectCategoryId);
+                    newscg.AcademicYear = Model.AcademicYear;
+                    newscg.IsActive = "Y";
+                   
+
+                    Connection.tblSchoolSubjects.Add(newscg);
+
+                    Connection.SaveChanges();
+
+                    result = Model.SchoolId.ToString();
+
+                    ViewBag.SchoolId = Model.SchoolId.ToString();
+
+                }
+                else
+                {
+                    result = "Exits";
+                }
+                //ShowTeacherQualificatoin();
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+        [AllowAnonymous]
+        public JsonResult AddSchoolExcActivity(SchoolExtraModel Model)
+        {
+            try
+            {
+                string result = "Error";
+                var count2 = Connection.tblSchoolExtraCurricularActivities.Count();
+               // Model.HouseId = count2.ToString();
+                var count = Connection.tblSchoolExtraCurricularActivities.Count(u => u.ActivityCode == Model.ActivityCode && u.SchoolId == Model.SchoolId);
+                if (count == 0)
+                {
+                    Model.SchoolId = Schoold;
+                    tblSchoolExtraCurricularActivity newscg = new tblSchoolExtraCurricularActivity();
+
+                    newscg.CreatedBy = "User1";
+                    newscg.CreatedDate = DateTime.Now;
+                    newscg.SchoolId = Schoold;
+                    newscg.ActivityCode = Model.ActivityCode;              
+                    newscg.IsActive = "Y";
+                 
+
+                    Connection.tblSchoolExtraCurricularActivities.Add(newscg);
+
+                    Connection.SaveChanges();
+
+                    result = Model.SchoolId.ToString();
+
+                    ViewBag.SchoolId = Model.SchoolId.ToString();
+
+                }
+                else
+                {
+                    result = "Exits";
+                }
+                //ShowTeacherQualificatoin();
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+
          public ActionResult ShowSchoolGrade(string SchoolId)
          {
              var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
@@ -272,8 +385,36 @@ namespace GDWEBSolution.Controllers
              return PartialView("GradeList", List);
          }
 
+
+         public ActionResult ShowSchoolSubjects(string AcademicYear, string SchoolId)
+         {
+             var STQlist = Connection.SMGTgetSchoolSubadd(Schoold, AcademicYear).ToList();
+             if (SchoolId == null||SchoolId =="")
+             {
+                 SchoolId = Schoold;
+
+             }
+             List<SchoolSubjectModel> List = STQlist.Select(x => new SchoolSubjectModel
+             {
+                
+                 
+                 SchoolId = x.SchoolId,
+                 SubjectName=x.SubjectName,
+                SubjectId= x.SubjectId.ToString(),
+
+                
+             
+                 IsActive = x.IsActive,
+                 
+
+             }).ToList();
+             return PartialView("SclSubList", List);
+         }
          public ActionResult ShowSchooHouse(string SchoolId)
          {
+
+             List<tblSubjectCategory> sclSubcatlist = Connection.tblSubjectCategories.ToList();
+             ViewBag.SubcatscldrpList = new SelectList(sclSubcatlist, "SubjectCategoryId", "SubjectCategoryName");
              List<tblSchoolCategory> SCategorylist = Connection.tblSchoolCategories.ToList();
              ViewBag.SchoolCategoryDrpDown = new SelectList(SCategorylist, "SchoolCategoryId", "SchoolCategoryName");
              List<tblProvince> provincelist = Connection.tblProvinces.ToList();
@@ -286,13 +427,23 @@ namespace GDWEBSolution.Controllers
              ViewBag.DivisionDrpDown = new SelectList(divisionlist, "DivisionId", "DivisionName");
              List<tblSchoolRank> Ranklist = Connection.tblSchoolRanks.ToList();
              ViewBag.RankDrpDown = new SelectList(Ranklist, "SchoolRankId", "SchoolRankName");
+             List<tblExtraCurricularActivity> excatlist = Connection.tblExtraCurricularActivities.ToList();
+             ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
+             List<tblSubject> sclSublist = Connection.tblSubjects.ToList();
+             ViewBag.SubjectscldrpList = new SelectList(sclSublist, "SubjectId", "SubjectName");
              SchoolGradeDrpList();
              SchoolHouseDrpListe(Schoold);
 
-             List<SchoolHouseModel> List = loadhouselist(SchoolId);
+             List<SchoolHouseModel> List = loadhouselist(Schoold);
              
              return PartialView("HouseList", List);
          }
+
+
+
+
+
+
 
          private List<SchoolHouseModel> loadhouselist(string SchoolId)
          {
@@ -317,6 +468,90 @@ namespace GDWEBSolution.Controllers
          }
 
 
+         public ActionResult ShowSchooEXActivity(string SchoolId)
+         {
+
+             List<tblSubjectCategory> sclSubcatlist = Connection.tblSubjectCategories.ToList();
+             ViewBag.SubcatscldrpList = new SelectList(sclSubcatlist, "SubjectCategoryId", "SubjectCategoryName");
+             List<tblSchoolCategory> SCategorylist = Connection.tblSchoolCategories.ToList();
+             ViewBag.SchoolCategoryDrpDown = new SelectList(SCategorylist, "SchoolCategoryId", "SchoolCategoryName");
+             List<tblProvince> provincelist = Connection.tblProvinces.ToList();
+             ViewBag.ProvinceDrpDown = new SelectList(provincelist, "ProvinceId", "ProvinceName");
+             List<tblSchoolGroup> schoolgrps = Connection.tblSchoolGroups.ToList();
+             ViewBag.SGroupDrpDown = new SelectList(schoolgrps, "GroupId", "GroupName");
+             List<tblDistrict> districtlist = Connection.tblDistricts.ToList();
+             ViewBag.DistrictDrpDown = new SelectList(districtlist, "DistrictId", "DistrictName");
+             List<tblDivision> divisionlist = Connection.tblDivisions.ToList();
+             ViewBag.DivisionDrpDown = new SelectList(divisionlist, "DivisionId", "DivisionName");
+             List<tblSchoolRank> Ranklist = Connection.tblSchoolRanks.ToList();
+             ViewBag.RankDrpDown = new SelectList(Ranklist, "SchoolRankId", "SchoolRankName");
+             List<tblSubject> sclSublist = Connection.tblSubjects.ToList();
+             ViewBag.SubjectscldrpList = new SelectList(sclSublist, "SubjectId", "SubjectName");
+             List<tblExtraCurricularActivity> excatlist = Connection.tblExtraCurricularActivities.ToList();
+             ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
+             SchoolGradeDrpList();
+             SchoolHouseDrpListe(Schoold);
+
+             List<SchoolExtraModel> List = loadSclEXtralist(Schoold);
+
+             return PartialView("ExcList", List);
+         }
+         public ActionResult ShowSchooSubject(string SchoolId)
+         {
+
+             List<tblSchoolCategory> SCategorylist = Connection.tblSchoolCategories.ToList();
+             ViewBag.SchoolCategoryDrpDown = new SelectList(SCategorylist, "SchoolCategoryId", "SchoolCategoryName");
+             List<tblProvince> provincelist = Connection.tblProvinces.ToList();
+             ViewBag.ProvinceDrpDown = new SelectList(provincelist, "ProvinceId", "ProvinceName");
+             List<tblSchoolGroup> schoolgrps = Connection.tblSchoolGroups.ToList();
+             ViewBag.SGroupDrpDown = new SelectList(schoolgrps, "GroupId", "GroupName");
+             List<tblDistrict> districtlist = Connection.tblDistricts.ToList();
+             ViewBag.DistrictDrpDown = new SelectList(districtlist, "DistrictId", "DistrictName");
+             List<tblDivision> divisionlist = Connection.tblDivisions.ToList();
+             ViewBag.DivisionDrpDown = new SelectList(divisionlist, "DivisionId", "DivisionName");
+             List<tblSchoolRank> Ranklist = Connection.tblSchoolRanks.ToList();
+             ViewBag.RankDrpDown = new SelectList(Ranklist, "SchoolRankId", "SchoolRankName");
+
+             List<tblSubject> sclSublist = Connection.tblSubjects.ToList();
+             ViewBag.SubjectscldrpList = new SelectList(sclSublist, "SubjectId", "SubjectName");
+             List<tblExtraCurricularActivity> excatlist = Connection.tblExtraCurricularActivities.ToList();
+             ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
+
+             List<tblSubjectCategory> sclSubcatlist = Connection.tblSubjectCategories.ToList();
+             ViewBag.SubcatscldrpList = new SelectList(sclSubcatlist, "SubjectCategoryId", "SubjectCategoryName");
+             SchoolGradeDrpList();
+             SchoolHouseDrpListe(Schoold);
+
+             List<SchoolExtraModel> List = loadSclEXtralist(Schoold);
+
+             return PartialView("ShowSchoolsubjects", List);
+         }
+
+         private List<SchoolExtraModel> loadSclEXtralist(string SchoolId)
+         {
+
+             var STQlist = Connection.SMGTgetSchoolExtraCadd(SchoolId).ToList();
+
+             List<SchoolExtraModel> List = STQlist.Select(x => new SchoolExtraModel
+             {
+
+                ActivityCode=x.ActivityCode,
+                ActivityName=x.ActivityName,
+                SchoolId=x.SchoolId,
+                SchoolName=x.SchoolName,
+
+                 //GradeId = x.GradeId,
+                 //SchoolName = x.SchoolName,
+                 //GradeName = x.GradeName,
+
+                 IsActive = x.IsActive
+
+
+             }).ToList();
+             return List;
+         }
+
+
          public ActionResult DeleteGrade(string SchoolId, string GradeId)
          {
              SchoolGradeModel Model = new SchoolGradeModel();
@@ -325,6 +560,24 @@ namespace GDWEBSolution.Controllers
              return PartialView("DeleteSchoolGrade", Model);
          }
 
+
+
+         public ActionResult DeleteSchoolSubjects(string SchoolId, string SubjectId,string AcademicYear)
+         {
+             SchoolSubjectModel Model = new SchoolSubjectModel();
+             Model.SubjectId= SubjectId;
+             Model.AcademicYear = AcademicYear;
+             Model.SchoolId = SchoolId;
+             return PartialView("DeleteSchoolSubjects", Model);
+         }
+         public ActionResult Deletescexc(string SchoolId, string ActivityCode,string ActivityName)
+         {
+             SchoolExtraModel Model = new SchoolExtraModel();
+             Model.ActivityCode = ActivityCode;
+             Model.SchoolId = SchoolId;
+             Model.ActivityName = ActivityName;
+             return PartialView("DeleteSchoolEXactvity", Model);
+         }
          public ActionResult DeleteHouse(string HouseId, string HouseName, string SchoolId)
          {
              SchoolHouseModel Model = new SchoolHouseModel();
@@ -354,6 +607,47 @@ namespace GDWEBSolution.Controllers
          }
 
          [HttpPost]
+         public ActionResult DeleteSchoolSubjects(SchoolSubjectModel Model)
+         {
+             try
+             {
+
+                 tblSchoolSubject Tble = Connection.tblSchoolSubjects.Find(Model.AcademicYear,Model.SchoolId, Model.SubjectId);
+                 Connection.tblSchoolSubjects.Remove(Tble);
+                 Connection.SaveChanges();
+
+
+                 return Json(Model.AcademicYear, JsonRequestBehavior.AllowGet);
+                 //return RedirectToAction("Index");
+             }
+             catch
+             {
+                 return Json("Error", JsonRequestBehavior.AllowGet);
+             }
+         }
+        
+
+                [HttpPost]
+         public ActionResult DeleteSchoolexcactivities(SchoolExtraModel Model)
+         {
+             try
+             {
+
+                 tblSchoolExtraCurricularActivity Tble = Connection.tblSchoolExtraCurricularActivities.Find(Model.SchoolId, Model.ActivityCode);
+                 Connection.tblSchoolExtraCurricularActivities.Remove(Tble);
+                 Connection.SaveChanges();
+
+
+                 return Json(Model.SchoolId, JsonRequestBehavior.AllowGet);
+                 //return RedirectToAction("Index");
+             }
+             catch
+             {
+                 return Json("Error", JsonRequestBehavior.AllowGet);
+             }
+         }
+
+         [HttpPost]
          public ActionResult DeleteSchoolHouses(SchoolHouseModel Model)
          {
              try
@@ -364,8 +658,10 @@ namespace GDWEBSolution.Controllers
                  Connection.tblHouses.Remove(Tble);
                  Connection.SaveChanges();
 
-               
 
+
+                 List<tblSubjectCategory> sclSubcatlist = Connection.tblSubjectCategories.ToList();
+                 ViewBag.SubcatscldrpList = new SelectList(sclSubcatlist, "SubjectCategoryId", "SubjectCategoryName");
                  List<tblSchoolCategory> SCategorylist = Connection.tblSchoolCategories.ToList();
                  ViewBag.SchoolCategoryDrpDown = new SelectList(SCategorylist, "SchoolCategoryId", "SchoolCategoryName");
                  List<tblProvince> provincelist = Connection.tblProvinces.ToList();
@@ -378,6 +674,10 @@ namespace GDWEBSolution.Controllers
                  ViewBag.DivisionDrpDown = new SelectList(divisionlist, "DivisionId", "DivisionName");
                  List<tblSchoolRank> Ranklist = Connection.tblSchoolRanks.ToList();
                  ViewBag.RankDrpDown = new SelectList(Ranklist, "SchoolRankId", "SchoolRankName");
+                 List<tblSubject> sclSublist = Connection.tblSubjects.ToList();
+                 ViewBag.SubjectscldrpList = new SelectList(sclSublist, "SubjectId", "SubjectName");
+                 List<tblExtraCurricularActivity> excatlist = Connection.tblExtraCurricularActivities.ToList();
+                 ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
                  SchoolGradeDrpList();
                  SchoolHouseDrpListe(Schoold);
 
@@ -505,13 +805,12 @@ namespace GDWEBSolution.Controllers
             string _path="";
             string _pathL = "";
 
-          var schoolcount = Connection.SMGTSchoolCount().FirstOrDefault();
-                    string SchoolId = "Scl" + Model.Division.ToString() + Model.District.ToString() + Model.Province.ToString() + Model.SchoolGroup.ToString() + schoolcount.ToString();
+       
 
            // return View("SchoolCreate");
 
+            Model.SchoolId = Schoold;
 
-                    Model.SchoolId = SchoolId;
             try
             {
                 if (ModelState.IsValid)
@@ -534,7 +833,8 @@ namespace GDWEBSolution.Controllers
 
                     //  ViewBag.Message = "File Uploaded Successfully!!";  
 
-                   
+                    var schoolcount = Connection.SMGTSchoolCount().FirstOrDefault();
+                    string SchoolId = "Scl" + Model.Division.ToString() + Model.District.ToString() + Model.Province.ToString() + Model.SchoolGroup.ToString() + schoolcount.ToString();
 
 
                     Connection.DCISsetSchool(SchoolId, Model.SchoolGroup, Model.SchoolName, Model.SchoolRank, "Y", Model.Division,
@@ -552,6 +852,8 @@ namespace GDWEBSolution.Controllers
                 }
 
 
+                List<tblSubjectCategory> sclSubcatlist = Connection.tblSubjectCategories.ToList();
+                ViewBag.SubcatscldrpList = new SelectList(sclSubcatlist, "SubjectCategoryId", "SubjectCategoryName");
                 List<tblSchoolCategory> SCategorylist = Connection.tblSchoolCategories.ToList();
                 ViewBag.SchoolCategoryDrpDown = new SelectList(SCategorylist, "SchoolCategoryId", "SchoolCategoryName");
                 List<tblProvince> provincelist = Connection.tblProvinces.ToList();
@@ -564,6 +866,10 @@ namespace GDWEBSolution.Controllers
                 ViewBag.DivisionDrpDown = new SelectList(divisionlist, "DivisionId", "DivisionName");
                 List<tblSchoolRank> Ranklist = Connection.tblSchoolRanks.ToList();
                 ViewBag.RankDrpDown = new SelectList(Ranklist, "SchoolRankId", "SchoolRankName");
+                List<tblSubject> sclSublist = Connection.tblSubjects.ToList();
+                ViewBag.SubjectscldrpList = new SelectList(sclSublist, "SubjectId", "SubjectName");
+                List<tblExtraCurricularActivity> excatlist = Connection.tblExtraCurricularActivities.ToList();
+                ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
                 SchoolGradeDrpList();
                 SchoolHouseDrpList();
               return View("SchoolCreate");
@@ -641,8 +947,10 @@ namespace GDWEBSolution.Controllers
             TModel.WebAddress = TCtable.WebUrl;
             TModel.MinuteforPeriod = TCtable.MinuteforPeriod.ToString();
             TModel.Telephone = TCtable.Telephone;
-            
 
+
+            List<tblSubjectCategory> sclSubcatlist = Connection.tblSubjectCategories.ToList();
+            ViewBag.SubcatscldrpList = new SelectList(sclSubcatlist, "SubjectCategoryId", "SubjectCategoryName");
             List<tblSchoolCategory> SCategorylist = Connection.tblSchoolCategories.ToList();
             ViewBag.SchoolCategoryDrpDown = new SelectList(SCategorylist, "SchoolCategoryId", "SchoolCategoryName");
           //  ViewBag.SchoolCategoryDrpDown = TCtable.SchoolCategory;
@@ -656,6 +964,10 @@ namespace GDWEBSolution.Controllers
             ViewBag.DivisionDrpDown = new SelectList(divisionlist, "DivisionId", "DivisionName");
             List<tblSchoolRank> Ranklist = Connection.tblSchoolRanks.ToList();
             ViewBag.RankDrpDown = new SelectList(Ranklist, "SchoolRankId", "SchoolRankName");
+            List<tblSubject> sclSublist = Connection.tblSubjects.ToList();
+            ViewBag.SubjectscldrpList = new SelectList(sclSublist, "SubjectId", "SubjectName");
+            List<tblExtraCurricularActivity> excatlist = Connection.tblExtraCurricularActivities.ToList();
+            ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
 
             TModel.SchoolCategory = TCtable.SchoolCategory;
             TModel.SchoolGroup = TCtable.SchoolGroup;

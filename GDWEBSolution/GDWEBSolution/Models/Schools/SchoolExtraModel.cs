@@ -6,27 +6,23 @@ using System.Web;
 
 namespace GDWEBSolution.Models.Schools
 {
-    public class SchoolSubjectModel
+    public class SchoolExtraModel
     {
-
-        [Display(Name = "Academic Year")]
-        public string AcademicYear { get; set; }
-
-        [Display(Name = "School Id")]
+        [Display(Name = "School Name")]
         public string SchoolId { get; set; }
 
-        [Display(Name = "Subject Category Name")]
-        public string SubjectCategoryId { get; set; }
+        [Display(Name = "Activity Code")]
+        public string ActivityCode { get; set; }
+
+        [Display(Name = "Activity Name")]
+        public string  ActivityName { get; set; }
+
+  
+
+        [Display(Name = "School Name")]
+        public string SchoolName { get; set; }
 
 
-        [Display(Name = "Subject Name")]
-        public string SubjectId { get; set; }
-
-        [Display(Name = "Subject Name")]
-        public string SubjectName { get; set; }
-
-        [Display(Name = "Optional")]
-        public string Optional { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
@@ -34,6 +30,7 @@ namespace GDWEBSolution.Models.Schools
 
         [Display(Name = "Active")]
         public string IsActive { get; set; }
+
 
 
 

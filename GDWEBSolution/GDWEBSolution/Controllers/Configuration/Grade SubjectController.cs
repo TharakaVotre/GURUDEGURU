@@ -213,6 +213,7 @@ namespace GDWEBSolution.Controllers.Configuration
             }
             catch (Exception ex)
             {
+                Errorlog.ErrorManager.LogError(ex);
                 return View();
             }
         }

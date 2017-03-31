@@ -28,7 +28,7 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
             }
             catch (Exception ex)
             {
-                //Errorlog.ErrorManager.LogError(ex);
+                Errorlog.ErrorManager.LogError(ex);
 
                 return View();
             }
@@ -62,7 +62,7 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
             }
             catch (Exception ex)
             {
-                //Errorlog.ErrorManager.LogError(ex);
+                Errorlog.ErrorManager.LogError(ex);
 
                 return View();
             }
