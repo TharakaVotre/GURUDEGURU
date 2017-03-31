@@ -1,0 +1,45 @@
+﻿
+@model  IEnumerable<GDWEBSolution.Models.Schools.SchoolExtraModel>
+
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.Count() == 0)
+        {
+            <div class="col-md-12">
+                <div class="well">
+                    No House is set to display
+                </div>
+            </div>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+
+                @*<div class="row">*@
+                <div class="col-md-6">
+                    <div class="well">
+                        <i class="glyphicon glyphicon-bell" aria-hidden="true"></i>
+                      
+                        @Html.HiddenFor(model => item.SchoolId)
+                        @Html.DisplayFor(modelItem => item.ActivityName)
+                        <button type="button" class="close" onclick='DeleteSchoolexc("@item.SchoolId","@(item.ActivityCode)","@(item.ActivityName)");'>&times;</button>
+                    </div>
+                </div>
+
+                @*</div>*@
+            }
+        }
+    </div>
+</div>
+<script>
+
+    function DeleteSchoolexc(SchoolId, ActivityCode, ActivityName) {
+        debugger
+        var Url = "/School/Deletescexc?SchoolId=" + SchoolId + "&ActivityCode=" + ActivityCode + "&ActivityName=" + ActivityName;
+        $("#DeleteModelBody").load(Url, function () {
+            $("#deleteModel").modal("show");
+        })
+    }
+
+    </script>

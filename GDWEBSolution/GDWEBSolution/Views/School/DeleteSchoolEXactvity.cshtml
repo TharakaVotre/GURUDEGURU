@@ -1,18 +1,17 @@
-﻿
-@model GDWEBSolution.Models.Schools.SchoolGradeModel
-
-
+﻿@model GDWEBSolution.Models.Schools.SchoolExtraModel
 <div>
-    <form id="FormQDelete" class="form-horizontal">
+    <form id="FormexdDelete" class="form-horizontal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h5 class="modal-title">Are you sure you want to Delete this Teacher Qualification ? @Html.HiddenFor(m => m.SchoolId)</h5>
-            @Html.HiddenFor(m => m.GradeId)
-          
+            <h5 class="modal-title">Are you sure you want to Delete this Activity ? @Html.LabelFor(m => m.ActivityName)</h5>
+            @Html.HiddenFor(m => m.ActivityCode)
+            @Html.HiddenFor(m => m.ActivityName)
+            @Html.HiddenFor(m => m.SchoolId)
+
         </div>
         <div class="modal-footer">
 
-            <a href="#" id="btnQDSubmit" class="btn btn-primary">YES</a>
+            <a href="#" id="btnexdSubmit" class="btn btn-primary">YES</a>
             <a href="#" id="btnNo" class="btn btn-default">NO</a>
         </div>
     </form>
@@ -24,13 +23,13 @@
 
     $(document).ready(function () {
 
-        $("#btnQDSubmit").click(function (e) {
+        $("#btnexdSubmit").click(function (e) {
             debugger
-            var myformdata = $("#FormQDelete").serialize();
+            var myformdata = $("#FormexdDelete").serialize();
             $.ajax({
 
                 type: "POST",
-                url: "/School/DeleteSchoolgrades",
+                url: "/School/DeleteSchoolexcactivities",
                 data: myformdata,
                 success: function (result) {
                     //$("#loaderDiv").hide();
@@ -39,7 +38,7 @@
                         //window.location.href = "/Teacher/Create";
                         // $("#TeacherID").val(result);
                         //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                        $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + result);
+                        $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + result);
                     }
                     $("#deleteModel").modal("hide");
 

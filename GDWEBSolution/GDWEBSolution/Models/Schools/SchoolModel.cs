@@ -19,6 +19,7 @@ namespace GDWEBSolution.Models.Schools
 
 
         [Display(Name = "Web Address")]
+        [Url]
         public string WebAddress { get; set; }
 
         [Display(Name = "Logo Path")]
@@ -33,15 +34,28 @@ namespace GDWEBSolution.Models.Schools
         [Display(Name = "School Category")]
         public string SchoolCategoryName { get; set; }
 
-
         [Display(Name = "Telephone")]
+
+        [Required(ErrorMessage = "You must provide a PhoneNumber")]
+
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public string Telephone { get; set; }
         [Display(Name = "Minute for Period")]
+
+        [Required(ErrorMessage = "You must provide a valid time period")]
+     
+        //[MaxValue(100)]
+        //[MinValue(1)]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Period must be numeric")]
         public string MinuteforPeriod { get; set; }
         [Display(Name = "Fax")]
         public string Fax { get; set; }
         [Display(Name = "Email")]
-        [Required(ErrorMessage = "Email Address is Required")]
+        [Required(ErrorMessage = "The email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+
+        
         public string Email { get; set; }
         [Display(Name = "Address3")]
         public string Address3 { get; set; }

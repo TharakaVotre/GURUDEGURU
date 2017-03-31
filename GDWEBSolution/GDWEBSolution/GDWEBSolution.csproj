@@ -186,6 +186,7 @@
     <Compile Include="Controllers\Maintenance\MaintainSubjectCategoryController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainSubjectController.cs" />
     <Compile Include="Controllers\Message\PSMessageController.cs" />
+    <Compile Include="Controllers\SchoolCalender\SchoolCalenderController.cs" />
     <Compile Include="Controllers\SchoolController.cs" />
     <Compile Include="Controllers\Teacher\TeacherCategoryController.cs" />
     <Compile Include="Controllers\Teacher\TeacherController.cs" />
@@ -270,11 +271,16 @@
     <Compile Include="Models\GDgetApplicationStatus_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GDgetSchoolCalenderEvent_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\getAllEvaluationType_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SchoolCalender\SchoolCalenderModel.cs" />
     <Compile Include="Models\Schools\RegistrationModel.cs" />
     <Compile Include="Models\Schools\SchoolExtraCuricularModel.cs" />
+    <Compile Include="Models\Schools\SchoolExtraModel.cs" />
     <Compile Include="Models\Schools\SchoolGradeModel.cs" />
     <Compile Include="Models\Schools\SchoolHouseModel.cs" />
     <Compile Include="Models\Schools\SchoolModel.cs" />
@@ -301,6 +307,9 @@
     <Compile Include="Models\SMGTgetPtoSMessageView_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGTgetSchoolExtraCadd_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGTgetSchoolGradeadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -308,6 +317,9 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGTgetSchoolHouseadd_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetSchoolSubadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGTgetSchoolTeacher_Result.cs">
@@ -1084,20 +1096,32 @@
     <Content Include="Views\PSMessage\Sent.cshtml" />
     <Content Include="Views\Upload\AsyncUpload.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
+    <Content Include="Views\SchoolCalender\AddView.cshtml" />
+    <Content Include="Views\SchoolCalender\DeleteView.cshtml" />
+    <Content Include="Views\SchoolCalender\EditView.cshtml" />
+    <Content Include="Views\SchoolCalender\Index.cshtml" />
+    <Content Include="Views\SchoolCalender\ParentView.cshtml" />
     <Content Include="Views\School\Create.cshtml" />
     <Content Include="Views\School\createdef.cshtml" />
     <Content Include="Views\School\Delete.cshtml" />
-    <Content Include="Views\School\DeleteSchoolGrade.cshtml" />
-    <Content Include="Views\School\DeleteSchoolHouse.cshtml" />
     <Content Include="Views\School\Detail.cshtml" />
     <Content Include="Views\School\Edit.cshtml" />
+    <Content Include="Views\School\Index.cshtml" />
+    <Content Include="Views\School\SchoolCreate.cshtml" />
+    <Content Include="Views\School\Success.cshtml" />
+    <Content Include="Views\School\DeleteSchoolEXactvity.cshtml" />
+    <Content Include="Views\School\DeleteSchoolGrade.cshtml" />
+    <Content Include="Views\School\DeleteSchoolHouse.cshtml" />
+    <Content Include="Views\School\DeleteSchoolSubjects.cshtml" />
+    <Content Include="Views\School\ExcList.cshtml" />
     <Content Include="Views\School\Grade.cshtml" />
     <Content Include="Views\School\GradeList.cshtml" />
     <Content Include="Views\School\House.cshtml" />
     <Content Include="Views\School\HouseList.cshtml" />
-    <Content Include="Views\School\Index.cshtml" />
-    <Content Include="Views\School\SchoolCreate.cshtml" />
-    <Content Include="Views\School\Success.cshtml" />
+    <Content Include="Views\School\SchoolExtra.cshtml" />
+    <Content Include="Views\School\SclSubList.cshtml" />
+    <Content Include="Views\School\ShowSchoolsubjects.cshtml" />
+    <Content Include="Views\School\Subject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
