@@ -70,6 +70,8 @@
                                 </div>
                                 <div class="col-sm-3">
                                     @Html.ValidationMessageFor(model => model.Address1, null, new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.Address2, null, new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.Address3, null, new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="hr-dashed"></div>
