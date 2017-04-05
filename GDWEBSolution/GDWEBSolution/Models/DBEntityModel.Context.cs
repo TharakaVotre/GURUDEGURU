@@ -989,7 +989,7 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyQualification", descriptionParameter, statusCodeParameter, modyfiedByParameter);
         }
     
-        public virtual int GDModifySchoolCalenderActivity(Nullable<long> seqNo, Nullable<System.DateTime> todate, Nullable<System.DateTime> fromDate, string comment, Nullable<System.DateTime> acDate, string isholiday, string userId)
+        public virtual int GDModifySchoolCalenderActivity(Nullable<long> seqNo, Nullable<System.DateTime> todate, Nullable<System.DateTime> fromDate, string comment, string dateComment, string isholiday, string userId)
         {
             var seqNoParameter = seqNo.HasValue ?
                 new ObjectParameter("SeqNo", seqNo) :
@@ -1007,9 +1007,9 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("Comment", comment) :
                 new ObjectParameter("Comment", typeof(string));
     
-            var acDateParameter = acDate.HasValue ?
-                new ObjectParameter("AcDate", acDate) :
-                new ObjectParameter("AcDate", typeof(System.DateTime));
+            var dateCommentParameter = dateComment != null ?
+                new ObjectParameter("DateComment", dateComment) :
+                new ObjectParameter("DateComment", typeof(string));
     
             var isholidayParameter = isholiday != null ?
                 new ObjectParameter("Isholiday", isholiday) :
@@ -1019,7 +1019,7 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("userId", userId) :
                 new ObjectParameter("userId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifySchoolCalenderActivity", seqNoParameter, todateParameter, fromDateParameter, commentParameter, acDateParameter, isholidayParameter, userIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifySchoolCalenderActivity", seqNoParameter, todateParameter, fromDateParameter, commentParameter, dateCommentParameter, isholidayParameter, userIdParameter);
         }
     
         public virtual int GDModifySchoolCategory(string description, Nullable<int> statusCode, string modyfiedBy)
@@ -1380,7 +1380,7 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetQualification", descriptionParameter, createdByParameter, isActiveParameter);
         }
     
-        public virtual int GDsetSchoolCalenderActivity(string schoolId, string acadamicYear, Nullable<System.DateTime> acadamicDate, string isHoliday, string specialComment, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, string user, string isActive)
+        public virtual int GDsetSchoolCalenderActivity(string schoolId, string acadamicYear, string dateComment, string isHoliday, string specialComment, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, string user, string isActive)
         {
             var schoolIdParameter = schoolId != null ?
                 new ObjectParameter("SchoolId", schoolId) :
@@ -1390,9 +1390,9 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("AcadamicYear", acadamicYear) :
                 new ObjectParameter("AcadamicYear", typeof(string));
     
-            var acadamicDateParameter = acadamicDate.HasValue ?
-                new ObjectParameter("AcadamicDate", acadamicDate) :
-                new ObjectParameter("AcadamicDate", typeof(System.DateTime));
+            var dateCommentParameter = dateComment != null ?
+                new ObjectParameter("DateComment", dateComment) :
+                new ObjectParameter("DateComment", typeof(string));
     
             var isHolidayParameter = isHoliday != null ?
                 new ObjectParameter("IsHoliday", isHoliday) :
@@ -1418,7 +1418,7 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("IsActive", isActive) :
                 new ObjectParameter("IsActive", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetSchoolCalenderActivity", schoolIdParameter, acadamicYearParameter, acadamicDateParameter, isHolidayParameter, specialCommentParameter, fromDateParameter, toDateParameter, userParameter, isActiveParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetSchoolCalenderActivity", schoolIdParameter, acadamicYearParameter, dateCommentParameter, isHolidayParameter, specialCommentParameter, fromDateParameter, toDateParameter, userParameter, isActiveParameter);
         }
     
         public virtual int GDsetSchoolCategory(string description, string createdBy, string isActive)
@@ -1706,6 +1706,11 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("SchoolId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetSchoolTeacher_Result>("SMGTgetSchoolTeacher", schoolIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetStudent_Result> SMGTgetStudent()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetStudent_Result>("SMGTgetStudent");
         }
     
         public virtual ObjectResult<SMGTgetTeacher_Result> SMGTgetTeacher(Nullable<long> teacherID)

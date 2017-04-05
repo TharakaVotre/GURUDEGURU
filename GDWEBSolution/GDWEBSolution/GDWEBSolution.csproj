@@ -325,6 +325,9 @@
     <Compile Include="Models\SMGTgetSchoolTeacher_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGTgetStudent_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGTgetTeacherExActivity_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -916,6 +919,7 @@
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\fileinput.js" />
     <Content Include="MUHandler.ashx" />
+    <Content Include="Content\css\rstyle.css" />
     <EntityDeploy Include="Models\DBEntityModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBEntityModel.Designer.cs</LastGenOutput>
@@ -923,7 +927,6 @@
     <Content Include="Models\DBEntityModel.edmx.diagram">
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\css\rstyle.css" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -1102,11 +1105,6 @@
     <Content Include="Views\PSMessage\Sent.cshtml" />
     <Content Include="Views\Upload\AsyncUpload.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
-    <Content Include="Views\SchoolCalender\AddView.cshtml" />
-    <Content Include="Views\SchoolCalender\DeleteView.cshtml" />
-    <Content Include="Views\SchoolCalender\EditView.cshtml" />
-    <Content Include="Views\SchoolCalender\Index.cshtml" />
-    <Content Include="Views\SchoolCalender\ParentView.cshtml" />
     <Content Include="Views\School\Create.cshtml" />
     <Content Include="Views\School\createdef.cshtml" />
     <Content Include="Views\School\Delete.cshtml" />
@@ -1128,6 +1126,11 @@
     <Content Include="Views\School\ShowSchoolsubjects.cshtml" />
     <Content Include="Views\School\Subject.cshtml" />
     <Content Include="Views\School\Success.cshtml" />
+    <Content Include="Views\SchoolCalender\AddView.cshtml" />
+    <Content Include="Views\SchoolCalender\DeleteView.cshtml" />
+    <Content Include="Views\SchoolCalender\EditView.cshtml" />
+    <Content Include="Views\SchoolCalender\Index.cshtml" />
+    <Content Include="Views\SchoolCalender\ParentView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
