@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<h2>Time Table</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">School : Christ King Colleage | Gread : 1 | Class : A</div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#monday" data-toggle="tab" aria-expanded="true">Monday</a></li>
+                    <li class=""><a href="#tuseday" data-toggle="tab" aria-expanded="false">Tuseday</a></li>
+                    <li class=""><a href="#wednesday" data-toggle="tab" aria-expanded="false">Wednesday</a></li>
+                    <li class=""><a href="#thursday" data-toggle="tab" aria-expanded="false">Thursday</a></li>
+                    <li class=""><a href="#friday" data-toggle="tab" aria-expanded="false">Friday</a></li>
+                </ul>
+                <br>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in" id="monday">
+                        @{ Html.RenderAction("ShowTimeTblView", new { ClassId = "A", GreadId = "G1", SchoolId = "CKC", Day = "MONDAY" }); }
+                    </div>
+                    <div class="tab-pane fade" id="tuseday">
+                        @{ Html.RenderAction("ShowTimeTblView", new { ClassId = "A", GreadId = "G1", SchoolId = "CKC", Day = "TUSEDAY" }); }
+                    </div>
+                    <div class="tab-pane fade" id="wednesday">
+                        @{ Html.RenderAction("ShowTimeTblView", new { ClassId = "A", GreadId = "G1", SchoolId = "CKC", Day = "WEDNESDAY" }); }
+                    </div>
+                    <div class="tab-pane fade" id="thursday">
+                        @{ Html.RenderAction("ShowTimeTblView", new { ClassId = "A", GreadId = "G1", SchoolId = "CKC", Day = "THURSEDAY" }); }
+                    </div>
+                    <div class="tab-pane fade" id="friday">
+                        @{ Html.RenderAction("ShowTimeTblView", new { ClassId = "A", GreadId = "G1", SchoolId = "CKC", Day = "FRIDAY" }); }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

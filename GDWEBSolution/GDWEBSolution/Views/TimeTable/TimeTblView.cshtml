@@ -1,0 +1,73 @@
+﻿@model IEnumerable<GDWEBSolution.Models.TimeTable.TimeTableModel>
+
+<div class="col-md-5">
+    <div class="panel panel-default">
+        <div class="panel-heading">Morning Shedule</div>
+        <div class="panel-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Subject</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    { 
+                        if(item.PeriodSeqNo <= 4)
+                        {
+                        <tr>
+                            <th scope="row">@Html.DisplayFor(modelItem => item.PeriodSeqNo)</th>
+                            <td>@Html.DisplayFor(modelItem => item.FromTime_String)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ToTime_String)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SubjectName)</td>
+                        </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="well" style="margin-top: 60px; padding-top: 50px; padding-bottom: 50px; margin-bottom: 60px; text-align: center; font-size: x-large;">
+        INTERVAL
+    </div>
+</div>
+<div class="col-md-5">
+    <div class="panel panel-default">
+        <div class="panel-heading">Afternoon Shedule</div>
+        <div class="panel-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Subject</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    { 
+                        if(item.PeriodSeqNo >= 5)
+                        {
+                        <tr>
+                            <th scope="row">@Html.DisplayFor(modelItem => item.PeriodSeqNo)</th>
+                            <td>@Html.DisplayFor(modelItem => item.FromTime_String)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ToTime_String)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SubjectName)</td>
+                        </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

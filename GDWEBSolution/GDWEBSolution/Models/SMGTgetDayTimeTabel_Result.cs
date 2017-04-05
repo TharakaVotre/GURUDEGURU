@@ -10,19 +10,19 @@
 namespace GDWEBSolution.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblStudentHistory
+    public partial class SMGTgetDayTimeTabel_Result
     {
         public long SeqNo { get; set; }
         public string AcademicYear { get; set; }
         public string SchoolId { get; set; }
-        public string StudentId { get; set; }
         public string GradeId { get; set; }
         public string ClassId { get; set; }
-        public string CreatedBy { get; set; }
-        public System.DateTime CreadedDate { get; set; }
-        public string ModifyedBy { get; set; }
-        public Nullable<System.DateTime> ModifyedDate { get; set; }
+        public string Day { get; set; }
+        public int SubjectId { get; set; }
+        public string SubjectName { get; set; }
+        public string FromTime { get; set; }
+        public string ToTime { get; set; }
+        public int PeriodSequenceNo { get; set; }
     }
 }

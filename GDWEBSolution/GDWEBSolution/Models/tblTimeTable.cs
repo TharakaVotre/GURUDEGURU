@@ -28,6 +28,7 @@ namespace GDWEBSolution.Models
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
+        public int PeriodSequenceNo { get; set; }
     
         public virtual tblClass tblClass { get; set; }
         public virtual tblGrade tblGrade { get; set; }
