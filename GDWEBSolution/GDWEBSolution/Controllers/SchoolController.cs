@@ -69,28 +69,11 @@ namespace GDWEBSolution.Controllers
             TModel.SchoolName = TCtable.SchoolName;
             TModel.Address1 = TCtable.Address1;
             TModel.Description = TCtable.Description;
-            TModel.Address1 = TCtable.Address1;
-            TModel.Address2 = TCtable.Address2;
-            TModel.Address3 = TCtable.Address3;
+            TModel.Address1 = TCtable.Address1 +" "+ TCtable.Address2 + " "+TCtable.Address3;
             TModel.Email = TCtable.Email;
             TModel.WebAddress = TCtable.WebUrl;
             TModel.MinuteforPeriod = TCtable.MinuteforPeriod.ToString();
             TModel.Telephone = TCtable.Telephone;
-
-
-            //List<tblSchoolCategory> SCategorylist = Connection.tblSchoolCategories.ToList();
-            //ViewBag.SchoolCategoryDrpDown = new SelectList(SCategorylist, "SchoolCategoryId", "SchoolCategoryName");
-            //ViewBag.SchoolCategoryDrpDown = TCtable.SchoolCategory;
-            //List<tblProvince> provincelist = Connection.tblProvinces.ToList();
-            //ViewBag.ProvinceDrpDown = new SelectList(provincelist, "ProvinceId", "ProvinceName");
-            //List<tblSchoolGroup> schoolgrps = Connection.tblSchoolGroups.ToList();
-            //ViewBag.SGroupDrpDown = new SelectList(schoolgrps, "GroupId", "GroupName");
-            //List<tblDistrict> districtlist = Connection.tblDistricts.ToList();
-            //ViewBag.DistrictDrpDown = new SelectList(districtlist, "DistrictId", "DistrictName");
-            //List<tblDivision> divisionlist = Connection.tblDivisions.ToList();
-            //ViewBag.DivisionDrpDown = new SelectList(divisionlist, "DivisionId", "DivisionName");
-            //List<tblSchoolRank> Ranklist = Connection.tblSchoolRanks.ToList();
-            //ViewBag.RankDrpDown = new SelectList(Ranklist, "SchoolRankId", "SchoolRankName");
 
             TModel.SchoolCategory = TCtable.SchoolCategory;
             TModel.SchoolGroup = TCtable.SchoolGroup;
@@ -98,6 +81,31 @@ namespace GDWEBSolution.Controllers
             TModel.District = TCtable.District;
             TModel.Division = TCtable.Division;
             TModel.Province = TCtable.Province;
+            TModel.ImagePath = TCtable.ImagePath;
+            TModel.LogoPath = TCtable.LogoPath;
+            if (TCtable.ImagePath == null ) { 
+            
+            TModel.ImagePath="~/Uploads/Schools/Logo/logo.png";
+            }
+            if (TCtable.LogoPath == null)
+            {
+
+                TModel.LogoPath = "~/Uploads/Schools/Logo/logo.png";
+            }
+
+            
+            tblSchoolCategory cattbl = Connection.tblSchoolCategories.SingleOrDefault(x => x.SchoolCategoryId == TModel.SchoolCategory);
+            TModel.SchoolCategoryName = cattbl.SchoolCategoryName;
+            tblSchoolGroup sclgrp = Connection.tblSchoolGroups.SingleOrDefault(x => x.GroupId == TModel.SchoolGroup);
+            TModel.GroupName = sclgrp.GroupName;
+            tblSchoolRank sclrank = Connection.tblSchoolRanks.SingleOrDefault(x => x.SchoolRankId == TModel.SchoolRank);
+            TModel.SchoolRankName = sclrank.SchoolRankName;
+            tblDistrict scldr = Connection.tblDistricts.SingleOrDefault(x => x.DistrictId == TModel.District);
+            TModel.DistrictName = scldr.DistrictName;
+            tblDivision scldivisions = Connection.tblDivisions.SingleOrDefault(x => x.DivisionId == TModel.Division);
+            TModel.DivisionName = scldivisions.DivisionName;
+            tblProvince Province = Connection.tblProvinces.SingleOrDefault(x => x.ProvinceId == TModel.Province);
+            TModel.ProvinceName = Province.ProvinceName;
 
 
             return View("Detail", TModel);
@@ -804,7 +812,8 @@ namespace GDWEBSolution.Controllers
         {
             string _path="";
             string _pathL = "";
-
+              string _path1="";
+            string _pathL2 = "";
        
 
            // return View("SchoolCreate");
@@ -819,15 +828,29 @@ namespace GDWEBSolution.Controllers
                     {
 
 
-                        string _FileName = Path.GetFileName(Model.File.FileName);
-                        _path = Path.Combine(Server.MapPath("~/Uploads"), _FileName);
+                        string fnm = DateTime.Now.ToString("");
+                        string nwString22 = fnm.Replace("-", ".");
+                        string nwString = nwString22.Replace("/", ".");
+                        string nwString2 = nwString.Replace(" ", ".");
+                        string time = nwString2.Replace(":", ".");
+
+                        string _FileName = time+"_"+Path.GetFileName(Model.File.FileName);
+                        _path = Path.Combine(Server.MapPath("~/Uploads/Schools/Images"), _FileName);
+                        _path1 = "~/Uploads/Schools/Images/" + _FileName;
                         Model.File.SaveAs(_path);
                     }
 
                     if (Model.LogoFile.ContentLength > 0)
                     {
-                        string _FileName = Path.GetFileName(Model.LogoFile.FileName);
-                        _pathL = Path.Combine(Server.MapPath("~/Uploads"), _FileName);
+                        string fnm = DateTime.Now.ToString("");
+                         string nwString22 = fnm.Replace("-", ".");
+                         string nwString = nwString22.Replace("/", ".");
+                        string nwString2 = nwString.Replace(" ", ".");
+                        string time = nwString2.Replace(":", ".");
+                   
+                        string _FileName =time+"_" +Path.GetFileName(Model.LogoFile.FileName);
+                        _pathL = Path.Combine(Server.MapPath("~/Uploads/Schools/Logo"), _FileName);
+                        _pathL2 = "~/Uploads/Schools/Logo/" + _FileName;
                         Model.LogoFile.SaveAs(_pathL);
                     }
 
@@ -838,7 +861,7 @@ namespace GDWEBSolution.Controllers
 
 
                     Connection.DCISsetSchool(SchoolId, Model.SchoolGroup, Model.SchoolName, Model.SchoolRank, "Y", Model.Division,
-                        Model.District, Model.Description, UserId, Model.Address1, Model.Address2, Model.Address3, Model.Email, Model.Fax, _path, Convert.ToInt16(Model.MinuteforPeriod), Model.Telephone, Model.SchoolCategory, Model.Province, Model.WebAddress, _pathL
+                        Model.District, Model.Description, UserId, Model.Address1, Model.Address2, Model.Address3, Model.Email, Model.Fax, _path1, Convert.ToInt16(Model.MinuteforPeriod), Model.Telephone, Model.SchoolCategory, Model.Province, Model.WebAddress, _pathL2
                         );
                     Connection.SaveChanges();
 
@@ -992,27 +1015,123 @@ namespace GDWEBSolution.Controllers
         public ActionResult Edit(SchoolModel  Model)
         {
             string _path = "";
+
             string _pathL = "";
+            string _path1 = "";
+
+            string _pathL2 = "";
             try
             {
-                // TODO: Add update logic here
-                if (Model.File.ContentLength > 0)
+                if (ModelState.IsValid)
                 {
-                    string _FileName = Path.GetFileName(Model.File.FileName);
-                    _path = Path.Combine(Server.MapPath("~/Uploads"), _FileName);
-                    Model.File.SaveAs(_path);
+                    // TODO: Add update logic here
+                    if (Model.File.ContentLength > 0)
+                    {
+
+                        string fnm = DateTime.Now.ToString("");
+                        string nwString22 = fnm.Replace("-", ".");
+                        string nwString = nwString22.Replace("/", ".");
+                        string nwString2 = nwString.Replace(" ", ".");
+                        string time = nwString2.Replace(":", ".");
+
+                        string _FileName = time + "_" + Path.GetFileName(Model.File.FileName);
+
+
+
+
+                        _path = Path.Combine(Server.MapPath("~/Uploads/Schools/Images"), _FileName);
+                        _path1 = "~/Uploads/Schools/Images/" + _FileName;
+                        Model.File.SaveAs(_path);
+                    }
+
+                    if (Model.LogoFile.ContentLength > 0)
+                    {
+                        string fnm = DateTime.Now.ToString("");
+                        string nwString22 = fnm.Replace("-", ".");
+                        string nwString = nwString22.Replace("/", ".");
+                        string nwString2 = nwString.Replace(" ", ".");
+                        string time = nwString2.Replace(":", ".");
+
+                        string _FileName = time + "_" + Path.GetFileName(Model.LogoFile.FileName);
+
+
+                        _pathL = Path.Combine(Server.MapPath("~/Uploads/Schools/Logo"), _FileName);
+                        _pathL2 = "~/Uploads/Schools/Logo/" + _FileName;
+                        Model.LogoFile.SaveAs(_pathL);
+                    }
                 }
 
-                if (Model.LogoFile.ContentLength > 0)
-                {
-                    string _FileName = Path.GetFileName(Model.LogoFile.FileName);
-                    _pathL = Path.Combine(Server.MapPath("~/Uploads"), _FileName);
-                    Model.LogoFile.SaveAs(_pathL);
-                }
-              
+
+
+                    
+
+           SchoolModel TModel = new SchoolModel();
+
+            tblSchool TCtable = Connection.tblSchools.SingleOrDefault(x => x.SchoolId == Model.SchoolId);
+            //  TModel.IsActive = TCtable.IsActive;
+
+            TModel.SchoolId = TCtable.SchoolId;
+            TModel.SchoolName = TCtable.SchoolName;
+            TModel.Address1 = TCtable.Address1;
+            TModel.Description = TCtable.Description;
+            TModel.Address1 = TCtable.Address1 +" "+ TCtable.Address2 + " "+TCtable.Address3;
+            TModel.Email = TCtable.Email;
+            TModel.WebAddress = TCtable.WebUrl;
+            TModel.MinuteforPeriod = TCtable.MinuteforPeriod.ToString();
+            TModel.Telephone = TCtable.Telephone;
+
+            TModel.SchoolCategory = TCtable.SchoolCategory;
+            TModel.SchoolGroup = TCtable.SchoolGroup;
+            TModel.SchoolRank = TCtable.SchoolRank;
+            TModel.District = TCtable.District;
+            TModel.Division = TCtable.Division;
+            TModel.Province = TCtable.Province;
+            TModel.ImagePath = TCtable.ImagePath;
+            TModel.LogoPath = TCtable.LogoPath;
+
+            if (Model.SchoolName == null) {
+                Model.SchoolName = TModel.SchoolName;
+            
+            }
+
+          
+            if (Model.Email == null)
+            {
+                Model.Email = TModel.Email;
+
+            }
+            if (Model.MinuteforPeriod == null)
+            {
+                Model.MinuteforPeriod = TModel.MinuteforPeriod;
+
+            }
+
+            if (Model.Telephone == null)
+            {
+                Model.Telephone = TModel.Telephone;
+
+            }
+
+            if (_path1 == "") {
+
+                _path1 = TModel.ImagePath;
+            
+            }
+            if (_pathL2 == "")
+            {
+
+                _pathL2 = TModel.LogoPath;
+
+            }
+               
+
+
+
+
+
 
                 Connection.DCISModifySchool(Model.SchoolId, Model.SchoolGroup, Model.SchoolName, Model.SchoolRank, "Y", Model.Division,
-                   Model.District, Model.Description, UserId, Model.Address1, Model.Address2, Model.Address3, _path, Model.Fax, "", Convert.ToInt16(Model.MinuteforPeriod), Model.Telephone, Model.SchoolCategory, Model.Province, Model.WebAddress, _pathL
+                   Model.District, Model.Description, UserId, Model.Address1, Model.Address2, Model.Address3,Model.Email , Model.Fax, _path1, Convert.ToInt16(Model.MinuteforPeriod), Model.Telephone, Model.SchoolCategory, Model.Province, Model.WebAddress, _pathL2
                    );
                 Connection.SaveChanges();
                 return RedirectToAction("Index");

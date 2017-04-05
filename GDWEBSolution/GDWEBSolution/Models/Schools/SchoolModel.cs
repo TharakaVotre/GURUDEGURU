@@ -118,5 +118,22 @@ namespace GDWEBSolution.Models.Schools
         public string IsActive { get; set; }
 
 
+
+           [Display(Name = "Rank Name")]
+        public string SchoolRankName { get; set; }
+
+         [Display(Name = "District Name")]
+        public string DistrictName { get; set; }
+
+
+         [Display(Name = "Division Name")]
+        public string DivisionName { get; set; }
+
+
+         [Display(Name = "Province Name")]
+        public string ProvinceName { get; set; }
+        
+
+
     }
 }
