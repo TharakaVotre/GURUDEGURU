@@ -923,6 +923,7 @@
     <Content Include="Models\DBEntityModel.edmx.diagram">
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\css\rstyle.css" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -947,6 +948,11 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\paginathing.js" />
     <Content Include="Scripts\select2.full.js" />
+    <Content Include="Uploads\Schools\Images\2.PNG" />
+    <Content Include="Uploads\Schools\Images\2017-04-02.ප.ව..1.27.05_3.PNG" />
+    <Content Include="Uploads\Schools\Images\defualt.gif" />
+    <Content Include="Uploads\Schools\Logo\2017-04-02.ප.ව..1.27.14_12.jpg" />
+    <Content Include="Uploads\Schools\Logo\logo.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1104,30 +1110,29 @@
     <Content Include="Views\School\Create.cshtml" />
     <Content Include="Views\School\createdef.cshtml" />
     <Content Include="Views\School\Delete.cshtml" />
-    <Content Include="Views\School\Detail.cshtml" />
-    <Content Include="Views\School\Edit.cshtml" />
-    <Content Include="Views\School\Index.cshtml" />
-    <Content Include="Views\School\SchoolCreate.cshtml" />
-    <Content Include="Views\School\Success.cshtml" />
     <Content Include="Views\School\DeleteSchoolEXactvity.cshtml" />
     <Content Include="Views\School\DeleteSchoolGrade.cshtml" />
     <Content Include="Views\School\DeleteSchoolHouse.cshtml" />
     <Content Include="Views\School\DeleteSchoolSubjects.cshtml" />
+    <Content Include="Views\School\Detail.cshtml" />
+    <Content Include="Views\School\Edit.cshtml" />
     <Content Include="Views\School\ExcList.cshtml" />
     <Content Include="Views\School\Grade.cshtml" />
     <Content Include="Views\School\GradeList.cshtml" />
     <Content Include="Views\School\House.cshtml" />
     <Content Include="Views\School\HouseList.cshtml" />
+    <Content Include="Views\School\Index.cshtml" />
+    <Content Include="Views\School\SchoolCreate.cshtml" />
     <Content Include="Views\School\SchoolExtra.cshtml" />
     <Content Include="Views\School\SclSubList.cshtml" />
     <Content Include="Views\School\ShowSchoolsubjects.cshtml" />
     <Content Include="Views\School\Subject.cshtml" />
+    <Content Include="Views\School\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\School\" />
     <Folder Include="UploadedFiles\" />
-    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

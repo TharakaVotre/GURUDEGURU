@@ -45,7 +45,7 @@
 
                                     @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
-                                        @Html.TextBoxFor(model => model.SchoolId, new { @class = "form-control", @placeholder = "School Id" })
+                                        @Html.TextBoxFor(model => model.SchoolId, new { @class = "form-control", @placeholder = "School Id", @readonly = "readonly" })
                                         <span class="help-block m-b-none" id="CategoryNameError"></span>
                                     </div>
                                 </div>
