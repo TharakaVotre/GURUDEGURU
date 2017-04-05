@@ -11,21 +11,24 @@ namespace GDWEBSolution.Models
 {
     using System;
     
-    public partial class GDgetSchoolCalenderEvent_Result
+    public partial class SMGTgetStudent_Result
     {
-        public long CalenderSeqNo { get; set; }
         public string SchoolId { get; set; }
-        public string AcadamicYear { get; set; }
-        public System.DateTime AcadamicDate { get; set; }
-        public string IsHoliday { get; set; }
-        public string SpecialComment { get; set; }
-        public string DateComment { get; set; }
-        public System.DateTime FromDate { get; set; }
-        public System.DateTime ToDate { get; set; }
+        public string StudentId { get; set; }
+        public string AcademicYear { get; set; }
+        public string studentName { get; set; }
+        public Nullable<System.DateTime> DateofBirth { get; set; }
+        public string GradeId { get; set; }
+        public string ClassId { get; set; }
+        public string Gender { get; set; }
+        public string UserId { get; set; }
+        public string HouseId { get; set; }
+        public string ImgUrl { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
+        public string SchoolName { get; set; }
     }
 }

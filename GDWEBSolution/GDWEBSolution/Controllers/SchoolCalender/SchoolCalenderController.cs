@@ -42,26 +42,26 @@ namespace GDWEBSolution.Controllers.SchoolCalender
 
                 List<SchoolCalenderModel> tcmlist = Grouplist.Select(x => new SchoolCalenderModel
                 {
-                    CalenderSeqNo = x.CalenderSeqNo,
-                    SchoolId = x.SchoolId,
-                    AcadamicYear = x.AcadamicYear,
-                    AcadamicDate = x.AcadamicDate,
-                    IsHoliday = x.IsHoliday,
-                    SpecialComment = x.SpecialComment,
+                    CalenderSeqNo=x.CalenderSeqNo,
+                    SchoolId=x.SchoolId,
+                    AcadamicYear=x.AcadamicYear,
+                    DateComment = x.DateComment,
+                    IsHoliday=x.IsHoliday,
+                    SpecialComment=x.SpecialComment,
                     FromDate = x.FromDate,
                     ToDate = x.ToDate,
-                    StartMonth = x.FromDate.Month.ToString(),
+                    StartMonth=x.FromDate.Month.ToString(),
                     EndMonth = x.ToDate.Month.ToString(),
-                    CreatedBy = x.CreatedBy,
+                    CreatedBy=x.CreatedBy,
                     CreatedDate = x.CreatedDate.ToShortDateString(),
-                    IsActive = x.IsActive
+                    IsActive=x.IsActive
                 }).ToList();
 
                 return View(tcmlist);
             }
             catch (Exception ex)
             {
-                Errorlog.ErrorManager.LogError(ex);
+                //Errorlog.ErrorManager.LogError(ex);
 
                 return View();
             }   
@@ -86,10 +86,10 @@ namespace GDWEBSolution.Controllers.SchoolCalender
                      holyday="Y";
                 }
                 AcademicYear = Session["AcademicYear"].ToString();
-                Connection.GDsetSchoolCalenderActivity(SchooId, AcademicYear, Model.AcadamicDate, holyday, Model.SpecialComment, Model.FromDate, Model.ToDate, UserId, "Y");
+                Connection.GDsetSchoolCalenderActivity(SchooId, AcademicYear, Model.DateComment, holyday, Model.SpecialComment, Model.FromDate, Model.ToDate, UserId, "Y");
                 Connection.SaveChanges();
 
-               
+                //return View();
 
                 return RedirectToAction("Index");
             }
@@ -137,12 +137,11 @@ namespace GDWEBSolution.Controllers.SchoolCalender
             tblSchoolCalendar TCtable = Connection.tblSchoolCalendars.SingleOrDefault(x => x.CalenderSeqNo == SeqNo);
             TModel.CalenderSeqNo = SeqNo;
             TModel.AcadamicYear = TCtable.AcadamicYear;
-            TModel.AcadamicDate = TCtable.AcadamicDate;
             TModel.FromDate = TCtable.FromDate;
             TModel.ToDate = TCtable.ToDate;
             TModel.SpecialComment = TCtable.SpecialComment;
             TModel.IsHoliday = TCtable.IsHoliday;
-           
+            TModel.DateComment = TCtable.DateComment;
             
            
 
@@ -160,7 +159,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
                 {
                     holiday ="N";
                 }
-                Connection.GDModifySchoolCalenderActivity(Model.CalenderSeqNo, Model.ToDate, Model.FromDate, Model.SpecialComment, Model.AcadamicDate, holiday, UserId);
+                Connection.GDModifySchoolCalenderActivity(Model.CalenderSeqNo, Model.ToDate, Model.FromDate, Model.SpecialComment, Model.DateComment, holiday, UserId);
                 Connection.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -201,7 +200,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
 
 
                 return Json(true, JsonRequestBehavior.AllowGet);
-                
+                //return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
@@ -243,7 +242,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
                     CalenderSeqNo = x.CalenderSeqNo,
                     SchoolId = x.SchoolId,
                     AcadamicYear = x.AcadamicYear,
-                    AcadamicDate = x.AcadamicDate,
+                    DateComment = x.DateComment,
                     IsHoliday = x.IsHoliday,
                     SpecialComment = x.SpecialComment,
                     FromDate = x.FromDate,
@@ -259,7 +258,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
             }
             catch (Exception ex)
             {
-                Errorlog.ErrorManager.LogError(ex);
+                //Errorlog.ErrorManager.LogError(ex);
 
                 return View();
             }

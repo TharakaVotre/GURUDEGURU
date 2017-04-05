@@ -11,20 +11,24 @@ namespace GDWEBSolution.Models.SchoolCalender
         [Display(Name = "CalenderSeqNo")]
         public long CalenderSeqNo { get; set; }
 
-        [Display(Name = "SchoolId")]
+        [Display(Name = "School Id")]
         public string SchoolId { get; set; }
 
-        [Display(Name = "AcadamicYear")]
+        [Display(Name = "Acadamic Year")]
         public string AcadamicYear { get; set; }
 
-        [Display(Name = "AcadamicDate")]
+        [Display(Name = "Acadamic Date")]
         public DateTime AcadamicDate { get; set; }
 
          [Display(Name = "IsHoliday")]
         public string IsHoliday { get; set; }
 
-         [Display(Name = "SpecialComment")]
+         [Display(Name = "Remark")]
         public string SpecialComment { get; set; }
+
+
+         [Display(Name = "Event")]
+         public string DateComment { get; set; }
 
         [Display(Name = "FromDate")]
         public DateTime FromDate { get; set; }
