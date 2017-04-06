@@ -400,6 +400,23 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteGradeSubject", academicYearParameter, gradeIdParameter, subjectIdParameter, isActiveParameter, userIdParameter);
         }
     
+        public virtual int GDDeleteHomeWork(string isactive, Nullable<long> assignmentNo, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var assignmentNoParameter = assignmentNo.HasValue ?
+                new ObjectParameter("AssignmentNo", assignmentNo) :
+                new ObjectParameter("AssignmentNo", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDDeleteHomeWork", isactiveParameter, assignmentNoParameter, modyfiedByParameter);
+        }
+    
         public virtual int GDdeleteMassageType(string isactive, Nullable<long> statusCode, string modyfiedBy)
         {
             var isactiveParameter = isactive != null ?
@@ -782,6 +799,31 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetApplicationStatus_Result>("GDgetApplicationStatus", idParameter);
         }
     
+        public virtual ObjectResult<GDgetHomeWorkAdd_Result> GDgetHomeWorkAdd(string schoolId, Nullable<long> teacherId, string isActive, string fromdate, string todate)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var teacherIdParameter = teacherId.HasValue ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(long));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            var fromdateParameter = fromdate != null ?
+                new ObjectParameter("Fromdate", fromdate) :
+                new ObjectParameter("Fromdate", typeof(string));
+    
+            var todateParameter = todate != null ?
+                new ObjectParameter("Todate", todate) :
+                new ObjectParameter("Todate", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetHomeWorkAdd_Result>("GDgetHomeWorkAdd", schoolIdParameter, teacherIdParameter, isActiveParameter, fromdateParameter, todateParameter);
+        }
+    
         public virtual ObjectResult<GDgetSchoolCalenderEvent_Result> GDgetSchoolCalenderEvent(string schoolId, string year, string isActive)
         {
             var schoolIdParameter = schoolId != null ?
@@ -936,6 +978,59 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("UserId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyGradeSubject", academicYearParameter, gradeIdParameter, subjectIdParameter, subjectCatIdParameter, optionParameter, userIdParameter);
+        }
+    
+        public virtual int GDModifyHomeWork(string assignmentDescription, string schoolId, string gradeId, string classId, string filePath, string batchNo, string batchDescription, Nullable<int> subjectId, Nullable<long> assignmentNo, Nullable<System.DateTime> dueDate, Nullable<long> dueId, string modyfiedBy)
+        {
+            var assignmentDescriptionParameter = assignmentDescription != null ?
+                new ObjectParameter("AssignmentDescription", assignmentDescription) :
+                new ObjectParameter("AssignmentDescription", typeof(string));
+    
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            var classIdParameter = classId != null ?
+                new ObjectParameter("ClassId", classId) :
+                new ObjectParameter("ClassId", typeof(string));
+    
+            var filePathParameter = filePath != null ?
+                new ObjectParameter("FilePath", filePath) :
+                new ObjectParameter("FilePath", typeof(string));
+    
+            var batchNoParameter = batchNo != null ?
+                new ObjectParameter("BatchNo", batchNo) :
+                new ObjectParameter("BatchNo", typeof(string));
+    
+            var batchDescriptionParameter = batchDescription != null ?
+                new ObjectParameter("BatchDescription", batchDescription) :
+                new ObjectParameter("BatchDescription", typeof(string));
+    
+            var subjectIdParameter = subjectId.HasValue ?
+                new ObjectParameter("SubjectId", subjectId) :
+                new ObjectParameter("SubjectId", typeof(int));
+    
+            var assignmentNoParameter = assignmentNo.HasValue ?
+                new ObjectParameter("AssignmentNo", assignmentNo) :
+                new ObjectParameter("AssignmentNo", typeof(long));
+    
+            var dueDateParameter = dueDate.HasValue ?
+                new ObjectParameter("DueDate", dueDate) :
+                new ObjectParameter("DueDate", typeof(System.DateTime));
+    
+            var dueIdParameter = dueId.HasValue ?
+                new ObjectParameter("DueId", dueId) :
+                new ObjectParameter("DueId", typeof(long));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyHomeWork", assignmentDescriptionParameter, schoolIdParameter, gradeIdParameter, classIdParameter, filePathParameter, batchNoParameter, batchDescriptionParameter, subjectIdParameter, assignmentNoParameter, dueDateParameter, dueIdParameter, modyfiedByParameter);
         }
     
         public virtual int GDModifyMassageType(string description, Nullable<long> statusCode, string modyfiedBy)
@@ -1327,6 +1422,67 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("IsActive", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetGradeSubject", academicYearParameter, gradeIdParameter, subjectIdParameter, subjectCategoryIdParameter, optionalParameter, createdByParameter, isActiveParameter);
+        }
+    
+        public virtual int GDsetHomeWork(string assignmentDescription, string schoolId, string gradeId, string classId, string filePath, Nullable<long> teacherId, string batchNo, string batchDescription, Nullable<int> subjectId, Nullable<long> assignmentNo, Nullable<System.DateTime> dueDate, Nullable<long> dueId, string user, string isActive)
+        {
+            var assignmentDescriptionParameter = assignmentDescription != null ?
+                new ObjectParameter("AssignmentDescription", assignmentDescription) :
+                new ObjectParameter("AssignmentDescription", typeof(string));
+    
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            var classIdParameter = classId != null ?
+                new ObjectParameter("ClassId", classId) :
+                new ObjectParameter("ClassId", typeof(string));
+    
+            var filePathParameter = filePath != null ?
+                new ObjectParameter("FilePath", filePath) :
+                new ObjectParameter("FilePath", typeof(string));
+    
+            var teacherIdParameter = teacherId.HasValue ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(long));
+    
+            var batchNoParameter = batchNo != null ?
+                new ObjectParameter("BatchNo", batchNo) :
+                new ObjectParameter("BatchNo", typeof(string));
+    
+            var batchDescriptionParameter = batchDescription != null ?
+                new ObjectParameter("BatchDescription", batchDescription) :
+                new ObjectParameter("BatchDescription", typeof(string));
+    
+            var subjectIdParameter = subjectId.HasValue ?
+                new ObjectParameter("SubjectId", subjectId) :
+                new ObjectParameter("SubjectId", typeof(int));
+    
+            var assignmentNoParameter = assignmentNo.HasValue ?
+                new ObjectParameter("AssignmentNo", assignmentNo) :
+                new ObjectParameter("AssignmentNo", typeof(long));
+    
+            var dueDateParameter = dueDate.HasValue ?
+                new ObjectParameter("DueDate", dueDate) :
+                new ObjectParameter("DueDate", typeof(System.DateTime));
+    
+            var dueIdParameter = dueId.HasValue ?
+                new ObjectParameter("DueId", dueId) :
+                new ObjectParameter("DueId", typeof(long));
+    
+            var userParameter = user != null ?
+                new ObjectParameter("User", user) :
+                new ObjectParameter("User", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDsetHomeWork", assignmentDescriptionParameter, schoolIdParameter, gradeIdParameter, classIdParameter, filePathParameter, teacherIdParameter, batchNoParameter, batchDescriptionParameter, subjectIdParameter, assignmentNoParameter, dueDateParameter, dueIdParameter, userParameter, isActiveParameter);
         }
     
         public virtual int GDsetMassageType(string description, string createdBy, string isActive)

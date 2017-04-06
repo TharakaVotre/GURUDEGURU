@@ -4563,6 +4563,11 @@
           <Parameter Name="isActive" Type="varchar" Mode="In" />
           <Parameter Name="userId" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GDDeleteHomeWork" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Isactive" Type="varchar" Mode="In" />
+          <Parameter Name="AssignmentNo" Type="bigint" Mode="In" />
+          <Parameter Name="ModyfiedBy" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GDdeleteMassageType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Isactive" Type="varchar" Mode="In" />
           <Parameter Name="StatusCode" Type="bigint" Mode="In" />
@@ -4681,6 +4686,13 @@
         <Function Name="GDgetApplicationStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="GDgetHomeWorkAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="TeacherId" Type="bigint" Mode="In" />
+          <Parameter Name="IsActive" Type="varchar" Mode="In" />
+          <Parameter Name="Fromdate" Type="varchar" Mode="In" />
+          <Parameter Name="Todate" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GDgetSchoolCalenderEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
           <Parameter Name="year" Type="varchar" Mode="In" />
@@ -4725,6 +4737,20 @@
           <Parameter Name="SubjectCatId" Type="int" Mode="In" />
           <Parameter Name="option" Type="varchar" Mode="In" />
           <Parameter Name="UserId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GDModifyHomeWork" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AssignmentDescription" Type="varchar" Mode="In" />
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="GradeId" Type="varchar" Mode="In" />
+          <Parameter Name="ClassId" Type="varchar" Mode="In" />
+          <Parameter Name="FilePath" Type="varchar" Mode="In" />
+          <Parameter Name="BatchNo" Type="varchar" Mode="In" />
+          <Parameter Name="BatchDescription" Type="varchar" Mode="In" />
+          <Parameter Name="SubjectId" Type="int" Mode="In" />
+          <Parameter Name="AssignmentNo" Type="bigint" Mode="In" />
+          <Parameter Name="DueDate" Type="date" Mode="In" />
+          <Parameter Name="DueId" Type="bigint" Mode="In" />
+          <Parameter Name="ModyfiedBy" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GDModifyMassageType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Description" Type="varchar" Mode="In" />
@@ -4836,6 +4862,22 @@
           <Parameter Name="SubjectCategoryId" Type="int" Mode="In" />
           <Parameter Name="Optional" Type="varchar" Mode="In" />
           <Parameter Name="CreatedBy" Type="varchar" Mode="In" />
+          <Parameter Name="IsActive" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GDsetHomeWork" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AssignmentDescription" Type="varchar" Mode="In" />
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="GradeId" Type="varchar" Mode="In" />
+          <Parameter Name="ClassId" Type="varchar" Mode="In" />
+          <Parameter Name="FilePath" Type="varchar" Mode="In" />
+          <Parameter Name="TeacherId" Type="bigint" Mode="In" />
+          <Parameter Name="BatchNo" Type="varchar" Mode="In" />
+          <Parameter Name="BatchDescription" Type="varchar" Mode="In" />
+          <Parameter Name="SubjectId" Type="int" Mode="In" />
+          <Parameter Name="AssignmentNo" Type="bigint" Mode="In" />
+          <Parameter Name="DueDate" Type="date" Mode="In" />
+          <Parameter Name="DueId" Type="bigint" Mode="In" />
+          <Parameter Name="User" Type="varchar" Mode="In" />
           <Parameter Name="IsActive" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GDsetMassageType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -5989,6 +6031,11 @@
             <Parameter Name="isActive" Mode="In" Type="String" />
             <Parameter Name="userId" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GDDeleteHomeWork">
+            <Parameter Name="Isactive" Mode="In" Type="String" />
+            <Parameter Name="AssignmentNo" Mode="In" Type="Int64" />
+            <Parameter Name="ModyfiedBy" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="GDdeleteMassageType">
             <Parameter Name="Isactive" Mode="In" Type="String" />
             <Parameter Name="StatusCode" Mode="In" Type="Int64" />
@@ -6107,6 +6154,13 @@
           <FunctionImport Name="GDgetApplicationStatus" ReturnType="Collection(SchoolMGTModel.GDgetApplicationStatus_Result)">
             <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
+          <FunctionImport Name="GDgetHomeWorkAdd" ReturnType="Collection(SchoolMGTModel.GDgetHomeWorkAdd_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="TeacherId" Mode="In" Type="Int64" />
+            <Parameter Name="IsActive" Mode="In" Type="String" />
+            <Parameter Name="Fromdate" Mode="In" Type="String" />
+            <Parameter Name="Todate" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="GDgetSchoolCalenderEvent" ReturnType="Collection(SchoolMGTModel.GDgetSchoolCalenderEvent_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
             <Parameter Name="year" Mode="In" Type="String" />
@@ -6151,6 +6205,20 @@
             <Parameter Name="SubjectCatId" Mode="In" Type="Int32" />
             <Parameter Name="option" Mode="In" Type="String" />
             <Parameter Name="UserId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GDModifyHomeWork">
+            <Parameter Name="AssignmentDescription" Mode="In" Type="String" />
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="GradeId" Mode="In" Type="String" />
+            <Parameter Name="ClassId" Mode="In" Type="String" />
+            <Parameter Name="FilePath" Mode="In" Type="String" />
+            <Parameter Name="BatchNo" Mode="In" Type="String" />
+            <Parameter Name="BatchDescription" Mode="In" Type="String" />
+            <Parameter Name="SubjectId" Mode="In" Type="Int32" />
+            <Parameter Name="AssignmentNo" Mode="In" Type="Int64" />
+            <Parameter Name="DueDate" Mode="In" Type="DateTime" />
+            <Parameter Name="DueId" Mode="In" Type="Int64" />
+            <Parameter Name="ModyfiedBy" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDModifyMassageType">
             <Parameter Name="Description" Mode="In" Type="String" />
@@ -6262,6 +6330,22 @@
             <Parameter Name="SubjectCategoryId" Mode="In" Type="Int32" />
             <Parameter Name="Optional" Mode="In" Type="String" />
             <Parameter Name="CreatedBy" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GDsetHomeWork">
+            <Parameter Name="AssignmentDescription" Mode="In" Type="String" />
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="GradeId" Mode="In" Type="String" />
+            <Parameter Name="ClassId" Mode="In" Type="String" />
+            <Parameter Name="FilePath" Mode="In" Type="String" />
+            <Parameter Name="TeacherId" Mode="In" Type="Int64" />
+            <Parameter Name="BatchNo" Mode="In" Type="String" />
+            <Parameter Name="BatchDescription" Mode="In" Type="String" />
+            <Parameter Name="SubjectId" Mode="In" Type="Int32" />
+            <Parameter Name="AssignmentNo" Mode="In" Type="Int64" />
+            <Parameter Name="DueDate" Mode="In" Type="DateTime" />
+            <Parameter Name="DueId" Mode="In" Type="Int64" />
+            <Parameter Name="User" Mode="In" Type="String" />
             <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDsetMassageType">
@@ -10620,6 +10704,24 @@
           <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
         </ComplexType>
+        <ComplexType Name="GDgetHomeWorkAdd_Result">
+          <Property Type="Int64" Name="AssignmentNo" Nullable="false" />
+          <Property Type="String" Name="AssignmentDescription" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
+          <Property Type="String" Name="GradeId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ClassId" Nullable="false" MaxLength="20" />
+          <Property Type="Int64" Name="TeacherId" Nullable="false" />
+          <Property Type="String" Name="FilePath" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="BatchNo" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BatchDescription" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="SubjectId" Nullable="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+          <Property Type="DateTime" Name="DueDate" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="GDgetSchoolCalenderEvent_Result">
           <Property Type="Int64" Name="CalenderSeqNo" Nullable="false" />
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
@@ -11922,6 +12024,7 @@
           <FunctionImportMapping FunctionImportName="GDdeleteFunction" FunctionName="SchoolMGTModel.Store.GDdeleteFunction" />
           <FunctionImportMapping FunctionImportName="GDdeleteGradeMaintenance" FunctionName="SchoolMGTModel.Store.GDdeleteGradeMaintenance" />
           <FunctionImportMapping FunctionImportName="GDdeleteGradeSubject" FunctionName="SchoolMGTModel.Store.GDdeleteGradeSubject" />
+          <FunctionImportMapping FunctionImportName="GDDeleteHomeWork" FunctionName="SchoolMGTModel.Store.GDDeleteHomeWork" />
           <FunctionImportMapping FunctionImportName="GDdeleteMassageType" FunctionName="SchoolMGTModel.Store.GDdeleteMassageType" />
           <FunctionImportMapping FunctionImportName="GDdeleteParentObservationType" FunctionName="SchoolMGTModel.Store.GDdeleteParentObservationType" />
           <FunctionImportMapping FunctionImportName="GDdeleteQualification" FunctionName="SchoolMGTModel.Store.GDdeleteQualification" />
@@ -12203,6 +12306,28 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GDgetHomeWorkAdd" FunctionName="SchoolMGTModel.Store.GDgetHomeWorkAdd">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.GDgetHomeWorkAdd_Result">
+                <ScalarProperty Name="AssignmentNo" ColumnName="AssignmentNo" />
+                <ScalarProperty Name="AssignmentDescription" ColumnName="AssignmentDescription" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
+                <ScalarProperty Name="BatchDescription" ColumnName="BatchDescription" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GDgetSchoolCalenderEvent" FunctionName="SchoolMGTModel.Store.GDgetSchoolCalenderEvent">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SchoolMGTModel.GDgetSchoolCalenderEvent_Result">
@@ -12230,6 +12355,7 @@
           <FunctionImportMapping FunctionImportName="GDModifyFunction" FunctionName="SchoolMGTModel.Store.GDModifyFunction" />
           <FunctionImportMapping FunctionImportName="GDModifyGrade" FunctionName="SchoolMGTModel.Store.GDModifyGrade" />
           <FunctionImportMapping FunctionImportName="GDModifyGradeSubject" FunctionName="SchoolMGTModel.Store.GDModifyGradeSubject" />
+          <FunctionImportMapping FunctionImportName="GDModifyHomeWork" FunctionName="SchoolMGTModel.Store.GDModifyHomeWork" />
           <FunctionImportMapping FunctionImportName="GDModifyMassageType" FunctionName="SchoolMGTModel.Store.GDModifyMassageType" />
           <FunctionImportMapping FunctionImportName="GDModifyParentObservationType" FunctionName="SchoolMGTModel.Store.GDModifyParentObservationType" />
           <FunctionImportMapping FunctionImportName="GDModifyQualification" FunctionName="SchoolMGTModel.Store.GDModifyQualification" />
@@ -12249,6 +12375,7 @@
           <FunctionImportMapping FunctionImportName="GDsetFunction" FunctionName="SchoolMGTModel.Store.GDsetFunction" />
           <FunctionImportMapping FunctionImportName="GDsetGrade" FunctionName="SchoolMGTModel.Store.GDsetGrade" />
           <FunctionImportMapping FunctionImportName="GDsetGradeSubject" FunctionName="SchoolMGTModel.Store.GDsetGradeSubject" />
+          <FunctionImportMapping FunctionImportName="GDsetHomeWork" FunctionName="SchoolMGTModel.Store.GDsetHomeWork" />
           <FunctionImportMapping FunctionImportName="GDsetMassageType" FunctionName="SchoolMGTModel.Store.GDsetMassageType" />
           <FunctionImportMapping FunctionImportName="GDsetParentObservationType" FunctionName="SchoolMGTModel.Store.GDsetParentObservationType" />
           <FunctionImportMapping FunctionImportName="GDsetQualification" FunctionName="SchoolMGTModel.Store.GDsetQualification" />

@@ -1,0 +1,302 @@
+﻿@model GDWEBSolution.Models.HomeWork.HomeWorkModel
+<script>
+    $(function () {
+        $("#DueDate").datepicker();
+    });
+
+
+</script>
+
+<div>
+
+    <form id="myForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add New Grade</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                @Html.LabelFor(m => m.DueDate, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.DueDate, new { @class = "form-control", @placeholder = "From Date" })
+                    <span class="help-block m-b-none" id="DueDateError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownList("GradeId")
+
+
+
+                    <span class="help-block m-b-none" id="GradeIdError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownList("ClassId")
+
+                    <span class="help-block m-b-none" id="ClassIdError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.AssignmentDescription, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.AssignmentDescription, new { @class = "form-control", @placeholder = "Special Comment" })
+                    <span class="help-block m-b-none" id="AssignmentDescriptionError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.BatchNo, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.BatchNo, new { @class = "form-control", @placeholder = "To Date" })
+                    <span class="help-block m-b-none" id="BatchNoError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.BatchDescription, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.BatchDescription, new { @class = "form-control", @placeholder = "Acadamic Date" })
+                    <span class="help-block m-b-none" id="BatchDescriptionError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.SubjectId, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownList("SubjectId")
+                    <span class="help-block m-b-none" id="AcadamicError"></span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FilePath, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.FilePath, new { @class = "form-control" })
+                </div>
+                <br />
+                <br />
+                <lable class="col-sm-3 control-label">Update File</lable> 
+                <div class="col-sm-8">
+                    <input type="file" name="files" id="fu1" />
+                    <span class="help-block m-b-none" id="CommentError"></span>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <a href="#" id="btnSubmit" class="btn btn-primary">Save</a>
+        </div>
+    </form>
+    <div class="progress">
+        <div class="progress-bar">0%</div>
+    </div>
+
+
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            debugger
+            var DueDate = $('#DueDate');
+            var DueDateError = $('#DueDateError');
+            var GradeId = $('#GradeId');
+            var GradeIdError = $('#GradeIdError');
+            var ClassId = $('#ClassId');
+            var ClassIdError = $('#ClassIdError');
+            var AssignmentDescription = $('#AssignmentDescription');
+            var AssignmentDescriptionError = $('#AssignmentDescriptionError');
+            var BatchNo = $('#BatchNo');
+            var BatchNoError = $('#BatchNoError');
+            var BatchDescription = $('#BatchDescription');
+            var BatchDescriptionError = $('#BatchDescriptionError');
+            var SubjectId = $('#SubjectId');
+            var SubjectIdError = $('#SubjectIdError');
+            var FilePath = $('#FilePath');
+            var FilePathError = $('#FilePathError');
+
+
+            if (!DueDate.val()) {
+                // Add errors highlight
+                DueDate.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#DueDateError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            } else {
+                DueDate.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#DueDateError").text("");
+            }
+            if (!GradeId.val()) {
+                // Add errors highlight
+                GradeId.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#GradeIdError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            } else {
+                GradeId.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#GradeIdError").text("");
+            }
+
+            if (!ClassId.val()) {
+                // Add errors highlight
+                ClassId.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#ClassIdError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            } else {
+                ClassId.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#ClassIdError").text("");
+            }
+            if (!AssignmentDescription.val()) {
+
+                // Add errors highlight
+                AssignmentDescription.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#AssignmentDescriptionError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            } else {
+                AssignmentDescription.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#AssignmentDescriptionError").text("");
+            }
+
+            if (!BatchNo.val()) {
+
+                // Add errors highlight
+                BatchNo.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#BatchNoError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            } else {
+                BatchNo.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#BatchNoError").text("");
+            }
+
+            if (!BatchDescription.val()) {
+
+                // Add errors highlight
+                BatchDescription.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#BatchDescriptionError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            } else {
+                BatchDescription.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#BatchDescriptionError").text("");
+            }
+
+            if (!SubjectId.val()) {
+
+                // Add errors highlight
+                SubjectId.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#SubjectIdError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            } else {
+                SubjectId.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#SubjectIdError").text("");
+            }
+
+            if (!FilePath.val()) {
+
+                // Add errors highlight
+                FilePath.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#FilePathError").text("Required");
+                // Stop submission of the form
+                // e.preventDefault();
+                return;
+            } else {
+                FilePath.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#FilePathError").text("");
+            }
+
+            var myformdata = $("#myForm").serialize();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/HomeWork/Create",
+                data: myformdata,
+                success: function () {
+
+                    $("#myModal").modal("hide");
+                    window.location.href = "/HomeWork/Index";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>
+
+
+
+<style>
+    .progress {
+        position: relative;
+        width: 400px;
+        border: 1px solid #ddd;
+        padding: 1px;
+    }
+
+    .progress-bar {
+        width: 0px;
+        height: 20px;
+        background-color: #57be65;
+    }
+</style>
+@section scripts{
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script>
+        (function () {
+            var bar = $('.progress-bar');
+            var percent = $('.progress-bar');
+            var status = $('#status');
+
+            $('form').ajaxForm({
+                beforeSend: function () {
+                    status.empty();
+                    var percentValue = '0%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    var percentValue = percentComplete + '%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                success: function (d) {
+                    var percentValue = '100%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                    $('#fu1').val('');
+                    alert(d);
+                },
+                complete: function (xhr) {
+                    status.html(xhr.responseText);
+                }
+            });
+        })();
+    </script>
+}
+
+

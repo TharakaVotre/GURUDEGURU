@@ -272,12 +272,17 @@
     <Compile Include="Models\GDgetApplicationStatus_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GDgetHomeWorkAdd_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GDgetSchoolCalenderEvent_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getAllEvaluationType_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HomeWork\HomeWorkModel.cs" />
+    <Compile Include="Models\HomeWork\ValidateFile.cs" />
     <Compile Include="Models\SchoolCalender\SchoolCalenderModel.cs" />
     <Compile Include="Models\Schools\RegistrationModel.cs" />
     <Compile Include="Models\Schools\SchoolExtraCuricularModel.cs" />
@@ -1138,9 +1143,14 @@
     <Content Include="Views\SchoolCalender\ParentView.cshtml" />
     <Content Include="Views\TimeTable\Index.cshtml" />
     <Content Include="Views\TimeTable\TimeTblView.cshtml" />
+    <Content Include="Views\HomeWork\AddView.cshtml" />
+    <Content Include="Views\HomeWork\DeleteView.cshtml" />
+    <Content Include="Views\HomeWork\EditView.cshtml" />
+    <Content Include="Views\HomeWork\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\HomeWork\" />
     <Folder Include="Controllers\School\" />
     <Folder Include="UploadedFiles\" />
   </ItemGroup>
