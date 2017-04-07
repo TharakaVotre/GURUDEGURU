@@ -1129,6 +1129,8 @@
     <Content Include="Views\SchoolCalender\ParentView.cshtml" />
     <Content Include="Views\TimeTable\Index.cshtml" />
     <Content Include="Views\TimeTable\TimeTblView.cshtml" />
+    <Content Include="Views\TimeTable\AddEditTimeTable.cshtml" />
+    <Content Include="Views\TimeTable\TClassNSubject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
