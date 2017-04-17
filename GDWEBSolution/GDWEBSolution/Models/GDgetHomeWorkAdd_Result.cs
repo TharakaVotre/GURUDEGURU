@@ -11,24 +11,23 @@ namespace GDWEBSolution.Models
 {
     using System;
     
-    public partial class SMGTGetStudent_Result
+    public partial class GDgetHomeWorkAdd_Result
     {
+        public long AssignmentNo { get; set; }
+        public string AssignmentDescription { get; set; }
         public string SchoolId { get; set; }
-        public string StudentId { get; set; }
-        public string AcademicYear { get; set; }
-        public string studentName { get; set; }
-        public Nullable<System.DateTime> DateofBirth { get; set; }
         public string GradeId { get; set; }
         public string ClassId { get; set; }
-        public string Gender { get; set; }
-        public string UserId { get; set; }
-        public string HouseId { get; set; }
-        public string ImgUrl { get; set; }
+        public long TeacherId { get; set; }
+        public string FilePath { get; set; }
+        public string BatchNo { get; set; }
+        public string BatchDescription { get; set; }
+        public int SubjectId { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
-        public string SchoolName { get; set; }
+        public System.DateTime DueDate { get; set; }
     }
 }
