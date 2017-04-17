@@ -1132,8 +1132,6 @@
     <Content Include="Views\SchoolCalender\EditView.cshtml" />
     <Content Include="Views\SchoolCalender\Index.cshtml" />
     <Content Include="Views\SchoolCalender\ParentView.cshtml" />
-    <Content Include="Views\TimeTable\Index.cshtml" />
-    <Content Include="Views\TimeTable\TimeTblView.cshtml" />
     <Content Include="Views\HomeWork\AddView.cshtml" />
     <Content Include="Views\HomeWork\DeleteView.cshtml" />
     <Content Include="Views\HomeWork\EditView.cshtml" />
@@ -1172,10 +1170,10 @@
     <Content Include="Views\SchoolCalender\EditView.cshtml" />
     <Content Include="Views\SchoolCalender\Index.cshtml" />
     <Content Include="Views\SchoolCalender\ParentView.cshtml" />
-    <Content Include="Views\TimeTable\Index.cshtml" />
-    <Content Include="Views\TimeTable\TimeTblView.cshtml" />
     <Content Include="Views\TimeTable\AddEditTimeTable.cshtml" />
     <Content Include="Views\TimeTable\TClassNSubject.cshtml" />
+    <Content Include="Views\TimeTable\Index.cshtml" />
+    <Content Include="Views\TimeTable\TimeTblView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
