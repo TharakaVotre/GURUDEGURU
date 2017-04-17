@@ -15,6 +15,7 @@
           <EntitySet Name="tblAssingmentQuestion" EntityType="SchoolMGTModel.Store.tblAssingmentQuestion" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblClass" EntityType="SchoolMGTModel.Store.tblClass" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblClassTeacher" EntityType="SchoolMGTModel.Store.tblClassTeacher" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblDaysOfWeek" EntityType="SchoolMGTModel.Store.tblDaysOfWeek" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblDistrict" EntityType="SchoolMGTModel.Store.tblDistrict" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblDivision" EntityType="SchoolMGTModel.Store.tblDivision" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblEntranceApplication" EntityType="SchoolMGTModel.Store.tblEntranceApplication" store:Type="Tables" Schema="dbo" />
@@ -1073,6 +1074,13 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="20" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsActive" Type="varchar" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="tblDaysOfWeek">
+          <Key>
+            <PropertyRef Name="DayNo" />
+          </Key>
+          <Property Name="DayNo" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DayName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblDistrict">
           <Key>
@@ -5088,6 +5096,7 @@
           <EntitySet Name="tblAssingmentQuestions" EntityType="SchoolMGTModel.tblAssingmentQuestion" />
           <EntitySet Name="tblClasses" EntityType="SchoolMGTModel.tblClass" />
           <EntitySet Name="tblClassTeachers" EntityType="SchoolMGTModel.tblClassTeacher" />
+          <EntitySet Name="tblDaysOfWeeks" EntityType="SchoolMGTModel.tblDaysOfWeek" />
           <EntitySet Name="tblDistricts" EntityType="SchoolMGTModel.tblDistrict" />
           <EntitySet Name="tblDivisions" EntityType="SchoolMGTModel.tblDivision" />
           <EntitySet Name="tblEntranceApplications" EntityType="SchoolMGTModel.tblEntranceApplication" />
@@ -6789,6 +6798,13 @@
           <NavigationProperty Name="tblSchool" Relationship="SchoolMGTModel.FK_tblClassTeacher_tblSchool" FromRole="tblClassTeacher" ToRole="tblSchool" />
           <NavigationProperty Name="tblUser" Relationship="SchoolMGTModel.FK_tblClassTeacher_tblUser" FromRole="tblClassTeacher" ToRole="tblUser" />
           <NavigationProperty Name="tblUser1" Relationship="SchoolMGTModel.FK_tblClassTeacher_tblUser1" FromRole="tblClassTeacher" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="tblDaysOfWeek">
+          <Key>
+            <PropertyRef Name="DayNo" />
+          </Key>
+          <Property Name="DayNo" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="DayName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
         </EntityType>
         <EntityType Name="tblDistrict">
           <Key>
@@ -11283,6 +11299,14 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDaysOfWeeks">
+            <EntityTypeMapping TypeName="SchoolMGTModel.tblDaysOfWeek">
+              <MappingFragment StoreEntitySet="tblDaysOfWeek">
+                <ScalarProperty Name="DayNo" ColumnName="DayNo" />
+                <ScalarProperty Name="DayName" ColumnName="DayName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
