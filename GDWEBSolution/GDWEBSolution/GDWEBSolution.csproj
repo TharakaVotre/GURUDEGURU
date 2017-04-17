@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AnnualFunctions\StudentGradeAdvanceController.cs" />
     <Compile Include="Controllers\Configuration\Grade SubjectController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HomeWork\HomeWorkController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainApplicationStatusController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainEventCategoryController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainExtraCurricularActivityController.cs" />
@@ -188,6 +189,8 @@
     <Compile Include="Controllers\Message\PSMessageController.cs" />
     <Compile Include="Controllers\SchoolCalender\SchoolCalenderController.cs" />
     <Compile Include="Controllers\SchoolController.cs" />
+    <Compile Include="Controllers\StudentOptionalSubject\StudentOptionalSubjectController.cs" />
+    <Compile Include="Controllers\Student\StudentController.cs" />
     <Compile Include="Controllers\Teacher\TeacherCategoryController.cs" />
     <Compile Include="Controllers\Teacher\TeacherController.cs" />
     <Compile Include="Controllers\TimeTable\TimeTableController.cs" />
@@ -216,6 +219,9 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GDgetAllApplicationStatus_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetAllClass_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GDgetAllEvaluationType_Result.cs">
@@ -275,6 +281,9 @@
     <Compile Include="Models\GDgetHomeWorkAdd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GDgetHomeWork_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GDgetSchoolCalenderEvent_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -302,6 +311,9 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGTgetAllTeachers_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetclassadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGTgetDayTimeTabel_Result.cs">
@@ -334,7 +346,10 @@
     <Compile Include="Models\SMGTgetSchoolTeacher_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SMGTgetStudent_Result.cs">
+    <Compile Include="Models\SMGTgetStudentExtraCadd_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTGetStudent_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGTgetTeacherExActivity_Result.cs">
@@ -358,6 +373,12 @@
     <Compile Include="Models\SMGTgetUserCategoryFunction_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGTloadScholExtraCadd_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Student\OptionalSubjectModel.cs" />
+    <Compile Include="Models\Student\StudentExtraCModel.cs" />
+    <Compile Include="Models\Student\StudentModel.cs" />
     <Compile Include="Models\tblApplicationStatu.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -1115,6 +1136,24 @@
     <Content Include="Views\PSMessage\Sent.cshtml" />
     <Content Include="Views\Upload\AsyncUpload.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
+    <Content Include="Views\SchoolCalender\AddView.cshtml" />
+    <Content Include="Views\SchoolCalender\DeleteView.cshtml" />
+    <Content Include="Views\SchoolCalender\EditView.cshtml" />
+    <Content Include="Views\SchoolCalender\Index.cshtml" />
+    <Content Include="Views\SchoolCalender\ParentView.cshtml" />
+    <Content Include="Views\TimeTable\Index.cshtml" />
+    <Content Include="Views\TimeTable\TimeTblView.cshtml" />
+    <Content Include="Views\HomeWork\AddView.cshtml" />
+    <Content Include="Views\HomeWork\DeleteView.cshtml" />
+    <Content Include="Views\HomeWork\EditView.cshtml" />
+    <Content Include="Views\HomeWork\Index.cshtml" />
+    <Content Include="Views\Student\Create.cshtml" />
+    <Content Include="Views\Student\Detail.cshtml" />
+    <Content Include="Views\Student\Edit.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Student\stdexclist.cshtml" />
+    <Content Include="Views\Student\StudentEXtra.cshtml" />
+    <Content Include="Views\StudentOptionalSubject\Index.cshtml" />
     <Content Include="Views\School\Create.cshtml" />
     <Content Include="Views\School\createdef.cshtml" />
     <Content Include="Views\School\Delete.cshtml" />
@@ -1136,23 +1175,13 @@
     <Content Include="Views\School\ShowSchoolsubjects.cshtml" />
     <Content Include="Views\School\Subject.cshtml" />
     <Content Include="Views\School\Success.cshtml" />
-    <Content Include="Views\SchoolCalender\AddView.cshtml" />
-    <Content Include="Views\SchoolCalender\DeleteView.cshtml" />
-    <Content Include="Views\SchoolCalender\EditView.cshtml" />
-    <Content Include="Views\SchoolCalender\Index.cshtml" />
-    <Content Include="Views\SchoolCalender\ParentView.cshtml" />
-    <Content Include="Views\TimeTable\Index.cshtml" />
-    <Content Include="Views\TimeTable\TimeTblView.cshtml" />
-    <Content Include="Views\HomeWork\AddView.cshtml" />
-    <Content Include="Views\HomeWork\DeleteView.cshtml" />
-    <Content Include="Views\HomeWork\EditView.cshtml" />
-    <Content Include="Views\HomeWork\Index.cshtml" />
+    <Content Include="Views\StudentOptionalSubject\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\HomeWork\" />
     <Folder Include="Controllers\School\" />
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Uploads\Student\Photo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

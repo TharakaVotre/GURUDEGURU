@@ -18,6 +18,10 @@ namespace GDWEBSolution
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute("Studentextracuricular",
+                         "student/getschoolextracuricluar/",
+                         new { controller = "Student", action = "GetSchoolextracuricluar" },
+                         new[] { "GDWEBSolution.Controllers.Student" });
 
 
         }

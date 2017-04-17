@@ -239,12 +239,12 @@ namespace GDWEBSolution.Controllers
                  var count = Connection.tblHouses.Count(u => u.SchoolId == Schoold && u.HouseName == Model.HouseName);
                  if (count == 0)
                  {
-                     Model.SchoolId = Schoold;
+                 //    Model.SchoolId = Schoold;
                      tblHouse newscg = new tblHouse();
 
                      newscg.CreatedBy = "User1";
                      newscg.CreatedDate = DateTime.Now;
-                     newscg.SchoolId = Schoold;
+                     newscg.SchoolId = Model.SchoolId;
                      newscg.HouseId = Model.HouseId;
                      newscg.HouseName = Model.HouseName;
                      newscg.IsActive = "Y";
@@ -442,11 +442,21 @@ namespace GDWEBSolution.Controllers
              SchoolGradeDrpList();
              SchoolHouseDrpListe(Schoold);
 
-             List<SchoolHouseModel> List = loadhouselist(Schoold);
-             
+             string listid = "";
+             if (SchoolId == null || SchoolId == "")
+             {
+                 listid = Schoold;
+             }
+             else
+             {
+
+                 listid = SchoolId;
+
+             }
+
+             List<SchoolHouseModel> List = loadhouselist(listid);
              return PartialView("HouseList", List);
          }
-
 
 
 

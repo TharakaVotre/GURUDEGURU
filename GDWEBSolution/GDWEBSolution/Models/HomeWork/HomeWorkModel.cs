@@ -9,22 +9,22 @@ namespace GDWEBSolution.Models.HomeWork
     public class HomeWorkModel
     {
 
-        [Display(Name = "DueDate")]
+        [Display(Name = "Due Date")]
         public DateTime DueDate { get; set; }
 
-        [Display(Name = "AssignmentNo")]
+        [Display(Name = "Assignment No")]
         public long AssignmentNo { get; set; }
 
-        [Display(Name = "AssignmentDescription")]
+        [Display(Name = "Description")]
         public string AssignmentDescription { get; set; }
 
         [Display(Name = "SchoolId")]
         public string SchoolId { get; set; }
 
-        [Display(Name = "GradeId")]
+        [Display(Name = "Grade")]
         public string GradeId { get; set; }
 
-        [Display(Name = "ClassId")]
+        [Display(Name = "Class")]
         public string ClassId { get; set; }
 
         [Display(Name = "StudentId")]
@@ -36,17 +36,17 @@ namespace GDWEBSolution.Models.HomeWork
         [Display(Name = "FilePath")]
         public string FilePath { get; set; }
 
-        [Display(Name = "School Image")]
+        [Display(Name = "File")]
       //  [ValidateFile]
         public HttpPostedFileBase File { get; set; }
 
-        [Display(Name = "BatchNo")]
+        [Display(Name = "Batch No")]
         public string BatchNo { get; set; }
 
-        [Display(Name = "BatchDescription")]
+        [Display(Name = "Batch Description")]
         public string BatchDescription { get; set; }
 
-        [Display(Name = "SubjectId")]
+        [Display(Name = "Subject")]
         public int SubjectId { get; set; }
 
         [Display(Name = "CreatedBy")]

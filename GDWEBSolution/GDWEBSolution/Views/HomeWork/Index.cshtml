@@ -105,7 +105,7 @@
                                
                                
                                 <td>
-                                    <a class="btn btn-info" onclick='EditView("@item.AssignmentNo","@item.DueDate")'><span class="fa fa-pencil"></span> Edit </a>
+                                    <a class="btn btn-info" onclick='EditView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="fa fa-pencil"></span> Edit </a>
                                     <a class="btn btn-danger" onclick='DeleteView("@item.AssignmentNo")'><span class="fa fa-trash"></span> Delete</a>
 
                                 </td>
@@ -184,7 +184,7 @@
     }
 
     var EditView = function (SeqNo,date) {
-        var Url = "/HomeWork/Edit?Code=" + SeqNo+"&dates="+date;
+        var Url = "/HomeWork/Edit?Code=" + SeqNo+"&dates="+ date;
         $("#MyModelBody").load(Url, function () {
             $("#myModal").modal("show");
         })
