@@ -18,12 +18,13 @@ namespace GDWEBSolution.Controllers.TimeTable
             return View();
         }
 
-        public ActionResult ShowTimeTblView(string ClassId, string GreadId,string SchoolId,string Day)
+        public ActionResult ShowTimeTblView(string ClassId, string GreadId,string SchoolId,string Day,bool ForEditDelte)
         {
             var STQlist = Connection.SMGTgetDayTimeTabel(ClassId,GreadId,SchoolId,Day).ToList();
 
             List<TimeTableModel> List = STQlist.Select(x => new TimeTableModel
             {
+                Day = x.Day,
                 PeriodSeqNo = x.PeriodSequenceNo,
                 FromTime_String = x.FromTime,
                 ToTime_String = x.ToTime,
@@ -36,7 +37,14 @@ namespace GDWEBSolution.Controllers.TimeTable
             ViewBag.Gread = GreadId;
             ViewBag.School = SchoolId;
             ViewBag.Day = Day;
-            return PartialView("TimeTblView", List);
+            if (ForEditDelte)
+            {
+                return PartialView("EditView", List);
+            }
+            else
+            {
+                return PartialView("TimeTblView", List);
+            }
         }
         //
         // GET: /TimeTable/Details/5
@@ -59,6 +67,9 @@ namespace GDWEBSolution.Controllers.TimeTable
         {
             List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
             ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
+
+            List<tblDaysOfWeek> DayList = Connection.tblDaysOfWeeks.ToList();
+            ViewBag.DayOfWeek = new SelectList(DayList, "DayName", "DayName");
 
             var GradeSubject = Connection.SMGTgetGradeSubjects(GradeId).ToList();//Need to Pass a Session Schoolid
             List<tblSubject> GradeSubjectList = GradeSubject.Select(x => new tblSubject
@@ -85,17 +96,41 @@ namespace GDWEBSolution.Controllers.TimeTable
         // POST: /TimeTable/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(TimeTableModel Model)
         {
             try
             {
-                // TODO: Add insert logic here
+                tblTimeTable TimeTbl = new tblTimeTable();
 
-                return RedirectToAction("Index");
+                TimeTbl.CreatedBy = "ADMIN";
+                TimeTbl.CreatedDate = DateTime.Now;
+
+                TimeTbl.AcademicYear = "2017"; // Parameter
+                TimeTbl.SchoolId = "CKC"; //Session
+                TimeTbl.GradeId = Model.GradeId;
+                TimeTbl.ClassId = Model.ClassId;
+                TimeTbl.Day = Model.Day;
+                TimeTbl.SubjectId = Model.SubjectId;
+
+                DateTime F = DateTime.Parse(Model.FromTime_String);
+                DateTime T = DateTime.Parse(Model.ToTime_String);
+
+                TimeTbl.FromTime = TimeSpan.Parse(F.ToString("HH:mm"));
+                TimeTbl.ToTime = TimeSpan.Parse(T.ToString("HH:mm"));
+
+                TimeTbl.IsActive = "Y";
+                TimeTbl.PeriodSequenceNo = Model.PeriodSeqNo; 
+
+                Connection.tblTimeTables.Add(TimeTbl);
+                Connection.SaveChanges();
+                //return View();
+                var result = new { r = "S" , Grade = Model.GradeId, Class = Model.ClassId , Day = Model.Day };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch (Exception Ex)
             {
-                return View();
+                var result = new { r = "E"};
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
         }
 

@@ -8,15 +8,16 @@
     <div class="panel-heading">Add / Edit Time Table</div>
     <div class="panel-body">
         <div class="row">
+            <form role="form" id="FrmTAdd" class="form-horizontal">
             <div class="col-lg-3">
-                <form role="form" class="form-horizontal">
+                
                     <div class="form-group">
                         <label class="col-sm-2" for="inputEmail1">Grade </label>
                         <div class="col-sm-8">
                             @Html.DropDownListFor(model => model.GradeId, ViewBag.SchoolGrades as SelectList, "", new { @class = "select2_Grade form-control", @onchange = "loadClassNSubjects()" })
                         </div>
                     </div>
-                </form>
+                
             </div>
             <div id="loaddropdowns">
                 <div class="col-md-9">
@@ -25,11 +26,12 @@
                     </div>
                 </div>
             </div>
+                </form>
         </div>
         <div id="tableview">
             <div class="panel panel-default">
-                <div class="panel-heading">Add / Edit Time Table</div>
-                <div class="panel-body">
+                @*<div class="panel-heading">Add / Edit Time Table</div>*@
+                <div class="panel-body" id="classtimetable">
                 </div>
             </div>
         </div>
@@ -55,6 +57,18 @@
         } else {
             $('#loaddropdowns').hide();
         }
+    }
+
+    var loadClasstimetable = function () {
+        debugger
+        if ($('#GreadId').val() != 0) {
+            $('#classtimetable').load('/TimeTable/ShowTimeTblView?ClassId=' + $('#ClassId').val() + '&GreadId=' + $('#GradeId').val() + '&SchoolId=CKC&Day=' + $('#Day').val() + '&ForEditDelte=true');
+            $('#classtimetable').show();
+        }
+        else {
+            $('#classtimetable').hide();
+        }
+
     }
     //<input id='timepicker' type='text'name='timepicker'/>
 </script>

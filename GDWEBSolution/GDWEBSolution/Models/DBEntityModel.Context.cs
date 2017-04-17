@@ -37,6 +37,7 @@ namespace GDWEBSolution.Models
         public DbSet<tblAssingmentQuestion> tblAssingmentQuestions { get; set; }
         public DbSet<tblClass> tblClasses { get; set; }
         public DbSet<tblClassTeacher> tblClassTeachers { get; set; }
+        public DbSet<tblDaysOfWeek> tblDaysOfWeeks { get; set; }
         public DbSet<tblDistrict> tblDistricts { get; set; }
         public DbSet<tblDivision> tblDivisions { get; set; }
         public DbSet<tblEntranceApplication> tblEntranceApplications { get; set; }
