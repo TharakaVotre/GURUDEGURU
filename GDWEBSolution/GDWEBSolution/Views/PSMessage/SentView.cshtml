@@ -46,27 +46,27 @@
                             @if(item.Subject == null){
                                 if (item.Message.Length > 20)
                                 {
-                                  <td class="view-message">No Subject : @item.Message.Substring(0,20) .... </td>
+                                  <td class="view-message">No Subject @*: @item.Message.Substring(0,20) ....*@ </td>
                                 }
                                 else{
-                                  <td class="view-message">No Subject : @item.Message </td>
+                                  <td class="view-message">No Subject @*: @item.Message*@ </td>
                                 }
                             }else{
-                                if (item.Subject.Length > 20)
+                                if (item.Subject.Length > 120)
                                 {
                                     if(item.Message.Length > 20){
-                                       <td class="view-message">@item.Subject.Substring(0,20) : @item.Message.Substring(0,20) </td>
+                                       <td class="view-message">@item.Subject  @*Substring(0,20) : @item.Message.Substring(0,20)*@ </td>
                                     }
                                     else{
-                                      <td class="view-message">@item.Subject.Substring(0,20) : @item.Message </td>  
+                                      <td class="view-message">@item.Subject  @*.Substring(0,20) : @item.Message*@ </td>  
                                     }
                                 }
                                 else{
                                     if(item.Message.Length > 20){
-                                       <td class="view-message">@item.Subject : @item.Message.Substring(0,20) </td>
+                                       <td class="view-message">@item.Subject @*: @item.Message.Substring(0,20)*@ </td>
                                     }
                                     else{
-                                      <td class="view-message">@item.Subject : @item.Message </td>  
+                                      <td class="view-message">@item.Subject @*: @item.Message*@ </td>  
                                     }
                                 }
                                

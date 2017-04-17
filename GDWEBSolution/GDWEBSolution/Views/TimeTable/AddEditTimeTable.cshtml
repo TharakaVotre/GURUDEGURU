@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Add/Edit Time Table";
+}
+@model GDWEBSolution.Models.TimeTable.TimeTableModel
+<h3>Add/Edit Time Table</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Add / Edit Time Table</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-3">
+                <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2" for="inputEmail1">Grade </label>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.GradeId, ViewBag.SchoolGrades as SelectList, "", new { @class = "select2_Grade form-control", @onchange = "loadClassNSubjects()" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="loaddropdowns">
+                <div class="col-md-9">
+                    <div class="well">
+                        Select a Gread to Load the Classes and Subject etc.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tableview">
+            <div class="panel panel-default">
+                <div class="panel-heading">Add / Edit Time Table</div>
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $(".select2_Grade").select2({
+            placeholder: "Select a Grade",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+    var loadClassNSubjects = function () {
+        var tid = $('#GradeId').val();
+        debugger
+        if (tid != "") {
+            $('#loaddropdowns').load('/TimeTable/ShowGradeClasses?GradeId=' + tid);
+            $('#loaddropdowns').show();
+        } else {
+            $('#loaddropdowns').hide();
+        }
+    }
+    //<input id='timepicker' type='text'name='timepicker'/>
+</script>

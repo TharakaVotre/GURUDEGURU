@@ -611,6 +611,7 @@
     <Content Include="Content\css\select\select2.min.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\style12.css" />
+    <Content Include="Content\css\timepicki.css" />
     <Content Include="Content\dll\Errorlog.dll" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
@@ -913,6 +914,8 @@
     <Content Include="Content\scss\_hacks.scss" />
     <Content Include="Content\scss\_mixins.scss" />
     <Content Include="Content\scss\_options.scss" />
+    <Content Include="images\arrow.png" />
+    <Content Include="images\top_arr.png" />
     <Content Include="img\1.jpg" />
     <Content Include="img\12.jpg" />
     <Content Include="img\circulloading.gif" />
@@ -982,6 +985,7 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\paginathing.js" />
     <Content Include="Scripts\select2.full.js" />
+    <Content Include="Scripts\timepicki.js" />
     <Content Include="Uploads\Schools\Images\2.PNG" />
     <Content Include="Uploads\Schools\Images\2017-04-02.ප.ව..1.27.05_3.PNG" />
     <Content Include="Uploads\Schools\Images\defualt.gif" />
@@ -997,19 +1001,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Scripts\_references.js" />
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -1176,6 +1167,15 @@
     <Content Include="Views\School\Subject.cshtml" />
     <Content Include="Views\School\Success.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Create.cshtml" />
+    <Content Include="Views\SchoolCalender\AddView.cshtml" />
+    <Content Include="Views\SchoolCalender\DeleteView.cshtml" />
+    <Content Include="Views\SchoolCalender\EditView.cshtml" />
+    <Content Include="Views\SchoolCalender\Index.cshtml" />
+    <Content Include="Views\SchoolCalender\ParentView.cshtml" />
+    <Content Include="Views\TimeTable\Index.cshtml" />
+    <Content Include="Views\TimeTable\TimeTblView.cshtml" />
+    <Content Include="Views\TimeTable\AddEditTimeTable.cshtml" />
+    <Content Include="Views\TimeTable\TClassNSubject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

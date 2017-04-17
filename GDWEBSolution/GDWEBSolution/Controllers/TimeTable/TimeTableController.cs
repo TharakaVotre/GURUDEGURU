@@ -41,9 +41,36 @@ namespace GDWEBSolution.Controllers.TimeTable
         //
         // GET: /TimeTable/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult AddEditTimeTable()
         {
+            var SchoolGrade = Connection.SMGTgetSchoolGrade("CKC").ToList();//Need to Pass a Session Schoolid
+            List<tblGrade> SchoolGradeList = SchoolGrade.Select(x => new tblGrade
+            {
+                GradeId = x.GradeId,
+                GradeName = x.GradeName,
+                IsActive = x.IsActive
+
+            }).ToList();
+            ViewBag.SchoolGrades = new SelectList(SchoolGradeList, "GradeId", "GradeName");
             return View();
+        }
+
+        public ActionResult ShowGradeClasses(string GradeId)
+        {
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
+            ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
+
+            var GradeSubject = Connection.SMGTgetGradeSubjects(GradeId).ToList();//Need to Pass a Session Schoolid
+            List<tblSubject> GradeSubjectList = GradeSubject.Select(x => new tblSubject
+            {
+                SubjectId = x.SubjectId,
+                ShortName = x.ShortName,
+                SubjectName = x.SubjectName,
+                IsActive = x.IsActive
+
+            }).ToList();
+            ViewBag.GradeSubjectList = new SelectList(GradeSubjectList, "SubjectId", "SubjectName");
+            return PartialView("TClassNSubject");
         }
 
         //
