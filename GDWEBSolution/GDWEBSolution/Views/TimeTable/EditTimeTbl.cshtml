@@ -1,0 +1,73 @@
+﻿@model GDWEBSolution.Models.TimeTable.TimeTableModel
+<div>
+    <form id="FrmEditTimeSlot" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Time Table</h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                @Html.HiddenFor(m => m.SeqNo)
+                @Html.HiddenFor(m => m.Day)
+                @Html.HiddenFor(m => m.GradeId)
+                @Html.HiddenFor(m => m.ClassId)
+                @Html.HiddenFor(m => m.SchoolId)
+                @Html.LabelFor(m => m.FromTime_String, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.FromTime_String, new { @class = "form-control", @placeholder = "From" })
+                    <span class="help-block m-b-none" id="ErrorFrm"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ToTime_String, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.ToTime_String, new { @class = "form-control", @placeholder = "To" })
+                    <span class="help-block m-b-none" id="ErrorTo" style="color: red"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.SubjectName, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.SubjectId, ViewBag.SubjectEdit as SelectList, "", new { @class = "select2_Grade form-control" })
+                    <span class="help-block m-b-none" id="ErrorSubj" style="color: red"></span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" id="btnEditTimeSlot" class="btn btn-primary">Save</a>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#btnEditTimeSlot").click(function (e) {
+            debugger
+            //var TeacherCategoryName = $('#TeacherCategoryName');
+            //var TeacherCategoryNameError = $('#TeacherCategoryNameError');
+            //if (!TeacherCategoryName.val()) {
+            //    TeacherCategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
+            //    $("#TeacherCategoryNameError").text("Required");
+            //    return;
+            //}
+            var myformdata = $("#FrmEditTimeSlot").serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/TimeTable/EditTimeTable",
+                data: myformdata,
+                success: function () {
+                   
+                    $("#myModal").modal("hide"); 
+                    $('.modal-backdrop').remove();
+                },
+                complete: function () {
+                    loadClasstimetable();
+                }
+
+            })
+        })
+
+    })
+</script>
+

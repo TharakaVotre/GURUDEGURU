@@ -25,11 +25,8 @@ namespace GDWEBSolution
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/css/font-awesome.min.css",
-                        "~/Content/css/bootstrap.min.css",
-                        "~/Content/css/dataTables.bootstrap.min.css",
                         "~/Content/css/bootstrap-social.css",
                         "~/Content/css/bootstrap-select.css",
-                        "~/Content/css/fileinput.min.css",
                         "~/Content/css/awesome-bootstrap-checkbox.css",
                         "~/Content/css/style.css"));
 
