@@ -1,0 +1,39 @@
+﻿@model GDWEBSolution.Models.TimeTable.TimeTableModel
+<div>
+    <form id="myForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5 class="modal-title">Are You Sure You Want To Delete This Period ? @Html.HiddenFor(m=> m.SeqNo)</h5>
+        </div>
+        <div class="modal-footer">
+            <a href="#" id="btnNo" class="btn btn-default">NO</a>
+            <a href="#" id="btnDelete" class="btn btn-primary">YES</a>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#btnDelete").click(function (e) {
+            debugger
+            var myformdata = $("#myForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/TimeTable/Delete",
+                data: myformdata,
+                success: function () {
+                    $("#myModal").modal("hide");
+                    //$("#btnrefresh").show();
+                    $('.modal-backdrop').remove();
+                },
+                complete: function(){
+                    loadClasstimetable();
+                }
+            }) 
+        })
+        $("#btnNo").click(function (e) {
+            debugger
+            $("#myModal").modal("hide");
+        })
+    })
+
+</script>

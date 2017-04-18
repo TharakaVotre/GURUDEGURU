@@ -29,7 +29,8 @@ namespace GDWEBSolution.Controllers.TimeTable
                 FromTime_String = x.FromTime,
                 ToTime_String = x.ToTime,
                 SubjectId = x.SubjectId,
-                SubjectName = x.SubjectName
+                SubjectName = x.SubjectName,
+                SeqNo = x.SeqNo
 
             }).ToList();
 
@@ -82,6 +83,78 @@ namespace GDWEBSolution.Controllers.TimeTable
             }).ToList();
             ViewBag.GradeSubjectList = new SelectList(GradeSubjectList, "SubjectId", "SubjectName");
             return PartialView("TClassNSubject");
+        }
+
+        public ActionResult ShowEditTimeTbl(long SeqNo)
+        {
+            TimeTableModel TModel = new TimeTableModel();
+
+            tblTimeTable TCtable = Connection.tblTimeTables.SingleOrDefault(x => x.SeqNo == SeqNo);
+
+            DateTime F = DateTime.Parse(TCtable.FromTime.ToString());
+            DateTime T = DateTime.Parse(TCtable.ToTime.ToString());
+
+           // F.Subtract(-TimeSpan.FromHours(Convert.ToDouble(F.ToString("HH")))).ToShortTimeString();
+
+            TModel.FromTime_String = F.ToString("hh:mm tt");
+            TModel.ToTime_String = T.ToString("hh:mm tt");
+
+            TModel.SubjectId = TCtable.SubjectId;
+            TModel.GradeId = TCtable.GradeId;
+            TModel.ClassId = TCtable.ClassId;
+            TModel.SchoolId = TCtable.SchoolId;
+
+            var GradeSubject = Connection.SMGTgetGradeSubjects(TModel.GradeId).ToList();//Need to Pass a Session Schoolid
+            List<tblSubject> EGradeSubjectList = GradeSubject.Select(x => new tblSubject
+            {
+                SubjectId = x.SubjectId,
+                ShortName = x.ShortName,
+                SubjectName = x.SubjectName,
+                IsActive = x.IsActive
+
+            }).ToList();
+            ViewBag.SubjectEdit = new SelectList(EGradeSubjectList, "SubjectId", "SubjectName");
+            return PartialView("EditTimeTbl", TModel);
+        }
+
+        [HttpPost]
+        public JsonResult EditTimeTable(TimeTableModel Model)
+        {
+            try
+            {
+                tblTimeTable Newt = Connection.tblTimeTables.SingleOrDefault(x => x.SeqNo == Model.SeqNo);
+
+                Newt.ModifiedBy = "ADMIN";
+                Newt.ModifiedDate = DateTime.Now;
+
+                DateTime F = DateTime.Parse(Model.FromTime_String);
+                DateTime T = DateTime.Parse(Model.ToTime_String);
+
+                Newt.FromTime = TimeSpan.Parse(F.ToString("HH:mm"));
+                Newt.ToTime = TimeSpan.Parse(T.ToString("HH:mm"));
+                Newt.SubjectId = Model.SubjectId;
+
+                Connection.SaveChanges();
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            {
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        string message = string.Format("{0}:{1}",
+                            validationErrors.Entry.Entity.ToString(),
+                            validationError.ErrorMessage);
+                        // raise a new exception nesting  
+                        // the current instance as InnerException  
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
+            }
         }
 
         //
@@ -163,22 +236,28 @@ namespace GDWEBSolution.Controllers.TimeTable
         //
         // GET: /TimeTable/Delete/5
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int SeqNo)
         {
-            return View();
+            TimeTableModel TModel = new TimeTableModel();
+            TModel.SeqNo = SeqNo;
+            return PartialView("DeleteTimeSlot", TModel);
         }
 
         //
         // POST: /TimeTable/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(TimeTableModel Model)
         {
             try
             {
-                // TODO: Add delete logic here
+                tblTimeTable TCtable = Connection.tblTimeTables.Find(Model.SeqNo);
+                Connection.tblTimeTables.Remove(TCtable);
+                Connection.SaveChanges();
 
-                return RedirectToAction("Index");
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+                //return RedirectToAction("Index");
             }
             catch
             {
