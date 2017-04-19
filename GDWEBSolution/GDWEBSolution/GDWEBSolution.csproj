@@ -1180,6 +1180,10 @@
     <Content Include="Views\TimeTable\EditView.cshtml" />
     <Content Include="Views\TimeTable\EditTimeTbl.cshtml" />
     <Content Include="Views\TimeTable\DeleteTimeSlot.cshtml" />
+    <Content Include="Views\TimeTable\ViewTimeTable.cshtml" />
+    <Content Include="Views\TimeTable\TimeSlotlist.cshtml" />
+    <Content Include="Views\TimeTable\LoadClass.cshtml" />
+    <Content Include="Views\TimeTable\Display.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

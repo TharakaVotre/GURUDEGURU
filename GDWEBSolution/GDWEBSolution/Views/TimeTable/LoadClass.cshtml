@@ -1,0 +1,15 @@
+﻿@model GDWEBSolution.Models.TimeTable.TimeTableModel
+
+
+@*<label for="pwd" class="control-label">Class :</label>*@
+@Html.DropDownListFor(model => model.ClassId, ViewBag.GradeClassse as SelectList, "", new { @class = "select2_Class form-control", @onchange = "loadDisplay()" })
+
+<script>
+    $(document).ready(function () {
+        $(".select2_Class").select2({
+            placeholder: "Select a Class",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+</script>
