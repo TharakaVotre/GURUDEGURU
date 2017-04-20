@@ -602,6 +602,8 @@
     <Content Include="Content\css\awesome-bootstrap-checkbox.css" />
     <Content Include="Content\css\bootstrap-select.css" />
     <Content Include="Content\css\bootstrap-social.css" />
+    <Content Include="Content\css\bootstrap-timepicker.css" />
+    <Content Include="Content\css\bootstrap-timepicker.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\css\vars.css" />
     <Content Include="Content\css\dataTables.bootstrap.min.css" />
@@ -924,6 +926,7 @@
     <Content Include="img\circulloading.gif" />
     <Content Include="img\default.gif" />
     <Content Include="img\ellipsis.gif" />
+    <Content Include="img\gears.gif" />
     <Content Include="img\loader.gif" />
     <Content Include="img\loading.gif" />
     <Content Include="img\loading_spinner.gif" />
@@ -939,6 +942,8 @@
     <Content Include="img\wheel.gif" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
+    <Content Include="Scripts\bootstrap-timepicker.js" />
+    <Content Include="Scripts\bootstrap-timepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Chart.min.js" />

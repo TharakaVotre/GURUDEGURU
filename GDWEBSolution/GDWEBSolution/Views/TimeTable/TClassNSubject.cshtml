@@ -50,8 +50,20 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#FromTime_String').timepicki();
-        $('#ToTime_String').timepicki();
+        //$('#FromTime_String').timepicki();
+        //$('#ToTime_String').timepicki();
+
+        $('#FromTime_String').timepicker({
+            template: false,
+            showInputs: false,
+            minuteStep: 5
+        });
+
+        $('#ToTime_String').timepicker({
+            template: false,
+            showInputs: false,
+            minuteStep: 5
+        });
 
         $(".select2_Class").select2({
             placeholder: "Select a Class",
@@ -70,13 +82,38 @@
         });
 
         $("#btnSubmit").click(function () {
-            //var TeacherCategoryName = $('#TeacherCategoryName');
-            //var TeacherCategoryNameError = $('#TeacherCategoryNameError');
-            //if (!TeacherCategoryName.val()) {
-            //    TeacherCategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
-            //    $("#TeacherCategoryNameError").text("Required");
-            //    return;
-            //}
+            if ($("#ClassId").val() == "") {
+                $("#ErrorLable").text("Select a Grade Class Before Saving.");
+                $("#errorModel").modal("show");
+                return;
+            }
+            if ($("#Day").val() == 0) {
+                $("#ErrorLable").text("Select a Day Before Saving");
+                $("#errorModel").modal("show");
+                return;
+            }
+            if ($("#SubjectId").val() == "") {
+                $("#ErrorLable").text("Select a Subject Before Saving");
+                $("#errorModel").modal("show");
+                return;
+            }
+            if ($("#FromTime_String").val() == "") {
+                $("#ErrorLable").text("Select a Star Time Before Saving");
+                $("#errorModel").modal("show");
+                return;
+            }
+            if ($("#ToTime_String").val() == "") {
+                $("#ErrorLable").text("Select a End Time Before Saving");
+                $("#errorModel").modal("show");
+                return;
+            }
+            if ($("#PeriodSeqNo").val() == "") {
+                $("#ErrorLable").text("Select a Period Number Before Saving");
+                $("#errorModel").modal("show");
+                return;
+            }
+
+
             var myformdata = $("#FrmTAdd").serialize();
             $.ajax({
 
