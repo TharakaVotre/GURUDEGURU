@@ -1,0 +1,5 @@
+﻿@model IEnumerable<GDWEBSolution.Models.TimeTable.TimeTableModel>
+@foreach (var item in Model)
+{
+    <li><a href="#" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="From : @Html.DisplayFor(modelItem => item.FromTime_String) To : @Html.DisplayFor(modelItem => item.ToTime_String)">@Html.DisplayFor(modelItem => item.SubjectName)</a></li>
+}

@@ -15,21 +15,21 @@
                 @Html.HiddenFor(m => m.SchoolId)
                 @Html.LabelFor(m => m.FromTime_String, new { @class = "col-sm-2 control-label" })
                 <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.FromTime_String, new { @class = "form-control", @placeholder = "From" })
+                    @Html.TextBoxFor(model => model.FromTime_String, new {id = "FromTime", @class = "form-control", @placeholder = "From" })
                     <span class="help-block m-b-none" id="ErrorFrm"></span>
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.ToTime_String, new { @class = "col-sm-2 control-label" })
                 <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.ToTime_String, new { @class = "form-control", @placeholder = "To" })
+                    @Html.TextBoxFor(model => model.ToTime_String, new {id = "ToTime", @class = "form-control", @placeholder = "To" })
                     <span class="help-block m-b-none" id="ErrorTo" style="color: red"></span>
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.SubjectName, new { @class = "col-sm-2 control-label" })
                 <div class="col-sm-8">
-                    @Html.DropDownListFor(model => model.SubjectId, ViewBag.SubjectEdit as SelectList, "", new { @class = "select2_Grade form-control" })
+                    @Html.DropDownListFor(model => model.SubjectId, ViewBag.SubjectEdit as SelectList, "", new { id="Subject", @class = "select2_Grade form-control" })
                     <span class="help-block m-b-none" id="ErrorSubj" style="color: red"></span>
                 </div>
             </div>
@@ -41,15 +41,30 @@
 </div>
 <script>
     $(document).ready(function () {
+        $('#FromTime').timepicker({
+            template: false,
+            showInputs: false,
+            minuteStep: 5
+        });
+        $('#ToTime').timepicker({
+            template: false,
+            showInputs: false,
+            minuteStep: 5
+        });
         $("#btnEditTimeSlot").click(function (e) {
             debugger
-            //var TeacherCategoryName = $('#TeacherCategoryName');
-            //var TeacherCategoryNameError = $('#TeacherCategoryNameError');
-            //if (!TeacherCategoryName.val()) {
-            //    TeacherCategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
-            //    $("#TeacherCategoryNameError").text("Required");
-            //    return;
-            //}
+            if (!$("#FromTime").val()) {
+                $("#ErrorFrm").text("Required From Time");
+                return;
+            }
+            if (!$("#ToTime").val()) {
+                $("#ErrorTo").text("Required To Time");
+                return;
+            }
+            if ($("#Subject").val() == 0) {
+                $("#ErrorSubj").text("Required Subject");
+                return;
+            }
             var myformdata = $("#FrmEditTimeSlot").serialize();
             $.ajax({
 

@@ -44,8 +44,17 @@ namespace GDWEBSolution.Controllers.TimeTable
             }
             else
             {
-                return PartialView("TimeTblView", List);
+                return PartialView("TimeSlotlist", List);
             }
+        }
+
+
+        public ActionResult DisplayTimeTable(string ClassId, string GreadId)
+        {
+            TimeTableModel Model = new TimeTableModel();
+            Model.ClassId = ClassId;
+            Model.GradeId = GreadId;
+            return PartialView("Display", Model);
         }
         //
         // GET: /TimeTable/Details/5
@@ -83,6 +92,14 @@ namespace GDWEBSolution.Controllers.TimeTable
             }).ToList();
             ViewBag.GradeSubjectList = new SelectList(GradeSubjectList, "SubjectId", "SubjectName");
             return PartialView("TClassNSubject");
+        }
+
+        public ActionResult ShowGradeClassesView(string GradeId)
+        {
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
+            ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
+
+            return PartialView("LoadClass");
         }
 
         public ActionResult ShowEditTimeTbl(long SeqNo)
@@ -263,6 +280,20 @@ namespace GDWEBSolution.Controllers.TimeTable
             {
                 return View();
             }
+        }
+
+        public ActionResult ViewTimeTable()
+        {
+            var SchoolGrade = Connection.SMGTgetSchoolGrade("CKC").ToList();//Need to Pass a Session Schoolid
+            List<tblGrade> SchoolGradeList = SchoolGrade.Select(x => new tblGrade
+            {
+                GradeId = x.GradeId,
+                GradeName = x.GradeName,
+                IsActive = x.IsActive
+
+            }).ToList();
+            ViewBag.SchoolGrades = new SelectList(SchoolGradeList, "GradeId", "GradeName");
+            return View();
         }
     }
 }
