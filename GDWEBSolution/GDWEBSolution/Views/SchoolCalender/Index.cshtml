@@ -9,7 +9,25 @@
 {
     if (type == "B") { 
         if(Model !=null){
-    <table class="display table table-bordered table-hover" cellspacing="0" width="100%">
+            bool Check1 = false;
+            foreach (var items in Model)
+            {
+                int st= Convert.ToInt16(items.StartMonth);
+            int end = Convert.ToInt16(items.EndMonth);
+            int mon = Convert.ToInt16(Month);
+            bool check=false;
+            if (st < mon && mon < end)
+            {
+            check = true;
+            }
+            if (items.StartMonth == Month || items.EndMonth == Month || check)
+            {
+                Check1 = true;
+            }
+                
+            }
+            if (Check1) { 
+    <table class="display table table-bordered table-hover" id="tbl1" cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th>
@@ -28,7 +46,7 @@
                     @Html.DisplayNameFor(model => model.IsHoliday)
                 </th>
                 <th></th>
-
+                
             </tr>
         </thead>
         <tbody>
@@ -116,11 +134,14 @@
 
             </tr>
         }
+        
             }
             }
             }
         </tbody>
     </table>
+}
+       
     }
     }
     else
@@ -204,10 +225,10 @@
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary monthtab"   onclick=Show(1,"janshow","djanshow")><b>January</b> <span id="janshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a>
                    
                     </h3>
-                    <div id="djanshow" style="padding-left:50px" >
+                    <div id="djanshow" class="summery">
                         <ul>@TblDataDisplay(years, Janu, Jannextmonth, monthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color: rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
+
                     </div>
                 </div>
                 <div id="1" style="display:none;border:1px solid gray;padding:3px;border-radius:4px">
@@ -228,10 +249,10 @@
 
                     }
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(2,"febshow","dfebshow")>February<span id="febshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                    <div id="dfebshow" style="padding-left:50px">
+                    <div id="dfebshow" class="summery">
                         <ul>@TblDataDisplay(years, Feb, Febnextmonth, FEbmonthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color: rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
+                    
                     </div>
                 </div>
                 <div id="2" style="display: none;border:1px solid gray; padding: 3px; border-radius: 4px">
@@ -251,10 +272,10 @@
 
                     }
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(3,"marshow","dmarshow")>March<span id="marshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                    <div id="dmarshow" style="padding-left:50px">
+                    <div id="dmarshow" class="summery">
                         <ul>@TblDataDisplay(years, Mar, Marnextmonth, MarbmonthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color: rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
+                    
                     </div>
                     </div>
                 <div id="3" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
@@ -271,10 +292,9 @@
                         string ApimonthFirstDay = "04/01/";
                     }
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(4,"apishow","dapishow")>April<span id="apishow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                    <div id="dapishow" style="padding-left:50px">
+                    <div id="dapishow" class="summery">
                         <ul>@TblDataDisplay(years, Apr, Aprnextmonth, ApimonthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color: rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
                     </div>
                 </div>
                 <div id="4" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
@@ -291,10 +311,10 @@
                         string MaymonthFirstDay = "05/01/";
                     }
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(5,"mayshow","dmayshow")>May<span id="mayshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                    <div id="dmayshow" style="padding-left:50px">
+                    <div id="dmayshow" class="summery">
                         <ul>@TblDataDisplay(years, May, Maynextmonth, MaymonthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color:rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
+                    
                     </div>
                 </div>
                 <div id="5" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
@@ -311,10 +331,9 @@
                         string junmonthFirstDay = "06/01/";
                     }
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(6,"junshow","djunshow")>June<span id="junshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                    <div id="djunshow" style="padding-left:50px">
+                    <div id="djunshow" class="summery">
                         <ul>@TblDataDisplay(years, jun, junnextmonth, junmonthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color: rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
                     </div>
                   </div>
                 <div id="6" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
@@ -331,10 +350,9 @@
                         string juymonthFirstDay = "07/01/";
                     }
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(7,"juyshow","djuyshow")>July<span id="juyshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                    <div id="djuyshow" style="padding-left:50px">
+                    <div id="djuyshow" class="summery">
                         <ul>@TblDataDisplay(years, juy, juynextmonth, juymonthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color: rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
                     </div>
                   </div>
                 <div id="7" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
@@ -352,10 +370,10 @@
                         string AugmonthFirstDay = "08/01/";
                     }
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(8,"augshow","daugshow")>August<span id="augshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                    <div id="daugshow" style="padding-left:50px">
+                    <div id="daugshow" class="summery">
                         <ul>@TblDataDisplay(years, Aug, Augnextmonth, AugmonthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color: rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
+                    
                     </div>
                 </div>
                 <div id="8" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
@@ -372,10 +390,10 @@
                         string SepmonthFirstDay = "10/01/";
                     }
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(9,"sepshow","dsepshow")>September<span id="sepshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                    <div id="dsepshow" style="padding-left:50px">
+                    <div id="dsepshow" class="summery">
                         <ul>@TblDataDisplay(years, Sep, Sepnextmonth, SepmonthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color: rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
+                        
                     </div>
                 </div>
                 <div id="9" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
@@ -392,10 +410,10 @@
                         string OCmonthFirstDay = "10/01/";
                     }
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(10,"ocshow","docshow")>October <span id="ocshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                    <div id="docshow" style="padding-left:50px">
+                    <div id="docshow" class="summery">
                         <ul>@TblDataDisplay(years, OC, OCnextmonth, OCmonthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color: rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
+                        
                     </div>
                 </div>
                 <div id="10" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
@@ -412,10 +430,10 @@
                         string NomonthFirstDay = "10/01/";
                     }
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(11,"noshow","dnoshow")>November <span id="noshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                    <div id="dnoshow" style="padding-left:50px">
+                    <div id="dnoshow" class="summery">
                         <ul>@TblDataDisplay(years, No, Nonextmonth, NomonthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color: rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
+                        
                     </div>
                 </div>
                 <div id="11" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
@@ -433,11 +451,10 @@
                         string DemonthFirstDay = "12/01/";
                     }
                     <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  id="de" onclick=Show(12,"deshow","ddeshow")>December<span id="deshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                    <div id="ddeshow" style="padding-left:50px">
+                    <div id="ddeshow" class="summery">
                         <ul>@TblDataDisplay(nextyear, De, Denextmonth, DemonthFirstDay, "H")</ul>
 
-                        <div class="col-md-12" style="height: 5px; border-radius: 2px; background-color: rgba(0, 0, 0, 0.3); margin-left: -25px"></div>
-                    </div>
+                   </div>
                 </div>
                 <div id="12" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
                     
@@ -479,6 +496,15 @@
         line-height: 1.45;
         border-radius: 2px;
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    .summery {
+        padding-left: 50px;
+        border: solid 3px;
+        border-radius: 8px;
+        padding: 5px;
+        margin-top: -10px;
+        background-color: rgba(147, 197, 75, 0.68);
     }
 </style>
 
