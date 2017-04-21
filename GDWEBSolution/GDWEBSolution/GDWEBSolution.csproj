@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnualFunctions\StudentGradeAdvanceController.cs" />
     <Compile Include="Controllers\Configuration\Grade SubjectController.cs" />
+    <Compile Include="Controllers\Event\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeWork\HomeWorkController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainApplicationStatusController.cs" />
@@ -600,10 +601,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\awesome-bootstrap-checkbox.css" />
+    <Content Include="Content\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\css\bootstrap-select.css" />
     <Content Include="Content\css\bootstrap-social.css" />
     <Content Include="Content\css\bootstrap-timepicker.css" />
     <Content Include="Content\css\bootstrap-timepicker.min.css" />
+    <Content Include="Content\css\bootstrap-year-calendar.css" />
+    <Content Include="Content\css\bootstrap-year-calendar.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\css\vars.css" />
     <Content Include="Content\css\dataTables.bootstrap.min.css" />
@@ -940,10 +944,14 @@
     <Content Include="img\login-bg.jpg" />
     <Content Include="img\logo.jpg" />
     <Content Include="img\wheel.gif" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
+    <Content Include="Scripts\bootstrap-popover.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
     <Content Include="Scripts\bootstrap-timepicker.min.js" />
+    <Content Include="Scripts\bootstrap-year-calendar.js" />
+    <Content Include="Scripts\bootstrap-year-calendar.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Chart.min.js" />
@@ -1184,6 +1192,8 @@
     <Content Include="Views\SchoolCalender\EditView.cshtml" />
     <Content Include="Views\SchoolCalender\Index.cshtml" />
     <Content Include="Views\SchoolCalender\ParentView.cshtml" />
+    <Content Include="Views\Event\Index.cshtml" />
+    <Content Include="Views\Event\AddEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
