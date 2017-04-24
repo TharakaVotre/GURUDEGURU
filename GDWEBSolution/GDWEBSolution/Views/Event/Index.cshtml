@@ -3,11 +3,15 @@
 }
 
 <h2>Index</h2>
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    <link href="~/Content/css/bootstrap-datepicker3.css" rel="stylesheet" />
+
 <div class="panel panel-default">
     <div class="panel-heading">Event Calender</div>
     <div class="panel-body">
         <div class="calendar" id="calendar">
         </div>
+               
     </div>
 </div>
 <div id="event-modal" class="modal fade" role="dialog">
@@ -45,9 +49,11 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
+                    </form>
             </div>
 
         </div>
+    </div>
     </div>
     <script>
         $(document).ready(function () {
