@@ -11,16 +11,13 @@ namespace GDWEBSolution.Models
 {
     using System;
     
-    public partial class GDgetHomeWorkAdd_Result
+    public partial class GDgetParentHomeWork_Result
     {
         public long AssignmentNo { get; set; }
         public string AssignmentDescription { get; set; }
         public string SchoolId { get; set; }
         public string GradeId { get; set; }
-        public string GradeName { get; set; }
         public string ClassId { get; set; }
-        public string ClassName { get; set; }
-        public string SubjectName { get; set; }
         public long TeacherId { get; set; }
         public string FilePath { get; set; }
         public string BatchNo { get; set; }

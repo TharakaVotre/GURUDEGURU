@@ -291,6 +291,19 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteAllApplicationStatus", isactiveParameter, statusCodeParameter, modyfiedByParameter);
         }
     
+        public virtual int GDdeleteApplication(Nullable<long> id, string isActive)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDdeleteApplication", idParameter, isActiveParameter);
+        }
+    
         public virtual int GDdeleteEvaluationType(string isactive, Nullable<long> statusCode, string modyfiedBy)
         {
             var isactiveParameter = isactive != null ?
@@ -800,6 +813,31 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetAllTeacherCategory_Result>("GDgetAllTeacherCategory", isactiveParameter);
         }
     
+        public virtual ObjectResult<GDgetApplication_Result> GDgetApplication(Nullable<long> statusCode, string schoolId, string startDate, string endDate, string isActive)
+        {
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var startDateParameter = startDate != null ?
+                new ObjectParameter("startDate", startDate) :
+                new ObjectParameter("startDate", typeof(string));
+    
+            var endDateParameter = endDate != null ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetApplication_Result>("GDgetApplication", statusCodeParameter, schoolIdParameter, startDateParameter, endDateParameter, isActiveParameter);
+        }
+    
         public virtual ObjectResult<GDgetApplicationStatus_Result> GDgetApplicationStatus(Nullable<long> id)
         {
             var idParameter = id.HasValue ?
@@ -807,6 +845,36 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("Id", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetApplicationStatus_Result>("GDgetApplicationStatus", idParameter);
+        }
+    
+        public virtual ObjectResult<GDgetGradeActiveClass_Result> GDgetGradeActiveClass(string gradeId, string schoolId, string isActive)
+        {
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetGradeActiveClass_Result>("GDgetGradeActiveClass", gradeIdParameter, schoolIdParameter, isActiveParameter);
+        }
+    
+        public virtual ObjectResult<GDgetGradeActiveSubject_Result> GDgetGradeActiveSubject(string gradeId, string isActive)
+        {
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetGradeActiveSubject_Result>("GDgetGradeActiveSubject", gradeIdParameter, isActiveParameter);
         }
     
         public virtual ObjectResult<GDgetHomeWork_Result> GDgetHomeWork(Nullable<long> id)
@@ -843,6 +911,40 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetHomeWorkAdd_Result>("GDgetHomeWorkAdd", schoolIdParameter, teacherIdParameter, isActiveParameter, fromdateParameter, todateParameter);
         }
     
+        public virtual ObjectResult<GDgetParentApplicationStatus_Result> GDgetParentApplicationStatus(string refNo)
+        {
+            var refNoParameter = refNo != null ?
+                new ObjectParameter("RefNo", refNo) :
+                new ObjectParameter("RefNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetParentApplicationStatus_Result>("GDgetParentApplicationStatus", refNoParameter);
+        }
+    
+        public virtual ObjectResult<GDgetParentHomeWork_Result> GDgetParentHomeWork(string schoolId, string fromdate, string todate, string userId, string isActive)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var fromdateParameter = fromdate != null ?
+                new ObjectParameter("Fromdate", fromdate) :
+                new ObjectParameter("Fromdate", typeof(string));
+    
+            var todateParameter = todate != null ?
+                new ObjectParameter("Todate", todate) :
+                new ObjectParameter("Todate", typeof(string));
+    
+            var userIdParameter = userId != null ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(string));
+    
+            var isActiveParameter = isActive != null ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetParentHomeWork_Result>("GDgetParentHomeWork", schoolIdParameter, fromdateParameter, todateParameter, userIdParameter, isActiveParameter);
+        }
+    
         public virtual ObjectResult<GDgetSchoolCalenderEvent_Result> GDgetSchoolCalenderEvent(string schoolId, string year, string isActive)
         {
             var schoolIdParameter = schoolId != null ?
@@ -875,6 +977,31 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("ModyfiedBy", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyAllApplicationStatus", descriptionParameter, statusCodeParameter, modyfiedByParameter);
+        }
+    
+        public virtual int GDModifyApplicationStatus(Nullable<long> id, string remark, Nullable<long> statusCode, string refNo, string userId)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            var remarkParameter = remark != null ?
+                new ObjectParameter("remark", remark) :
+                new ObjectParameter("remark", typeof(string));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("StatusCode", statusCode) :
+                new ObjectParameter("StatusCode", typeof(long));
+    
+            var refNoParameter = refNo != null ?
+                new ObjectParameter("refNo", refNo) :
+                new ObjectParameter("refNo", typeof(string));
+    
+            var userIdParameter = userId != null ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyApplicationStatus", idParameter, remarkParameter, statusCodeParameter, refNoParameter, userIdParameter);
         }
     
         public virtual int GDModifyEvaluationTypee(string description, Nullable<long> statusCode, string modyfiedBy)

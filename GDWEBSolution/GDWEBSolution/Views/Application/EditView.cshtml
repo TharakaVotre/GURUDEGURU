@@ -1,0 +1,136 @@
+﻿@model GDWEBSolution.Models.Application.ApplicationModel
+
+
+<div>
+
+    <form  action="~/Application/Edit" method="post">
+        <fieldset>
+            
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Application Status</h4>
+            </div>
+            
+                @Html.HiddenFor(model => model.AppStatusSeqNo)
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Remarks, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Due Date" })
+                        <span class="help-block m-b-none" id="DueDateError"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.StatusCode, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownList("StatusCode")
+                        <span class="help-block m-b-none" id="GradeIdError"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RefNo, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.RefNo, new { @class = "form-control", @placeholder = "Batch No" })
+                        <span class="help-block m-b-none" id="BatchNoError"></span>
+                    </div>
+                </div>
+               
+            </div>
+          
+            <div class="modal-footer" style="border-top: 1px solid #ffffff">
+                <input type="submit" class="btn btn-primary" />
+            </div>
+        </fieldset>
+    </form>
+    
+
+
+</div>
+
+
+
+
+<style>
+
+    #GradeId {
+        border: 1px solid #e0e0e0;
+        padding: 5px 8px;
+        color: #616161;
+        background: #fff;
+        box-shadow: none !important;
+        display: block;
+        width: 100% !important;
+        height: 32px;
+        font-size: 14px;
+        line-height: 1.45;
+        border-radius: 2px;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+    #ClassId {
+        border: 1px solid #e0e0e0;
+        padding: 5px 8px;
+        color: #616161;
+        background: #fff;
+        box-shadow: none !important;
+        display: block;
+        width: 100%;
+        height: 32px;
+        font-size: 14px;
+        line-height: 1.45;
+        border-radius: 2px;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+    #SubjectId {
+        border: 1px solid #e0e0e0;
+        padding: 5px 8px;
+        color: #616161;
+        background: #fff;
+        box-shadow: none !important;
+        display: block;
+        width: 100%;
+        height: 32px;
+        font-size: 14px;
+        line-height: 1.45;
+        border-radius: 2px;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    } 
+</style>
+@section scripts{
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script>
+        (function () {
+            var bar = $('.progress-bar');
+            var percent = $('.progress-bar');
+            var status = $('#status');
+
+            $('form').ajaxForm({
+                beforeSend: function () {
+                    status.empty();
+                    var percentValue = '0%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    var percentValue = percentComplete + '%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                success: function (d) {
+                    var percentValue = '100%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                    $('#fu1').val('');
+                    alert(d);
+                },
+                complete: function (xhr) {
+                    status.html(xhr.responseText);
+                }
+            });
+        })();
+    </script>
+}

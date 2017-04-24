@@ -85,6 +85,12 @@
                         <li>@Html.ActionLink("Class Teacher", "Class", "Teacher")</li>
                     </ul>
                 </li>
+                <li><a href="#"><i class="fa fa-desktop"></i>Time Table</a>
+                    <ul>
+                        <li>@Html.ActionLink("View", "ViewTimeTable", "TimeTable")</li>
+                        <li>@Html.ActionLink("Add Edit Time Table", "AddEditTimeTable", "TimeTable")</li>
+                    </ul>
+                </li>
                  <li>
                     <a href="#"><i class="fa fa-desktop"></i>Maintain</a>
                     <ul>
@@ -120,8 +126,15 @@
 
                  <li><a href="#"><i class="fa fa-desktop"></i>Home Work</a>
                     <ul>
-                        <li>@Html.ActionLink("HomeWork", "Index", "HomeWork")</li>
-                       
+                        
+                        <li><a href="~/HomeWork/Index">HomeWork</a></li>
+                        <li><a href="~/HomeWork/ParentView">HomeWork View</a></li>
+                    </ul>
+                </li>
+                  <li><a href="#"><i class="fa fa-desktop"></i>Application</a>
+                    <ul>
+                        <li><a href="~/Application/Index">Application Update</a></li>
+                        <li><a href="~/Application/ParentView">Application status view</a></li>
                     </ul>
                 </li>
                  <li>

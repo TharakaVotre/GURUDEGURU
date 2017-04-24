@@ -33,7 +33,7 @@ namespace GDWEBSolution.Models.HomeWork
         [Display(Name = "TeacherId")]
         public long TeacherId { get; set; }
 
-        [Display(Name = "FilePath")]
+        [Display(Name = "FileName")]
         public string FilePath { get; set; }
 
         [Display(Name = "File")]
@@ -63,5 +63,14 @@ namespace GDWEBSolution.Models.HomeWork
             
         [Display(Name = "Name")]
         public string IsActive { get; set; }
+
+        [Display(Name = "Subject")]
+        public string Subject { get; set; }
+
+        [Display(Name = "Class")]
+        public string Class { get; set; }
+
+        [Display(Name = "Grade")]
+        public string Grade { get; set; }
     }
 }
