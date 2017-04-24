@@ -169,7 +169,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnualFunctions\StudentGradeAdvanceController.cs" />
-    <Compile Include="Controllers\Application\ApplicationController.cs" />
     <Compile Include="Controllers\Configuration\Grade SubjectController.cs" />
     <Compile Include="Controllers\Event\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -202,7 +201,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Application\ApplicationModel.cs" />
     <Compile Include="Models\DBEntityModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -281,25 +279,10 @@
     <Compile Include="Models\GDgetApplicationStatus_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GDgetApplication_Result.cs">
-      <DependentUpon>DBEntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GDgetGradeActiveClass_Result.cs">
-      <DependentUpon>DBEntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GDgetGradeActiveSubject_Result.cs">
-      <DependentUpon>DBEntityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GDgetHomeWorkAdd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GDgetHomeWork_Result.cs">
-      <DependentUpon>DBEntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GDgetParentApplicationStatus_Result.cs">
-      <DependentUpon>DBEntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GDgetParentHomeWork_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GDgetSchoolCalenderEvent_Result.cs">
@@ -309,6 +292,7 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HomeWork\HomeWorkModel.cs" />
+    <Compile Include="Models\HomeWork\ValidateFile.cs" />
     <Compile Include="Models\SchoolCalender\SchoolCalenderModel.cs" />
     <Compile Include="Models\Schools\RegistrationModel.cs" />
     <Compile Include="Models\Schools\SchoolExtraCuricularModel.cs" />
@@ -963,15 +947,6 @@
     <Content Include="img\login-bg.jpg" />
     <Content Include="img\logo.jpg" />
     <Content Include="img\wheel.gif" />
-    <Content Include="Models\DBEntityModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
-    <Content Include="Models\DBEntityModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-popover.js" />
     <Content Include="Scripts\bootstrap-select.js" />
@@ -992,8 +967,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBEntityModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Models\DBEntityModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\DBEntityModel.edmx.diagram">
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\DBEntityModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
@@ -1162,6 +1147,10 @@
     <Content Include="Views\PSMessage\Sent.cshtml" />
     <Content Include="Views\Upload\AsyncUpload.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
+    <Content Include="Views\HomeWork\AddView.cshtml" />
+    <Content Include="Views\HomeWork\DeleteView.cshtml" />
+    <Content Include="Views\HomeWork\EditView.cshtml" />
+    <Content Include="Views\HomeWork\Index.cshtml" />
     <Content Include="Views\Student\Create.cshtml" />
     <Content Include="Views\Student\Detail.cshtml" />
     <Content Include="Views\Student\Edit.cshtml" />
@@ -1207,16 +1196,6 @@
     <Content Include="Views\SchoolCalender\EditView.cshtml" />
     <Content Include="Views\SchoolCalender\Index.cshtml" />
     <Content Include="Views\SchoolCalender\ParentView.cshtml" />
-    <Content Include="Views\Application\DeleteView.cshtml" />
-    <Content Include="Views\Application\EditView.cshtml" />
-    <Content Include="Views\Application\Index.cshtml" />
-    <Content Include="Views\Application\ParentView.cshtml" />
-    <Content Include="Views\HomeWork\AddView.cshtml" />
-    <Content Include="Views\HomeWork\DeleteView.cshtml" />
-    <Content Include="Views\HomeWork\DetailView.cshtml" />
-    <Content Include="Views\HomeWork\EditView.cshtml" />
-    <Content Include="Views\HomeWork\Index.cshtml" />
-    <Content Include="Views\HomeWork\ParentView.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\AddEvent.cshtml" />
   </ItemGroup>
