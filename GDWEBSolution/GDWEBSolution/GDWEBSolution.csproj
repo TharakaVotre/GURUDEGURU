@@ -967,6 +967,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
       <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\DBEntityModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
