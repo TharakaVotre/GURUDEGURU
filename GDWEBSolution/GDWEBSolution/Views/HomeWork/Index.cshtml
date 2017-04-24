@@ -16,7 +16,7 @@
 
 <div class="form-horizontal">
     <div class="modal-header">
-        <h4 class="modal-title">Home Work</h4>
+        <h4 class="modal-title">Add New Grade Subject</h4>
     </div>
 
     <div class="panel panel-default">
@@ -58,11 +58,10 @@
                         </th>
                        
                         <th>
-                            @Html.DisplayNameFor(model => model.Grade)
-                           
+                            @Html.DisplayNameFor(model => model.GradeId)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Class)
+                            @Html.DisplayNameFor(model => model.ClassId)
                         </th>
                         
                         
@@ -89,12 +88,10 @@
                                
                                
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Grade)
-                                    @Html.HiddenFor(modelItem => item.GradeId)
+                                    @Html.DisplayFor(modelItem => item.GradeId)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Class)
-                                    @Html.HiddenFor(modelItem => item.ClassId)
+                                    @Html.DisplayFor(modelItem => item.ClassId)
                                 </td>
                                
                                
@@ -109,9 +106,8 @@
                                
                                 <td>
                                     <a class="btn btn-info" onclick='EditView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="fa fa-pencil"></span> Edit </a>
-                                    <a class="btn btn-info" onclick='DetailView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="fa fa-trash"></span> Detail</a>
                                     <a class="btn btn-danger" onclick='DeleteView("@item.AssignmentNo")'><span class="fa fa-trash"></span> Delete</a>
-                          
+
                                 </td>
                             </tr>
                     }
@@ -189,13 +185,6 @@
 
     var EditView = function (SeqNo,date) {
         var Url = "/HomeWork/Edit?Code=" + SeqNo+"&dates="+ date;
-        $("#MyModelBody").load(Url, function () {
-            $("#myModal").modal("show");
-        })
-    }
-
-    var DetailView = function (SeqNo,date) {
-        var Url = "/HomeWork/Details?Code=" + SeqNo+"&dates="+ date;
         $("#MyModelBody").load(Url, function () {
             $("#myModal").modal("show");
         })

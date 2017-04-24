@@ -24,7 +24,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.DueDate, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.DueDate, new { @class = "form-control", @placeholder = "Due Date" })
+                        @Html.TextBoxFor(model => model.DueDate, new { @class = "form-control", @placeholder = "From Date" })
                         <span class="help-block m-b-none" id="DueDateError"></span>
                     </div>
                 </div>
@@ -33,7 +33,6 @@
                     @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
                         @Html.DropDownList("GradeId")
-                        @Html.HiddenFor(m=>m.GradeId)
                         <span class="help-block m-b-none" id="GradeIdError"></span>
                     </div>
                 </div>
@@ -42,7 +41,6 @@
                     @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
                         @Html.DropDownList("ClassId")
-
                         <span class="help-block m-b-none" id="ClassIdError"></span>
                     </div>
                 </div>
@@ -58,7 +56,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.BatchNo, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.BatchNo, new { @class = "form-control", @placeholder = "Batch No" })
+                        @Html.TextBoxFor(model => model.BatchNo, new { @class = "form-control", @placeholder = "To Date" })
                         <span class="help-block m-b-none" id="BatchNoError"></span>
                     </div>
                 </div>
@@ -66,7 +64,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.BatchDescription, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.BatchDescription, new { @class = "form-control", @placeholder = "Description" })
+                        @Html.TextBoxFor(model => model.BatchDescription, new { @class = "form-control", @placeholder = "Acadamic Date" })
                         <span class="help-block m-b-none" id="BatchDescriptionError"></span>
                     </div>
                 </div>
@@ -87,16 +85,16 @@
                         <span class="help-block m-b-none" id="AcadamicError"></span>
                         @Html.HiddenFor(model => model.FilePath)
                    
-                  
-                        </div>
+                    <br />
+                    <br />
+  
                     
-                        <label for="fileselect" class="col-sm-3 control-label">Files to upload:</label>
-                        <div class="col-sm-8">
-                            <input type="file" id="uploadFile" name="File" />
-                            </div>
-                        </div>
-               
+                        <label for="fileselect">Files to upload:</label>
+                        <input type="file" id="uploadFile" name="File" />
+
+                    </div>
                 </div>
+
             </div>
             <div class="modal-footer">
                 <input type="submit" class="btn btn-primary" />
@@ -122,15 +120,12 @@
         background: #fff;
         box-shadow: none !important;
         display: block;
-        width: 100% !important;
+        width: 100%;
         height: 32px;
         font-size: 14px;
         line-height: 1.45;
         border-radius: 2px;
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-        cursor: not-allowed;
-        opacity: 0.6;
-        pointer-events: none;
     }
     #ClassId {
         border: 1px solid #e0e0e0;
