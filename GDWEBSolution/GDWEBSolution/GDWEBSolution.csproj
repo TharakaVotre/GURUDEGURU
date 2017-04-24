@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AnnualFunctions\StudentGradeAdvanceController.cs" />
     <Compile Include="Controllers\Application\ApplicationController.cs" />
     <Compile Include="Controllers\Configuration\Grade SubjectController.cs" />
+    <Compile Include="Controllers\Event\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeWork\HomeWorkController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainApplicationStatusController.cs" />
@@ -616,14 +617,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\awesome-bootstrap-checkbox.css" />
+    <Content Include="Content\css\bootstrap-datepicker.min.css" />
+    <Content Include="Content\css\bootstrap-datepicker3.css" />
     <Content Include="Content\css\bootstrap-select.css" />
     <Content Include="Content\css\bootstrap-social.css" />
     <Content Include="Content\css\bootstrap-timepicker.css" />
     <Content Include="Content\css\bootstrap-timepicker.min.css" />
+    <Content Include="Content\css\bootstrap-year-calendar.css" />
+    <Content Include="Content\css\bootstrap-year-calendar.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\css\vars.css" />
     <Content Include="Content\css\dataTables.bootstrap.min.css" />
     <Content Include="Content\css\datatables.min.css" />
+    <Content Include="Content\css\datepicker.css" />
     <Content Include="Content\css\fileinput.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\hover-min.css" />
@@ -960,16 +967,19 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
       <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\DBEntityModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
       <LastGenOutput>DBEntityModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
+    <Content Include="Scripts\bootstrap-popover.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
     <Content Include="Scripts\bootstrap-timepicker.min.js" />
+    <Content Include="Scripts\bootstrap-year-calendar.js" />
+    <Content Include="Scripts\bootstrap-year-calendar.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Chart.min.js" />
@@ -986,6 +996,7 @@
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -1206,6 +1217,8 @@
     <Content Include="Views\HomeWork\EditView.cshtml" />
     <Content Include="Views\HomeWork\Index.cshtml" />
     <Content Include="Views\HomeWork\ParentView.cshtml" />
+    <Content Include="Views\Event\Index.cshtml" />
+    <Content Include="Views\Event\AddEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

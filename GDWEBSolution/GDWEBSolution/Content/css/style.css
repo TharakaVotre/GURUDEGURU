@@ -114,7 +114,7 @@ h1, .h1, h2, .h2, h3, .h3 {
     border-radius: 0px;
 }
 
-.form-control, .frm-btn, .datepicker {
+.form-control, .frm-btn {
     border: 1px solid #e0e0e0;
     padding: 5px 8px;
     color: #616161;

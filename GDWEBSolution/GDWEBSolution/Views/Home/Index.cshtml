@@ -12,15 +12,26 @@
 								<code>.well</code> @ViewBag.Message
 							</p>
 						</div>
-						
+						<div class="row">
+					<div class="clearfix pt pb">
+						<div class="col-md-12">
+                             <input class="form-control" id="date" name="date" style="width:200px" placeholder="MM/DD/YYYY" type="text"/>
+						</div>
+					</div>
+				</div>
 					</div>
 				</div>
 }
 
-				<div class="row">
-					<div class="clearfix pt pb">
-						<div class="col-md-12">
+<script>
+     $(document).ready(function () {
+         var date_input = $('input[name="date"]'); //our date input has the name "date"
+         date_input.datepicker({
+             format: 'mm/dd/yyyy',
+             todayHighlight: true,
+             autoclose: true,
+         })
+     });
+ </script>
 
-						</div>
-					</div>
-				</div>
+				
