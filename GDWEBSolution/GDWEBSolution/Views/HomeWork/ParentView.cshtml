@@ -21,30 +21,29 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-           @using (Html.BeginForm("Index", "HomeWork", FormMethod.Post))
-{
-            <div class="form-group">
-                <div class="row">
-                    <lable class="col-sm-2 control-label">From Date</lable>
-                    <div class="col-sm-3">
+            @using (Html.BeginForm("ParentView", "HomeWork", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <div class="row">
+                        <lable class="col-sm-2 control-label">From Date</lable>
+                        <div class="col-sm-3">
 
-                        @Html.TextBox("FromDate")
+                            @Html.TextBox("FromDate")
 
-                    </div>
-                    <lable class="col-sm-2 control-label">To Date</lable>
-                    <div class="col-sm-3">
+                        </div>
+                        <lable class="col-sm-2 control-label">To Date</lable>
+                        <div class="col-sm-3">
 
-                       @Html.TextBox("ToDate")
+                            @Html.TextBox("ToDate")
 
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+                        </div>
                     </div>
                 </div>
-            </div>
             }
-            <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button>
-
+           
         </div>
         <div class="panel-body">
             <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
@@ -56,72 +55,67 @@
                         <th>
                             @Html.DisplayNameFor(model => model.AssignmentDescription)
                         </th>
-                       
+
                         <th>
-                            @Html.DisplayNameFor(model => model.Grade)
-                           
+                            @Html.DisplayNameFor(model => model.GradeId)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Class)
+                            @Html.DisplayNameFor(model => model.ClassId)
                         </th>
-                        
-                        
-                       
+
+
+
                         <th>
                             @Html.DisplayNameFor(model => model.BatchNo)
                         </th>
-                        
-                        
-                        
-                       
+
+
+
+
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @if (Model != null)
-                        {
-                        foreach (var item in Model)
                     {
+                        foreach (var item in Model)
+                        {
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.AssignmentNo)
                                 </td>
-                               
-                               
+
+
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Grade)
-                                    @Html.HiddenFor(modelItem => item.GradeId)
+                                    @Html.DisplayFor(modelItem => item.GradeId)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Class)
-                                    @Html.HiddenFor(modelItem => item.ClassId)
+                                    @Html.DisplayFor(modelItem => item.ClassId)
                                 </td>
-                               
-                               
+
+
                                 <td>
                                     @Html.DisplayFor(modelItem => item.BatchNo)
                                 </td>
-                               
+
                                 <td>
                                     @Html.DisplayFor(modelItem => item.SubjectId)
                                 </td>
-                               
-                               
+
+
                                 <td>
-                                    <a class="btn btn-info" onclick='EditView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="fa fa-pencil"></span> Edit </a>
-                                    <a class="btn btn-info" onclick='DetailView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="fa fa-trash"></span> Detail</a>
-                                    <a class="btn btn-danger" onclick='DeleteView("@item.AssignmentNo")'><span class="fa fa-trash"></span> Delete</a>
-                          
+                                     <a class="btn btn-info" onclick='DetailView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="fa fa-trash"></span> Detail</a>
+                                   
                                 </td>
                             </tr>
-                    }
-
                         }
-                    </tbody>
-                </table>
-            </div>
+
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -149,6 +143,7 @@
         border-radius: 2px;
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     }
+
     #ToDate {
         border: 1px solid #e0e0e0;
         padding: 5px 8px;
@@ -163,6 +158,7 @@
         border-radius: 2px;
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     }
+
     #GradeId {
         border: 1px solid #e0e0e0;
         padding: 5px 8px;
@@ -180,19 +176,7 @@
 </style>
 
 <script>
-    var ShowView = function (id) {
-        var Url = "/HomeWork/ShowAddView?id=" + id;
-        $("#MyModelBody").load(Url, function () {
-            $("#myModal").modal("show");
-        })
-    }
-
-    var EditView = function (SeqNo,date) {
-        var Url = "/HomeWork/Edit?Code=" + SeqNo+"&dates="+ date;
-        $("#MyModelBody").load(Url, function () {
-            $("#myModal").modal("show");
-        })
-    }
+   
 
     var DetailView = function (SeqNo,date) {
         var Url = "/HomeWork/Details?Code=" + SeqNo+"&dates="+ date;
@@ -201,10 +185,5 @@
         })
     }
 
-    var DeleteView = function (SeqNo) {
-        var Url = "/HomeWork/Delete?Code=" + SeqNo;
-        $("#MyModelBody").load(Url, function () {
-            $("#myModal").modal("show");
-        })
-    }
+   
 </script>
