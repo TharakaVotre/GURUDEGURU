@@ -21,6 +21,7 @@ namespace GDWEBSolution.Models
     
         public string SchoolId { get; set; }
         public long EventNo { get; set; }
+        public string EventTitle { get; set; }
         public string EventDescription { get; set; }
         public System.DateTime FromDate { get; set; }
         public System.DateTime ToDate { get; set; }
