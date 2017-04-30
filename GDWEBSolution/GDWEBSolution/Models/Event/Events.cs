@@ -25,5 +25,7 @@ namespace GDWEBSolution.Models.Event
       public string totime { get; set; }
       public string organizer { get; set; }
       public string category { get; set; }
+
+      public string desc { get; set; }
     }
 }
