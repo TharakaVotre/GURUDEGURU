@@ -17,24 +17,9 @@ namespace GDWEBSolution.Controllers.Event
 
         public ActionResult Index()
         {
-            var STQlist = Connection.tblEventCalendars.Where(r => r.SchoolId == "CKC").ToList();
-
-            List<Events> List = STQlist.Select(x => new Events
-            {
-                id = x.EventNo.ToString(),
-                name = x.EventTitle,
-                //des = x.EventDescription,
-                category = x.EventCategory.ToString(),
-                organizer = x.EventOrganizer,
-                startDate = Newtonsoft.Json.JsonConvert.SerializeObject(DateTime.Now).ToString(),
-                endDate = Newtonsoft.Json.JsonConvert.SerializeObject(DateTime.Now).ToString(),
-                fromtime = x.ToTime.ToString(),
-                totime = x.FromTime.ToString()
-
-            }).ToList();
-
-            //ViewData["SchoolEvents"] = List;
-            return View(List);
+            List<tblEventcategory> EventList = Connection.tblEventcategories.ToList();
+            ViewBag.EventList = new SelectList(EventList, "EventCategoryId", "EventCategoryDesc");
+            return View();
         }
 
         public ActionResult getEvents()
@@ -45,14 +30,12 @@ namespace GDWEBSolution.Controllers.Event
             {
                 id = x.EventNo.ToString(),
                 name = x.EventTitle,
-                //des = x.EventDescription,
+                desc = x.EventDescription,
                 category = x.EventCategory.ToString(),
                 organizer = x.EventOrganizer,
-
                 syear = x.FromDate.ToString("yyyy"),
                 smonth = x.FromDate.ToString("MM"),
                 sday = x.FromDate.ToString("dd"),
-
                 eyear = x.ToDate.ToString("yyyy"),
                 emonth = x.ToDate.ToString("MM"),
                 eday = x.ToDate.ToString("dd"),
@@ -61,8 +44,6 @@ namespace GDWEBSolution.Controllers.Event
                 totime = DateTime.Parse(x.ToTime.ToString()).ToString("hh:mm tt")
 
             }).ToList();
-
-            //ViewData["SchoolEvents"] = List;
             return Json(List, JsonRequestBehavior.AllowGet);
         }
 
@@ -79,24 +60,46 @@ namespace GDWEBSolution.Controllers.Event
 
         public ActionResult Create()
         {
-            return View();
+
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         //
         // POST: /Event/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(EventModel Model)
         {
             try
             {
-                // TODO: Add insert logic here
+                tblEventCalendar Events = new tblEventCalendar();
 
-                return RedirectToAction("Index");
+                Events.CreatedBy = "ADMIN";
+                Events.CreatedDate = DateTime.Now;
+                Events.SchoolId = "CKC";
+                Events.EventTitle = Model.EventName;
+                Events.EventCategory = Model.EventCategoryId;
+                Events.EventDescription = Model.EventDescription;
+                Events.EventOrganizer = Model.EventOrganizer;
+                Events.FromDate = Convert.ToDateTime(Model.SFromDate);
+                Events.ToDate = Convert.ToDateTime(Model.SToDate);
+
+                DateTime F = DateTime.Parse(Model.SFromTime);
+                DateTime T = DateTime.Parse(Model.SToTime);
+                Events.FromTime = TimeSpan.Parse(F.ToString("HH:mm"));
+                Events.ToTime = TimeSpan.Parse(T.ToString("HH:mm"));
+                Events.IsActive = "Y";
+
+                Connection.tblEventCalendars.Add(Events);
+                Connection.SaveChanges();
+                //return View();
+                return Json("Succsess", JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch (Exception Ex)
             {
-                return View();
+                var result = new { r = "E" };
+                Errorlog.ErrorManager.LogError("@EventController/Create", Ex);
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
         }
 

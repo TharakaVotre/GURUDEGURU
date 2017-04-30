@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GDWEBSolution.Models.Event.Events>
+﻿@model GDWEBSolution.Models.Event.EventModel
 
 @{
     ViewBag.Title = "Add/Edit Event Calender";
@@ -15,7 +15,7 @@
     </div>
 </div>
 <div id="event-modal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+ <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -39,8 +39,10 @@
                     <div class="form-group">
                         <label for="min-date" class="col-sm-3 control-label">Category</label>
                         <div class="col-sm-7">
-                            <input name="event-category" class="form-control" type="text">
+                            @*<input name="event-category" class="form-control" type="text">*@
+                            @Html.DropDownListFor(model => model.EventCategoryId, ViewBag.EventList as SelectList, "", new { @class = "select2_Class form-control" })
                         </div>
+                        @Html.ValidationMessageFor(m => m.EventCategoryId)    
                     </div>
                     <div class="form-group">
                         <label for="min-date" class="col-sm-3 control-label">Description</label>
@@ -61,7 +63,7 @@
                     <div class="form-group">
                         <label for="min-date" class="col-sm-3 control-label">Time</label>
                         <div class="col-sm-7">
-                            <div class="input-group input-daterange" data-provide="datepicker">
+                            <div class="input-group input-daterange">
                                 <input name="event-from-time" class="form-control" type="text">
                                 <span class="input-group-addon">to</span>
                                 <input name="event-to-time" class="form-control" type="text">
@@ -76,13 +78,13 @@
 
         </div>
     </div>
+
 </div>
 <script>
     $(document).ready(function () {
         $('#calendar').calendar();
     });
-    function load() {
-        
+    function load() {  
         var dataSource = $('#calendar').data('calendar').getDataSource();
         $.ajax({
                 url: '/Event/getEvents',
@@ -100,25 +102,26 @@
                             fromtime: result[i].fromtime,
                             totime: result[i].totime,
                             organizer: result[i].organizer,
-                            category: result[i].category
+                            category: result[i].category,
+                            desc: result[i].desc
                         });
                     }
                     $('#calendar').data('calendar').setDataSource(dataSource);
                 }
             });
-       
     }
     function editEvent(event) {
         debugger
         $('#event-modal input[name="event-index"]').val(event ? event.id : '');
         $('#event-modal input[name="event-name"]').val(event ? event.name : '');
         $('#event-modal input[name="event-desc"]').val(event ? event.desc : '');
-        $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
-        $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
         $('#event-modal input[name="event-from-time"]').val(event ? event.fromtime : '');
         $('#event-modal input[name="event-to-time"]').val(event ? event.totime : '');
         $('#event-modal input[name="event-organiser"]').val(event ? event.organizer : '');
         $('#event-modal input[name="event-category"]').val(event ? event.category : '');
+        $('#EventCategoryId').val(event ? event.category : '');
+        $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
+        $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
         $('#event-modal').modal();
     }
 
@@ -139,84 +142,45 @@
         var event = {
             id: $('#event-modal input[name="event-index"]').val(),
             name: $('#event-modal input[name="event-name"]').val(),
-            location: $('#event-modal input[name="event-location"]').val(),
-            startDate: $('#event-modal input[name="event-start-date"]').datepicker('getDate'),
-            endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate')
+            startDate: $('#event-modal input[name="event-start-date"]').val(),
+            endDate: $('#event-modal input[name="event-end-date"]').val(),
+            fromtime: $('#event-modal input[name="event-from-time"]').val(),
+            totime: $('#event-modal input[name="event-to-time"]').val(),
+            organizer: $('#event-modal input[name="event-organiser"]').val(),
+            category: $('#EventCategoryId').val(),
+            desc: $('#event-modal input[name="event-desc"]').val(),
         }
 
-        var dataSource = $('#calendar').data('calendar').getDataSource();
+        var data = new FormData;
+        debugger
+        data.append("EventNo", parseInt(event.id));
+        data.append("EventName", event.name);
+        data.append("EventDescription", event.desc);
+        data.append("FromDate", event.startDate);
+        data.append("ToDate", event.endDate);
+        data.append("SFromDate", event.startDate);
+        data.append("SToDate", event.endDate);
+        data.append("SFromTime", event.fromtime);
+        data.append("SToTime", event.totime);
+        data.append("EventOrganizer",event.organizer);
+        data.append("EventCategoryId", event.category);
 
-        if (event.id) {
-            for (var i in dataSource) {
-                if (dataSource[i].id == event.id) {
-                    dataSource[i].name = event.name;
-                    dataSource[i].location = event.location;
-                    dataSource[i].startDate = event.startDate;
-                    dataSource[i].endDate = event.endDate;
-                }
+        $.ajax({
+
+            type: "POST",
+            url: "/Event/Create",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function () {
+                $('#event-modal').modal('hide');
+                load();
             }
-        }
-        else {
-            var newId = 0;
-            for (var i in dataSource) {
-                if (dataSource[i].id > newId) {
-                    newId = dataSource[i].id;
-                }
-            }
+        })
 
-            newId++;
-            event.id = newId;
-
-            dataSource.push(event);
-        }
-
-        $('#calendar').data('calendar').setDataSource(dataSource);
-        $('#event-modal').modal('hide');
+        //$('#calendar').data('calendar').setDataSource(dataSource);
+        
     }
-    //function saveEvent() {
-    //    var event = {
-    //        id: $('#event-modal input[name="event-index"]').val(),
-    //        name: $('#event-modal input[name="event-name"]').val(),
-    //        startDate: $('#event-modal input[name="event-start-date"]').datepicker('getDate'),
-    //        endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate'),
-    //        fromtime: $('#event-modal input[name="event-from-time"]').val(),
-    //        totime: $('#event-modal input[name="event-to-time"]').val(),
-    //        organizer: $('#event-modal input[name="event-organiser"]').val(),
-    //        category: $('#event-modal input[name="event-category"]').val(),
-    //    }
-
-    //    var data = new FormData;
-    //    data.append("EventNo", parseInt(event.id));
-    //    data.append("EventName", event.name);
-    //    data.append("EventDescription", event.desc);
-    //    data.append("FromDate", event.startDate);
-    //    data.append("ToDate", event.endDate);
-    //    data.append("FromTime", event.fromtime);
-    //    data.append("ToTime", event.totime);
-    //    data.append("EventOrganizer",event.organizer);
-    //    data.append("EventCategory", event.category);
-
-
-    //    var dataSource = $('#calendar').data('calendar').getDataSource();
-
-    //    if (event.id) {
-    //        debugger
-    //        for (var i in dataSource) {
-    //            if (dataSource[i].id == event.id) {
-    //                dataSource[i].name = event.name;
-    //                dataSource[i].location = event.location;
-    //                dataSource[i].startDate = event.startDate;
-    //                dataSource[i].endDate = event.endDate;
-    //            }
-    //        }
-    //    }
-    //    else {
-    //        var newId = 0;
-    //    }
-
-    //    $('#calendar').data('calendar').setDataSource(dataSource);
-    //    $('#event-modal').modal('hide');
-    //}
 
     $(function () {
         var currentYear = new Date().getFullYear();

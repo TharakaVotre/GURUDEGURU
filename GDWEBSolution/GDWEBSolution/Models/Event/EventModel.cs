@@ -25,10 +25,21 @@ namespace GDWEBSolution.Models.Event
         public System.DateTime FromDate { get; set; }
         [Display(Name = "To Date")]
         public System.DateTime ToDate { get; set; }
+
+        [Display(Name = "From Date")]
+        public string SFromDate { get; set; }
+        [Display(Name = "To Date")]
+        public string SToDate { get; set; }
+
         [Display(Name = "From Time")]
         public System.TimeSpan FromTime { get; set; }
         [Display(Name = "To Time")]
         public System.TimeSpan ToTime { get; set; }
+
+        [Display(Name = "From Time")]
+        public string SFromTime { get; set; }
+        [Display(Name = "To Time")]
+        public string SToTime { get; set; }
 
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
