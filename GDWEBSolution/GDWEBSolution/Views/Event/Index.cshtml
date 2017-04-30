@@ -221,13 +221,13 @@
 
                     for (var i in e.events) {
                         content += '<div class="event-tooltip-content">'
-                                        + '<div class="event-name" style="color:' + e.events[i].color + '">--------------------------------------------------</div>'
-                                        + '<div class="event-name" style="color:' + e.events[i].color + '">' + e.events[i].name + '</div>'
+                                        + '<div class="event-name" style="color:' + e.events[i].color + ';white-space:nowrap;">--------------------------------------------------</div>'
+                                        + '<div class="event-name" style="color:' + e.events[i].color + ';white-space:nowrap;">' + e.events[i].name + '</div>'
                                         //+ '<div class="event-location">' + e.events[i].startDate + '</div>'
                                         //+ '<div class="event-location">' + e.events[i].endDate + '</div>'
-                                        + '<div class="event-location" style="font-size:small; color:#395f64 ;"> From : ' + e.events[i].fromtime + " To : " + e.events[i].totime + '</div>'
-                                        + '<div class="event-location" style="font-size:small"> Organized By : ' + e.events[i].organizer + '</div>'
-                                        + '<div class="event-name" style="color:' + e.events[i].color + '">--------------------------------------------------</div>'
+                                        + '<div class="event-location" style="font-size:small; color:#395f64 ;white-space:nowrap;"> From : ' + e.events[i].fromtime + " To : " + e.events[i].totime + '</div>'
+                                        + '<div class="event-location" style="font-size:small;white-space:nowrap;"> Organized By : ' + e.events[i].organizer + '</div>'
+                                        + '<div class="event-name" style="color:' + e.events[i].color + ';white-space:nowrap;">--------------------------------------------------</div>'
                                     + '</div>';
                     }
 
@@ -235,7 +235,8 @@
                         trigger: 'manual',
                         container: 'body',
                         html: true,
-                        content: content
+                        content: content,
+                        placement: 'auto'
                     });
 
                     $(e.element).popover('show');
