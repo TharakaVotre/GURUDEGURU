@@ -15,6 +15,8 @@ namespace GDWEBSolution.Models.Event
 
         [Display(Name = "Event No")]
         public long EventNo { get; set; }
+        [Display(Name = "Event No")]
+        public string EventNo_S { get; set; }
         [Display(Name = "Event Desciption")]
         public string EventDescription { get; set; }
         [Display(Name = "Event Name")]

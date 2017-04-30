@@ -72,26 +72,52 @@ namespace GDWEBSolution.Controllers.Event
         {
             try
             {
-                tblEventCalendar Events = new tblEventCalendar();
+                
 
-                Events.CreatedBy = "ADMIN";
-                Events.CreatedDate = DateTime.Now;
-                Events.SchoolId = "CKC";
-                Events.EventTitle = Model.EventName;
-                Events.EventCategory = Model.EventCategoryId;
-                Events.EventDescription = Model.EventDescription;
-                Events.EventOrganizer = Model.EventOrganizer;
-                Events.FromDate = Convert.ToDateTime(Model.SFromDate);
-                Events.ToDate = Convert.ToDateTime(Model.SToDate);
+                if (Model.EventNo == 0)
+                {
+                    tblEventCalendar Events = new tblEventCalendar();
+                    Events.CreatedBy = "ADMIN";
+                    Events.CreatedDate = DateTime.Now;
+                    Events.SchoolId = "CKC";
+                    Events.EventTitle = Model.EventName;
+                    Events.EventCategory = Model.EventCategoryId;
+                    Events.EventDescription = Model.EventDescription;
+                    Events.EventOrganizer = Model.EventOrganizer;
+                    Events.FromDate = Convert.ToDateTime(Model.SFromDate);
+                    Events.ToDate = Convert.ToDateTime(Model.SToDate);
 
-                DateTime F = DateTime.Parse(Model.SFromTime);
-                DateTime T = DateTime.Parse(Model.SToTime);
-                Events.FromTime = TimeSpan.Parse(F.ToString("HH:mm"));
-                Events.ToTime = TimeSpan.Parse(T.ToString("HH:mm"));
-                Events.IsActive = "Y";
+                    DateTime F = DateTime.Parse(Model.SFromTime);
+                    DateTime T = DateTime.Parse(Model.SToTime);
+                    Events.FromTime = TimeSpan.Parse(F.ToString("HH:mm"));
+                    Events.ToTime = TimeSpan.Parse(T.ToString("HH:mm"));
+                    Events.IsActive = "Y";
 
-                Connection.tblEventCalendars.Add(Events);
-                Connection.SaveChanges();
+                    Connection.tblEventCalendars.Add(Events);
+                    Connection.SaveChanges();
+                }
+                else
+                {
+                    tblEventCalendar Events = Connection.tblEventCalendars.SingleOrDefault(x => x.EventNo == Model.EventNo);
+
+                    Events.CreatedBy = "ADMIN";
+                    Events.CreatedDate = DateTime.Now;
+                    Events.SchoolId = "CKC";
+                    Events.EventTitle = Model.EventName;
+                    Events.EventCategory = Model.EventCategoryId;
+                    Events.EventDescription = Model.EventDescription;
+                    Events.EventOrganizer = Model.EventOrganizer;
+                    Events.FromDate = Convert.ToDateTime(Model.SFromDate);
+                    Events.ToDate = Convert.ToDateTime(Model.SToDate);
+
+                    DateTime F = DateTime.Parse(Model.SFromTime);
+                    DateTime T = DateTime.Parse(Model.SToTime);
+                    Events.FromTime = TimeSpan.Parse(F.ToString("HH:mm"));
+                    Events.ToTime = TimeSpan.Parse(T.ToString("HH:mm"));
+                    Events.IsActive = "Y";
+
+                    Connection.SaveChanges();
+                }
                 //return View();
                 return Json("Succsess", JsonRequestBehavior.AllowGet);
             }
@@ -141,16 +167,19 @@ namespace GDWEBSolution.Controllers.Event
         // POST: /Event/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(EventModel Model)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                tblEventCalendar DEvents = Connection.tblEventCalendars.Find(Model.EventNo);
+                Connection.tblEventCalendars.Remove(DEvents);
+                Connection.SaveChanges();
+                return Json(true, JsonRequestBehavior.AllowGet);
+                //return RedirectToAction("Index");
             }
-            catch
+            catch(Exception Ex)
             {
+                Errorlog.ErrorManager.LogError("@EventController/Delete", Ex);
                 return View();
             }
         }

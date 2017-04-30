@@ -85,7 +85,7 @@
         $('#calendar').calendar();
     });
     function load() {  
-        var dataSource = $('#calendar').data('calendar').getDataSource();
+        var dataSource = [];
         $.ajax({
                 url: '/Event/getEvents',
                 contentType: 'application/json; charset=utf-8',
@@ -130,8 +130,21 @@
 
         for (var i in dataSource) {
             if (dataSource[i].id == event.id) {
-                dataSource.splice(i, 1);
-                break;
+                var data = new FormData;
+                debugger
+                data.append("EventNo", parseInt(event.id));
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Event/Delete",
+                    data: data,
+                    contentType: false,
+                    processData: false,
+                    success: function () {
+                        load();
+                    }
+                })
             }
         }
 
