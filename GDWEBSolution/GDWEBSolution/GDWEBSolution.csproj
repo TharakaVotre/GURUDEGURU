@@ -569,6 +569,8 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TimeTable\TimeTableModel.cs" />
+    <Compile Include="Models\User\UserModel.cs" />
+    <Compile Include="Models\User\UserSession.cs" />
     <Compile Include="MUHandler.ashx.cs">
       <DependentUpon>MUHandler.ashx</DependentUpon>
     </Compile>
