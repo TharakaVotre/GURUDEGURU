@@ -10,8 +10,9 @@
     <div class="panel-heading">Event Calender</div>
     <div class="panel-body">
         <div class="calendar" id="calendar">
-        </div>
 
+        </div>
+        <br />
     </div>
 </div>
 <div id="event-modal" class="modal fade" role="dialog">
@@ -88,6 +89,18 @@
  **/
     $(document).ready(function () {
         $('#calendar').calendar();
+
+        $('#event-modal input[name="event-from-time"]').timepicker({
+            template: false,
+            showInputs: false,
+            minuteStep: 5
+        });
+
+        $('#event-modal input[name="event-to-time"]').timepicker({
+            template: false,
+            showInputs: false,
+            minuteStep: 5
+        });
     });
     function load() {  
         var dataSource = [];
@@ -156,7 +169,6 @@
         $('#calendar').data('calendar').setDataSource(dataSource);
     }
     function saveEvent() {
-        debugger
         var event = {
             id: $('#event-modal input[name="event-index"]').val(),
             name: $('#event-modal input[name="event-name"]').val(),
