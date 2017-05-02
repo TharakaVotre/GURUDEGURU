@@ -1193,6 +1193,7 @@
           </Key>
           <Property Name="SchoolId" Type="varchar" Nullable="false" MaxLength="14" />
           <Property Name="EventNo" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EventTitle" Type="varchar" Nullable="false" MaxLength="150" />
           <Property Name="EventDescription" Type="varchar" Nullable="false" MaxLength="200" />
           <Property Name="FromDate" Type="date" Nullable="false" />
           <Property Name="ToDate" Type="date" Nullable="false" />
@@ -6949,6 +6950,7 @@
           </Key>
           <Property Name="SchoolId" Type="String" Nullable="false" MaxLength="14" Unicode="false" FixedLength="false" />
           <Property Name="EventNo" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="EventTitle" Type="String" Nullable="false" MaxLength="150" Unicode="false" FixedLength="false" />
           <Property Name="EventDescription" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
           <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ToDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -11425,6 +11427,7 @@
               <MappingFragment StoreEntitySet="tblEventCalendar">
                 <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="EventNo" ColumnName="EventNo" />
+                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
                 <ScalarProperty Name="EventDescription" ColumnName="EventDescription" />
                 <ScalarProperty Name="FromDate" ColumnName="FromDate" />
                 <ScalarProperty Name="ToDate" ColumnName="ToDate" />
