@@ -121,7 +121,7 @@ namespace GDWEBSolution.Controllers.Student
 
             }).ToList();
 
-            var schoolclass = Connection.SMGTgetclassadd(sclid).ToList();
+            var schoolclass = Connection.SMGTgetclassadd(sclid,"%").ToList();
 
             List<tblClass> SchoolclassList = schoolclass.Select(x => new tblClass
             {

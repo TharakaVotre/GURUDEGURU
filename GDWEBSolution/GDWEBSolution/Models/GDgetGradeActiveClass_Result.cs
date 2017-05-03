@@ -10,27 +10,17 @@
 namespace GDWEBSolution.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblSchoolCalendar
+    public partial class GDgetGradeActiveClass_Result
     {
-        public long CalenderSeqNo { get; set; }
+        public string ClassId { get; set; }
+        public string ClassName { get; set; }
+        public string GradeId { get; set; }
         public string SchoolId { get; set; }
-        public string AcadamicYear { get; set; }
-        public Nullable<System.DateTime> AcadamicDate { get; set; }
-        public string IsHoliday { get; set; }
-        public string SpecialComment { get; set; }
-        public string DateComment { get; set; }
-        public System.DateTime FromDate { get; set; }
-        public System.DateTime ToDate { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
-    
-        public virtual tblSchool tblSchool { get; set; }
-        public virtual tblUser tblUser { get; set; }
-        public virtual tblUser tblUser1 { get; set; }
     }
 }

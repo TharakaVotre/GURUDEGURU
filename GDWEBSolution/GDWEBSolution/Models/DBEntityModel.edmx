@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SchoolMGTModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SchoolMGTModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="SchoolMGTModelStoreContainer">
           <EntitySet Name="tblApplicationStatus" EntityType="SchoolMGTModel.Store.tblApplicationStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblAssignmentDueDate" EntityType="SchoolMGTModel.Store.tblAssignmentDueDate" store:Type="Tables" Schema="dbo" />
@@ -957,7 +957,7 @@
           <Property Name="SchoolId" Type="varchar" Nullable="false" MaxLength="14" />
           <Property Name="GradeId" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="ClassId" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="StudentId" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="StudentId" Type="varchar" MaxLength="20" />
           <Property Name="TeacherId" Type="bigint" Nullable="false" />
           <Property Name="FilePath" Type="varchar" Nullable="false" MaxLength="200" />
           <Property Name="BatchNo" Type="varchar" MaxLength="10" />
@@ -1500,7 +1500,7 @@
           <Property Name="CalenderSeqNo" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="SchoolId" Type="varchar" Nullable="false" MaxLength="14" />
           <Property Name="AcadamicYear" Type="varchar" Nullable="false" MaxLength="4" />
-          <Property Name="AcadamicDate" Type="datetime" Nullable="false" />
+          <Property Name="AcadamicDate" Type="datetime" />
           <Property Name="IsHoliday" Type="varchar" Nullable="false" MaxLength="1" />
           <Property Name="SpecialComment" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="DateComment" Type="varchar" Nullable="false" MaxLength="50" />
@@ -2005,7 +2005,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblAssignmentHeader_tblStudent">
-          <End Role="tblStudent" Type="SchoolMGTModel.Store.tblStudent" Multiplicity="1" />
+          <End Role="tblStudent" Type="SchoolMGTModel.Store.tblStudent" Multiplicity="0..1" />
           <End Role="tblAssignmentHeader" Type="SchoolMGTModel.Store.tblAssignmentHeader" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblStudent">
@@ -4540,6 +4540,10 @@
           <Parameter Name="StatusCode" Type="bigint" Mode="In" />
           <Parameter Name="ModyfiedBy" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GDdeleteApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="bigint" Mode="In" />
+          <Parameter Name="IsActive" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GDdeleteEvaluationType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Isactive" Type="varchar" Mode="In" />
           <Parameter Name="StatusCode" Type="bigint" Mode="In" />
@@ -4695,8 +4699,24 @@
         <Function Name="GDgetAllTeacherCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Isactive" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GDgetApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StatusCode" Type="bigint" Mode="In" />
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="startDate" Type="varchar" Mode="In" />
+          <Parameter Name="EndDate" Type="varchar" Mode="In" />
+          <Parameter Name="IsActive" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GDgetApplicationStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="GDgetGradeActiveClass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GradeId" Type="varchar" Mode="In" />
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="IsActive" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GDgetGradeActiveSubject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GradeId" Type="varchar" Mode="In" />
+          <Parameter Name="IsActive" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GDgetHomeWork" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="bigint" Mode="In" />
@@ -4708,6 +4728,16 @@
           <Parameter Name="Fromdate" Type="varchar" Mode="In" />
           <Parameter Name="Todate" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GDgetParentApplicationStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RefNo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GDgetParentHomeWork" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="Fromdate" Type="varchar" Mode="In" />
+          <Parameter Name="Todate" Type="varchar" Mode="In" />
+          <Parameter Name="userId" Type="varchar" Mode="In" />
+          <Parameter Name="IsActive" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GDgetSchoolCalenderEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
           <Parameter Name="year" Type="varchar" Mode="In" />
@@ -4717,6 +4747,13 @@
           <Parameter Name="Description" Type="varchar" Mode="In" />
           <Parameter Name="StatusCode" Type="bigint" Mode="In" />
           <Parameter Name="ModyfiedBy" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GDModifyApplicationStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="bigint" Mode="In" />
+          <Parameter Name="remark" Type="varchar" Mode="In" />
+          <Parameter Name="StatusCode" Type="bigint" Mode="In" />
+          <Parameter Name="refNo" Type="varchar" Mode="In" />
+          <Parameter Name="userId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GDModifyEvaluationTypee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Description" Type="varchar" Mode="In" />
@@ -4984,6 +5021,7 @@
         </Function>
         <Function Name="SMGTgetclassadd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="GradeId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SMGTgetDayTimeTabel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClassId" Type="varchar" Mode="In" />
@@ -4993,6 +5031,18 @@
         </Function>
         <Function Name="SMGTgetGradeSubjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GradeId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SMGTgetOptionalSubjectadd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="GradeId" Type="varchar" Mode="In" />
+          <Parameter Name="AcademicYear" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SMGTGetParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentID" Type="varchar" Mode="In" />
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SMGTgetParentStudentadd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ParentId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SMGTgetParentToSchoolSentMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ParentId" Type="bigint" Mode="In" />
@@ -5021,6 +5071,16 @@
         </Function>
         <Function Name="SMGTGetStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SMGTgetStudentExtraCadd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="StudentId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SMGTgetStudentforoptionalSubject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="GradeId" Type="varchar" Mode="In" />
+          <Parameter Name="AcademicYear" Type="varchar" Mode="In" />
+          <Parameter Name="ClassId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SMGTgetStudentOptionalSubjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
           <Parameter Name="StudentId" Type="varchar" Mode="In" />
         </Function>
@@ -5062,6 +5122,28 @@
           <Parameter Name="IsActive" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SMGTSchoolCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SMGTsetParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ParentName" Type="varchar" Mode="In" />
+          <Parameter Name="RelationshipId" Type="int" Mode="In" />
+          <Parameter Name="Address1" Type="varchar" Mode="In" />
+          <Parameter Name="Address2" Type="varchar" Mode="In" />
+          <Parameter Name="Address3" Type="varchar" Mode="In" />
+          <Parameter Name="HomeTelephone" Type="varchar" Mode="In" />
+          <Parameter Name="PersonalEmail" Type="varchar" Mode="In" />
+          <Parameter Name="PersonalMobile" Type="varchar" Mode="In" />
+          <Parameter Name="Occupation" Type="varchar" Mode="In" />
+          <Parameter Name="OfficeAddress1" Type="varchar" Mode="In" />
+          <Parameter Name="OfficeAddress2" Type="varchar" Mode="In" />
+          <Parameter Name="OfficeAddress3" Type="varchar" Mode="In" />
+          <Parameter Name="OfficePhone" Type="varchar" Mode="In" />
+          <Parameter Name="officeEmail" Type="varchar" Mode="In" />
+          <Parameter Name="NIC" Type="varchar" Mode="In" />
+          <Parameter Name="UserId" Type="varchar" Mode="In" />
+          <Parameter Name="ImgUrl" Type="varchar" Mode="In" />
+          <Parameter Name="DateofBirth" Type="date" Mode="In" />
+          <Parameter Name="CreatedBy" Type="varchar" Mode="In" />
+          <Parameter Name="IsActive" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SMGTsetSchoolGrade" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
           <Parameter Name="GradeId" Type="varchar" Mode="In" />
@@ -5082,8 +5164,17 @@
           <Parameter Name="CreatedBy" Type="varchar" Mode="In" />
           <Parameter Name="IsActive" Type="varchar" Mode="In" />
         </Function>
-      </Schema>
-    </edmx:StorageModels>
+        <Function Name="SMGTsetStudentOptionalSubject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="GradeId" Type="varchar" Mode="In" />
+          <Parameter Name="CreatedBy" Type="varchar" Mode="In" />
+          <Parameter Name="IsActive" Type="varchar" Mode="In" />
+          <Parameter Name="AcademicYear" Type="varchar" Mode="In" />
+          <Parameter Name="StudentId" Type="varchar" Mode="In" />
+          <Parameter Name="ClassId" Type="varchar" Mode="In" />
+          <Parameter Name="SubjectId" Type="varchar" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SchoolMGTModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -6054,6 +6145,10 @@
             <Parameter Name="StatusCode" Mode="In" Type="Int64" />
             <Parameter Name="ModyfiedBy" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GDdeleteApplication">
+            <Parameter Name="id" Mode="In" Type="Int64" />
+            <Parameter Name="IsActive" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="GDdeleteEvaluationType">
             <Parameter Name="Isactive" Mode="In" Type="String" />
             <Parameter Name="StatusCode" Mode="In" Type="Int64" />
@@ -6146,22 +6241,22 @@
             <Parameter Name="id" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllClass" ReturnType="Collection(SchoolMGTModel.GDgetAllClass_Result)">
-            <Parameter Name="IsaActive" Mode="In" Type="String" />
+          <Parameter Name="IsaActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllEvaluationType" ReturnType="Collection(SchoolMGTModel.GDgetAllEvaluationType_Result)">
-            <Parameter Name="Isactive" Mode="In" Type="String" />
+          <Parameter Name="Isactive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllEventCategory" ReturnType="Collection(SchoolMGTModel.GDgetAllEventCategory_Result)">
-            <Parameter Name="IsActive" Mode="In" Type="String" />
+          <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllExtraCurricularActivity" ReturnType="Collection(SchoolMGTModel.GDgetAllExtraCurricularActivity_Result)">
-            <Parameter Name="IsActive" Mode="In" Type="String" />
+          <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllFunction" ReturnType="Collection(SchoolMGTModel.GDgetAllFunction_Result)">
-            <Parameter Name="IsActive" Mode="In" Type="String" />
+          <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllGradeMaintenance" ReturnType="Collection(SchoolMGTModel.GDgetAllGradeMaintenance_Result)">
-            <Parameter Name="IsActive" Mode="In" Type="String" />
+          <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllGradeSubject" ReturnType="Collection(SchoolMGTModel.GDgetAllGradeSubject_Result)">
             <Parameter Name="AcademicYear" Mode="In" Type="String" />
@@ -6169,29 +6264,29 @@
             <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllMassageType" ReturnType="Collection(SchoolMGTModel.GDgetAllMassageType_Result)">
-            <Parameter Name="IsActive" Mode="In" Type="String" />
+          <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllParentObservationType" ReturnType="Collection(SchoolMGTModel.GDgetAllParentObservationType_Result)">
-            <Parameter Name="IsActive" Mode="In" Type="String" />
+          <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllQualification" ReturnType="Collection(SchoolMGTModel.GDgetAllQualification_Result)">
-            <Parameter Name="IsActive" Mode="In" Type="String" />
+          <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllSchoolCategory" ReturnType="Collection(SchoolMGTModel.GDgetAllSchoolCategory_Result)">
-            <Parameter Name="Isactive" Mode="In" Type="String" />
+          <Parameter Name="Isactive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllSchoolClass" ReturnType="Collection(SchoolMGTModel.GDgetAllSchoolClass_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
             <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllSchoolGroup" ReturnType="Collection(SchoolMGTModel.GDgetAllSchoolGroup_Result)">
-            <Parameter Name="Isactive" Mode="In" Type="String" />
+          <Parameter Name="Isactive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllSchoolRank" ReturnType="Collection(SchoolMGTModel.GDgetAllSchoolRank_Result)">
-            <Parameter Name="Isactive" Mode="In" Type="String" />
+          <Parameter Name="Isactive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllStudentEvaluationType">
-            <Parameter Name="Isactive" Mode="In" Type="String" />
+          <Parameter Name="Isactive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllStudentInGrade" ReturnType="Collection(SchoolMGTModel.GDgetAllStudentInGrade_Result)">
             <Parameter Name="AcademicYear" Mode="In" Type="String" />
@@ -6201,19 +6296,35 @@
             <Parameter Name="isactive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllSubject" ReturnType="Collection(SchoolMGTModel.GDgetAllSubject_Result)">
-            <Parameter Name="Isactive" Mode="In" Type="String" />
+          <Parameter Name="Isactive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllSubjectCategory" ReturnType="Collection(SchoolMGTModel.GDgetAllSubjectCategory_Result)">
-            <Parameter Name="Isactive" Mode="In" Type="String" />
+          <Parameter Name="Isactive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetAllTeacherCategory" ReturnType="Collection(SchoolMGTModel.GDgetAllTeacherCategory_Result)">
-            <Parameter Name="Isactive" Mode="In" Type="String" />
+          <Parameter Name="Isactive" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GDgetApplication" ReturnType="Collection(SchoolMGTModel.GDgetApplication_Result)">
+            <Parameter Name="StatusCode" Mode="In" Type="Int64" />
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="startDate" Mode="In" Type="String" />
+            <Parameter Name="EndDate" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetApplicationStatus" ReturnType="Collection(SchoolMGTModel.GDgetApplicationStatus_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int64" />
+          <Parameter Name="Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="GDgetGradeActiveClass" ReturnType="Collection(SchoolMGTModel.GDgetGradeActiveClass_Result)">
+            <Parameter Name="GradeId" Mode="In" Type="String" />
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GDgetGradeActiveSubject" ReturnType="Collection(SchoolMGTModel.GDgetGradeActiveSubject_Result)">
+            <Parameter Name="GradeId" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetHomeWork" ReturnType="Collection(SchoolMGTModel.GDgetHomeWork_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int64" />
+          <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GDgetHomeWorkAdd" ReturnType="Collection(SchoolMGTModel.GDgetHomeWorkAdd_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
@@ -6221,6 +6332,16 @@
             <Parameter Name="IsActive" Mode="In" Type="String" />
             <Parameter Name="Fromdate" Mode="In" Type="String" />
             <Parameter Name="Todate" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GDgetParentApplicationStatus" ReturnType="Collection(SchoolMGTModel.GDgetParentApplicationStatus_Result)">
+          <Parameter Name="RefNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GDgetParentHomeWork" ReturnType="Collection(SchoolMGTModel.GDgetParentHomeWork_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="Fromdate" Mode="In" Type="String" />
+            <Parameter Name="Todate" Mode="In" Type="String" />
+            <Parameter Name="userId" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetSchoolCalenderEvent" ReturnType="Collection(SchoolMGTModel.GDgetSchoolCalenderEvent_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
@@ -6231,6 +6352,13 @@
             <Parameter Name="Description" Mode="In" Type="String" />
             <Parameter Name="StatusCode" Mode="In" Type="Int64" />
             <Parameter Name="ModyfiedBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GDModifyApplicationStatus">
+            <Parameter Name="id" Mode="In" Type="Int64" />
+            <Parameter Name="remark" Mode="In" Type="String" />
+            <Parameter Name="StatusCode" Mode="In" Type="Int64" />
+            <Parameter Name="refNo" Mode="In" Type="String" />
+            <Parameter Name="userId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDModifyEvaluationTypee">
             <Parameter Name="Description" Mode="In" Type="String" />
@@ -6456,7 +6584,7 @@
             <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDsetStudentHistory">
-            <Parameter Name="StudentId" Mode="In" Type="String" />
+          <Parameter Name="StudentId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDsetSubject">
             <Parameter Name="ShortName" Mode="In" Type="String" />
@@ -6470,7 +6598,7 @@
             <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getAllEvaluationType" ReturnType="Collection(SchoolMGTModel.getAllEvaluationType_Result)">
-            <Parameter Name="Isactive" Mode="In" Type="String" />
+          <Parameter Name="Isactive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTDeleteSchool">
             <Parameter Name="Isactive" Mode="In" Type="String" />
@@ -6483,13 +6611,13 @@
             <Parameter Name="ActivityCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetAllSchoolExtraCurricularActivity" ReturnType="Collection(SchoolMGTModel.SMGTgetAllSchoolExtraCurricularActivity_Result)">
-            <Parameter Name="IsActive" Mode="In" Type="String" />
+          <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetAllSchoolGrades" ReturnType="Collection(SchoolMGTModel.SMGTgetAllSchoolGrades_Result)">
-            <Parameter Name="IsActive" Mode="In" Type="String" />
+          <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetAllSchoolSubjects" ReturnType="Collection(SchoolMGTModel.SMGTgetAllSchoolSubjects_Result)">
-            <Parameter Name="IsActive" Mode="In" Type="String" />
+          <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetAllTeachers" ReturnType="Collection(SchoolMGTModel.SMGTgetAllTeachers_Result)">
             <Parameter Name="Schoolid" Mode="In" Type="String" />
@@ -6498,6 +6626,7 @@
           </FunctionImport>
           <FunctionImport Name="SMGTgetclassadd" ReturnType="Collection(SchoolMGTModel.SMGTgetclassadd_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="GradeId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetDayTimeTabel" ReturnType="Collection(SchoolMGTModel.SMGTgetDayTimeTabel_Result)">
             <Parameter Name="ClassId" Mode="In" Type="String" />
@@ -6506,56 +6635,78 @@
             <Parameter Name="Day" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetGradeSubjects" ReturnType="Collection(SchoolMGTModel.SMGTgetGradeSubjects_Result)">
+          <Parameter Name="GradeId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGTgetOptionalSubjectadd" ReturnType="Collection(SchoolMGTModel.SMGTgetOptionalSubjectadd_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
             <Parameter Name="GradeId" Mode="In" Type="String" />
+            <Parameter Name="AcademicYear" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGTGetParent" ReturnType="Collection(SchoolMGTModel.SMGTGetParent_Result)">
+            <Parameter Name="StudentID" Mode="In" Type="String" />
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGTgetParentStudentadd" ReturnType="Collection(SchoolMGTModel.SMGTgetParentStudentadd_Result)">
+          <Parameter Name="ParentId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetParentToSchoolSentMail" ReturnType="Collection(SchoolMGTModel.SMGTgetParentToSchoolSentMail_Result)">
-            <Parameter Name="ParentId" Mode="In" Type="Int64" />
+          <Parameter Name="ParentId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetPtoSMessageView" ReturnType="Collection(SchoolMGTModel.SMGTgetPtoSMessageView_Result)">
-            <Parameter Name="MessageId" Mode="In" Type="Int64" />
+          <Parameter Name="MessageId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetSchoolExtraCadd" ReturnType="Collection(SchoolMGTModel.SMGTgetSchoolExtraCadd_Result)">
-            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetSchoolGrade" ReturnType="Collection(SchoolMGTModel.SMGTgetSchoolGrade_Result)">
-            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetSchoolGradeadd" ReturnType="Collection(SchoolMGTModel.SMGTgetSchoolGradeadd_Result)">
-            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetSchoolHouseadd" ReturnType="Collection(SchoolMGTModel.SMGTgetSchoolHouseadd_Result)">
-            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetSchoolSubadd" ReturnType="Collection(SchoolMGTModel.SMGTgetSchoolSubadd_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
             <Parameter Name="academicyear" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetSchoolTeacher" ReturnType="Collection(SchoolMGTModel.SMGTgetSchoolTeacher_Result)">
-            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTGetStudent" ReturnType="Collection(SchoolMGTModel.SMGTGetStudent_Result)" />
           <FunctionImport Name="SMGTgetStudentExtraCadd" ReturnType="Collection(SchoolMGTModel.SMGTgetStudentExtraCadd_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
             <Parameter Name="StudentId" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SMGTgetStudentforoptionalSubject" ReturnType="Collection(SchoolMGTModel.SMGTgetStudentforoptionalSubject_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="GradeId" Mode="In" Type="String" />
+            <Parameter Name="AcademicYear" Mode="In" Type="String" />
+            <Parameter Name="ClassId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGTgetStudentOptionalSubjects" ReturnType="Collection(SchoolMGTModel.SMGTgetStudentOptionalSubjects_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="StudentId" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SMGTgetTeacher" ReturnType="Collection(SchoolMGTModel.SMGTgetTeacher_Result)">
-            <Parameter Name="TeacherID" Mode="In" Type="Int64" />
+          <Parameter Name="TeacherID" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetTeacherExActivity" ReturnType="Collection(SchoolMGTModel.SMGTgetTeacherExActivity_Result)">
-            <Parameter Name="TeacherID" Mode="In" Type="Int64" />
+          <Parameter Name="TeacherID" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetTeacherfromSchool" ReturnType="Collection(SchoolMGTModel.SMGTgetTeacherfromSchool_Result)">
-            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetTeacherQualification" ReturnType="Collection(SchoolMGTModel.SMGTgetTeacherQualification_Result)">
-            <Parameter Name="TeacherId" Mode="In" Type="Int64" />
+          <Parameter Name="TeacherId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetTeachers" ReturnType="Collection(SchoolMGTModel.SMGTgetTeachers_Result)" />
           <FunctionImport Name="SMGTgetTeacherSubjects" ReturnType="Collection(SchoolMGTModel.SMGTgetTeacherSubjects_Result)">
-            <Parameter Name="TeacherId" Mode="In" Type="Int64" />
+          <Parameter Name="TeacherId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetUserCategoryFunction" ReturnType="Collection(SchoolMGTModel.SMGTgetUserCategoryFunction_Result)">
-            <Parameter Name="UserCategoryId" Mode="In" Type="String" />
+          <Parameter Name="UserCategoryId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTloadScholExtraCadd" ReturnType="Collection(SchoolMGTModel.SMGTloadScholExtraCadd_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
@@ -6576,6 +6727,28 @@
             <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTSchoolCount" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="SMGTsetParent">
+            <Parameter Name="ParentName" Mode="In" Type="String" />
+            <Parameter Name="RelationshipId" Mode="In" Type="Int32" />
+            <Parameter Name="Address1" Mode="In" Type="String" />
+            <Parameter Name="Address2" Mode="In" Type="String" />
+            <Parameter Name="Address3" Mode="In" Type="String" />
+            <Parameter Name="HomeTelephone" Mode="In" Type="String" />
+            <Parameter Name="PersonalEmail" Mode="In" Type="String" />
+            <Parameter Name="PersonalMobile" Mode="In" Type="String" />
+            <Parameter Name="Occupation" Mode="In" Type="String" />
+            <Parameter Name="OfficeAddress1" Mode="In" Type="String" />
+            <Parameter Name="OfficeAddress2" Mode="In" Type="String" />
+            <Parameter Name="OfficeAddress3" Mode="In" Type="String" />
+            <Parameter Name="OfficePhone" Mode="In" Type="String" />
+            <Parameter Name="officeEmail" Mode="In" Type="String" />
+            <Parameter Name="NIC" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="String" />
+            <Parameter Name="ImgUrl" Mode="In" Type="String" />
+            <Parameter Name="DateofBirth" Mode="In" Type="DateTime" />
+            <Parameter Name="CreatedBy" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SMGTsetSchoolGrade">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
             <Parameter Name="GradeId" Mode="In" Type="String" />
@@ -6595,6 +6768,16 @@
             <Parameter Name="ImgUrl" Mode="In" Type="String" />
             <Parameter Name="CreatedBy" Mode="In" Type="String" />
             <Parameter Name="IsActive" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGTsetStudentOptionalSubject">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="GradeId" Mode="In" Type="String" />
+            <Parameter Name="CreatedBy" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="String" />
+            <Parameter Name="AcademicYear" Mode="In" Type="String" />
+            <Parameter Name="StudentId" Mode="In" Type="String" />
+            <Parameter Name="ClassId" Mode="In" Type="String" />
+            <Parameter Name="SubjectId" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="tblApplicationStatu">
@@ -6639,7 +6822,7 @@
           <Property Name="SchoolId" Type="String" Nullable="false" MaxLength="14" Unicode="false" FixedLength="false" />
           <Property Name="GradeId" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="ClassId" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="StudentId" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="StudentId" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="TeacherId" Type="Int64" Nullable="false" />
           <Property Name="FilePath" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
           <Property Name="BatchNo" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
@@ -7374,7 +7557,7 @@
           <Property Name="CalenderSeqNo" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="SchoolId" Type="String" Nullable="false" MaxLength="14" Unicode="false" FixedLength="false" />
           <Property Name="AcadamicYear" Type="String" Nullable="false" MaxLength="4" Unicode="false" FixedLength="false" />
-          <Property Name="AcadamicDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AcadamicDate" Type="DateTime" Precision="3" />
           <Property Name="IsHoliday" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
           <Property Name="SpecialComment" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="DateComment" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
@@ -8107,7 +8290,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblAssignmentHeader_tblStudent">
-          <End Role="tblStudent" Type="SchoolMGTModel.tblStudent" Multiplicity="1" />
+          <End Role="tblStudent" Type="SchoolMGTModel.tblStudent" Multiplicity="0..1" />
           <End Role="tblAssignmentHeader" Type="SchoolMGTModel.tblAssignmentHeader" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblStudent">
@@ -10814,6 +10997,14 @@
           <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
         </ComplexType>
+        <ComplexType Name="GDgetApplication_Result">
+          <Property Type="Int64" Name="AppStatusSeqNo" Nullable="false" />
+          <Property Type="String" Name="RefNo" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="StatusCode" Nullable="false" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="StatusDescription" Nullable="false" MaxLength="50" />
+        </ComplexType>
         <ComplexType Name="GDgetApplicationStatus_Result">
           <Property Type="Int64" Name="StatusCode" Nullable="false" />
           <Property Type="String" Name="StatusDescription" Nullable="false" MaxLength="50" />
@@ -10822,6 +11013,21 @@
           <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="20" />
           <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="GDgetGradeActiveClass_Result">
+          <Property Type="String" Name="ClassId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ClassName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="GradeId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="GDgetGradeActiveSubject_Result">
+          <Property Type="Int32" Name="SubjectId" Nullable="false" />
+          <Property Type="String" Name="SubjectName" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="GDgetHomeWork_Result">
           <Property Type="Int64" Name="AssignmentNo" Nullable="false" />
@@ -10834,6 +11040,35 @@
           <Property Type="DateTime" Name="DueDate" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GDgetHomeWorkAdd_Result">
+          <Property Type="Int64" Name="AssignmentNo" Nullable="false" />
+          <Property Type="String" Name="AssignmentDescription" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
+          <Property Type="String" Name="GradeId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="GradeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ClassId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ClassName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SubjectName" Nullable="false" MaxLength="50" />
+          <Property Type="Int64" Name="TeacherId" Nullable="false" />
+          <Property Type="String" Name="FilePath" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="BatchNo" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BatchDescription" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="SubjectId" Nullable="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+          <Property Type="DateTime" Name="DueDate" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GDgetParentApplicationStatus_Result">
+          <Property Type="Int64" Name="AppStatusSeqNo" Nullable="false" />
+          <Property Type="String" Name="RefNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="StatusCode" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="StatusDescription" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GDgetParentHomeWork_Result">
           <Property Type="Int64" Name="AssignmentNo" Nullable="false" />
           <Property Type="String" Name="AssignmentDescription" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
@@ -10855,7 +11090,7 @@
           <Property Type="Int64" Name="CalenderSeqNo" Nullable="false" />
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
           <Property Type="String" Name="AcadamicYear" Nullable="false" MaxLength="4" />
-          <Property Type="DateTime" Name="AcadamicDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="AcadamicDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="IsHoliday" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="SpecialComment" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="DateComment" Nullable="false" MaxLength="50" />
@@ -10953,6 +11188,42 @@
           <Property Type="String" Name="ShortName" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="SubjectName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SMGTgetOptionalSubjectadd_Result">
+          <Property Type="Int32" Name="SubjectId" Nullable="false" />
+          <Property Type="String" Name="ShortName" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="SMGTGetParent_Result">
+          <Property Type="Int64" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="ParentName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="RelationshipId" Nullable="false" />
+          <Property Type="String" Name="Address1" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="Address2" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="Address3" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="HomeTelephone" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PersonalEmail" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="PersonalMobile" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Occupation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="OfficeAddress1" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="OfficeAddress2" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="OfficeAddress3" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="OfficePhone" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="officeEmail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="NIC" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="UserId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ImgUrl" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="DateofBirth" Nullable="true" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SMGTgetParentStudentadd_Result">
+          <Property Type="Int64" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="StudentId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ParentName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="studentName" Nullable="false" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="SMGTgetParentToSchoolSentMail_Result">
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
@@ -11054,6 +11325,24 @@
           <Property Type="String" Name="StudentId" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="studentName" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
+        </ComplexType>
+        <ComplexType Name="SMGTgetStudentforoptionalSubject_Result">
+          <Property Type="String" Name="StudentId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="StudentName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SMGTgetStudentOptionalSubjects_Result">
+          <Property Type="Int64" Name="SeqNo" Nullable="false" />
+          <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
+          <Property Type="String" Name="AcademicYear" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="SchoolName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="GradeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ClassName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SubjectName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="studentName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="StudentId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="GradeId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ClassId" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="SubjectId" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SMGTgetTeacher_Result">
           <Property Type="Int64" Name="TeacherId" Nullable="false" />
@@ -12172,6 +12461,7 @@
           <FunctionImportMapping FunctionImportName="DCISModifySchool" FunctionName="SchoolMGTModel.Store.DCISModifySchool" />
           <FunctionImportMapping FunctionImportName="DCISsetSchool" FunctionName="SchoolMGTModel.Store.DCISsetSchool" />
           <FunctionImportMapping FunctionImportName="GDdeleteAllApplicationStatus" FunctionName="SchoolMGTModel.Store.GDdeleteAllApplicationStatus" />
+          <FunctionImportMapping FunctionImportName="GDdeleteApplication" FunctionName="SchoolMGTModel.Store.GDdeleteApplication" />
           <FunctionImportMapping FunctionImportName="GDdeleteEvaluationType" FunctionName="SchoolMGTModel.Store.GDdeleteEvaluationType" />
           <FunctionImportMapping FunctionImportName="GDdeleteEventCategory" FunctionName="SchoolMGTModel.Store.GDdeleteEventCategory" />
           <FunctionImportMapping FunctionImportName="GDdeleteExtraCurricularActivity" FunctionName="SchoolMGTModel.Store.GDdeleteExtraCurricularActivity" />
@@ -12462,6 +12752,18 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GDgetApplication" FunctionName="SchoolMGTModel.Store.GDgetApplication">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.GDgetApplication_Result">
+                <ScalarProperty Name="AppStatusSeqNo" ColumnName="AppStatusSeqNo" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GDgetApplicationStatus" FunctionName="SchoolMGTModel.Store.GDgetApplicationStatus">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SchoolMGTModel.GDgetApplicationStatus_Result">
@@ -12472,6 +12774,29 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GDgetGradeActiveClass" FunctionName="SchoolMGTModel.Store.GDgetGradeActiveClass">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.GDgetGradeActiveClass_Result">
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GDgetGradeActiveSubject" FunctionName="SchoolMGTModel.Store.GDgetGradeActiveSubject">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.GDgetGradeActiveSubject_Result">
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -12492,6 +12817,43 @@
           <FunctionImportMapping FunctionImportName="GDgetHomeWorkAdd" FunctionName="SchoolMGTModel.Store.GDgetHomeWorkAdd">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SchoolMGTModel.GDgetHomeWorkAdd_Result">
+                <ScalarProperty Name="AssignmentNo" ColumnName="AssignmentNo" />
+                <ScalarProperty Name="AssignmentDescription" ColumnName="AssignmentDescription" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
+                <ScalarProperty Name="BatchDescription" ColumnName="BatchDescription" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GDgetParentApplicationStatus" FunctionName="SchoolMGTModel.Store.GDgetParentApplicationStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.GDgetParentApplicationStatus_Result">
+                <ScalarProperty Name="AppStatusSeqNo" ColumnName="AppStatusSeqNo" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GDgetParentHomeWork" FunctionName="SchoolMGTModel.Store.GDgetParentHomeWork">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.GDgetParentHomeWork_Result">
                 <ScalarProperty Name="AssignmentNo" ColumnName="AssignmentNo" />
                 <ScalarProperty Name="AssignmentDescription" ColumnName="AssignmentDescription" />
                 <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
@@ -12532,6 +12894,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GDModifyAllApplicationStatus" FunctionName="SchoolMGTModel.Store.GDModifyAllApplicationStatus" />
+          <FunctionImportMapping FunctionImportName="GDModifyApplicationStatus" FunctionName="SchoolMGTModel.Store.GDModifyApplicationStatus" />
           <FunctionImportMapping FunctionImportName="GDModifyEvaluationTypee" FunctionName="SchoolMGTModel.Store.GDModifyEvaluationTypee" />
           <FunctionImportMapping FunctionImportName="GDModifyEventCategory" FunctionName="SchoolMGTModel.Store.GDModifyEventCategory" />
           <FunctionImportMapping FunctionImportName="GDModifyExtraCurricularActivit" FunctionName="SchoolMGTModel.Store.GDModifyExtraCurricularActivit" />
@@ -12691,6 +13054,54 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGTgetOptionalSubjectadd" FunctionName="SchoolMGTModel.Store.SMGTgetOptionalSubjectadd">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTgetOptionalSubjectadd_Result">
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGTGetParent" FunctionName="SchoolMGTModel.Store.SMGTGetParent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTGetParent_Result">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="RelationshipId" ColumnName="RelationshipId" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address3" ColumnName="Address3" />
+                <ScalarProperty Name="HomeTelephone" ColumnName="HomeTelephone" />
+                <ScalarProperty Name="PersonalEmail" ColumnName="PersonalEmail" />
+                <ScalarProperty Name="PersonalMobile" ColumnName="PersonalMobile" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="OfficeAddress1" ColumnName="OfficeAddress1" />
+                <ScalarProperty Name="OfficeAddress2" ColumnName="OfficeAddress2" />
+                <ScalarProperty Name="OfficeAddress3" ColumnName="OfficeAddress3" />
+                <ScalarProperty Name="OfficePhone" ColumnName="OfficePhone" />
+                <ScalarProperty Name="officeEmail" ColumnName="officeEmail" />
+                <ScalarProperty Name="NIC" ColumnName="NIC" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
+                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGTgetParentStudentadd" FunctionName="SchoolMGTModel.Store.SMGTgetParentStudentadd">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTgetParentStudentadd_Result">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="studentName" ColumnName="studentName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SMGTgetParentToSchoolSentMail" FunctionName="SchoolMGTModel.Store.SMGTgetParentToSchoolSentMail">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTgetParentToSchoolSentMail_Result">
@@ -12832,6 +13243,32 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGTgetStudentforoptionalSubject" FunctionName="SchoolMGTModel.Store.SMGTgetStudentforoptionalSubject">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTgetStudentforoptionalSubject_Result">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGTgetStudentOptionalSubjects" FunctionName="SchoolMGTModel.Store.SMGTgetStudentOptionalSubjects">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTgetStudentOptionalSubjects_Result">
+                <ScalarProperty Name="SeqNo" ColumnName="SeqNo" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="AcademicYear" ColumnName="AcademicYear" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="studentName" ColumnName="studentName" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SMGTgetTeacher" FunctionName="SchoolMGTModel.Store.SMGTgetTeacher">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTgetTeacher_Result">
@@ -12955,8 +13392,10 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SMGTModifyStudent" FunctionName="SchoolMGTModel.Store.SMGTModifyStudent" />
           <FunctionImportMapping FunctionImportName="SMGTSchoolCount" FunctionName="SchoolMGTModel.Store.SMGTSchoolCount" />
+          <FunctionImportMapping FunctionImportName="SMGTsetParent" FunctionName="SchoolMGTModel.Store.SMGTsetParent" />
           <FunctionImportMapping FunctionImportName="SMGTsetSchoolGrade" FunctionName="SchoolMGTModel.Store.SMGTsetSchoolGrade" />
           <FunctionImportMapping FunctionImportName="SMGTsetStudent" FunctionName="SchoolMGTModel.Store.SMGTsetStudent" />
+          <FunctionImportMapping FunctionImportName="SMGTsetStudentOptionalSubject" FunctionName="SchoolMGTModel.Store.SMGTsetStudentOptionalSubject" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

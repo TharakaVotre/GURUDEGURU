@@ -5,6 +5,7 @@
     <title>@ViewBag.Title</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,chrome=1">
 
     <!-- Font awesome -->
     <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
@@ -119,6 +120,13 @@
                 <li><a href="#"><i class="fa fa-desktop"></i>Student</a>
                     <ul>
                         <li>@Html.ActionLink("Student", "Index", "Student")</li>
+
+                    </ul>
+                </li>
+
+                <li><a href="#"><i class="fa fa-desktop"></i>Student Optional Subject</a>
+                    <ul>
+                        <li>@Html.ActionLink("Student Optional Subject", "Index", "StudentOptionalSubject")</li>
 
                     </ul>
                 </li>
