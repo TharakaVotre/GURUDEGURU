@@ -10,10 +10,12 @@ namespace GDWEBSolution.Models.Student
     {
 
 
+        public List<OptionalSubjectModel> GetStudentList { get; set; }
+
 
         [Display(Name = "Seq No")]
       
-        public string SequanceNo { get; set; }
+        public long SequanceNo { get; set; }
 
         [Display(Name = "School Id")]
         [Required(ErrorMessage = "Please Select School Name")]
@@ -31,13 +33,18 @@ namespace GDWEBSolution.Models.Student
 
         [Display(Name = "Student Id")]
 
-        [Required(ErrorMessage = "Student ID is required")]
+        //[Required(ErrorMessage = "Student ID is required")]
         public string StudentId { get; set; }
+
+        public List<string> StudentIdL { get; set; }
+
+
+       // public List<Movie> AvailableMovies { get; set; } 
 
 
       
         [Display(Name = "Student Name")]
-        [Required(ErrorMessage = "Student Name is required")]
+      
         public string StudentName { get; set; }
 
    
@@ -50,10 +57,18 @@ namespace GDWEBSolution.Models.Student
 
         [Required(ErrorMessage = "Grade Name is required")]
         public string GradeId { get; set; }
-        [Display(Name = "Class Id")]
 
+
+        [Display(Name = "Grade Name")]     
+        public string GradeName { get; set; }
+
+        [Display(Name = "Class Id")]
         [Required(ErrorMessage = "Class Name is required")]
         public string ClassId { get; set; }
+
+
+        [Display(Name = "Class Name")]
+        public string ClassName { get; set; }
 
 
 
@@ -61,6 +76,9 @@ namespace GDWEBSolution.Models.Student
 
         [Display(Name = "Subject Id")]
         public string SubjectId { get; set; }
+
+        [Display(Name = "Subject Name")]
+        public string SubjectName { get; set; }
 
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
