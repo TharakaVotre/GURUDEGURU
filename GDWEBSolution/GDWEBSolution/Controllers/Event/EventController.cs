@@ -33,6 +33,8 @@ namespace GDWEBSolution.Controllers.Event
                 desc = x.EventDescription,
                 category = x.EventCategory.ToString(),
                 organizer = x.EventOrganizer,
+                startDate = x.FromDate.ToString("yyyy/MM/dd"),
+                endDate = x.ToDate.ToString("yyyy/MM/dd"),
                 syear = x.FromDate.ToString("yyyy"),
                 smonth = x.FromDate.ToString("MM"),
                 sday = x.FromDate.ToString("dd"),
