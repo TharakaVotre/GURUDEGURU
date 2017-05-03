@@ -81,6 +81,7 @@
     </div>
 
 </div>
+<script src="~/Scripts/formatDate.js"></script>
 <script>
 /**
  * Author:    G.M.Tharaka Madusanka
@@ -101,6 +102,16 @@
             showInputs: false,
             minuteStep: 5
         });
+        $('#event-modal input[name="event-start-date"]').datepicker({
+            format: 'yyyy/mm/dd',
+            todayHighlight: true,
+            autoclose: true,
+        });
+        $('#event-modal input[name="event-end-date"]').datepicker({
+            format: 'yyyy/mm/dd',
+            todayHighlight: true,
+            autoclose: true,
+        });
     });
     function load() {  
         var dataSource = [];
@@ -110,13 +121,14 @@
                 datatype: 'json',
                 type: "GET",
                 success: function (result) {
-                    debugger
                     for (var i = 0; i < result.length; i++) {
                         dataSource.push({
                             id: result[i].id,
                             name: result[i].name,
                             startDate: new Date(result[i].syear,result[i].smonth - 1,result[i].sday),
                             endDate: new Date(result[i].eyear, result[i].emonth - 1, result[i].eday),
+                            fromday: result[i].startDate,
+                            today: result[i].endDate,
                             fromtime: result[i].fromtime,
                             totime: result[i].totime,
                             organizer: result[i].organizer,
@@ -129,7 +141,6 @@
             });
     }
     function editEvent(event) {
-        debugger
         $('#event-modal input[name="event-index"]').val(event ? event.id : '');
         $('#event-modal input[name="event-name"]').val(event ? event.name : '');
         $('#event-modal input[name="event-desc"]').val(event ? event.desc : '');
@@ -149,7 +160,6 @@
         for (var i in dataSource) {
             if (dataSource[i].id == event.id) {
                 var data = new FormData;
-                debugger
                 data.append("EventNo", parseInt(event.id));
 
                 $.ajax({
@@ -182,7 +192,6 @@
         }
 
         var data = new FormData;
-        debugger
         data.append("EventNo", parseInt(event.id));
         data.append("EventName", event.name);
         data.append("EventDescription", event.desc);
