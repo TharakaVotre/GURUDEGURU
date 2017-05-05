@@ -188,6 +188,7 @@
     <Compile Include="Controllers\Maintenance\MaintainSubjectCategoryController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainSubjectController.cs" />
     <Compile Include="Controllers\Message\PSMessageController.cs" />
+    <Compile Include="Controllers\Message\SPMessageController.cs" />
     <Compile Include="Controllers\SchoolCalender\SchoolCalenderController.cs" />
     <Compile Include="Controllers\SchoolController.cs" />
     <Compile Include="Controllers\StudentOptionalSubject\StudentOptionalSubjectController.cs" />
@@ -310,6 +311,8 @@
     </Compile>
     <Compile Include="Models\HomeWork\HomeWorkModel.cs" />
     <Compile Include="Models\HomeWork\ValidateFile.cs" />
+    <Compile Include="Models\Message\StoPMessageDetailModel.cs" />
+    <Compile Include="Models\Message\StoPMessageHeaderModel.cs" />
     <Compile Include="Models\SchoolCalender\SchoolCalenderModel.cs" />
     <Compile Include="Models\Schools\RegistrationModel.cs" />
     <Compile Include="Models\Schools\SchoolExtraCuricularModel.cs" />
@@ -1235,6 +1238,10 @@
     <Content Include="Views\StudentOptionalSubject\Create.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Delete.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Index.cshtml" />
+    <Content Include="Views\SPMessage\Index.cshtml" />
+    <Content Include="Views\SPMessage\Sent.cshtml" />
+    <Content Include="Views\SPMessage\SentView.cshtml" />
+    <Content Include="Views\SPMessage\NewMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

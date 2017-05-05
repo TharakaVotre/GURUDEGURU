@@ -13,20 +13,16 @@ namespace GDWEBSolution.Controllers.Message
     public class PSMessageController : Controller
     {
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        //
-        // GET: /PSMessage/
 
         public ActionResult Index()
         {
             Dropdowns();
-
             return View();
         }
 
         public ActionResult Sent()
         {
             Dropdowns();
-
             return View();
         }
 
@@ -70,7 +66,6 @@ namespace GDWEBSolution.Controllers.Message
                     UserId = x.UserId,
                     Name = x.Name,
                     TeacherId = x.TeacherId
-
                 }).ToList();
                 ViewBag.TeacherDropdown = new SelectList(tcmlist, "UserId", "Name");
 
@@ -90,7 +85,6 @@ namespace GDWEBSolution.Controllers.Message
             {
                 Errorlog.ErrorManager.LogError("ShowNewMessage() @PSMessageController", Ex);
             }
-
             return PartialView("NewMessage");
         }
 
@@ -101,7 +95,6 @@ namespace GDWEBSolution.Controllers.Message
             try
             {
                 tblParentToSchoolMessageHeader MsgHead = new tblParentToSchoolMessageHeader();
-
                 MsgHead.SchoolId = "CKC";
                 MsgHead.MessageId = Model.MessageId;
                 MsgHead.ParentId = 2;//session parent id
@@ -125,15 +118,9 @@ namespace GDWEBSolution.Controllers.Message
                 MsgDetail.AuthStatus = "A";
                 MsgDetail.CreatedBy = "ADMIN";
                 MsgDetail.CreatedDate = DateTime.Now;
-
-
-
                 Connection.tblParentToSchoolMessageHeaders.Add(MsgHead);
                 Connection.SaveChanges();
                 Connection.tblParentToSchoolMessageDetails.Add(MsgDetail);
-                Connection.SaveChanges();
-
-                //return View();
 
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
@@ -147,11 +134,6 @@ namespace GDWEBSolution.Controllers.Message
                 Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
                 return Json("Exception", JsonRequestBehavior.AllowGet);
             }
-            //catch (Exception Ex)
-            //{
-            //    Errorlog.ErrorManager.LogError("public JsonResult SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @ PSMessageController", Ex);
-            //    return Json("Error", JsonRequestBehavior.AllowGet);
-            //}
         }
 
         [HttpPost]
@@ -162,17 +144,13 @@ namespace GDWEBSolution.Controllers.Message
                 var file = Model.Attachment_File;
                 long AttachmentId = 0;
                 tblParentToSchollMessageAttachment Attachmentfile = new tblParentToSchollMessageAttachment();
-
                 if (file != null)
                 {
                     var Atid = Connection.tblParameters.Where(x => x.ParameterId == "PSMAS").Select(x => x.ParameterValue).SingleOrDefault();
                     AttachmentId = Convert.ToInt64(Atid);
                     long Next = AttachmentId + 1;
-
                     var fileName = Path.GetFileName(file.FileName);
                     var extention = Path.GetExtension(file.FileName);
-
-
                     Attachmentfile.AttachementName = file.FileName;
                     Attachmentfile.AttachementPath = "/UploadedFiles/" + file.FileName;
                     Attachmentfile.MessageId = Model.MessageId;
@@ -182,12 +160,9 @@ namespace GDWEBSolution.Controllers.Message
                     Connection.SaveChanges();
 
                     tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "PSMAS");
-
                     TCtable.ParameterValue = Next.ToString();
                     Connection.SaveChanges();
-
                     file.SaveAs(Server.MapPath("/UploadedFiles/" + file.FileName));
-
                 }
                 var result = new { FileName = file.FileName, SeqNo = AttachmentId };
                 return Json(result, JsonRequestBehavior.AllowGet);
@@ -197,14 +172,12 @@ namespace GDWEBSolution.Controllers.Message
                 Errorlog.ErrorManager.LogError("AttachmentUpload(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
                 var result = new { FileName = "Error", SeqNo = "Error" };
                 return Json(result, JsonRequestBehavior.AllowGet);
-            }
-            
+            }   
         }
 
         public ActionResult ShowSentMessages()
         {
             var STQlist = Connection.SMGTgetParentToSchoolSentMail(2).ToList(); //ParentId session
-
             List<PtoSMessageHeaderModel> List = STQlist.Select(x => new PtoSMessageHeaderModel
             {
                 SchoolId = x.SchoolId,
@@ -234,9 +207,7 @@ namespace GDWEBSolution.Controllers.Message
                 Connection.tblParentToSchollMessageAttachments.Remove(Tble);
                 Connection.SaveChanges();
                 System.IO.File.Delete(Server.MapPath(path));
-
                 return Json(Model.SeqNo, JsonRequestBehavior.AllowGet);
-                //return RedirectToAction("Index");
             }
             catch
             {
@@ -277,92 +248,6 @@ namespace GDWEBSolution.Controllers.Message
             var file = Connection.tblParentToSchollMessageAttachments.FirstOrDefault(x => x.SeqNo == SeqNo);
             byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(file.AttachementPath));
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file.AttachementName);
-        }
-
-        //
-        // GET: /PSMessage/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /PSMessage/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //
-        // POST: /PSMessage/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /PSMessage/Edit/5
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /PSMessage/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /PSMessage/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /PSMessage/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }
