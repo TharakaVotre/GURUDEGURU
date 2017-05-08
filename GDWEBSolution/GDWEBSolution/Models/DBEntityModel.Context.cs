@@ -1847,6 +1847,23 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllEvaluationType_Result>("getAllEvaluationType", isactiveParameter);
         }
     
+        public virtual ObjectResult<SMGT_getSchoolGreadClassParent_Result> SMGT_getSchoolGreadClassParent(string schoolId, string greadId, string classId)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var greadIdParameter = greadId != null ?
+                new ObjectParameter("GreadId", greadId) :
+                new ObjectParameter("GreadId", typeof(string));
+    
+            var classIdParameter = classId != null ?
+                new ObjectParameter("ClassId", classId) :
+                new ObjectParameter("ClassId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchoolGreadClassParent_Result>("SMGT_getSchoolGreadClassParent", schoolIdParameter, greadIdParameter, classIdParameter);
+        }
+    
         public virtual int SMGTDeleteSchool(string isactive, string schoolId, string modyfiedBy)
         {
             var isactiveParameter = isactive != null ?
@@ -2459,6 +2476,28 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("SubjectId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTsetStudentOptionalSubject", schoolIdParameter, gradeIdParameter, createdByParameter, isActiveParameter, academicYearParameter, studentIdParameter, classIdParameter, subjectIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGT_getSchoolExactivity_Result> SMGT_getSchoolExactivity(string schoolId)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchoolExactivity_Result>("SMGT_getSchoolExactivity", schoolIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGT_getSchoolExactivityParent_Result> SMGT_getSchoolExactivityParent(string schoolId, string activityCode)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var activityCodeParameter = activityCode != null ?
+                new ObjectParameter("ActivityCode", activityCode) :
+                new ObjectParameter("ActivityCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchoolExactivityParent_Result>("SMGT_getSchoolExactivityParent", schoolIdParameter, activityCodeParameter);
         }
     }
 }

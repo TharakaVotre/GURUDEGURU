@@ -1,0 +1,15 @@
+﻿@model GDWEBSolution.Models.Message.StoPMessageHeaderModel
+
+
+@*<label for="pwd" class="control-label">Class :</label>*@
+@Html.DropDownListFor(model => model.ParentId, ViewBag.ExactParents as SelectList, "", new { @class = "select2_Parent2 form-control"})@*,multiple="multiple"*@
+
+<script>
+    $(document).ready(function () {
+        $(".select2_Parent2").select2({
+            placeholder: "Select a Parent",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+</script>

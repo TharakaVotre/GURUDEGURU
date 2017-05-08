@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GDWEBSolution.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,7 @@ namespace GDWEBSolution.Controllers.Message
     {
         //
         // GET: /SPMessage/
-
+        SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
         public ActionResult Index()
         {
             return View();
@@ -27,8 +28,20 @@ namespace GDWEBSolution.Controllers.Message
         //
         // GET: /SPMessage/Create
 
-        public ActionResult Create()
+        public ActionResult NewMessage()
         {
+            var SchoolGrade = Connection.SMGTgetSchoolGrade("CKC").ToList();//Need to Pass a Session Schoolid
+            List<tblGrade> SchoolGradeList = SchoolGrade.Select(x => new tblGrade
+            {
+                GradeId = x.GradeId,
+                GradeName = x.GradeName,
+                IsActive = x.IsActive
+
+            }).ToList();
+            ViewBag.SchoolGrades = new SelectList(SchoolGradeList, "GradeId", "GradeName");
+            List<SMGT_getSchoolExactivity_Result> ex = Connection.SMGT_getSchoolExactivity("CKC").ToList();//Need to Pass a Session Schoolid
+
+            ViewBag.SchoolExactivity = new SelectList(ex, "ActivityCode", "ActivityName");
             return View();
         }
 
@@ -36,7 +49,7 @@ namespace GDWEBSolution.Controllers.Message
         // POST: /SPMessage/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult NewMessage(FormCollection collection)
         {
             try
             {
@@ -49,7 +62,27 @@ namespace GDWEBSolution.Controllers.Message
                 return View();
             }
         }
+        public ActionResult ShowGradeClass(string GradeId)
+        {
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
+            ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
 
+            return PartialView("loadClass");
+        }
+        public ActionResult ShowParentByClass(string GradeId,string ClassId)
+        {
+            List<SMGT_getSchoolGreadClassParent_Result> gcp = Connection.SMGT_getSchoolGreadClassParent("CKC",GradeId,ClassId).ToList();
+            ViewBag.GradeClassseParent = new SelectList(gcp, "ParentId", "ParentName");
+
+            return PartialView("loadParent");
+        }
+        public ActionResult ShowParentByExActivity(string ExActivityId)
+        {
+            List<SMGT_getSchoolExactivityParent_Result> exl = Connection.SMGT_getSchoolExactivityParent("CKC",ExActivityId).ToList();
+            ViewBag.ExactParents = new SelectList(exl, "ParentId", "ParentName");
+
+            return PartialView("loadExParent");
+        }
         //
         // GET: /SPMessage/Edit/5
 

@@ -17,5 +17,13 @@ namespace GDWEBSolution.Models.Message
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
+
+        public long SeqNo { get; set; }
+        public long ParentId { get; set; }
+
+        //For dropdowns
+        public string GradeId { set; get; }
+        public string ClassId { set; get; }
+        public string ExActivityCode { set; get; }
     }
 }

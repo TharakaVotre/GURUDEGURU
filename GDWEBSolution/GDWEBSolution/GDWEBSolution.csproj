@@ -412,6 +412,15 @@
     <Compile Include="Models\SMGTloadScholExtraCadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGT_getSchoolExactivityParent_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGT_getSchoolExactivity_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGT_getSchoolGreadClassParent_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Student\OptionalSubjectModel.cs" />
     <Compile Include="Models\Student\StudentExtraCModel.cs" />
     <Compile Include="Models\Student\StudentModel.cs" />
@@ -984,16 +993,6 @@
     <Content Include="img\login-bg.jpg" />
     <Content Include="img\logo.jpg" />
     <Content Include="img\wheel.gif" />
-    <Content Include="Models\DBEntityModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\DBEntityModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-popover.js" />
     <Content Include="Scripts\bootstrap-select.js" />
@@ -1014,8 +1013,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBEntityModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Models\DBEntityModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\DBEntityModel.edmx.diagram">
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\DBEntityModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
@@ -1241,7 +1250,11 @@
     <Content Include="Views\SPMessage\Index.cshtml" />
     <Content Include="Views\SPMessage\Sent.cshtml" />
     <Content Include="Views\SPMessage\SentView.cshtml" />
+    <Content Include="Views\SPMessage\NewMessage1.cshtml" />
     <Content Include="Views\SPMessage\NewMessage.cshtml" />
+    <Content Include="Views\SPMessage\loadClass.cshtml" />
+    <Content Include="Views\SPMessage\loadParent.cshtml" />
+    <Content Include="Views\SPMessage\loadExParent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
