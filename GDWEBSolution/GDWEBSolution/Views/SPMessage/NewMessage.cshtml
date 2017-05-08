@@ -1,0 +1,110 @@
+﻿@model GDWEBSolution.Models.Message.StoPMessageHeaderModel
+
+@{
+    ViewBag.Title = "New Message";
+}
+
+<h4>New Message</h4>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">New Message</div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">
+                Message Recipients
+            </label>
+            <div class="col-sm-10">
+                <div class="radio radio-info radio-inline">
+                    <input type="radio" id="inlineRadio1" value="option1" name="radioInline">
+                    <label for="inlineRadio1">All </label>
+                </div>
+                <div class="radio radio-inline">
+                    <input type="radio" id="inlineRadio2" value="option2" name="radioInline" onchange="showgread()">
+                    <label for="inlineRadio2">By Grade </label>
+                </div>
+                <div class="radio radio-inline">
+                    <input type="radio" id="inlineRadio2" value="option2" name="radioInline" onchange="showexactivity()">
+                    <label for="inlineRadio2">By Extra Curricular Activity </label>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="hr-dashed"></div>
+        <div class="row" id="bygread" style="display: none">
+            <div class="col-md-2">
+                @Html.DropDownListFor(model => model.GradeId, ViewBag.SchoolGrades as SelectList, "", new { @class = "select2_Grade form-control", @onchange = "loadClass()" })
+            </div>
+            <div class="col-md-2" id="loadclass"></div>
+            <div class="col-md-8" id="loadclassparent"></div>
+        </div>
+        <div class="row" id="byexactivity" style="display: none">
+            <div class="col-md-4">
+                 @Html.DropDownListFor(model => model.ExActivityCode, ViewBag.SchoolExactivity as SelectList, "", new { @class = "select2_Ex form-control", @onchange = "loadExactivityparent()" })
+            </div>
+            <div class="col-md-8" id="loadexparent">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".select2_Grade").select2({
+            placeholder: "Select a Grade",
+            allowClear: true,
+            width: '100%'
+        });
+        $(".select2_Ex").select2({
+            placeholder: "Select a Extracurricular Activity",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+    var loadClass = function () {
+        var tid = $('#GradeId').val(); 
+        debugger
+        if (tid != "") {
+            //$('#loaderDiv').show();
+            $('#loadclass').load('/SPMessage/ShowGradeClass?GradeId=' + tid);
+            $('#loadclass').show();
+            //  $('#loaderDiv').hide();
+        } else {
+            $('#loadclass').hide();
+        }
+    }
+    var loadClassParent = function () {
+        var gid = $('#GradeId').val();
+        var cid = $('#ClassId').val();
+        debugger
+        if (gid != "") {
+            //$('#loaderDiv').show();
+            $('#loadclassparent').load('/SPMessage/ShowParentByClass?GradeId=' + gid + '&ClassId=' + cid);
+            $('#loadclassparent').show();
+            //  $('#loaderDiv').hide();
+        } else {
+            $('#loadclassparent').hide();
+        }
+    }
+    var loadExactivityparent = function () {
+        var tid = $('#ExActivityCode').val();
+        debugger
+        if (tid != "") {
+            //$('#loaderDiv').show();
+            $('#loadexparent').load('/SPMessage/ShowParentByExActivity?ExActivityId=' + tid);
+            $('#loadexparent').show();
+            //  $('#loaderDiv').hide();
+        } else {
+            $('#loadexparent').hide();
+        }
+    }
+    var showgread = function () {
+        $('#bygread').show();
+        $('#byexactivity').hide();     
+    }
+    var showexactivity = function () {
+        $('#byexactivity').show(); 
+        $('#bygread').hide();
+    }
+</script>

@@ -4995,6 +4995,18 @@
         <Function Name="getAllEvaluationType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Isactive" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SMGT_getSchoolExactivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SMGT_getSchoolExactivityParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="ActivityCode" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SMGT_getSchoolGreadClassParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="GreadId" Type="varchar" Mode="In" />
+          <Parameter Name="ClassId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SMGTDeleteSchool" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Isactive" Type="varchar" Mode="In" />
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
@@ -6600,6 +6612,11 @@
           <FunctionImport Name="getAllEvaluationType" ReturnType="Collection(SchoolMGTModel.getAllEvaluationType_Result)">
           <Parameter Name="Isactive" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SMGT_getSchoolGreadClassParent" ReturnType="Collection(SchoolMGTModel.SMGT_getSchoolGreadClassParent_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="GreadId" Mode="In" Type="String" />
+            <Parameter Name="ClassId" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SMGTDeleteSchool">
             <Parameter Name="Isactive" Mode="In" Type="String" />
             <Parameter Name="SchoolId" Mode="In" Type="String" />
@@ -6778,6 +6795,13 @@
             <Parameter Name="StudentId" Mode="In" Type="String" />
             <Parameter Name="ClassId" Mode="In" Type="String" />
             <Parameter Name="SubjectId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGT_getSchoolExactivity" ReturnType="Collection(SchoolMGTModel.SMGT_getSchoolExactivity_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGT_getSchoolExactivityParent" ReturnType="Collection(SchoolMGTModel.SMGT_getSchoolExactivityParent_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="ActivityCode" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="tblApplicationStatu">
@@ -11111,6 +11135,11 @@
           <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
         </ComplexType>
+        <ComplexType Name="SMGT_getSchoolGreadClassParent_Result">
+          <Property Type="Int64" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="ParentName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="studentName" Nullable="false" MaxLength="100" />
+        </ComplexType>
         <ComplexType Name="SMGTgetAllSchoolExtraCurricularActivity_Result">
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
           <Property Type="String" Name="ActivityCode" Nullable="false" MaxLength="6" />
@@ -11432,6 +11461,15 @@
           <Property Type="String" Name="ActivityCode" Nullable="false" MaxLength="6" />
           <Property Type="String" Name="ActivityName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
+        </ComplexType>
+        <ComplexType Name="SMGT_getSchoolExactivity_Result">
+          <Property Type="String" Name="ActivityName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ActivityCode" Nullable="false" MaxLength="6" />
+        </ComplexType>
+        <ComplexType Name="SMGT_getSchoolExactivityParent_Result">
+          <Property Type="Int64" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="ParentName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="studentName" Nullable="false" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -12946,6 +12984,15 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGT_getSchoolGreadClassParent" FunctionName="SchoolMGTModel.Store.SMGT_getSchoolGreadClassParent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGT_getSchoolGreadClassParent_Result">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="studentName" ColumnName="studentName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SMGTDeleteSchool" FunctionName="SchoolMGTModel.Store.SMGTDeleteSchool" />
           <FunctionImportMapping FunctionImportName="SMGTDeleteTeacherExtraCurricularActivity" FunctionName="SchoolMGTModel.Store.SMGTDeleteTeacherExtraCurricularActivity" />
           <FunctionImportMapping FunctionImportName="SMGTgetAllSchoolExtraCurricularActivity" FunctionName="SchoolMGTModel.Store.SMGTgetAllSchoolExtraCurricularActivity">
@@ -13396,6 +13443,23 @@
           <FunctionImportMapping FunctionImportName="SMGTsetSchoolGrade" FunctionName="SchoolMGTModel.Store.SMGTsetSchoolGrade" />
           <FunctionImportMapping FunctionImportName="SMGTsetStudent" FunctionName="SchoolMGTModel.Store.SMGTsetStudent" />
           <FunctionImportMapping FunctionImportName="SMGTsetStudentOptionalSubject" FunctionName="SchoolMGTModel.Store.SMGTsetStudentOptionalSubject" />
+          <FunctionImportMapping FunctionImportName="SMGT_getSchoolExactivity" FunctionName="SchoolMGTModel.Store.SMGT_getSchoolExactivity">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGT_getSchoolExactivity_Result">
+                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+                <ScalarProperty Name="ActivityCode" ColumnName="ActivityCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGT_getSchoolExactivityParent" FunctionName="SchoolMGTModel.Store.SMGT_getSchoolExactivityParent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGT_getSchoolExactivityParent_Result">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="studentName" ColumnName="studentName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

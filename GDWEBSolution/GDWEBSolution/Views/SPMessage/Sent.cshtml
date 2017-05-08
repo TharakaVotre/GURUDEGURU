@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Sent Message";
+}
+
+<h4>Sent Message</h4>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Sent<label id="id"> - </label></div>
+            <div class="panel-body" id="sentbody">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" id="MyModelBody">
+        </div>
+    </div>
+</div>
+<div id="SuccesModel" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content" id="SuccessModelBody">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Successful !</h4>
+            </div>
+            <div class="modal-body">
+                <label id="SuccesLable" class="control-label" style="color: #3bc91f"></label>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ErrorModel" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content" id="ErrorModelBody">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Error !</h4>
+            </div>
+            <div class="modal-body">
+                <label id="ErrorLable" class="control-label" style="color: #e83a3a"></label>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#sentbody').load('/SPMessage/ShowSentMessages');
+        $('#sentbody').show();
+        //setInterval('loadClassList();', 10000);
+    });
+        
+    var loadClassList = function () {
+        debugger
+        document.getElementById("id").innerHTML = document.getElementById("id").innerHTML + 1;
+        $('#sentbody').show();
+    }
+
+    var ShowViewNewMSG = function (bookid) {
+        var Url = "/SPMessage/ShowNewMessage"
+        $("#MyModelBody").load(Url, function () {
+            $('#myModal').modal({ backdrop: 'static', keyboard: false })
+            $("#myModal").modal("show");
+        })
+    }
+
+</script>
