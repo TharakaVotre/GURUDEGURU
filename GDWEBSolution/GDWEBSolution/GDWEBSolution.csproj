@@ -188,6 +188,7 @@
     <Compile Include="Controllers\Maintenance\MaintainSubjectCategoryController.cs" />
     <Compile Include="Controllers\Maintenance\MaintainSubjectController.cs" />
     <Compile Include="Controllers\Message\PSMessageController.cs" />
+    <Compile Include="Controllers\Parent\ParentController.cs" />
     <Compile Include="Controllers\SchoolCalender\SchoolCalenderController.cs" />
     <Compile Include="Controllers\SchoolController.cs" />
     <Compile Include="Controllers\StudentOptionalSubject\StudentOptionalSubjectController.cs" />
@@ -310,6 +311,7 @@
     </Compile>
     <Compile Include="Models\HomeWork\HomeWorkModel.cs" />
     <Compile Include="Models\HomeWork\ValidateFile.cs" />
+    <Compile Include="Models\Parent\ParentModel.cs" />
     <Compile Include="Models\SchoolCalender\SchoolCalenderModel.cs" />
     <Compile Include="Models\Schools\RegistrationModel.cs" />
     <Compile Include="Models\Schools\SchoolExtraCuricularModel.cs" />
@@ -1235,6 +1237,15 @@
     <Content Include="Views\StudentOptionalSubject\Create.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Delete.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Index.cshtml" />
+    <Content Include="Views\Parent\AddChild.cshtml" />
+    <Content Include="Views\Parent\ChildrenList.cshtml" />
+    <Content Include="Views\Parent\Childtest.cshtml" />
+    <Content Include="Views\Parent\ChildtestList.cshtml" />
+    <Content Include="Views\Parent\Create.cshtml" />
+    <Content Include="Views\Parent\DeleteParent.cshtml" />
+    <Content Include="Views\Parent\Details.cshtml" />
+    <Content Include="Views\Parent\Edit.cshtml" />
+    <Content Include="Views\Parent\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,58 @@
+﻿@model GDWEBSolution.Models.Parent.ParentModel
+<div>
+    <form id="FormHDelete" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5 class="modal-title">Are you sure you want to Delete this Child ? @Html.HiddenFor(m => m.ParentId)</h5>
+            @Html.HiddenFor(m => m.StudentId)
+          
+
+        </div>
+        <div class="modal-footer">
+
+            <a href="#" id="btnHDSubmit" class="btn btn-primary">YES</a>
+            <a href="#" id="btnNo" class="btn btn-default">NO</a>
+        </div>
+    </form>
+    @*    <div style="text-align: center; display: none" id="loaderDiv">
+            Loading
+        </div>*@
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnHDSubmit").click(function (e) {
+            debugger
+            var myformdata = $("#FormHDelete").serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/Parent/DeleteChild",
+                data: myformdata,
+                success: function (result) {
+                    //$("#loaderDiv").hide();
+                    if (result != "Error") {
+                        debugger
+                        //window.location.href = "/Teacher/Create";
+                        // $("#TeacherID").val(result);
+                        //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                        $('#showChild').load('/Parent/ShowchildAdd?ParentId=' + result);
+                    }
+                    $("#deleteModel").modal("hide");
+
+
+                }
+
+            })
+        })
+
+        $("#btnNo").click(function (e) {
+            debugger
+            $("#deleteModel").modal("hide");
+        })
+
+    })
+
+
+</script>
