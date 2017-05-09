@@ -42,6 +42,9 @@ namespace GDWEBSolution.Controllers.Message
             List<SMGT_getSchoolExactivity_Result> ex = Connection.SMGT_getSchoolExactivity("CKC").ToList();//Need to Pass a Session Schoolid
 
             ViewBag.SchoolExactivity = new SelectList(ex, "ActivityCode", "ActivityName");
+
+            List<tblMessageType> MsgTypeList = Connection.tblMessageTypes.ToList();
+            ViewBag.MessageTypesDropdown = new SelectList(MsgTypeList, "MessageTypeId", "MessageTypeDescription");
             return View();
         }
 
