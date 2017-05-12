@@ -1613,6 +1613,7 @@
           </Key>
           <Property Name="SchoolId" Type="varchar" Nullable="false" MaxLength="14" />
           <Property Name="MessageId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Sender" Type="varchar" Nullable="false" MaxLength="250" />
           <Property Name="Subject" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="MessageType" Type="bigint" Nullable="false" />
           <Property Name="Message" Type="varchar" Nullable="false" MaxLength="1000" />
@@ -6797,7 +6798,7 @@
             <Parameter Name="SubjectId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGT_getSchoolExactivity" ReturnType="Collection(SchoolMGTModel.SMGT_getSchoolExactivity_Result)">
-            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGT_getSchoolExactivityParent" ReturnType="Collection(SchoolMGTModel.SMGT_getSchoolExactivityParent_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
@@ -7736,6 +7737,7 @@
           <NavigationProperty Name="tblSchoolToParentMessageDetails" Relationship="SchoolMGTModel.FK_tblSchoolToParentMessageDetail_tblSchoolToParentMessageHeader" FromRole="tblSchoolToParentMessageHeader" ToRole="tblSchoolToParentMessageDetail" />
           <NavigationProperty Name="tblUser" Relationship="SchoolMGTModel.FK_tblSchoolToParentMessageHeader_tblUser" FromRole="tblSchoolToParentMessageHeader" ToRole="tblUser" />
           <NavigationProperty Name="tblUser1" Relationship="SchoolMGTModel.FK_tblSchoolToParentMessageHeader_tblUser1" FromRole="tblSchoolToParentMessageHeader" ToRole="tblUser" />
+          <Property Type="String" Name="Sender" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblStudent">
           <Key>
@@ -12188,6 +12190,7 @@
           <EntitySetMapping Name="tblSchoolToParentMessageHeaders">
             <EntityTypeMapping TypeName="SchoolMGTModel.tblSchoolToParentMessageHeader">
               <MappingFragment StoreEntitySet="tblSchoolToParentMessageHeader">
+                <ScalarProperty Name="Sender" ColumnName="Sender" />
                 <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />

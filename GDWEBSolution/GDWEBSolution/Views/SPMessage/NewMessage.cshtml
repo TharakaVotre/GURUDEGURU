@@ -45,13 +45,16 @@
             <div class="col-md-8" id="loadexparent">
             </div>
         </div>
-            <div class="form-area">
+        <div class="form-area">
         <form id="MsgFrm" enctype="multipart/form-data">
             <br style="clear: both">
             @*            <h3 style="margin-bottom: 25px; text-align: center;">Contact Form</h3>*@
             @Html.HiddenFor(model => model.MessageId, new { @Value = ViewBag.Message_Id })
             <div class="form-group">
                 @Html.DropDownListFor(model => model.MessageType, ViewBag.MessageTypesDropdown as SelectList, "", new { @class = "select2_MSG form-control" })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.Subject, new { @class = "form-control", @placeholder = "Sender" })
             </div>
             <div class="form-group">
                 @Html.TextBoxFor(model => model.Subject, new { @class = "form-control", @placeholder = "Message Subject" })

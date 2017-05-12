@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GDWEBSolution.Models.Message;
 
 namespace GDWEBSolution.Controllers.Message
 {
@@ -52,17 +53,47 @@ namespace GDWEBSolution.Controllers.Message
         // POST: /SPMessage/Create
 
         [HttpPost]
-        public ActionResult NewMessage(FormCollection collection)
+        public ActionResult NewMessage(StoPMessageHeaderModel Model)
         {
+            string result = "Success";
             try
             {
-                // TODO: Add insert logic here
+                tblSchoolToParentMessageHeader MsgHead = new tblSchoolToParentMessageHeader();
+                MsgHead.SchoolId = "CKC";
+                MsgHead.MessageId = Model.MessageId;
+                MsgHead.Message = Model.Message.Replace("\r\n", "<br />");
+                MsgHead.CreatedBy = "ADMIN";
+                MsgHead.CreatedDate = DateTime.Now;
+                MsgHead.MessageType = Model.MessageType;
+                MsgHead.IsActive = "Y";
+                MsgHead.Sender = Model.Sender;
+                MsgHead.Subject = Model.Subject;
+                //MsgHead.Attachments = 0;
 
-                return RedirectToAction("Index");
+                tblSchoolToParentMessageDetail MsgDetail = new tblSchoolToParentMessageDetail();
+                MsgDetail.SchoolId = "CKC";
+                MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
+                MsgDetail.ParentId = Model.ParentId;
+                MsgDetail.IsActive = "Y";
+                MsgDetail.Status = "N";
+                MsgDetail.CreatedBy = "ADMIN";
+                MsgDetail.CreatedDate = DateTime.Now;
+
+                Connection.tblSchoolToParentMessageHeaders.Add(MsgHead);
+                Connection.SaveChanges();
+                Connection.tblSchoolToParentMessageDetails.Add(MsgDetail);
+
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
             {
-                return View();
+                Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", dbEx);
+                return Json("Validation", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult ShowGradeClass(string GradeId)
