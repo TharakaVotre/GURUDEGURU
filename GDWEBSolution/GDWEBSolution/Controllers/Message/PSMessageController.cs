@@ -50,11 +50,6 @@ namespace GDWEBSolution.Controllers.Message
             }
         }
 
-        public ActionResult ShowInbox()
-        {
-            return PartialView("InboxView");
-        }
-
         public ActionResult ShowNewMessage()
         {
             try
@@ -119,9 +114,9 @@ namespace GDWEBSolution.Controllers.Message
                 MsgDetail.CreatedBy = "ADMIN";
                 MsgDetail.CreatedDate = DateTime.Now;
                 Connection.tblParentToSchoolMessageHeaders.Add(MsgHead);
-                Connection.SaveChanges();
+                
                 Connection.tblParentToSchoolMessageDetails.Add(MsgDetail);
-
+                Connection.SaveChanges();
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
@@ -248,6 +243,52 @@ namespace GDWEBSolution.Controllers.Message
             var file = Connection.tblParentToSchollMessageAttachments.FirstOrDefault(x => x.SeqNo == SeqNo);
             byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(file.AttachementPath));
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file.AttachementName);
+        }
+
+        public ActionResult ShowInbox()
+        {
+            var STQlist = Connection.SMGT_getParentInbox(2).ToList(); //ParentId session
+            List<StoPMessageHeaderModel> List = STQlist.Select(x => new StoPMessageHeaderModel
+            {
+                SchoolId = x.SchoolId,
+                MessageId = x.MessageId,
+                MessageType = x.MessageType,
+                ParentId = x.ParentId, 
+                Sender = x.Sender,
+                Message = x.Message.Replace("<br />", " "),
+                IsActive = x.IsActive,
+                SeqNo = x.SeqNo,
+                Subject = x.Subject,
+                CreatedDate = x.CreatedDate,
+
+            }).ToList();
+            return PartialView("InboxView", List);
+        }
+
+        public ActionResult ViewInboxMessage(long MessageId)
+        {
+            StoPMessageHeaderModel M = new StoPMessageHeaderModel();
+            try
+            {
+                var H = Connection.SMGT_getStoPMessageView(MessageId,2).SingleOrDefault();
+                M.MessageId = H.MessageId;
+                M.Message = H.Message.Replace("<br />", "\r\n");
+                M.MessageType = Convert.ToInt64(H.MessageType);
+                M.MessageTypeDes = H.MessageTypeDescription;
+                M.SchoolId = H.SchoolId;
+                M.SeqNo = H.SeqNo;
+                M.Subject = H.Subject;
+                M.Sender = H.Sender;
+
+
+                //List<tblParentToSchollMessageAttachment> AList = Connection.tblParentToSchollMessageAttachments.Where(x => x.MessageId == MessageId).ToList();
+                //M.AttachmentList = AList;
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("ActionResult ViewInboxMessage(long MessageId) @ PSMessageController", Ex);
+            }
+            return PartialView("InboxMsgView", M);
         }
     }
 }

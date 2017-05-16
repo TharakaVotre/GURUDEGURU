@@ -46,6 +46,16 @@ namespace GDWEBSolution.Controllers.Message
 
             List<tblMessageType> MsgTypeList = Connection.tblMessageTypes.ToList();
             ViewBag.MessageTypesDropdown = new SelectList(MsgTypeList, "MessageTypeId", "MessageTypeDescription");
+
+            var MsgId = Connection.tblParameters.Where(x => x.ParameterId == "PSMHS").Select(x => x.ParameterValue).SingleOrDefault();
+            long a = Convert.ToInt64(MsgId) + 1;
+
+            tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "PSMHS");
+            TCtable.ParameterValue = a.ToString();
+            Connection.SaveChanges();
+
+            ViewBag.Message_Id = a.ToString();
+
             return View();
         }
 
@@ -80,9 +90,9 @@ namespace GDWEBSolution.Controllers.Message
                 MsgDetail.CreatedDate = DateTime.Now;
 
                 Connection.tblSchoolToParentMessageHeaders.Add(MsgHead);
-                Connection.SaveChanges();
+               //S Connection.SaveChanges();
                 Connection.tblSchoolToParentMessageDetails.Add(MsgDetail);
-
+                Connection.SaveChanges();
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)

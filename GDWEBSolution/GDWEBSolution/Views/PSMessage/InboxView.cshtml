@@ -1,4 +1,6 @@
-﻿<div class="row">
+﻿
+@model IEnumerable<GDWEBSolution.Models.Message.StoPMessageHeaderModel>
+<div class="row">
     <div class="col-sm-3 col-md-2">
         <a href="#" class="btn btn-primary btn-sm btn-block" role="button" onclick="ShowViewNewMSG(0)">New Message</a>
     </div>
@@ -25,86 +27,85 @@
         <!-- Tab panes -->
 
         <div class="inbox fade in active" id="home">
-            <div class="list-group">
-                <a href="#" class="list-group-item">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox">
-                        </label>
-                    </div>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="name" style="min-width: 120px; display: inline-block;">Message Header</span>
-                    <span class="">--------------------</span>
-                    <span class="text-muted" style="font-size: 11px;">- More content here</span>
-                    <span class="badge">12:10 AM</span>
-                    <!--<span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>-->
-                </a>
-                <a href="#" class="list-group-item">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox">
-                        </label>
-                    </div>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="name" style="min-width: 120px; display: inline-block;">Message Header</span>
-                    <span class="">--------------------</span>
-                    <span class="text-muted" style="font-size: 11px;">- More content here</span>
-                    <span class="badge">12:10 AM</span>
-                    <!--<span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>-->
-                </a>
-                <a href="#" class="list-group-item">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox">
-                        </label>
-                    </div>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="name" style="min-width: 120px; display: inline-block;">Message Header</span>
-                    <span class="">--------------------</span>
-                    <span class="text-muted" style="font-size: 11px;">- More content here</span>
-                    <span class="badge">12:10 AM</span>
-                    <!--<span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>-->
-                </a>
-                <a href="#" class="list-group-item">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox">
-                        </label>
-                    </div>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="name" style="min-width: 120px; display: inline-block;">Message Header</span>
-                    <span class="">--------------------</span>
-                    <span class="text-muted" style="font-size: 11px;">- More content here</span>
-                    <span class="badge">12:10 AM</span>
-                    <!--<span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>-->
-                </a>
-                <a href="#" class="list-group-item">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox">
-                        </label>
-                    </div>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="name" style="min-width: 120px; display: inline-block;">Message Header</span>
-                    <span class="">--------------------</span>
-                    <span class="text-muted" style="font-size: 11px;">- More content here</span>
-                    <span class="badge">12:10 AM</span>
-                    <!--<span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>-->
-                </a>
-            </div>
-            <div class="pull-right">
-                <!--<span class="text-muted"><b>1</b>–<b>50</b> of <b>160</b></span>-->
-                <div class="btn-group btn-group-sm">
-                    <button type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </button>
-                    <button type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </button>
-                </div>
+            <div class="">
+                @if (Model != null)
+                {<table class="table table-inbox table-hover">
+                            <tbody>
+                     
+                    @foreach (var item in Model)
+                    {
+                        <tr class="">
+                            <td class="inbox-small-cells">
+                                <input type="checkbox" class="mail-checkbox">
+                            </td>
+                            @*<td class="inbox-small-cells"><i class="fa fa-star"></i></td>*@
+                            @if(item.Sender.Length > 30){
+                              <td class="view-message dont-show">@item.Sender.Substring(0,26)....</td>
+                            }
+                            else{<td class="view-message dont-show">@item.Sender</td>}
+                            @if(item.Subject == null){
+                                if (item.Message.Length > 20)
+                                {
+                                  <td class="view-message">No Subject @*: @item.Message.Substring(0,20) ....*@ </td>
+                                }
+                                else{
+                                  <td class="view-message">No Subject @*: @item.Message*@ </td>
+                                }
+                            }else{
+                                if (item.Subject.Length > 120)
+                                {
+                                    if(item.Message.Length > 20){
+                                       <td class="view-message">@item.Subject  @*Substring(0,20) : @item.Message.Substring(0,20)*@ </td>
+                                    }
+                                    else{
+                                      <td class="view-message">@item.Subject  @*.Substring(0,20) : @item.Message*@ </td>  
+                                    }
+                                }
+                                else{
+                                    if(item.Message.Length > 20){
+                                       <td class="view-message">@item.Subject @*: @item.Message.Substring(0,20)*@ </td>
+                                    }
+                                    else{
+                                      <td class="view-message">@item.Subject @*: @item.Message*@ </td>  
+                                    }
+                                }
+                               
+                            }
+                            <td class="view-message inbox-small-cells"></td>
+                            @if (item.CreatedDate.ToString("dd/MM/yyyy").Equals(DateTime.Now.ToString("dd/MM/yyyy"))){
+                            <td class="view-message text-right">@item.CreatedDate.ToString("h:mm tt")</td>
+                            }
+                            else
+                            {
+                                <td class="view-message text-right">@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                            }
+                            <td class="view-message text-right"><a href="#" onclick="ShowSentMsg(@item.MessageId)">View</a></td>
+                        </tr>
+                    }
+                                </tbody>
+                    </table>
+                }
+
             </div>
         </div>
 
 
     </div>
 </div>
+<script src="~/Scripts/paginathing.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+		$('.table tbody').paginathing({
+	    perPage: 40,
+	    insertAfter: '.table'
+		});
+    });
+
+    var ShowSentMsg = function (msgid) {
+        var Url = "/PSMessage/ViewInboxMessage?MessageId=" + msgid;
+        $("#MyModelBody").load(Url, function () {
+            //$('#myModal').modal({ backdrop: 'static', keyboard: false })
+            $("#myModal").modal("show");
+        })
+    }
+</script>

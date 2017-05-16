@@ -12,6 +12,7 @@ namespace GDWEBSolution.Models.Message
         public string Sender { get; set; }
         public string Subject { get; set; }
         public long MessageType { get; set; }
+        public string MessageTypeDes { get; set; }
         public string Message { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
@@ -26,5 +27,7 @@ namespace GDWEBSolution.Models.Message
         public string GradeId { set; get; }
         public string ClassId { set; get; }
         public string ExActivityCode { set; get; }
+
+        public string whichParent { set; get; }
     }
 }

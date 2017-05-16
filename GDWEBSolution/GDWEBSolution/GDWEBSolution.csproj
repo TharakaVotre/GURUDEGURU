@@ -414,6 +414,9 @@
     <Compile Include="Models\SMGTloadScholExtraCadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGT_getParentInbox_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGT_getSchoolExactivityParent_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -421,6 +424,9 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGT_getSchoolGreadClassParent_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGT_getStoPMessageView_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Student\OptionalSubjectModel.cs" />
@@ -1266,6 +1272,7 @@
     <Content Include="Views\SPMessage\loadClass.cshtml" />
     <Content Include="Views\SPMessage\loadParent.cshtml" />
     <Content Include="Views\SPMessage\loadExParent.cshtml" />
+    <Content Include="Views\PSMessage\InboxMsgView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -21,6 +21,7 @@ namespace GDWEBSolution.Models
     
         public string SchoolId { get; set; }
         public long MessageId { get; set; }
+        public string Sender { get; set; }
         public string Subject { get; set; }
         public long MessageType { get; set; }
         public string Message { get; set; }
@@ -29,7 +30,6 @@ namespace GDWEBSolution.Models
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
-        public string Sender { get; set; }
     
         public virtual tblMessageType tblMessageType { get; set; }
         public virtual tblSchool tblSchool { get; set; }
