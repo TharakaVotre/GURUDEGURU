@@ -280,6 +280,7 @@ namespace GDWEBSolution.Controllers.Teacher
                     Connection.SaveChanges();
 
                     result = "Success";
+
                 }
                 else
                 {

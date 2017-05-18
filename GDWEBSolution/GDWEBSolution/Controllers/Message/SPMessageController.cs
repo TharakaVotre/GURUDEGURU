@@ -5,7 +5,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GDWEBSolution.Models.Message;
-
+/* ===============================
+ * AUTHOR     : G.M. Tharaka Madusanka
+ * CREATE DATE     : May 5 2017
+*/
 namespace GDWEBSolution.Controllers.Message
 {
     public class SPMessageController : Controller
@@ -126,6 +129,29 @@ namespace GDWEBSolution.Controllers.Message
             ViewBag.ExactParents = new SelectList(exl, "ParentId", "ParentName");
 
             return PartialView("loadExParent");
+        }
+
+        public ActionResult ShowInboxMessages()
+        {
+            var STQlist = Connection.SMGT_getTeacherInbox("bond").ToList(); //ParentId session
+            List<PtoSMessageHeaderModel> List = STQlist.Select(x => new PtoSMessageHeaderModel
+            {
+                SchoolId = x.SchoolId,
+                MessageId = x.MessageId,
+                MessageTypeDes = x.MessageTypeDescription,
+                ParentId = x.ParentId, 
+                ParentName = x.ParentName,
+                Message = x.Message.Replace("<br />", " "),
+                Status = x.Status,
+                IsActive = x.IsActive,
+                SeqNo = x.SeqNo,
+                RecepientUser = x.RecepientUser,
+                TeacherName = x.Name,
+                Subject = x.Subject,
+                CreatedDate = x.CreatedDate,
+
+            }).ToList();
+            return PartialView("InboxView", List);
         }
         //
         // GET: /SPMessage/Edit/5

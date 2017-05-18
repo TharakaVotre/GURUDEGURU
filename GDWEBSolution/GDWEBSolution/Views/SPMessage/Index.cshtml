@@ -48,14 +48,14 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#inboxbody').load('/SPMessage/ShowInbox');
+        $('#inboxbody').load('/SPMessage/ShowInboxMessages');
         $('#inboxbody').show();
         setInterval('loadClassList();', 10000);
     });
         
     var loadClassList = function () {
         debugger
-        $('#inboxbody').load('/SPMessage/ShowInbox');
+        $('#inboxbody').load('/SPMessage/ShowInboxMessages');
         document.getElementById("id").innerHTML = document.getElementById("id").innerHTML + 1;
         $('#inboxbody').show();
     }

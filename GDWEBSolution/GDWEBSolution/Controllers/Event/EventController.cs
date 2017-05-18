@@ -6,7 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+/* ===============================
+ * AUTHOR     : G.M. Tharaka Madusanka
+ * CREATE DATE     : April 26 2017
+*/
 namespace GDWEBSolution.Controllers.Event
 {
     public class EventController : Controller

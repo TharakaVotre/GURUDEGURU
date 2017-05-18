@@ -7,7 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+/* ===============================
+ * AUTHOR     : G.M. Tharaka Madusanka
+ * CREATE DATE     : March 17 2017
+*/
 namespace GDWEBSolution.Controllers.Message
 {
     public class PSMessageController : Controller

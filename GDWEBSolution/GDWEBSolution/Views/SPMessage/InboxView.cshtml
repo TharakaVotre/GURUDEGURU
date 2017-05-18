@@ -1,0 +1,111 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Message.PtoSMessageHeaderModel>
+
+<div class="row">
+    <div class="col-sm-3 col-md-2">
+        <a href="#" class="btn btn-primary btn-sm btn-block" role="button" onclick="ShowViewNewMSG(0)">New Message</a>
+    </div>
+    <div class="col-sm-9 col-md-10">
+
+        <button type="button" class="btn btn-default" data-toggle="tooltip" title="Refresh">
+            &nbsp;<span class="glyphicon glyphicon-refresh"></span>&nbsp;</button>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-3 col-md-2">
+
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="~/SPMessage/Index"><span class="badge pull-right">0</span> Inbox </a>
+            </li>
+            <li class="active"><a href="~/SPMessage/Sent" onclick="">Sent</a></li>
+
+        </ul>
+    </div>
+    <div class="col-sm-9 col-md-10">
+        <!-- Nav tabs -->
+
+        <!-- Tab panes -->
+
+        <div class="inbox fade in active" id="home">
+            <div class="">
+                @if (Model != null)
+                {<table class="table table-inbox table-hover">
+                            <tbody>
+                     
+                    @foreach (var item in Model)
+                    {
+                        <tr class="">
+                            <td class="inbox-small-cells">
+                                <input type="checkbox" class="mail-checkbox">
+                            </td>
+                            @*<td class="inbox-small-cells"><i class="fa fa-star"></i></td>*@
+                            @if(item.ParentName.Length > 30){
+                              <td class="view-message dont-show">@item.ParentName.Substring(0,26)....</td>
+                            }
+                            else{<td class="view-message dont-show">@item.ParentName</td>}
+                            @if(item.Subject == null){
+                                if (item.Message.Length > 20)
+                                {
+                                  <td class="view-message">No Subject @*: @item.Message.Substring(0,20) ....*@ </td>
+                                }
+                                else{
+                                  <td class="view-message">No Subject @*: @item.Message*@ </td>
+                                }
+                            }else{
+                                if (item.Subject.Length > 120)
+                                {
+                                    if(item.Message.Length > 20){
+                                       <td class="view-message">@item.Subject  @*Substring(0,20) : @item.Message.Substring(0,20)*@ </td>
+                                    }
+                                    else{
+                                      <td class="view-message">@item.Subject  @*.Substring(0,20) : @item.Message*@ </td>  
+                                    }
+                                }
+                                else{
+                                    if(item.Message.Length > 20){
+                                       <td class="view-message">@item.Subject @*: @item.Message.Substring(0,20)*@ </td>
+                                    }
+                                    else{
+                                      <td class="view-message">@item.Subject @*: @item.Message*@ </td>  
+                                    }
+                                }
+                               
+                            }
+                            <td class="view-message inbox-small-cells"></td>
+                            @if (item.CreatedDate.ToString("dd/MM/yyyy").Equals(DateTime.Now.ToString("dd/MM/yyyy"))){
+                            <td class="view-message text-right">@item.CreatedDate.ToString("h:mm tt")</td>
+                            }
+                            else
+                            {
+                                <td class="view-message text-right">@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                            }
+                            <td class="view-message text-right"><a href="#" onclick="ShowSentMsg(@item.MessageId)">View</a></td>
+                        </tr>
+                    }
+                                </tbody>
+                    </table>
+                }
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script src="~/Scripts/paginathing.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+		$('.table tbody').paginathing({
+	    perPage: 40,
+	    insertAfter: '.table'
+		});
+    });
+
+    var ShowSentMsg = function (msgid) {
+        var Url = "/PSMessage/ViewPSMessage?MessageId=" + msgid;
+        $("#MyModelBody").load(Url, function () {
+            //$('#myModal').modal({ backdrop: 'static', keyboard: false })
+            $("#myModal").modal("show");
+        })
+    }
+</script>
