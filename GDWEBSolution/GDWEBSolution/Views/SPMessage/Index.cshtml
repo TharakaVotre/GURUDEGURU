@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">Inbox<label id="id">1</label></div>
+            <div class="panel-heading">Inbox<label id="id">-</label></div>
             <div class="panel-body" id="inboxbody">
             </div>
         </div>
@@ -48,16 +48,16 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#inboxbody').load('/SPMessage/ShowInbox');
+        $('#inboxbody').load('/SPMessage/ShowInboxMessages');
         $('#inboxbody').show();
         setInterval('loadClassList();', 10000);
     });
         
     var loadClassList = function () {
         debugger
-        $('#inboxbody').load('/SPMessage/ShowInbox');
-        document.getElementById("id").innerHTML = document.getElementById("id").innerHTML + 1;
-        $('#inboxbody').show();
+        $('#inboxbody').load('/SPMessage/ShowInboxMessages');
+       // document.getElementById("id").innerHTML = document.getElementById("id").innerHTML + 1;
+       // $('#inboxbody').show();
     }
 
     var ShowViewNewMSG = function (bookid) {

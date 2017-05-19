@@ -9,8 +9,10 @@ namespace GDWEBSolution.Models.Message
     {
         public string SchoolId { get; set; }
         public long MessageId { get; set; }
+        public string Sender { get; set; }
         public string Subject { get; set; }
         public long MessageType { get; set; }
+        public string MessageTypeDes { get; set; }
         public string Message { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
@@ -20,10 +22,13 @@ namespace GDWEBSolution.Models.Message
 
         public long SeqNo { get; set; }
         public long ParentId { get; set; }
+        public string ParentName { get; set; }
 
         //For dropdowns
         public string GradeId { set; get; }
         public string ClassId { set; get; }
         public string ExActivityCode { set; get; }
+
+        public string whichParent { set; get; }
     }
 }

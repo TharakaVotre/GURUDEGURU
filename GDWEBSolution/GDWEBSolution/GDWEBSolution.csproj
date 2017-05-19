@@ -406,6 +406,9 @@
     <Compile Include="Models\SMGTgetSchoolTeacher_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGTgetSchooltoParentSentMail_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGTgetStudentExtraCadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -445,6 +448,12 @@
     <Compile Include="Models\SMGTloadScholExtraCadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGT_getParentInbox_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGT_getParentToSchoolSentMail_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGT_getSchoolExactivityParent_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -452,6 +461,15 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGT_getSchoolGreadClassParent_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGT_getSchooltoParentSentMail_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGT_getStoPMessageView_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGT_getTeacherInbox_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Student\OptionalSubjectModel.cs" />
@@ -1313,6 +1331,9 @@
     <Content Include="Views\School\ShowSchoolsubjects.cshtml" />
     <Content Include="Views\School\Subject.cshtml" />
     <Content Include="Views\School\Success.cshtml" />
+    <Content Include="Views\PSMessage\InboxMsgView.cshtml" />
+    <Content Include="Views\SPMessage\InboxView.cshtml" />
+    <Content Include="Views\SPMessage\ViewInboxMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
