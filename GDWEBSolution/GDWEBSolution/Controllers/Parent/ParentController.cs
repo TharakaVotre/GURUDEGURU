@@ -90,15 +90,24 @@ namespace GDWEBSolution.Controllers.Parent
             {
                 Model.IsActive = "Y";
                 Model.CreatedBy = "User1";
-                Model.UserId = "Parent1";
-                if (ModelState.IsValid)
+
+                bool parentID = Connection.tblParents.Any(x => x.UserId==Model.UserId);
+
+                if (parentID == false)
                 {
+                    if (ModelState.IsValid)
+                    {
 
-                    Connection.SMGTsetParent(Model.ParentName, Model.RelationshipId, Model.Address1, Model.Address2, Model.Address3, Model.HomeTelephone, Model.PersonalEmail, Model.PersonalMobile, Model.Occupation, Model.OfficeAddress1, Model.OfficeAddress2, Model.Address3, Model.OfficePhone, Model.officeEmail, Model.NIC, Model.UserId, Model.ImagePath, Model.DateofBirth, Model.CreatedBy, Model.IsActive);
-                    Connection.SaveChanges();
+                        Connection.SMGTsetParent(Model.ParentName, Model.RelationshipId, Model.Address1, Model.Address2, Model.Address3, Model.HomeTelephone, Model.PersonalEmail, Model.PersonalMobile, Model.Occupation, Model.OfficeAddress1, Model.OfficeAddress2, Model.Address3, Model.OfficePhone, Model.officeEmail, Model.NIC, Model.UserId, Model.ImagePath, Model.DateofBirth, Model.CreatedBy, Model.IsActive);
+                        Connection.SaveChanges();
 
-                    string result = "Success";
-                    ModelState.Clear();
+                        string result = "Success";
+                        ModelState.Clear();
+
+
+                    }
+                }
+                else { 
                 
                 
                 }

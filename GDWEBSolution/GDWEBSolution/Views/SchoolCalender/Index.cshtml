@@ -163,7 +163,7 @@
                
                     if (item.StartMonth == Month || item.EndMonth == Month || check)
                     {
-                        <li><span id="janshow" class="glyphicon glyphicon-hand-right"> @item.DateComment (From:-@item.FromDate.ToShortDateString() ,To:-@item.ToDate.ToShortDateString() )</span></li>
+                        <li><span id="janshow" class="glyphicon glyphicon-hand-right"><b> @item.DateComment (From:-@item.FromDate.ToShortDateString() ,To:-@item.ToDate.ToShortDateString() )</b></span></li>
 
 
                     }
@@ -222,12 +222,13 @@
                         string monthFirstDay = "01/01/";
 
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary monthtab"   onclick=Show(1,"janshow","djanshow")><b>January</b> <span id="janshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" onclick=Show(1,"janshow","djanshow")><b>January</b> <span id="janshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a>
                    
                     </h3>
                     <div id="djanshow" class="summery">
                         <ul>@TblDataDisplay(years, Janu, Jannextmonth, monthFirstDay, "H")</ul>
 
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
 
                     </div>
                 </div>
@@ -248,11 +249,12 @@
                         string FEbmonthFirstDay = "02/01/";
 
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(2,"febshow","dfebshow")>February<span id="febshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" onclick=Show(2,"febshow","dfebshow")><b>February</b><span id="febshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="dfebshow" class="summery">
                         <ul>@TblDataDisplay(years, Feb, Febnextmonth, FEbmonthFirstDay, "H")</ul>
 
-                    
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
+
                     </div>
                 </div>
                 <div id="2" style="display: none;border:1px solid gray; padding: 3px; border-radius: 4px">
@@ -271,10 +273,11 @@
                         string MarbmonthFirstDay = "03/01/";
 
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(3,"marshow","dmarshow")>March<span id="marshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" onclick=Show(3,"marshow","dmarshow")><b>March</b><span id="marshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="dmarshow" class="summery">
                         <ul>@TblDataDisplay(years, Mar, Marnextmonth, MarbmonthFirstDay, "H")</ul>
 
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
                     
                     </div>
                     </div>
@@ -291,9 +294,10 @@
                         string Aprnextmonth = "05/01/";
                         string ApimonthFirstDay = "04/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(4,"apishow","dapishow")>April<span id="apishow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" onclick=Show(4,"apishow","dapishow")><b>April</b><span id="apishow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="dapishow" class="summery">
                         <ul>@TblDataDisplay(years, Apr, Aprnextmonth, ApimonthFirstDay, "H")</ul>
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
 
                     </div>
                 </div>
@@ -310,10 +314,11 @@
                         string Maynextmonth = "06/01/";
                         string MaymonthFirstDay = "05/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(5,"mayshow","dmayshow")>May<span id="mayshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" onclick=Show(5,"mayshow","dmayshow")><b>May</b><span id="mayshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="dmayshow" class="summery">
                         <ul>@TblDataDisplay(years, May, Maynextmonth, MaymonthFirstDay, "H")</ul>
 
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
                     
                     </div>
                 </div>
@@ -330,9 +335,10 @@
                         string junnextmonth = "07/01/";
                         string junmonthFirstDay = "06/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(6,"junshow","djunshow")>June<span id="junshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" onclick=Show(6,"junshow","djunshow")><b>June</b><span id="junshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="djunshow" class="summery">
                         <ul>@TblDataDisplay(years, jun, junnextmonth, junmonthFirstDay, "H")</ul>
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
 
                     </div>
                   </div>
@@ -349,9 +355,10 @@
                         string juynextmonth = "08/01/";
                         string juymonthFirstDay = "07/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(7,"juyshow","djuyshow")>July<span id="juyshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" onclick=Show(7,"juyshow","djuyshow")><b>July</b><span id="juyshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="djuyshow" class="summery">
                         <ul>@TblDataDisplay(years, juy, juynextmonth, juymonthFirstDay, "H")</ul>
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
 
                     </div>
                   </div>
@@ -369,9 +376,10 @@
                         string Augnextmonth = "09/01/";
                         string AugmonthFirstDay = "08/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(8,"augshow","daugshow")>August<span id="augshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" onclick=Show(8,"augshow","daugshow")><b>August</b><span id="augshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="daugshow" class="summery">
                         <ul>@TblDataDisplay(years, Aug, Augnextmonth, AugmonthFirstDay, "H")</ul>
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
 
                     
                     </div>
@@ -389,9 +397,10 @@
                         string Sepnextmonth = "11/01/";
                         string SepmonthFirstDay = "10/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(9,"sepshow","dsepshow")>September<span id="sepshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" onclick=Show(9,"sepshow","dsepshow")><b>September</b><span id="sepshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="dsepshow" class="summery">
                         <ul>@TblDataDisplay(years, Sep, Sepnextmonth, SepmonthFirstDay, "H")</ul>
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
 
                         
                     </div>
@@ -409,9 +418,10 @@
                         string OCnextmonth = "11/01/";
                         string OCmonthFirstDay = "10/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(10,"ocshow","docshow")>October <span id="ocshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" onclick=Show(10,"ocshow","docshow")><b>October</b> <span id="ocshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="docshow" class="summery">
                         <ul>@TblDataDisplay(years, OC, OCnextmonth, OCmonthFirstDay, "H")</ul>
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
 
                         
                     </div>
@@ -429,9 +439,10 @@
                         string Nonextmonth = "12/01/";
                         string NomonthFirstDay = "10/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  onclick=Show(11,"noshow","dnoshow")>November <span id="noshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" onclick=Show(11,"noshow","dnoshow")><b>November</b> <span id="noshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="dnoshow" class="summery">
                         <ul>@TblDataDisplay(years, No, Nonextmonth, NomonthFirstDay, "H")</ul>
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
 
                         
                     </div>
@@ -450,9 +461,10 @@
                         int nextyear = years + 1;
                         string DemonthFirstDay = "12/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"  id="de" onclick=Show(12,"deshow","ddeshow")>December<span id="deshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><a href="#" class="btn btn-block btn-primary" style=" font-size: 16px; padding: 10px;" id="de" onclick=Show(12,"deshow","ddeshow")><b>December</b><span id="deshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="ddeshow" class="summery">
                         <ul>@TblDataDisplay(nextyear, De, Denextmonth, DemonthFirstDay, "H")</ul>
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);"></div>
 
                    </div>
                 </div>
@@ -500,11 +512,10 @@
 
     .summery {
         padding-left: 50px;
-        border: solid 3px;
-        border-radius: 8px;
+      
         padding: 5px;
         margin-top: -10px;
-        background-color: rgba(147, 197, 75, 0.68);
+       
     }
 </style>
 

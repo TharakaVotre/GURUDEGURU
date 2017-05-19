@@ -11,7 +11,7 @@
     
     <div class="form-horizontal">
         <div class="modal-header">
-            <h4 class="modal-title">Student Grade Advance</h4>
+            <h4 class="modal-title">Update student grade</h4>
         </div>
 
         <div class="panel panel-default">
@@ -19,21 +19,30 @@
                
                 <div class="form-group">
                     <div class="row">
-                        <lable class="col-sm-2 control-label"> Grade</lable>
-                        
+                        <lable class="col-sm-2 control-label"> Acadamic year</lable>
                         <div class="col-sm-3">
-
-                            @Html.DropDownList("GradeId","--Select Grade--")
-
+                            @Html.TextBox("AcedamicYear")
                         </div>
-                        <div>
-                            <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+                        <lable class="col-sm-2 control-label"> Grade</lable>
+                        <div class="col-sm-3">
+                            @Html.DropDownList("GradeId", ViewBag.country as List<SelectListItem>, "", new { @class = "form-control" })
+                        </div>
                         </div>
                     </div>
-                </div>
-                
-              
-            </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <lable class="col-sm-2 control-label"> Class</lable>
+                                <div class="col-sm-3">
+                                    @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-5">
+                                    <button type="submit" style="float:right" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
               <div class="panel-body">
                 <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
                     <thead>
@@ -129,17 +138,55 @@
                 $("#myModal").modal("show");
             })
         }
+
+       
+      
     </script>
 
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        $("#GradeId").change(function () {
+            $("#ClassId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getstate")',
+
+                dataType: 'json',
+
+                data: { id: $("#GradeId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#ClassId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+
+</script>
 <style>
-    #GradeId {
+    #AcedamicYear {
         border: 1px solid #e0e0e0;
         padding: 5px 8px;
         color: #616161;
         background: #fff;
         box-shadow: none !important;
         display: block;
-        width: 80%;
+        width: 100%;
         height: 32px;
         font-size: 14px;
         line-height: 1.45;

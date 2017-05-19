@@ -28,10 +28,13 @@
     <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
     <link href="~/Content/css/bootstrap-datepicker3.css" rel="stylesheet" />
     @* @Scripts.Render("~/bundles/modernizr")*@
-    @*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">*@
-    @* <script src="https://code.jquery.com/jquery-1.12.4.js"></script>*@
-    @*    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-ui-timepicker-addon.js"></script>
+    <link href="~/Content/css/css/jquery-ui-timepicker-addon.css" rel="stylesheet" />
+
 
 </head>
 <body>
@@ -162,6 +165,29 @@
                     <ul>
                         <li><a href="~/SchoolCalender/Index">School Calender</a></li>
                         <li><a href="~/SchoolCalender/ParentView">School Calender View</a></li>
+                    </ul>
+                </li>
+                 <li>
+                    <a href="#"><i class="fa fa-desktop"></i>Report</a>
+                    <ul>
+                        <li><a href="~/StudentReport/Index">Attention required Subject</a></li>
+                        <li><a href="~/StudentReport/ParentReport">Attention required Subject Parent View</a></li>
+                    </ul>
+                </li>
+
+                 <li>
+                    <a href="#"><i class="fa fa-desktop"></i>Evaluation</a>
+                    <ul>
+                        <li><a href="~/EvaluationbySchool/Create">Evaluation By School</a></li>
+                       
+                    </ul>
+                </li>
+
+                 <li>
+                    <a href="#"><i class="fa fa-desktop"></i>MarkSheet</a>
+                    <ul>
+                        <li><a href="~/Marksheet/Index">Mark Sheet</a></li>
+                       
                     </ul>
                 </li>
                 <!-- Account from above -->

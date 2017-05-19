@@ -85,7 +85,7 @@
 
         }
         <div class="col-sm-4">
-            @Html.DropDownListFor(model => model.AcademicYear, listItems, "", new { @class = "form-control", @placeholder = "Academic Year", @onchange = "loadyrSub(this.value)"})
+            @Html.DropDownListFor(model => model.AcademicYear, ViewBag.AcademicYear as SelectList, "", new { @class = "form-control", @placeholder = "Academic Year", @onchange = "loadyrSub(this.value)"})
 
             </div>
           

@@ -30,9 +30,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.ModifiedDate)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.IsActive)
-                            </th>
+                            
                             <th></th>
                         </tr>
                     </thead>
@@ -60,20 +58,12 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ModifiedDate)
                                 </td>
-                                @if (item.IsActive == "Y")
-                                {
-                                    <td>YES</td>
-                                }
-                                else
-                                {
-                                    <td>NO
-                                    </td>
-                                }
+                                
                                 <td>
-                                    <a href="#" class="hvr-buzz-out" onclick="DetailsView(@item.TeacherCategoryId)">Edit </a> |
-                                    <a href="#" class="hvr-buzz-out" onclick="DetailsView(@item.TeacherCategoryId)">Delete </a> 
-                                    @*<a class="btn btn-info" onclick="EditView(@item.TeacherCategoryId)"><span class="fa fa-pencil"></span>Edit </a>
-                                    <a class="btn btn-danger" onclick="DeleteView(@item.TeacherCategoryId)"><span class="fa fa-trash"></span>Delete</a>*@
+                                    @*<a href="#" class="hvr-buzz-out" onclick="DetailsView(@item.TeacherCategoryId)">Edit </a> |
+                                    <a href="#" class="hvr-buzz-out" onclick="DetailsView(@item.TeacherCategoryId)">Delete </a>*@ 
+                                    <a class="hvr-buzz-out" onclick="EditView(@item.TeacherCategoryId)"><span class="fa fa-pencil"></span>Edit </a>
+                                    <a class="hvr-buzz-out" onclick="DeleteView(@item.TeacherCategoryId)"><span class="fa fa-trash"></span>Delete</a>
                                 </td>
                             </tr>
     

@@ -1,0 +1,243 @@
+﻿@model GDWEBSolution.Models.Evaluation.EvaluationModel
+
+
+<form id="FrmEVClass" class="form-horizontal">
+    <div class="form-group">
+
+
+
+
+        @Html.LabelFor(m => m.SchoolId1, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.DropDownListFor(model => model.SchoolId1, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onchange = "loadGradese(this.value)" })
+
+            @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
+
+        </div>
+        <div class="div123">
+            @Html.LabelFor(m => m.Grade, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-4">
+                @Html.DropDownListFor(model => model.Grade, ViewBag.SchoolGradeList as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onchange = "loadClasse(this.value)" })
+            </div>
+        </div>
+        <br/><br/>
+
+        <div class="div123">
+            @Html.LabelFor(m => m.Class, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-3">
+                @Html.DropDownListFor(model => model.Class, ViewBag.classDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onclick = "GetStudentTable1(this.value)" })
+            </div>
+        </div>
+
+
+        
+            @Html.LabelFor(m => m.ScheduledDate, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.ScheduledDate, "", new { @class = "form-control", @placeholder = "School Group" })
+            </div>
+        <br/><br/>
+            
+       
+        
+            @Html.LabelFor(m => m.ScheduledTime, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-3">
+                @Html.TextBoxFor(model => model.ScheduledTime, "", new { @class = "form-control", @placeholder = "School Group" })
+            </div>
+           
+        
+
+        
+        <div class="div123">
+            @Html.LabelFor(m => m.EvaluationNo, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-4">
+                @Html.DropDownListFor(model => model.EvaluationNo, ViewBag.EvaluationDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onclick = "GetStudentTable1(this.value)" })
+            </div>
+        </div>
+
+        <br/><br /><br/>
+
+
+        <div id="showstds" style="display:none">
+            <div style="text-align:center;">
+                <table class="table table-striped table-hover table-bordered" style="width:66%; margin: 0 auto; text-align:left;">
+                    <thead>
+                        <tr>
+
+                            <th><input type="checkbox" name="chooseAllRecipient" id="chooseAllRecipient" /></th>
+                            <th class="center">Student Names</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody id="contacts"></tbody>
+                </table>
+
+            </div>
+        </div>
+
+     
+
+
+        <div class="col-sm-2">
+            <button type="reset" id="btnAddQualification" onclick="AddEvolutionclz()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+        </div>
+    </div>
+    <div class="hr-dashed"></div>
+    @*     <h4 style="padding-left:120px;">Qualifications</h4>
+        <div class="hr-dashed"></div>*@
+
+</form>
+
+<script>
+
+    var AddEvolutionclz = function () {
+        //debugger
+        var myformdata = $("#FrmEVClass").serialize();
+
+        //if (!$("#FrmANT").valid()) {
+        //    return false;
+        //}
+
+        $.ajax({
+
+            type: "POST",
+            url: "/EvaluationbySchool/Addevaluationdataforclass",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                // $("#myModal").modal("hide");
+                if (result != "Exception" && result != "Exits") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+                    $("#SchoolId").val(result);
+
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + result);
+                    $("#SuccesLable").text("Grade Added");
+                    // $("#btnAddQualification").prop('value', 'Save');
+                    $("#SuccesModel").modal("show");
+                }
+                else if (result == "Exception") {
+                    debugger
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Exception Error Occurd");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+                }
+                else if (result == "Exits") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("This Grade is Already Assigned to this School");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+                else {
+
+                }
+
+            }
+
+        })
+    }
+
+    var loadGradese = function (value) {
+        debugger
+     //   $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + value);
+
+      //  $("#showAcyr").show();
+    //    $("#showGradess").show();
+        
+        var selectedItem = value;
+        
+        var ddlStates = $("#Grade");
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("Studentgrade"))",
+            data: { "SchoolId": selectedItem },
+        success: function (data) {
+            ddlStates.html('');
+            ddlStates.append($('<option></option>').val("").html(""));
+            $.each(data, function (ActivityCode, option) {
+               
+                ddlStates.append($('<option></option>').val(option.GradeId).html(option.GradeName));
+            });
+            
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('Failed to retrieve states.');
+                 
+        }
+    });
+    }
+    var loadClasse = function (value) {
+     //   $("#showStateLga").show();
+        var selectedItem = value;
+          var SchoolId1=$("#SchoolId1").val();
+
+        
+        var ddlStates = $("#Class");
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("Studentclass"))",
+            data: { "SchoolId": SchoolId1, "GradeId": selectedItem },
+        success: function (data) {
+            ddlStates.html('');
+            ddlStates.append($('<option></option>').val("").html(""));
+            $.each(data, function (ActivityCode, option) {
+                ddlStates.append($('<option></option>').val(option.ClassId).html(option.ClassName));
+            });
+            
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('Failed to retrieve states.');
+                 
+        }
+    });
+    }
+
+    function GetStudentTable1() {
+        $("#showstds").show();
+        var SchoolId1 = $("#SchoolId1").val();
+        // var AcademicYear1 = $("#AcademicYear").val();
+        var AcademicYear1 = "%";
+        var GradeId1 = $("#Grade").val();
+        var ClassId1 = $("#Class").val();
+
+        $.ajax({
+            url: "/StudentOptionalSubject/GetAllContacts",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: { "GradeId1": GradeId1, "SchoolId1": SchoolId1, "AcademicYear1": AcademicYear1, "ClassId1": ClassId1 },
+            dataType: "json",
+            success: function (data) {
+                var row = "";
+                $.each(data, function (index, item) {
+                    row += "<tr><td><input type='checkbox'value='" + item.StudentIdL + "' name='chooseRecipient' class='my_chkBox' /></td><td>" + item.StudentName + "</td>";
+                });
+                $("#contacts").html(row);
+            },
+            error: function (result) {
+                alert("Error");
+            }
+        });
+    }
+
+    
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        // This will make every element with the class "date-picker" into a DatePicker element
+        $("#ScheduledDate").datepicker(); 
+        $("#ScheduledTime").timepicker();
+    });
+</script>
+
+

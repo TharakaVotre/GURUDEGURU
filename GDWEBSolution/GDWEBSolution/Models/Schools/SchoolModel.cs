@@ -107,6 +107,10 @@ namespace GDWEBSolution.Models.Schools
         public string GradeId { get; set; }
         [Display(Name = "Class Id")]
         public string ClassId { get; set; }
+
+
+        [Display(Name = "Class Name")]
+        public string ClassName { get; set; }
         [Display(Name = "Accedamic Year")]
         public string AccedamicYear { get; set; }
         public string CreatedBy { get; set; }
