@@ -108,6 +108,7 @@
                 data: { "SchoolId": selectedItem },
                 success: function (data) {
                     ddlStates.html('');
+                    ddlStates.append($('<option></option>').val("").html(""));
                     $.each(data, function (ActivityCode, option) {
                         ddlStates.append($('<option></option>').val(option.ActivityCode).html(option.ActivityName));
                     });

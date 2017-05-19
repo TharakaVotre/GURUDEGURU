@@ -20,6 +20,9 @@ namespace GDWEBSolution.Models.Schools
 
          [Display(Name = "Grade Id")]
         public string GradeId { get; set; }
+
+         [Display(Name = "Grade Id")]
+         public string GradeId1 { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }

@@ -220,6 +220,7 @@ namespace GDWEBSolution.Controllers.TimeTable
             catch (Exception Ex)
             {
                 var result = new { r = "E"};
+                Errorlog.ErrorManager.LogError("@ ActionResult Create(TimeTableModel Model)", Ex);
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
         }

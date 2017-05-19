@@ -21,15 +21,17 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.DueDate, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.DueDate, new { @class = "form-control", @placeholder = "From Date" })
+                        @Html.TextBoxFor(model => model.DueDate, new { @class = "form-control", @placeholder = "Due Date", required = "required" })
                         <span class="help-block m-b-none" id="DueDateError"></span>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" >
                     @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        @Html.DropDownList("GradeId", "")
+                        @Html.DropDownList("GradeId", ViewBag.country as List<SelectListItem>, "", new { @class = "form-control", required = "required" })
+
+
                         <span class="help-block m-b-none" id="GradeIdError"></span>
                     </div>
                 </div>
@@ -37,7 +39,9 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        @Html.DropDownList("ClassId", "")
+                        @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
+
+
                         <span class="help-block m-b-none" id="ClassIdError"></span>
                     </div>
                 </div>
@@ -45,7 +49,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.AssignmentDescription, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.AssignmentDescription, new { @class = "form-control", @placeholder = "Special Comment" })
+                        @Html.TextAreaFor(model => model.AssignmentDescription, new { @class = "form-control", @placeholder = "Description", required = "required" })
                         <span class="help-block m-b-none" id="AssignmentDescriptionError"></span>
                     </div>
                 </div>
@@ -53,7 +57,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.BatchNo, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.BatchNo, new { @class = "form-control", @placeholder = "To Date" })
+                        @Html.TextBoxFor(model => model.BatchNo, new { @class = "form-control", @placeholder = "Batch No", required = "required" })
                         <span class="help-block m-b-none" id="BatchNoError"></span>
                     </div>
                 </div>
@@ -61,7 +65,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.BatchDescription, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.BatchDescription, new { @class = "form-control", @placeholder = "Acadamic Date" })
+                        @Html.TextBoxFor(model => model.BatchDescription, new { @class = "form-control", @placeholder = "Description", required = "required" })
                         <span class="help-block m-b-none" id="BatchDescriptionError"></span>
                     </div>
                 </div>
@@ -69,7 +73,8 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.SubjectId, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        @Html.DropDownList("SubjectId", "")
+                       
+                        @Html.DropDownList("SubjectId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
                         <span class="help-block m-b-none" id="AcadamicError"></span>
                     </div>
                 </div>
@@ -78,16 +83,16 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.FilePath, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        <label for="fileselect">Files to upload:</label>
-                        <input type="file" id="uploadFile" name="File" />
+                       
+                        <input type="file" id="uploadFile" name="File" required />
 
                     </div>
                 </div>
 
 </div>
-            
-<div class="modal-footer">
-                <input type="submit" class="btn btn-primary"/>
+        
+            <div class="modal-footer" style="border-top: 1px solid #ffffff">
+                <input type="submit" class="btn btn-primary" />
             </div>
         </fieldset>
     </form>
@@ -254,7 +259,7 @@
         background: #fff;
         box-shadow: none !important;
         display: block;
-        width: 100%;
+        width: 100% !important;
         height: 32px;
         font-size: 14px;
         line-height: 1.45;
@@ -293,7 +298,67 @@
     }
 
     </style >
-</style>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        $("#GradeId").change(function () {
+            $("#ClassId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getClass")',
+
+                dataType: 'json',
+
+                data: { id: $("#GradeId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#ClassId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+        $("#GradeId").change(function () {
+            $("#SubjectId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getSubject")',
+
+                dataType: 'json',
+
+                data: { id: $("#GradeId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#SubjectId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+
+</script>
 @section scripts{
     <script src="http://malsup.github.com/jquery.form.js"></script>
     <script>
@@ -327,4 +392,5 @@
             });
         })();
     </script>
+
 }

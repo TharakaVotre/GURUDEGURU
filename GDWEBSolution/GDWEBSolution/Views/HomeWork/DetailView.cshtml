@@ -1,0 +1,199 @@
+﻿@model GDWEBSolution.Models.HomeWork.HomeWorkModel
+<script>
+    $(function () {
+        $("#DueDate").datepicker();
+    });
+
+
+</script>
+
+<div>
+
+      
+
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">View Homework</h4>
+            </div>
+
+            @Html.HiddenFor(model => model.AssignmentNo)
+
+            <div class="modal-body">
+               
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DueDate, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.stringDueDate, new { @class = "form-control", @placeholder = "From Date", disabled = "disabled" })
+                        <span class="help-block m-b-none" id="DueDateError"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Grade, new { @class = "form-control", disabled = "disabled" })
+                        @Html.HiddenFor(m => m.GradeId)
+                        <span class="help-block m-b-none"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Class, new { @class = "form-control", disabled = "disabled" })
+                        @Html.HiddenFor(m => m.ClassId)
+                        <span class="help-block m-b-none" ></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SubjectId, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Subject, new { @class = "form-control", disabled = "disabled" })
+                        @Html.HiddenFor(m => m.SubjectId)
+                        <span class="help-block m-b-none"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AssignmentDescription, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.AssignmentDescription, new { @class = "form-control", @placeholder = "Special Comment", disabled = "disabled" })
+                        <span class="help-block m-b-none" id="AssignmentDescriptionError"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BatchNo, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.BatchNo, new { @class = "form-control", @placeholder = "To Date", disabled = "disabled" })
+                        <span class="help-block m-b-none" id="BatchNoError"></span>
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BatchDescription, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.BatchDescription, new { @class = "form-control", @placeholder = "Acadamic Date", disabled = "disabled" })
+                        <span class="help-block m-b-none" id="BatchDescriptionError"></span>
+                    </div>
+                </div>
+
+            
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FilePath, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.FilePath, new { @class = "form-control", disabled = "disabled" })
+                        <span class="help-block m-b-none" id="AcadamicError"></span>
+                        @Html.HiddenFor(model => model.FilePath)
+
+                        <br />
+                        <br />
+                    
+
+                        <label for="fileselect">Files to upload:</label>
+                      
+                           @Html.ActionLink("Download", "Download", new { path = @Model.FilePath })</div>
+                </div>
+                
+            </div>
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid #ffffff">
+    <input type="submit" value="close" class="btn btn-primary" />
+</div>
+ 
+  
+
+
+</div>
+
+
+
+
+<style>
+    #GradeId {
+        border: 1px solid rgba(152, 151, 139, 0.55) !important;
+        padding: 5px 8px;
+        color: #616161;
+        background: rgba(223, 215, 202, 0.5) !important;
+        box-shadow: none !important;
+        display: block;
+        width: 100% !important;
+        height: 32px;
+        font-size: 14px;
+        line-height: 1.45;
+        border-radius: 2px;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        opacity: .5;
+        pointer-events: none;
+    }
+
+    #ClassId {
+        border: 1px solid rgba(152, 151, 139, 0.55);
+        padding: 5px 8px;
+        color: #616161;
+        background: rgba(223, 215, 202, 0.5);
+        box-shadow: none !important;
+        display: block;
+        width: 100%;
+        height: 32px;
+        font-size: 14px;
+        line-height: 1.45;
+        border-radius: 2px;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        opacity: .5;
+        pointer-events: none;
+    }
+
+    #SubjectId {
+        border: 1px solid rgba(152, 151, 139, 0.55);
+        padding: 5px 8px;
+        color: #616161;
+        background: rgba(223, 215, 202, 0.5);
+        box-shadow: none !important;
+        display: block;
+        width: 100%;
+        height: 32px;
+        font-size: 14px;
+        line-height: 1.45;
+        border-radius: 2px;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        opacity: .5;
+        pointer-events: none;
+    }
+</style>
+@section scripts{
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script>
+        (function () {
+            var bar = $('.progress-bar');
+            var percent = $('.progress-bar');
+            var status = $('#status');
+
+            $('form').ajaxForm({
+                beforeSend: function () {
+                    status.empty();
+                    var percentValue = '0%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    var percentValue = percentComplete + '%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                success: function (d) {
+                    var percentValue = '100%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                    $('#fu1').val('');
+                    alert(d);
+                },
+                complete: function (xhr) {
+                    status.html(xhr.responseText);
+                }
+            });
+        })();
+    </script>
+}

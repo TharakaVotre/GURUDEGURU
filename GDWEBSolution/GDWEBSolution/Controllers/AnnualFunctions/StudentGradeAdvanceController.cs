@@ -20,57 +20,63 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
         {
             try
             {
-
+                ViewBag.AcedamicYear = DateTime.Now.Year.ToString();
                 Dropdownlistdata(SchoolId);
-                List<StudentGradeAdvanceModel> tcmlist = getdataForTable("");
+                List<StudentGradeAdvanceModel> tcmlist = getdataForTable("","","");
 
                 return View(tcmlist);
             }
             catch (Exception ex)
             {
-                Errorlog.ErrorManager.LogError(ex);
+                //Errorlog.ErrorManager.LogError(ex);
 
-                return View();
+                return View();  
             }
         }
 
-        public ActionResult Detail(string GradeId)
+        public ActionResult Detail(string GradeId, string ClassId, string AcedamicYear)
         {
             try
             {
-                if (GradeId == null && Session["GroutId"] == null)
-                {
+                
+                if (GradeId == null && Session["GroupId"] == null) {
                     return RedirectToAction("Index");
                 }
-                if (GradeId != null)
+                if (GradeId != null & ClassId!=null)
                 {
-                    Session["GroutId"] = GradeId;
+                    Session["GroupId"]=GradeId;
+                    Session["ClassId"] = ClassId;
                 }
-                else
-                {
-                    GradeId = Session["GroutId"].ToString();
+                else{
+                    GradeId=Session["GroupId"].ToString();
+                    ClassId = Session["classId"].ToString();
                 }
+                ViewBag.CurentYear = AcedamicYear;
                 tblGrade TCtable = Connection.tblGrades.SingleOrDefault(x => x.GradeId == GradeId);
-                ViewBag.CurentGroup = TCtable.GradeName;
+                ViewBag.CurentGrade = TCtable.GradeName;
+
+                tblClass classtable = Connection.tblClasses.SingleOrDefault(x => x.ClassId == ClassId & x.GradeId == GradeId);
+                ViewBag.CurentClass = classtable.ClassName;
+
                 Dropdownlistdata(SchoolId);
-                List<StudentGradeAdvanceModel> tcmlist = getdataForTable(GradeId);
-                if (tcmlist.Count == 0)
+                List<StudentGradeAdvanceModel> tcmlist = getdataForTable(AcedamicYear,GradeId, ClassId);
+                if (tcmlist.Count==0)
                 {
-                    return RedirectToAction("Index");
+                return RedirectToAction("Index");
                 }
                 return View(tcmlist);
             }
             catch (Exception ex)
             {
-                Errorlog.ErrorManager.LogError(ex);
+                //Errorlog.ErrorManager.LogError(ex);
 
                 return View();
             }
         }
 
-        private List<StudentGradeAdvanceModel> getdataForTable(string GradeId)
+        private List<StudentGradeAdvanceModel> getdataForTable(string AcedamicYear,string GradeId,string ClassId)
         {
-            var Group = Connection.GDgetAllStudentInGrade("2017",SchoolId, GradeId,"1", "Y");
+            var Group = Connection.GDgetAllStudentInGrade(AcedamicYear, SchoolId, GradeId, ClassId, "Y");
             List<GDgetAllStudentInGrade_Result> Grouplist = Group.ToList();
 
             StudentGradeAdvanceModel tcm = new StudentGradeAdvanceModel();
@@ -94,7 +100,6 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
 
             }).ToList();
             return tcmlist;
-
         }
         private void Dropdownlistdata(string SchoolId)
         {
@@ -102,24 +107,45 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
             var Grade = Connection.GDgetAllGradeMaintenance("Y");
             List<GDgetAllGradeMaintenance_Result> Gradelist = Grade.ToList();
 
-        
             ViewBag.GradeId = new SelectList(Gradelist, "GradeId", "GradeName");
+
+
+            var Class = Connection.GDgetAllSchoolClass(SchoolId, "Y");
+            List<GDgetAllSchoolClass_Result> Classlist = Class.ToList();
+
+
+            ViewBag.ClassId = new SelectList(Classlist, "ClassId", "ClassName");
             
         }
 
-
+       
 
         [HttpPost]
-        public ActionResult Update(string[] selectedNames, string GradeId)
+        public ActionResult Update(string[] selectedNames, string GradeId, string ClassId)
         {
-
             try
             {
+                if (GradeId!="")
+                {
                 if (selectedNames != null)
                 {
-                    foreach (string studentId in selectedNames)
-                        Connection.GDModifyStudentGradeAdvance(SchoolId, studentId, GradeId,"", UserId);
+                    if (ClassId=="")
+                    {
+                        foreach (string studentId in selectedNames)
+                        {
+                            Connection.GDsetStudentHistory(studentId);
+                            Connection.GDModifyStudentLeaver(SchoolId, studentId, UserId, "L");
+                        }
+                    }else{
+                        foreach (string studentId in selectedNames)
+                        {
+                            Connection.GDsetStudentHistory(studentId);
+                            Connection.GDModifyStudentGradeAdvance(SchoolId, studentId, GradeId, ClassId, UserId);
+                        }
+                    }
+                   
                     Connection.SaveChanges();
+                }
                 }
                 //return View();
 
@@ -133,6 +159,30 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
         }
 
 
+
+
+        public JsonResult getstate(string id)
+        {
+            var states = Connection.GDgetGradeActiveClass(id,SchoolId,"Y");
+            List<SelectListItem> listates = new List<SelectListItem>();
+
+            listates.Add(new SelectListItem { Text = "", Value = "" });
+            if (states != null)
+            {
+                foreach (var x in states)
+                {
+                    listates.Add(new SelectListItem { Text = x.ClassName, Value = x.ClassId });
+
+                }
+
+
+
+            }
+
+
+            return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
+        }  
+    
     }
 }
       

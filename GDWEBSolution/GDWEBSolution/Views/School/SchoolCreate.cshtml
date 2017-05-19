@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <h3>Schools</h3>
         <div class="panel panel-default">
-            <div class="panel-heading">New School | Grade |House|EXtra Curicular|Subject  </div>
+            <div class="panel-heading">New School | Grade |House|EXtra Curicular|Subject|Class  </div>
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New School</a></li>
@@ -16,6 +16,8 @@
                     <li class=""><a href="#excactivity" data-toggle="tab" aria-expanded="false">Ex-Curicular Activities</a></li>
 
                     <li class=""><a href="#subjects" data-toggle="tab" aria-expanded="false">Subjects</a></li>
+
+                    <li class=""><a href="#Classes" data-toggle="tab" aria-expanded="false">Add Class</a></li>
                     @*<li class="disabled"><a>Disabled</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -31,11 +33,11 @@
                 <br>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in" id="bio">
-@using (Html.BeginForm("Create", "School",
+@*@using (Html.BeginForm("Create", "School",
     FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+{*@
     @Html.AntiForgeryToken()
-                        @*<form id="FrmANT" class="form-horizontal">*@
+                        <form id="FormNewdata" class="form-horizontal">
                             <div class="form-horizontal">
 
 
@@ -222,8 +224,8 @@
                                     </div>
                                 </div>
                             </div>
-                            }
-                        @*</form>*@
+                            @*}*@
+                        </form>
                     </div>
                     <div class="tab-pane fade" id="qualification">
                         @{Html.RenderPartial("Grade");}
@@ -259,6 +261,18 @@
     </div>
                      
                     </div>
+
+                    <div class="tab-pane fade" id="Classes">
+                        @{Html.RenderPartial("Class");}
+                        <div id="showclasses">
+                            @{Html.RenderAction("ShowSchooClasses", new { ClasslId = "0" });}
+
+                        </div>
+
+                    </div>
+
+
+
                 </div>
             </div>
         </div>
@@ -302,6 +316,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        // This will make every element with the class "date-picker" into a DatePicker element
+        // $("#DateOfBirth").datepicker();
+           $("#Address1").datetimepicker();
+        // $("#CreatedDate").datetimepicker();
+      //  $("#Address1").timepicker();
+
+
+
+
+    });
+
+
+    </script>
 
 @*<script>
     $(function validateForm() {

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Schools.SchoolModel>
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.Count() == 0)
+        {
+            <div class="col-md-12">
+                <div class="well">
+                    No Class is set to display
+                </div>
+            </div>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+
+                @*<div class="row">*@
+                <div class="col-md-6">
+                    <div class="well">
+                        <i class="glyphicon glyphicon-bell" aria-hidden="true"></i>
+                        @Html.DisplayFor(modelItem => item.ClassName)
+                        <button type="button" class="close" onclick='DeleteClss("@item.SchoolId","@(item.GradeId)","@(item.ClassId)");'>&times;</button>
+                    </div>
+                </div>
+
+                @*</div>*@
+            }
+        }
+    </div>
+</div>
+<script>
+
+    function DeleteClss(SchoolId, GradeId, ClassId) {
+        debugger
+        var Url = "/School/DeleteClass?SchoolId=" + SchoolId + "&GradeId=" + GradeId + "&ClassId=" + ClassId;
+        $("#DeleteModelBody").load(Url, function () {
+            $("#deleteModel").modal("show");
+        })
+    }
+</script>
+

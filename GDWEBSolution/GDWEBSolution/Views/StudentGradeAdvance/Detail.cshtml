@@ -11,31 +11,50 @@
 
     <div class="form-horizontal">
         <div class="modal-header">
-            <h4 class="modal-title">Student Grade Advance</h4>
+            <h4 class="modal-title">update student grade</h4>
         </div>
 
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="form-group">
+                    <div class="row"> 
+                        <lable class="col-sm-3 control-label">Selected Year:-@ViewBag.CurentYear</lable>
+                        
+                        <lable class="col-sm-3 control-label">Selected Grade:-@ViewBag.CurentGrade</lable>
+                       
+                        <lable class="col-sm-3 control-label">Selected Class:-@ViewBag.CurentClass</lable>
+                       
+                </div>
+                    </div>
+                <hr />
+                <div class="form-group">
                     <div class="row">
-                        <lable class="col-sm-2 control-label">Selected Grade</lable>
-                        <div class="col-sm-2">
-                            @Html.TextBox("CurentGroup")
+                        <lable class="col-sm-2 control-label">Advance to Year</lable>
+                        <div class="col-sm-3">
+
+                            @Html.TextBox("AcedamicYear", "")
+
                         </div>
                         <lable class="col-sm-2 control-label">Advance to Grade</lable>
                         <div class="col-sm-3">
-
-                            @Html.DropDownList("GradeId", "--Select Grade--")
-
+                            @Html.DropDownList("GradeId", ViewBag.country as List<SelectListItem>, "", new { @class = "form-control" })
                         </div>
-                        <div>
-                            <button type="submit" class="btn btn-primary"><span class="fa fa-flag"></span> Save</button>
                         </div>
                     </div>
-                </div>
-                <a href="~/StudentGradeAdvance/Index" class="btn btn-primary">Go Back</a>
+                        <div class="form-group">
+                            <div class="row">
+                                <lable class="col-sm-2 control-label">Advance to Class</lable>
+                                <div class="col-sm-3">
+                                    @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary"><span class="fa fa-flag"></span> Save</button>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="~/StudentGradeAdvance/Index" class="btn btn-primary"><span class="fa fa-plus"></span>Go Back</a>
 
-            </div>
+                    </div>
             <div class="panel-body">
                 <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
                     <thead>
@@ -92,32 +111,46 @@
     </div>
 }
 <style>
-    #CurentGroup {
+    #AcedamicYear {
         border: 1px solid #e0e0e0;
         padding: 5px 8px;
         color: #616161;
         background: #fff;
         box-shadow: none !important;
         display: block;
-        width: 80%;
+        width: 100%;
         height: 32px;
         font-size: 14px;
         line-height: 1.45;
         border-radius: 2px;
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     }
-    #GradeId {
-        border: 1px solid #e0e0e0;
-        padding: 5px 8px;
-        color: #616161;
-        background: #fff;
-        box-shadow: none !important;
-        display: block;
-        width: 80%;
-        height: 32px;
-        font-size: 14px;
-        line-height: 1.45;
-        border-radius: 2px;
-        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    }
+    
 </style>
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#GradeId").change(function () {
+            $("#ClassId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getstate")',
+                dataType: 'json',
+                data: { id: $("#GradeId").val() },
+                success: function (states) {
+                    $.each(states, function (i, state) {
+                        $("#ClassId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+
+</script>

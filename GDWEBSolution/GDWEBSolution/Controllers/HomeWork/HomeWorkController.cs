@@ -14,24 +14,31 @@ namespace GDWEBSolution.Controllers
         //
         // GET: /HomeWork/
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        string UserId = "kamalasiri";
         string SchoolId = "CKC";
-        string StudentId = "";
+       
         long TeacherId = 1;
         public ActionResult Index(string FromDate,string ToDate)
         {
             try
             {
+                if (FromDate == null && Session["FromDate"]==null) {
+                    FromDate="01/01/1111";
+                    ToDate = "01/01/1111";
+                }
+                else
                 if (FromDate == null && ToDate == null && Session["FromDate"]!=null)
                 {
                    FromDate= Session["FromDate"].ToString();
                    ToDate = Session["ToDate"].ToString();
-                }
+                }else
                 if (FromDate != null && ToDate != null)
                 {
                      Session["FromDate"]=FromDate;
                      Session["ToDate"]=ToDate;
                 }
+                if (FromDate != "" && ToDate!="")
+                {
                 DateTime StartDate = Convert.ToDateTime(FromDate);
                 DateTime EndDate = Convert.ToDateTime(ToDate);
                 string stDate = StartDate.ToString("yyyyMMdd");
@@ -48,8 +55,10 @@ namespace GDWEBSolution.Controllers
                     DueDate=x.DueDate,
                     SchoolId = x.SchoolId,
                     GradeId = x.GradeId,
+                    Class=x.ClassName,
+                    Subject=x.SubjectName,
                     ClassId = x.ClassId,
-                   
+                    Grade=x.GradeName,
                     TeacherId = x.TeacherId,
                     FilePath = x.FilePath,
                     BatchNo = x.BatchNo,
@@ -60,10 +69,10 @@ namespace GDWEBSolution.Controllers
 
 
                 }).ToList();
-
-
-
                 return View(tcmlist);
+                }
+                return View();
+                
             }
             catch (Exception ex) {
                 Errorlog.ErrorManager.LogError(ex);
@@ -71,40 +80,57 @@ namespace GDWEBSolution.Controllers
             }
         }
 
-        public ActionResult Details(string code)
+        public ActionResult Details(long code, string dates)
         {
-            return View();
+            DropDownList("%");
+            HomeWorkModel TModel = new HomeWorkModel();
+
+            tblAssignmentHeader TCtable = Connection.tblAssignmentHeaders.SingleOrDefault(x => x.AssignmentNo == code);
+            TModel.SubjectId = TCtable.SubjectId;
+            TModel.GradeId = TCtable.GradeId;
+            TModel.ClassId = TCtable.ClassId;
+            tblClass TClass = Connection.tblClasses.SingleOrDefault(x => x.ClassId == TCtable.ClassId && x.GradeId == TCtable.GradeId);
+            TModel.Class = TClass.ClassName;
+            tblGrade TGrade = Connection.tblGrades.SingleOrDefault(x => x.GradeId == TCtable.GradeId);
+            TModel.Grade = TGrade.GradeName;
+            tblSubject TSubject = Connection.tblSubjects.SingleOrDefault(x => x.SubjectId == TCtable.SubjectId);
+            TModel.Subject = TSubject.SubjectName;
+            TModel.stringDueDate = dates;
+            TModel.AssignmentDescription = TCtable.AssignmentDescription;
+            TModel.BatchNo = TCtable.BatchNo;
+            TModel.BatchDescription = TCtable.BatchDescription;
+            TModel.FilePath = TCtable.FilePath;
+            TModel.AssignmentNo = TCtable.AssignmentNo;
+            return PartialView("DetailView", TModel);
         }
 
+        public FileResult Download(string path)
+        {
+            string Filepath =Server.MapPath("~/Uploads/" + path);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Filepath);
+            
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, path);
+
+        }
         //
 
         public ActionResult ShowAddView(int id)
         {
 
-            DropDownList();
+            DropDownList("");
 
            
             return PartialView("AddView");
         }
 
-        private void DropDownList()
+        private void DropDownList(string id)
         {
-            var sub = Connection.GDgetAllSubject("Y");
-            List<GDgetAllSubject_Result> Sublist = sub.ToList();
-
-            ViewBag.SubjectId = new SelectList(Sublist, "SubjectId", "SubjectName");
-
-
-            var Grade = Connection.GDgetAllGradeMaintenance("Y");
+             var Grade = Connection.GDgetAllGradeMaintenance("Y");
             List<GDgetAllGradeMaintenance_Result> Gradelist = Grade.ToList();
 
             ViewBag.GradeId = new SelectList(Gradelist, "GradeId", "GradeName");
-
-            var Class = Connection.GDgetAllClass("Y");
-            List<GDgetAllClass_Result> Classlist = Class.ToList();
-
-            ViewBag.ClassId = new SelectList(Classlist, "ClassId", "ClassName");
-
+           
+          
         }
 
        
@@ -124,11 +150,12 @@ namespace GDWEBSolution.Controllers
 
 
                         string _FileName = Path.GetFileName(Model.File.FileName); //;
-                        _path = Path.Combine(Server.MapPath("~/Uploads"), TeacherId.ToString() + DateTime.Now.Date.ToString("yyyyMMdd")+_FileName);
+                        string filename= TeacherId.ToString() + DateTime.Now.Date.ToString("yyyyMMdd")+_FileName;
+                        _path = Path.Combine(Server.MapPath("~/Uploads"), filename);
                         Model.File.SaveAs(_path);
                         string Filepath = _path;
-                      
-                        Connection.GDsetHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, Filepath, TeacherId, Model.BatchNo, Model.BatchDescription, Model.SubjectId, Model.AssignmentNo, Model.DueDate, dueId, UserId, "Y");
+
+                        Connection.GDsetHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, filename, TeacherId, Model.BatchNo, Model.BatchDescription, Model.SubjectId, Model.AssignmentNo, Model.DueDate, dueId, UserId, "Y");
                         Connection.SaveChanges();
                     }
                     }
@@ -168,22 +195,28 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(long Code, string dates)
         {
-            DropDownList();
-
+           
             HomeWorkModel TModel = new HomeWorkModel();
 
             tblAssignmentHeader TCtable = Connection.tblAssignmentHeaders.SingleOrDefault(x => x.AssignmentNo == Code);
             TModel.SubjectId = TCtable.SubjectId;
             TModel.GradeId = TCtable.GradeId;
             TModel.ClassId = TCtable.ClassId;
-            TModel.DueDate = Convert.ToDateTime(dates);
+            tblClass TClass = Connection.tblClasses.SingleOrDefault(x => x.ClassId == TCtable.ClassId && x.GradeId==TCtable.GradeId);
+            TModel.Class = TClass.ClassName;
+            tblGrade TGrade = Connection.tblGrades.SingleOrDefault(x => x.GradeId == TCtable.GradeId);
+            TModel.Grade = TGrade.GradeName;
+            tblSubject TSubject = Connection.tblSubjects.SingleOrDefault(x => x.SubjectId == TCtable.SubjectId);
+            TModel.Subject = TSubject.SubjectName;
+            TModel.stringDueDate = dates;
             TModel.AssignmentDescription = TCtable.AssignmentDescription;
             TModel.BatchNo = TCtable.BatchNo;
             TModel.BatchDescription = TCtable.BatchDescription;
             TModel.FilePath = TCtable.FilePath;
            TModel.AssignmentNo=TCtable.AssignmentNo;
 
-
+   
+           DropDownList(TCtable.GradeId);
              
             return PartialView("EditView", TModel);
         }
@@ -199,6 +232,7 @@ namespace GDWEBSolution.Controllers
                 long dueId = 0;
                 if (ModelState.IsValid)
                 {
+                    DateTime duedate = Convert.ToDateTime(Model.stringDueDate);
                     string _path = null;
                     if (Model.File != null)
                     {
@@ -207,15 +241,16 @@ namespace GDWEBSolution.Controllers
 
 
                             string _FileName = Path.GetFileName(Model.File.FileName); //;
-                            _path = Path.Combine(Server.MapPath("~/Uploads"), TeacherId.ToString() + DateTime.Now.Date.ToString("yyyyMMddHHmmSS")+ _FileName );
+                            string filename = TeacherId.ToString() + DateTime.Now.Date.ToString("yyyyMMddHHmmSS") + _FileName;
+                            _path = Path.Combine(Server.MapPath("~/Uploads"), filename );
                             Model.File.SaveAs(_path);
-                            string Filepath = _path;
-                            Connection.GDModifyHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, Filepath, Model.BatchNo, Model.BatchDescription, Model.SubjectId, Model.AssignmentNo, Model.DueDate, dueId, UserId);                      
+
+                            Connection.GDModifyHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, filename, Model.BatchNo, Model.BatchDescription, Model.SubjectId, Model.AssignmentNo, duedate, dueId, UserId);                      
                             Connection.SaveChanges();
                         }
                     }
                     else {
-                        Connection.GDModifyHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, Model.FilePath, Model.BatchNo, Model.BatchDescription, Model.SubjectId, Model.AssignmentNo, Model.DueDate, dueId, UserId);
+                        Connection.GDModifyHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, Model.FilePath, Model.BatchNo, Model.BatchDescription, Model.SubjectId, Model.AssignmentNo, duedate, dueId, UserId);
                         Connection.SaveChanges();
                     }
 
@@ -269,6 +304,113 @@ namespace GDWEBSolution.Controllers
                 return View();
             }
         }
+
+
+
+        public ActionResult ParentView(string FromDate, string ToDate)
+        {
+            try
+            {
+                if (FromDate == null && ToDate == null && Session["FromDate"] != null)
+                {
+                    FromDate = Session["FromDate"].ToString();
+                    ToDate = Session["ToDate"].ToString();
+                }
+                if (FromDate != null && ToDate != null)
+                {
+                    Session["FromDate"] = FromDate;
+                    Session["ToDate"] = ToDate;
+                }
+                if (FromDate != "" && ToDate != "")
+                {
+                    DateTime StartDate = Convert.ToDateTime(FromDate);
+                    DateTime EndDate = Convert.ToDateTime(ToDate);
+                    string stDate = StartDate.ToString("yyyyMMdd");
+                    string edDate = EndDate.ToString("yyyyMMdd");
+                    var Grade = Connection.GDgetParentHomeWork(SchoolId, stDate, edDate,UserId,"Y");
+                    List<GDgetParentHomeWork_Result> Gradelist = Grade.ToList();
+
+                    HomeWorkModel tcm = new HomeWorkModel();
+
+                    List<HomeWorkModel> tcmlist = Gradelist.Select(x => new HomeWorkModel
+                    {
+                        AssignmentNo = x.AssignmentNo,
+                        AssignmentDescription = x.AssignmentDescription,
+                        DueDate = x.DueDate,
+                        SchoolId = x.SchoolId,
+                        GradeId = x.GradeId,
+                        ClassId = x.ClassId,
+
+                        TeacherId = x.TeacherId,
+                        FilePath = x.FilePath,
+                        BatchNo = x.BatchNo,
+                        BatchDescription = x.BatchDescription,
+                        SubjectId = x.SubjectId,
+                        CreatedBy = x.CreatedBy,
+                        CreatedDate = x.CreatedDate,
+
+
+                    }).ToList();
+                    return View(tcmlist);
+                }
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+            }
+        }
+
+
+        public JsonResult getClass(string id)
+        {
+            var states = Connection.GDgetGradeActiveClass(id,SchoolId,"Y");
+            List<SelectListItem> listates = new List<SelectListItem>();
+
+            listates.Add(new SelectListItem { Text = "", Value = "" });
+            if (states != null)
+            {
+                foreach (var x in states)
+                {
+                    listates.Add(new SelectListItem { Text = x.ClassName, Value = x.ClassId });
+
+                }
+
+            }
+
+
+            return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
+        }
+
+      
+        public JsonResult getSubject(string id)
+        {
+           
+            var states = Connection.GDgetGradeActiveSubject(id,"Y"); ;
+            List<SelectListItem> listates = new List<SelectListItem>();
+
+          
+            listates.Add(new SelectListItem { Text = "", Value = "" });
+            if (states != null)
+            {
+                foreach (var x in states)
+                {
+                    listates.Add(new SelectListItem { Text = x.SubjectName, Value = x.SubjectId.ToString() });
+
+                }
+
+
+
+            }
+
+
+            return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
+        }  
+
+
+
     }
 }
 

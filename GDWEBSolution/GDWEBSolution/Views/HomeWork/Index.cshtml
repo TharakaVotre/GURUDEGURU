@@ -16,7 +16,7 @@
 
 <div class="form-horizontal">
     <div class="modal-header">
-        <h4 class="modal-title">Add New Grade Subject</h4>
+        <h4 class="modal-title">Home Work</h4>
     </div>
 
     <div class="panel panel-default">
@@ -58,10 +58,11 @@
                         </th>
                        
                         <th>
-                            @Html.DisplayNameFor(model => model.GradeId)
+                            @Html.DisplayNameFor(model => model.Grade)
+                           
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.ClassId)
+                            @Html.DisplayNameFor(model => model.Class)
                         </th>
                         
                         
@@ -88,26 +89,30 @@
                                
                                
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.GradeId)
+                                    @Html.DisplayFor(modelItem => item.AssignmentDescription)
+                                    
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ClassId)
-                                </td>
-                               
-                               
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BatchNo)
-                                </td>
-                               
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SubjectId)
+                                    @Html.DisplayFor(modelItem => item.Grade)
+                                   @Html.HiddenFor(modelItem => item.GradeId)
                                 </td>
                                
                                
                                 <td>
-                                    <a class="btn btn-info" onclick='EditView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="fa fa-pencil"></span> Edit </a>
-                                    <a class="btn btn-danger" onclick='DeleteView("@item.AssignmentNo")'><span class="fa fa-trash"></span> Delete</a>
-
+                                    @Html.DisplayFor(modelItem => item.Class)
+                                    @Html.HiddenFor(modelItem => item.ClassId)
+                                </td>
+                               
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Subject)
+                                </td>
+                               
+                               
+                                <td>
+                                    <a class="hvr-buzz-out" onclick='EditView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'> Edit </a>|
+                                    <a class="hvr-buzz-out" onclick='DetailView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'>Detail</a>|
+                                    <a class="hvr-buzz-out" onclick='DeleteView("@item.AssignmentNo")'> Delete</a>
+                          
                                 </td>
                             </tr>
                     }
@@ -185,6 +190,13 @@
 
     var EditView = function (SeqNo,date) {
         var Url = "/HomeWork/Edit?Code=" + SeqNo+"&dates="+ date;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var DetailView = function (SeqNo,date) {
+        var Url = "/HomeWork/Details?Code=" + SeqNo+"&dates="+ date;
         $("#MyModelBody").load(Url, function () {
             $("#myModal").modal("show");
         })

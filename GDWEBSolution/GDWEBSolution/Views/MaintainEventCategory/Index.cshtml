@@ -55,10 +55,15 @@
                                     </td>
                                    
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ParentApprovalNeeded)
+                                        @if (item.ParentApprovalNeeded=="Y") {<div>Yes</div>}else{<div>No</div>}
+                                        
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.BroadcastMessage)
+                                         @if (item.BroadcastMessage=="Y") {<div>Yes</div> }
+                                        else{
+                                        <div>No</div>
+                                        }
+                                       
                                     </td>
                                     
                                      <td>

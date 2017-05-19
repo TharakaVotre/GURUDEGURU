@@ -86,7 +86,9 @@
                                         @Html.DisplayFor(modelItem => item.SubjectName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Optional)
+                                        @if (item.Optional=="Y") { <div>Yes</div>}
+                                        else
+                                        { <div>No</div>}
                                     </td>
                                     
                                     <td>
@@ -96,8 +98,8 @@
                                        
                                    
                                     <td>
-                                        <a class="btn btn-info" onclick='EditView("@item.AcademicYear","@item.GradeId","@item.SubjectId","@item.SubjectCategoryId","@item.Optional")'><span class="fa fa-pencil"></span> Edit </a>
-                                        <a class="btn btn-danger" onclick='DeleteView("@item.AcademicYear","@item.GradeId",@item.SubjectId,"@item.ShortName","@item.SubjectName",@item.SubjectCategoryId,"@item.Optional")'><span class="fa fa-trash"></span> Delete</a>
+                                        <a class="hvr-buzz-out" onclick='EditView("@item.AcademicYear","@item.GradeId","@item.SubjectId","@item.SubjectCategoryId","@item.Optional")'><span class="fa fa-pencil"></span> Edit </a> | 
+                                        <a class="hvr-buzz-out" onclick='DeleteView("@item.AcademicYear","@item.GradeId",@item.SubjectId,"@item.ShortName","@item.SubjectName",@item.SubjectCategoryId,"@item.Optional")'><span class="fa fa-trash"></span> Delete</a>
 
                                     </td>
                                 </tr>
