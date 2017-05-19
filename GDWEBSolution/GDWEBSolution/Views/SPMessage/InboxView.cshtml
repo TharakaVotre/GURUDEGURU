@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-sm-3 col-md-2">
-        <a href="#" class="btn btn-primary btn-sm btn-block" role="button" onclick="ShowViewNewMSG(0)">New Message</a>
+        <a href="~/SPMessage/NewMessage" class="btn btn-primary btn-sm btn-block" role="button">New Message</a>
     </div>
     <div class="col-sm-9 col-md-10">
 
@@ -15,7 +15,7 @@
     <div class="col-sm-3 col-md-2">
 
         <ul class="nav nav-pills nav-stacked">
-            <li><a href="~/SPMessage/Index"><span class="badge pull-right">0</span> Inbox </a>
+            <li><a href="~/SPMessage/Index">@*<span class="badge pull-right">0</span>*@ Inbox </a>
             </li>
             <li class="active"><a href="~/SPMessage/Sent" onclick="">Sent</a></li>
 
@@ -92,7 +92,7 @@
 
     </div>
 </div>
-<script src="~/Scripts/paginathing.js"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
 		$('.table tbody').paginathing({
@@ -102,7 +102,7 @@
     });
 
     var ShowSentMsg = function (msgid) {
-        var Url = "/PSMessage/ViewPSMessage?MessageId=" + msgid;
+        var Url = "/SPMessage/ViewPSMessage?MessageId=" + msgid;
         $("#MyModelBody").load(Url, function () {
             //$('#myModal').modal({ backdrop: 'static', keyboard: false })
             $("#myModal").modal("show");

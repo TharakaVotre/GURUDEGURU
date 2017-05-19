@@ -378,6 +378,9 @@
     <Compile Include="Models\SMGTgetSchoolTeacher_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGTgetSchooltoParentSentMail_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGTgetStudentExtraCadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -427,6 +430,9 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGT_getSchoolGreadClassParent_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGT_getSchooltoParentSentMail_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGT_getStoPMessageView_Result.cs">
@@ -1280,6 +1286,7 @@
     <Content Include="Views\SPMessage\loadExParent.cshtml" />
     <Content Include="Views\PSMessage\InboxMsgView.cshtml" />
     <Content Include="Views\SPMessage\InboxView.cshtml" />
+    <Content Include="Views\SPMessage\ViewInboxMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

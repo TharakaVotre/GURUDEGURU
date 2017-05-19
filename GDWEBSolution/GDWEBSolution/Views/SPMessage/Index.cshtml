@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">Inbox<label id="id">1</label></div>
+            <div class="panel-heading">Inbox<label id="id">-</label></div>
             <div class="panel-body" id="inboxbody">
             </div>
         </div>
@@ -56,8 +56,8 @@
     var loadClassList = function () {
         debugger
         $('#inboxbody').load('/SPMessage/ShowInboxMessages');
-        document.getElementById("id").innerHTML = document.getElementById("id").innerHTML + 1;
-        $('#inboxbody').show();
+       // document.getElementById("id").innerHTML = document.getElementById("id").innerHTML + 1;
+       // $('#inboxbody').show();
     }
 
     var ShowViewNewMSG = function (bookid) {

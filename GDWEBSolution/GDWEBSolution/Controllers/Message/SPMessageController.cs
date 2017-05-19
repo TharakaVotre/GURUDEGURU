@@ -153,6 +153,59 @@ namespace GDWEBSolution.Controllers.Message
             }).ToList();
             return PartialView("InboxView", List);
         }
+
+        public ActionResult ViewPSMessage(long MessageId)
+        {
+            PtoSMessageHeaderModel M = new PtoSMessageHeaderModel();
+            try
+            {
+                var H = Connection.SMGTgetPtoSMessageView(MessageId).SingleOrDefault();
+                M.MessageId = H.MessageId;
+                M.Message = H.Message.Replace("<br />", "\r\n");
+                M.MessageType = Convert.ToInt64(H.MessageType);
+                M.MessageTypeDes = H.MessageTypeDescription;
+                M.ParentId = H.ParentId;
+                M.ParentName = H.ParentName;
+                M.RecepientUser = H.RecepientUser;
+                M.SchoolId = H.SchoolId;
+                M.SeqNo = H.SeqNo;
+                M.Status = H.Status;
+                M.Subject = H.Subject;
+                M.TeacherName = H.PersonName;
+
+                List<tblParentToSchollMessageAttachment> AList = Connection.tblParentToSchollMessageAttachments.Where(x => x.MessageId == MessageId).ToList();
+                M.AttachmentList = AList;
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("ActionResult ViewPSMessage(long MessageId) @ PSMessageController", Ex);
+            }
+            return PartialView("ViewInboxMessage", M);
+        }
+
+        public ActionResult Sent()
+        {
+            return View();
+        }
+        public ActionResult ShowSentMessages()
+        {
+            var STQlist = Connection.SMGT_getSchooltoParentSentMail("ADMIN").ToList(); //ParentId session
+            List<StoPMessageHeaderModel> List = STQlist.Select(x => new StoPMessageHeaderModel
+            {
+                SchoolId = x.SchoolId,
+                MessageId = x.MessageId,
+                MessageTypeDes = x.MessageTypeDescription,
+                ParentId = x.ParentId,
+                ParentName = x.ParentName,
+                Message = x.Message.Replace("<br />", " "),
+                IsActive = x.IsActive,
+                SeqNo = x.SeqNo,
+                Subject = x.Subject,
+                CreatedDate = x.CreatedDate,
+
+            }).ToList();
+            return PartialView("SentView", List);
+        }
         //
         // GET: /SPMessage/Edit/5
 

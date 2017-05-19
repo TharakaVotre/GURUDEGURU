@@ -5011,6 +5011,9 @@
           <Parameter Name="GreadId" Type="varchar" Mode="In" />
           <Parameter Name="ClassId" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SMGT_getSchooltoParentSentMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CreatedBy" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SMGT_getStoPMessageView" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MessageId" Type="bigint" Mode="In" />
           <Parameter Name="ParentId" Type="bigint" Mode="In" />
@@ -5091,6 +5094,9 @@
         </Function>
         <Function Name="SMGTgetSchoolTeacher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SMGTgetSchooltoParentSentMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CreatedBy" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SMGTGetStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SMGTgetStudentExtraCadd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -6825,7 +6831,13 @@
           <Parameter Name="RecepientUser" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGT_getTeacherInbox" ReturnType="Collection(SchoolMGTModel.SMGT_getTeacherInbox_Result)">
-            <Parameter Name="RecepientUser" Mode="In" Type="String" />
+          <Parameter Name="RecepientUser" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGTgetSchooltoParentSentMail" ReturnType="Collection(SchoolMGTModel.SMGTgetSchooltoParentSentMail_Result)">
+          <Parameter Name="CreatedBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGT_getSchooltoParentSentMail" ReturnType="Collection(SchoolMGTModel.SMGT_getSchooltoParentSentMail_Result)">
+            <Parameter Name="CreatedBy" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="tblApplicationStatu">
@@ -11554,6 +11566,31 @@
           <Property Type="Int32" Name="Attachments" Nullable="true" />
           <Property Type="String" Name="Subject" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="SMGTgetSchooltoParentSentMail_Result">
+          <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
+          <Property Type="Int64" Name="MessageId" Nullable="false" />
+          <Property Type="Int64" Name="ParentId" Nullable="false" />
+          <Property Type="Int64" Name="MessageType" Nullable="false" />
+          <Property Type="String" Name="MessageTypeDescription" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+          <Property Type="Int64" Name="SeqNo" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Subject" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SMGT_getSchooltoParentSentMail_Result">
+          <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
+          <Property Type="Int64" Name="MessageId" Nullable="false" />
+          <Property Type="Int64" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="ParentName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="MessageType" Nullable="false" />
+          <Property Type="String" Name="MessageTypeDescription" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+          <Property Type="Int64" Name="SeqNo" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Subject" Nullable="false" MaxLength="100" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13594,6 +13631,39 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Attachments" ColumnName="Attachments" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGTgetSchooltoParentSentMail" FunctionName="SchoolMGTModel.Store.SMGTgetSchooltoParentSentMail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTgetSchooltoParentSentMail_Result">
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="MessageType" ColumnName="MessageType" />
+                <ScalarProperty Name="MessageTypeDescription" ColumnName="MessageTypeDescription" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SeqNo" ColumnName="SeqNo" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGT_getSchooltoParentSentMail" FunctionName="SchoolMGTModel.Store.SMGT_getSchooltoParentSentMail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGT_getSchooltoParentSentMail_Result">
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="MessageType" ColumnName="MessageType" />
+                <ScalarProperty Name="MessageTypeDescription" ColumnName="MessageTypeDescription" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SeqNo" ColumnName="SeqNo" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
               </ComplexTypeMapping>
             </ResultMapping>

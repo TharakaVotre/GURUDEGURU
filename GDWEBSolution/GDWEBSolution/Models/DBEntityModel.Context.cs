@@ -2539,5 +2539,23 @@ namespace GDWEBSolution.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getTeacherInbox_Result>("SMGT_getTeacherInbox", recepientUserParameter);
         }
+    
+        public virtual ObjectResult<SMGTgetSchooltoParentSentMail_Result> SMGTgetSchooltoParentSentMail(string createdBy)
+        {
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetSchooltoParentSentMail_Result>("SMGTgetSchooltoParentSentMail", createdByParameter);
+        }
+    
+        public virtual ObjectResult<SMGT_getSchooltoParentSentMail_Result> SMGT_getSchooltoParentSentMail(string createdBy)
+        {
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchooltoParentSentMail_Result>("SMGT_getSchooltoParentSentMail", createdByParameter);
+        }
     }
 }

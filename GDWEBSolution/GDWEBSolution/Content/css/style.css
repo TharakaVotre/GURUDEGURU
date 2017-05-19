@@ -210,9 +210,9 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-    color: #8e8c84;
-    background-color: #e3e2e1;
-    border-color: #dfd7ca;
+    color: #fffffd;
+    background-color: rgba(30, 110, 189, 0.49);
+    border-color: #1e54bd;
 }
 
 .pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {

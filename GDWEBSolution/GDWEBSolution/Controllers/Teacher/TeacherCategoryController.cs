@@ -127,6 +127,8 @@ namespace GDWEBSolution.Controllers.Teacher
             else{TModel.IsActiveBool = false;}
             TModel.TeacherCategoryName = TCtable.TeacherCategoryName;
             TModel.TeacherCategoryId = TCtable.TeacherCategoryId;
+            TModel.ModifiedBy = "ADMIN"; //User session needed
+            TModel.ModifiedDate = DateTime.Now;
 
             return PartialView("EditTeacherCategory",TModel);
         }

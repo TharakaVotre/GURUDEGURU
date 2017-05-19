@@ -22,6 +22,7 @@ namespace GDWEBSolution.Models.Message
 
         public long SeqNo { get; set; }
         public long ParentId { get; set; }
+        public string ParentName { get; set; }
 
         //For dropdowns
         public string GradeId { set; get; }
