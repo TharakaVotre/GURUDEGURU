@@ -2634,5 +2634,63 @@ namespace GDWEBSolution.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTsetStudentOptionalSubject", schoolIdParameter, gradeIdParameter, createdByParameter, isActiveParameter, academicYearParameter, studentIdParameter, classIdParameter, subjectIdParameter);
         }
+    
+        public virtual ObjectResult<SMGT_getParentInbox_Result> SMGT_getParentInbox(Nullable<long> parentId)
+        {
+            var parentIdParameter = parentId.HasValue ?
+                new ObjectParameter("ParentId", parentId) :
+                new ObjectParameter("ParentId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getParentInbox_Result>("SMGT_getParentInbox", parentIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGT_getStoPMessageView_Result> SMGT_getStoPMessageView(Nullable<long> messageId, Nullable<long> parentId)
+        {
+            var messageIdParameter = messageId.HasValue ?
+                new ObjectParameter("MessageId", messageId) :
+                new ObjectParameter("MessageId", typeof(long));
+    
+            var parentIdParameter = parentId.HasValue ?
+                new ObjectParameter("ParentId", parentId) :
+                new ObjectParameter("ParentId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getStoPMessageView_Result>("SMGT_getStoPMessageView", messageIdParameter, parentIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGT_getParentToSchoolSentMail_Result> SMGT_getParentToSchoolSentMail(string recepientUser)
+        {
+            var recepientUserParameter = recepientUser != null ?
+                new ObjectParameter("RecepientUser", recepientUser) :
+                new ObjectParameter("RecepientUser", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getParentToSchoolSentMail_Result>("SMGT_getParentToSchoolSentMail", recepientUserParameter);
+        }
+    
+        public virtual ObjectResult<SMGT_getTeacherInbox_Result> SMGT_getTeacherInbox(string recepientUser)
+        {
+            var recepientUserParameter = recepientUser != null ?
+                new ObjectParameter("RecepientUser", recepientUser) :
+                new ObjectParameter("RecepientUser", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getTeacherInbox_Result>("SMGT_getTeacherInbox", recepientUserParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetSchooltoParentSentMail_Result> SMGTgetSchooltoParentSentMail(string createdBy)
+        {
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetSchooltoParentSentMail_Result>("SMGTgetSchooltoParentSentMail", createdByParameter);
+        }
+    
+        public virtual ObjectResult<SMGT_getSchooltoParentSentMail_Result> SMGT_getSchooltoParentSentMail(string createdBy)
+        {
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchooltoParentSentMail_Result>("SMGT_getSchooltoParentSentMail", createdByParameter);
+        }
     }
 }

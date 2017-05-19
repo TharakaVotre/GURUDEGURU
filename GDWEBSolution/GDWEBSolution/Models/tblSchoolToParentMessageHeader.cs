@@ -21,6 +21,7 @@ namespace GDWEBSolution.Models
     
         public string SchoolId { get; set; }
         public long MessageId { get; set; }
+        public string Sender { get; set; }
         public string Subject { get; set; }
         public long MessageType { get; set; }
         public string Message { get; set; }

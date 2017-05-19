@@ -1,8 +1,8 @@
-﻿@model IEnumerable<GDWEBSolution.Models.Message.PtoSMessageHeaderModel>
+﻿@model IEnumerable<GDWEBSolution.Models.Message.StoPMessageHeaderModel>
 
 <div class="row">
     <div class="col-sm-3 col-md-2">
-        <a href="#" class="btn btn-primary btn-sm btn-block" role="button" onclick="ShowViewNewMSG(0)">New Message</a>
+        <a href="~/SPMessage/NewMessage" class="btn btn-primary btn-sm btn-block" role="button">New Message</a>
     </div>
     <div class="col-sm-9 col-md-10">
 
@@ -15,7 +15,7 @@
     <div class="col-sm-3 col-md-2">
 
         <ul class="nav nav-pills nav-stacked">
-            <li><a href="~/PSMessage/Index"><span class="badge pull-right">0</span> Inbox </a>
+            <li><a href="~/SPMessage/Index">@*<span class="badge pull-right">0</span>*@ Inbox </a>
             </li>
             <li class="active"><a href="#" onclick="">Sent</a></li>
 
@@ -39,10 +39,10 @@
                                 <input type="checkbox" class="mail-checkbox">
                             </td>
                             @*<td class="inbox-small-cells"><i class="fa fa-star"></i></td>*@
-                            @if(item.TeacherName.Length > 30){
-                              <td class="view-message dont-show">@item.TeacherName.Substring(0,26)....</td>
+                            @if(item.ParentName.Length > 30){
+                              <td class="view-message dont-show">@item.ParentName.Substring(0,26)....</td>
                             }
-                            else{<td class="view-message dont-show">@item.TeacherName</td>}
+                            else{<td class="view-message dont-show">@item.ParentName</td>}
                             @if(item.Subject == null){
                                 if (item.Message.Length > 20)
                                 {
@@ -92,7 +92,7 @@
 
     </div>
 </div>
-<script src="~/Scripts/paginathing.js"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
 		$('.table tbody').paginathing({

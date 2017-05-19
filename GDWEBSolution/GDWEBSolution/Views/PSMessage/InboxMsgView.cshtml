@@ -1,17 +1,17 @@
-﻿@model GDWEBSolution.Models.Message.PtoSMessageHeaderModel
+﻿@model GDWEBSolution.Models.Message.StoPMessageHeaderModel
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <h4 class="modal-title">Sent Message</h4>
+    <h4 class="modal-title">Inbox Message</h4>
 </div>
 <div class="modal-body">
 
     <form class="form-horizontal">
         <!-- Name input-->
         <div class="form-group">
-            <label class="col-md-3 control-label" for="name">To :</label>
+            <label class="col-md-3 control-label" for="name">From :</label>
             <div class="col-md-9">
-                @Html.TextBoxFor(model => model.TeacherName, new { @class = "form-control", @readonly = "readonly" })
+                @Html.TextBoxFor(model => model.Sender, new { @class = "form-control", @readonly = "readonly" })
             </div>
         </div>
 
@@ -31,9 +31,9 @@
 
         <!-- Message body -->
         <div class="form-group">
-            <label class="col-md-3 control-label" for="message">Your message</label>
+            <label class="col-md-3 control-label" for="message">Message</label>
             <div class="col-md-9">
-                @Html.TextAreaFor(model => model.Message, new { @class = "form-control", rows = "5", cols = "20", @readonly = "readonly" })
+                @Html.TextAreaFor(model => model.Message, new { @class = "form-control", rows = "8", cols = "20", @readonly = "readonly" })
             </div>
         </div>
         <div class="row">      

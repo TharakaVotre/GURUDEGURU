@@ -5,7 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+/* ===============================
+ * AUTHOR     : G.M. Tharaka Madusanka
+ * CREATE DATE     : April 17 2017
+*/
 namespace GDWEBSolution.Controllers.TimeTable
 {
     public class TimeTableController : Controller
