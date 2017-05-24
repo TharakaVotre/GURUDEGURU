@@ -208,7 +208,32 @@ namespace GDWEBSolution.Controllers.Message
         }
         //
         // GET: /SPMessage/Edit/5
+        public ActionResult ViewSPMessage(long MessageId,long ParentId)
+        {
+            StoPMessageHeaderModel M = new StoPMessageHeaderModel();
+            try
+            {
+                var H = Connection.SMGTgetStoPMessageView(MessageId,ParentId).SingleOrDefault();
+                M.MessageId = H.MessageId;
+                M.Message = H.Message.Replace("<br />", "\r\n");
+                M.MessageType = Convert.ToInt64(H.MessageType);
+                M.MessageTypeDes = H.MessageTypeDescription;
+                M.ParentId = H.ParentId;
+                M.ParentName = H.ParentName;
+                M.Sender = H.Sender;
+                M.SchoolId = H.SchoolId;
+                M.SeqNo = H.SeqNo;
+                M.Subject = H.Subject;
 
+                //List<tblParentToSchollMessageAttachment> AList = Connection.tblParentToSchollMessageAttachments.Where(x => x.MessageId == MessageId).ToList();
+                //M.AttachmentList = AList;
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("ActionResult ViewPSMessage(long MessageId) @ PSMessageController", Ex);
+            }
+            return PartialView("ViewMessage", M);
+        }
         public ActionResult Edit(int id)
         {
             return View();

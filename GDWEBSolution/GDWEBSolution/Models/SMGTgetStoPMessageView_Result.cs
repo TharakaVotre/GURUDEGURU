@@ -11,21 +11,20 @@ namespace GDWEBSolution.Models
 {
     using System;
     
-    public partial class SMGT_getParentToSchoolSentMail_Result
+    public partial class SMGTgetStoPMessageView_Result
     {
         public string SchoolId { get; set; }
         public long MessageId { get; set; }
         public long ParentId { get; set; }
-        public Nullable<long> MessageType { get; set; }
+        public string ParentName { get; set; }
+        public long MessageType { get; set; }
         public string MessageTypeDescription { get; set; }
         public string Message { get; set; }
-        public string Status { get; set; }
-        public string IsActive { get; set; }
-        public long SeqNo { get; set; }
-        public string RecepientUser { get; set; }
-        public string Name { get; set; }
+        public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
-        public Nullable<int> Attachments { get; set; }
         public string Subject { get; set; }
+        public long SeqNo { get; set; }
+        public string Sender { get; set; }
+        public string PersonName { get; set; }
     }
 }

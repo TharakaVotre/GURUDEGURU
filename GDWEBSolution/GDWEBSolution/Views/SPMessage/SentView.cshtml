@@ -79,7 +79,7 @@
                             {
                                 <td class="view-message text-right">@item.CreatedDate.ToString("dd/MM/yyyy")</td>
                             }
-                            <td class="view-message text-right"><a href="#" onclick="ShowSentMsg(@item.MessageId)">View</a></td>
+                            <td class="view-message text-right"><a href="#" onclick="ShowSentMsg(@item.MessageId,@item.ParentId)">View</a></td>
                         </tr>
                     }
                                 </tbody>
@@ -101,8 +101,9 @@
 		});
     });
 
-    var ShowSentMsg = function (msgid) {
-        var Url = "/PSMessage/ViewPSMessage?MessageId=" + msgid;
+    var ShowSentMsg = function (msgid, pid) {
+        debugger
+        var Url = "/SPMessage/ViewSPMessage?MessageId=" + msgid + "&ParentId=" + pid;
         $("#MyModelBody").load(Url, function () {
             //$('#myModal').modal({ backdrop: 'static', keyboard: false })
             $("#myModal").modal("show");
