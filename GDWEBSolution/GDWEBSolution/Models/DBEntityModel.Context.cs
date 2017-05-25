@@ -90,6 +90,7 @@ namespace GDWEBSolution.Models
         public DbSet<tblUser> tblUsers { get; set; }
         public DbSet<tblUserCategory> tblUserCategories { get; set; }
         public DbSet<tblUserCategoryFunction> tblUserCategoryFunctions { get; set; }
+        public DbSet<tblSchoolToParentMessageAttachment> tblSchoolToParentMessageAttachments { get; set; }
     
         public virtual ObjectResult<DCISgetSchool_Result> DCISgetSchool()
         {

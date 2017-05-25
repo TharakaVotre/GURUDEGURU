@@ -50,6 +50,7 @@
           <EntitySet Name="tblSchoolGroup" EntityType="SchoolMGTModel.Store.tblSchoolGroup" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblSchoolRank" EntityType="SchoolMGTModel.Store.tblSchoolRank" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblSchoolSubject" EntityType="SchoolMGTModel.Store.tblSchoolSubject" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblSchoolToParentMessageAttachment" EntityType="SchoolMGTModel.Store.tblSchoolToParentMessageAttachment" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblSchoolToParentMessageDetail" EntityType="SchoolMGTModel.Store.tblSchoolToParentMessageDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblSchoolToParentMessageHeader" EntityType="SchoolMGTModel.Store.tblSchoolToParentMessageHeader" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblStudent" EntityType="SchoolMGTModel.Store.tblStudent" store:Type="Tables" Schema="dbo" />
@@ -1590,6 +1591,15 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="20" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsActive" Type="varchar" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="tblSchoolToParentMessageAttachment">
+          <Key>
+            <PropertyRef Name="SeqNo" />
+          </Key>
+          <Property Name="SeqNo" Type="bigint" Nullable="false" />
+          <Property Name="MessageId" Type="bigint" Nullable="false" />
+          <Property Name="AttachmentName" Type="varchar" Nullable="false" MaxLength="350" />
+          <Property Name="AttachmentPath" Type="varchar" Nullable="false" MaxLength="350" />
         </EntityType>
         <EntityType Name="tblSchoolToParentMessageDetail">
           <Key>
@@ -6916,6 +6926,7 @@
             <Parameter Name="MessageId" Mode="In" Type="Int64" />
             <Parameter Name="ParentId" Mode="In" Type="Int64" />
           </FunctionImport>
+          <EntitySet Name="tblSchoolToParentMessageAttachments" EntityType="SchoolMGTModel.tblSchoolToParentMessageAttachment" />
         </EntityContainer>
         <EntityType Name="tblApplicationStatu">
           <Key>
@@ -11700,6 +11711,15 @@
           <Property Type="String" Name="Sender" Nullable="false" MaxLength="250" />
           <Property Type="String" Name="PersonName" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <EntityType Name="tblSchoolToParentMessageAttachment">
+          <Key>
+            <PropertyRef Name="SeqNo" />
+          </Key>
+          <Property Type="Int64" Name="SeqNo" Nullable="false" />
+          <Property Type="Int64" Name="MessageId" Nullable="false" />
+          <Property Type="String" Name="AttachmentName" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="AttachmentPath" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13853,6 +13873,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblSchoolToParentMessageAttachments">
+            <EntityTypeMapping TypeName="SchoolMGTModel.tblSchoolToParentMessageAttachment">
+              <MappingFragment StoreEntitySet="tblSchoolToParentMessageAttachment">
+                <ScalarProperty Name="AttachmentPath" ColumnName="AttachmentPath" />
+                <ScalarProperty Name="AttachmentName" ColumnName="AttachmentName" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="SeqNo" ColumnName="SeqNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

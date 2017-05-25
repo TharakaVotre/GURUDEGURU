@@ -2,7 +2,7 @@
 
 
 @*<label for="pwd" class="control-label">Class :</label>*@
-@Html.DropDownListFor(model => model.ParentId, ViewBag.GradeClassseParent as SelectList, "", new {id="GreadeParentId", @class = "select2_Parent form-control"})@*,multiple="multiple"*@
+@Html.DropDownListFor(model => model.ParentIdArray, (MultiSelectList)ViewBag.GradeClassseParent as MultiSelectList, "", new { id = "GreadeParentId", @class = "select2_Parent form-control", multiple = "multiple" })@*,multiple="multiple"*@
 
 <script>
     $(document).ready(function () {

@@ -604,6 +604,9 @@
     <Compile Include="Models\tblSchoolSubject.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblSchoolToParentMessageAttachment.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblSchoolToParentMessageDetail.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -1335,6 +1338,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Attachments\" />
     <Folder Include="Controllers\School\" />
     <Folder Include="UploadedFiles\" />
     <Folder Include="Uploads\Student\Photo\" />
