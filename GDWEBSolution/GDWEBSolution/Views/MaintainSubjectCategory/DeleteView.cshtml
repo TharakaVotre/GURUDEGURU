@@ -1,11 +1,11 @@
 ﻿@model GDWEBSolution.Models.Maintenance.SubjectCategoryModel
 
 
-<div>
+<div id="Viewform">
     <form id="myForm" class="form-horizontal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h5 class="modal-title">Are you sure you want to Delete this Subject Category ? @Html.HiddenFor(model => model.SubjectCategoryId)</h5>
+            <h5 class="modal-title">Are You Sure that You Want to Delete the Subject Category ? @Html.HiddenFor(model => model.SubjectCategoryId)</h5>
         </div>
         <div class="modal-footer">
             
@@ -20,6 +20,48 @@
     </div>*@
 
 </div>
+
+<!--Success message-->
+<div id="successmsg" style="display:none">
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" onclick="CloseView()">&times;</button>
+            <h5 class="modal-title" style="color:green">Delete Success....!</h5>
+        </div>
+        <div class="modal-footer">
+
+
+            <a href="#" id="btnSubmit" class="btn btn-primary" onclick="CloseView()">YES</a>
+           
+        </div>
+    </div>
+
+    @*    <div style="text-align: center; display: none" id="loaderDiv">
+            Loading
+        </div>*@
+
+</div>
+
+<!--Error message-->
+<div id="errormsg" style="display:none">
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5 class="modal-title" style="color:red">Delete Fail......!</h5>
+        </div>
+        <div class="modal-footer">
+
+
+            <a href="#" id="btnSubmit" onclick="CloseView()" class="btn btn-primary">Close</a>
+           
+        </div>
+    </div>
+
+    @*    <div style="text-align: center; display: none" id="loaderDiv">
+            Loading
+        </div>*@
+
+</div>
 <script>
 
     $(document).ready(function () {
@@ -32,22 +74,28 @@
                 type: "POST",
                 url: "/MaintainSubjectCategory/Delete",
                 data: myformdata,
-                success: function () {
-                    //$("#loaderDiv").hide();
-                    $("#myModal").modal("hide");
-                    window.location.href = "/MaintainSubjectCategory/Index";
-
+                success: function (result) {
+                    document.getElementById('Viewform').style.display = "none";
+                    if (result==true) {
+                        //$("#loaderDiv").hide(
+                        //$("#myModal").modal("hide");
+                        
+                        document.getElementById("successmsg").style.display = "block";
+                    //
+                    } else {
+                        document.getElementById("errormsg").style.display = "block";
+                    }
+                    
                 }
 
             })
         })
 
-        $("#btnNo").click(function (e) {
-            debugger
-            $("#myModal").modal("hide");
-        })
+       
 
     })
 
-
+    function CloseView() {
+        window.location.href = "/MaintainSubjectCategory/Index";
+    }
 </script>

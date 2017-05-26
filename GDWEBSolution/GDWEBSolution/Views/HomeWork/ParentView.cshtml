@@ -50,28 +50,19 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.AssignmentNo)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.AssignmentDescription)
-                        </th>
-
-                        <th>
                             @Html.DisplayNameFor(model => model.GradeId)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.ClassId)
                         </th>
-
-
-
                         <th>
-                            @Html.DisplayNameFor(model => model.BatchNo)
+                            @Html.DisplayNameFor(model => model.Subject)
                         </th>
-
-
-
-
+                       
+                        <th>
+                            @Html.DisplayNameFor(model => model.DueDate)
+                        </th>
+                        
                         <th></th>
                     </tr>
                 </thead>
@@ -81,30 +72,23 @@
                         foreach (var item in Model)
                         {
                             <tr>
+                                
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.AssignmentNo)
-                                </td>
-
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.GradeId)
+                                    @Html.DisplayFor(modelItem => item.Grade)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ClassId)
-                                </td>
-
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BatchNo)
+                                    @Html.DisplayFor(modelItem => item.Class)
                                 </td>
 
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.SubjectId)
+                                    @Html.DisplayFor(modelItem => item.Subject)
                                 </td>
-
-
                                 <td>
-                                     <a class="btn btn-info" onclick='DetailView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="fa fa-trash"></span> Detail</a>
+                                    @Html.DisplayFor(modelItem => item.DueDate)
+                                </td>
+                               
+                                <td style="width:50px">
+                                     <a class="btn btn-primary" onclick='DetailView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="glyphicon glyphicon-eye-open"></span> Detail</a>
                                    
                                 </td>
                             </tr>

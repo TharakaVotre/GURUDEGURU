@@ -185,7 +185,7 @@ namespace GDWEBSolution.Controllers.MarkSheet
 
             {
 
-                String a = model.SchoolId;
+                string a = model.SchoolId;
                 String b = model.Grade;
                 string c = model.StudentId;
                 string d = model.Class;

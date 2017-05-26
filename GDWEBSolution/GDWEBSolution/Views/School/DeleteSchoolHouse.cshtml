@@ -4,15 +4,15 @@
     <form id="FormHDelete" class="form-horizontal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h5 class="modal-title">Are you sure you want to Delete this House ? @Html.HiddenFor(m => m.HouseName)</h5>
-            @Html.HiddenFor(m => m.SchoolId)
+            <h5 class="modal-title">Are you sure you want to Delete this House ? </h5>
+            @Html.HiddenFor(m => m.SchoolId2)
             @Html.HiddenFor(m => m.HouseId)
 
         </div>
         <div class="modal-footer">
 
-            <a href="#" id="btnHDSubmit" class="btn btn-primary">YES</a>
-            <a href="#" id="btnNo" class="btn btn-default">NO</a>
+            <a href="#" id="btnHDSubmits" onclick="vcb()" class="btn btn-primary">YES</a>
+            <a href="#" id="btnNo" onclick="dsh()" class="btn btn-default">NO</a>
         </div>
     </form>
     @*    <div style="text-align: center; display: none" id="loaderDiv">
@@ -20,40 +20,45 @@
         </div>*@
 </div>
 <script>
+    var vcb = function () {
 
-    $(document).ready(function () {
+        debugger
+        var myformdata = $("#FormHDelete").serialize();
+        $.ajax({
 
-        $("#btnHDSubmit").click(function (e) {
-            debugger
-            var myformdata = $("#FormHDelete").serialize();
-            $.ajax({
-
-                type: "POST",
-                url: "/School/DeleteSchoolHouses",
-                data: myformdata,
-                success: function (result) {
-                    //$("#loaderDiv").hide();
-                    if (result != "Error") {
-                        debugger
-                        //window.location.href = "/Teacher/Create";
-                        // $("#TeacherID").val(result);
-                        //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                        $('#showgrade').load('/School/ShowSchooHouse?SchoolId=' + result);
-                    }
-                    $("#deleteModel").modal("hide");
-
-
+            type: "POST",
+            url: "/School/DeleteSchoolHouses",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                if (result != "Error") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+                    // $("#TeacherID").val(result);
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + result);
                 }
+                $("#deleteModel").modal("hide");
 
-            })
+
+            }
+
         })
 
-        $("#btnNo").click(function (e) {
-            debugger
-            $("#deleteModel").modal("hide");
-        })
 
-    })
+
+
+
+    }
+
+    var dsh = function () {
+        debugger
+        $("#deleteModel").modal("hide");
+
+
+    }
+
+   
 
 
 </script>

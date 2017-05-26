@@ -11,7 +11,7 @@
 
         @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-4">
-            @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadEXactivsess(this.value)" })
+            @Html.DropDownListFor(model => model.SchoolId3, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadEXactivsess(this.value)" })
 
             @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
 
@@ -19,7 +19,7 @@
 
         @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
-            @Html.DropDownListFor(model => model.GradeId, ViewBag.grdschooldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School " })
+            @Html.DropDownListFor(model => model.GradeId, ViewBag.grdschooldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School " , @onchange = "loadsclgradeclassess(this.value)" }) 
         </div>
         <br/><br />
         @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-2 control-label" })
@@ -31,9 +31,14 @@
         <div class="col-sm-3">
             @Html.TextBoxFor(model => model.ClassName, new { @class = "form-control", @placeholder = "Class Name" })
         </div>
+        <br />
+        
+      
+    </div>
 
+    <div class="form-group">
 
-        <div class="col-sm-2">
+          <div class="col-sm-2" style="float:right">
             <button type="reset" id="btnAddQualification" onclick="AddClass()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
         </div>
     </div>
@@ -44,6 +49,16 @@
 </form>
 
 <script>
+
+    
+    var loadsclgradeclassess = function (value) {
+        var Schoolid = $('#SchoolId3').val();
+
+        $('#showclasses').load('/School/ShowSchooClasses?SchoolIdGradeId='+Schoolid +"!"+ value);
+
+
+
+    }
 
     var AddClass = function () {
         //debugger

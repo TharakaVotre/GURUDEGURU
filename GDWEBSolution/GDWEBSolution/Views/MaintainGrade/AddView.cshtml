@@ -14,6 +14,9 @@
                 <div class="col-sm-8">
                     @Html.TextBoxFor(model => model.GradeId, new { @class = "form-control", @placeholder = "Grade Id",onkeypress="return RestrictSpace()" })
                     <span class="help-block m-b-none" id="CodeError"></span>
+                    <div id="Msg" style="display:none;color:red" class="has-error">
+                        The Code entered has been used Earlier which is in Inactive Or Active status Now.
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -28,6 +31,7 @@
         <div class="modal-footer">
            <a href="#" id="btnSubmit" class="btn btn-primary">Save</a>
         </div>
+       
     </form>
 
 
@@ -87,12 +91,16 @@
                 type: "POST",
                 url: "/MaintainGrade/Create",
                 data: myformdata,
-                success: function () {
+                success: function (result) {
                     
-                    $("#myModal").modal("hide");
-                    window.location.href = "/MaintainGrade/Index";
-
+                    if (result == "success") {
+                        $("#myModal").modal("hide");
+                        window.location.href = "/MaintainGrade/Index";
+                    } else {
+                        document.getElementById("Msg").style.display="block";
+                    }
                 }
+
 
             })
         })

@@ -342,7 +342,10 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
             }
             //int id = 0;
             //bool isValid = Int32.TryParse(SchoolId, out id);
+            if (SchoolId == "") {
 
+                SchoolId = "asdas123err";
+            }
             var SchoolGrade = Connection.SMGTgetSchoolGrade(SchoolId).ToList();//Need to Pass a Session Schoolid
         
 

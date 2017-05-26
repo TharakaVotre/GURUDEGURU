@@ -20,9 +20,9 @@
                     <div class="well">
                         <i class="glyphicon glyphicon-bell" aria-hidden="true"></i>
                         @Html.HiddenFor(model => item.HouseId)
-                        @Html.HiddenFor(model => item.SchoolId)
+                        @Html.HiddenFor(model => item.SchoolId2)
                         @Html.DisplayFor(modelItem => item.HouseName)
-                        <button type="button" class="close" onclick='DeleteSchoolHouse("@item.HouseId","@(item.HouseName)","@(item.SchoolId)");'>&times;</button>
+                        <button type="button" class="close" onclick='DeleteSchoolHouse("@item.HouseId","@(item.HouseName)","@(item.SchoolId2)");'>&times;</button>
                     </div>
                 </div>
 
@@ -33,9 +33,9 @@
 </div>
 <script>
 
-    function DeleteSchoolHouse(HouseId, HouseName, SchoolId) {
+    function DeleteSchoolHouse(HouseId, HouseName, SchoolId2) {
         debugger
-        var Url = "/School/DeleteHouse?HouseId=" + HouseId + "&HouseName=" + HouseName + "&SchoolId=" + SchoolId;
+        var Url = "/School/DeleteHouse?HouseId=" + HouseId  + "&SchoolId=" + SchoolId2;
         $("#DeleteModelBody").load(Url, function () {
             $("#deleteModel").modal("show");
         })

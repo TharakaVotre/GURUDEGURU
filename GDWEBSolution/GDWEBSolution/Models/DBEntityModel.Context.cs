@@ -1944,6 +1944,15 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllEvaluationType_Result>("getAllEvaluationType", isactiveParameter);
         }
     
+        public virtual ObjectResult<SMGT_getParentInbox_Result> SMGT_getParentInbox(Nullable<long> parentId)
+        {
+            var parentIdParameter = parentId.HasValue ?
+                new ObjectParameter("ParentId", parentId) :
+                new ObjectParameter("ParentId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getParentInbox_Result>("SMGT_getParentInbox", parentIdParameter);
+        }
+    
         public virtual ObjectResult<SMGT_getSchoolExactivity_Result> SMGT_getSchoolExactivity(string schoolId)
         {
             var schoolIdParameter = schoolId != null ?
@@ -1983,6 +1992,54 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchoolGreadClassParent_Result>("SMGT_getSchoolGreadClassParent", schoolIdParameter, greadIdParameter, classIdParameter);
         }
     
+        public virtual ObjectResult<SMGT_getSchooltoParentSentMail_Result> SMGT_getSchooltoParentSentMail(string createdBy)
+        {
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchooltoParentSentMail_Result>("SMGT_getSchooltoParentSentMail", createdByParameter);
+        }
+    
+        public virtual ObjectResult<SMGT_getStoPMessageView_Result> SMGT_getStoPMessageView(Nullable<long> messageId, Nullable<long> parentId)
+        {
+            var messageIdParameter = messageId.HasValue ?
+                new ObjectParameter("MessageId", messageId) :
+                new ObjectParameter("MessageId", typeof(long));
+    
+            var parentIdParameter = parentId.HasValue ?
+                new ObjectParameter("ParentId", parentId) :
+                new ObjectParameter("ParentId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getStoPMessageView_Result>("SMGT_getStoPMessageView", messageIdParameter, parentIdParameter);
+        }
+    
+        public virtual ObjectResult<SMGT_getTeacherInbox_Result> SMGT_getTeacherInbox(string recepientUser)
+        {
+            var recepientUserParameter = recepientUser != null ?
+                new ObjectParameter("RecepientUser", recepientUser) :
+                new ObjectParameter("RecepientUser", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getTeacherInbox_Result>("SMGT_getTeacherInbox", recepientUserParameter);
+        }
+    
+        public virtual int SMGTDeleteParent(string isactive, string parentId, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var parentIdParameter = parentId != null ?
+                new ObjectParameter("ParentId", parentId) :
+                new ObjectParameter("ParentId", typeof(string));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTDeleteParent", isactiveParameter, parentIdParameter, modyfiedByParameter);
+        }
+    
         public virtual int SMGTDeleteSchool(string isactive, string schoolId, string modyfiedBy)
         {
             var isactiveParameter = isactive != null ?
@@ -1998,6 +2055,23 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("ModyfiedBy", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTDeleteSchool", isactiveParameter, schoolIdParameter, modyfiedByParameter);
+        }
+    
+        public virtual int SMGTDeleteStudent(string isactive, string studentId, string modyfiedBy)
+        {
+            var isactiveParameter = isactive != null ?
+                new ObjectParameter("Isactive", isactive) :
+                new ObjectParameter("Isactive", typeof(string));
+    
+            var studentIdParameter = studentId != null ?
+                new ObjectParameter("studentId", studentId) :
+                new ObjectParameter("studentId", typeof(string));
+    
+            var modyfiedByParameter = modyfiedBy != null ?
+                new ObjectParameter("ModyfiedBy", modyfiedBy) :
+                new ObjectParameter("ModyfiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTDeleteStudent", isactiveParameter, studentIdParameter, modyfiedByParameter);
         }
     
         public virtual int SMGTDeleteTeacherExtraCurricularActivity(Nullable<long> teacherid, string schoolid, string activityCode)
@@ -2232,6 +2306,15 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetSchoolTeacher_Result>("SMGTgetSchoolTeacher", schoolIdParameter);
         }
     
+        public virtual ObjectResult<SMGTgetSchoolteachers_Result> SMGTgetSchoolteachers(string schoolId)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetSchoolteachers_Result>("SMGTgetSchoolteachers", schoolIdParameter);
+        }
+    
         public virtual ObjectResult<SMGTGetStudent_Result> SMGTGetStudent()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTGetStudent_Result>("SMGTGetStudent");
@@ -2379,6 +2462,19 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("StudentId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTloadScholExtraCadd_Result>("SMGTloadScholExtraCadd", schoolIdParameter, studentIdParameter);
+        }
+    
+        public virtual int SMGTModifySchoolHouseStatus(string schoolId, string houseId)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var houseIdParameter = houseId != null ?
+                new ObjectParameter("HouseId", houseId) :
+                new ObjectParameter("HouseId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTModifySchoolHouseStatus", schoolIdParameter, houseIdParameter);
         }
     
         public virtual int SMGTModifyStudent(string schoolId, string studentId, string studentName, Nullable<System.DateTime> dateofBirth, string gradeId, string classId, string gender, string userId, string houseId, string imgUrl, string modifiedBy, string isActive)
@@ -2633,64 +2729,6 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("SubjectId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTsetStudentOptionalSubject", schoolIdParameter, gradeIdParameter, createdByParameter, isActiveParameter, academicYearParameter, studentIdParameter, classIdParameter, subjectIdParameter);
-        }
-    
-        public virtual ObjectResult<SMGT_getParentInbox_Result> SMGT_getParentInbox(Nullable<long> parentId)
-        {
-            var parentIdParameter = parentId.HasValue ?
-                new ObjectParameter("ParentId", parentId) :
-                new ObjectParameter("ParentId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getParentInbox_Result>("SMGT_getParentInbox", parentIdParameter);
-        }
-    
-        public virtual ObjectResult<SMGT_getStoPMessageView_Result> SMGT_getStoPMessageView(Nullable<long> messageId, Nullable<long> parentId)
-        {
-            var messageIdParameter = messageId.HasValue ?
-                new ObjectParameter("MessageId", messageId) :
-                new ObjectParameter("MessageId", typeof(long));
-    
-            var parentIdParameter = parentId.HasValue ?
-                new ObjectParameter("ParentId", parentId) :
-                new ObjectParameter("ParentId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getStoPMessageView_Result>("SMGT_getStoPMessageView", messageIdParameter, parentIdParameter);
-        }
-    
-        public virtual ObjectResult<SMGT_getParentToSchoolSentMail_Result> SMGT_getParentToSchoolSentMail(string recepientUser)
-        {
-            var recepientUserParameter = recepientUser != null ?
-                new ObjectParameter("RecepientUser", recepientUser) :
-                new ObjectParameter("RecepientUser", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getParentToSchoolSentMail_Result>("SMGT_getParentToSchoolSentMail", recepientUserParameter);
-        }
-    
-        public virtual ObjectResult<SMGT_getTeacherInbox_Result> SMGT_getTeacherInbox(string recepientUser)
-        {
-            var recepientUserParameter = recepientUser != null ?
-                new ObjectParameter("RecepientUser", recepientUser) :
-                new ObjectParameter("RecepientUser", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getTeacherInbox_Result>("SMGT_getTeacherInbox", recepientUserParameter);
-        }
-    
-        public virtual ObjectResult<SMGTgetSchooltoParentSentMail_Result> SMGTgetSchooltoParentSentMail(string createdBy)
-        {
-            var createdByParameter = createdBy != null ?
-                new ObjectParameter("CreatedBy", createdBy) :
-                new ObjectParameter("CreatedBy", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetSchooltoParentSentMail_Result>("SMGTgetSchooltoParentSentMail", createdByParameter);
-        }
-    
-        public virtual ObjectResult<SMGT_getSchooltoParentSentMail_Result> SMGT_getSchooltoParentSentMail(string createdBy)
-        {
-            var createdByParameter = createdBy != null ?
-                new ObjectParameter("CreatedBy", createdBy) :
-                new ObjectParameter("CreatedBy", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchooltoParentSentMail_Result>("SMGT_getSchooltoParentSentMail", createdByParameter);
         }
     }
 }

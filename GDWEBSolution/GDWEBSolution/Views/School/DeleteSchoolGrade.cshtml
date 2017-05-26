@@ -1,19 +1,19 @@
 ﻿
-@model GDWEBSolution.Models.Schools.SchoolModel
+@model GDWEBSolution.Models.Schools.SchoolGradeModel
 
 
 <div>
-    <form id="FormQDelete" class="form-horizontal">
+    <form id="Formgrddelete" class="form-horizontal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h5 class="modal-title">Are you sure you want to Delete this Teacher Qualification ? @Html.HiddenFor(m => m.SchoolId)</h5>
+            <h5 class="modal-title">Are you sure you want to Delete this Grade ? @Html.HiddenFor(m => m.SchoolId)</h5>
             @Html.HiddenFor(m => m.GradeId)
           
         </div>
         <div class="modal-footer">
 
-            <a href="#" id="btnQDSubmit" class="btn btn-primary">YES</a>
-            <a href="#" id="btnNo" class="btn btn-default">NO</a>
+            <a href="#" id="btngrddSubmit" onclick="ccc()" class="btn btn-primary">YES</a>
+            <a href="#" id="btngddNo" onclick="ccn()" class="btn btn-default">NO</a>
         </div>
     </form>
     @*    <div style="text-align: center; display: none" id="loaderDiv">
@@ -22,39 +22,76 @@
 </div>
 <script>
 
-    $(document).ready(function () {
+    var ccn = function () {
+        debugger
+        $("#deleteModel").modal("hide");
 
-        $("#btnQDSubmit").click(function (e) {
-            debugger
-            var myformdata = $("#FormQDelete").serialize();
-            $.ajax({
+    }
 
-                type: "POST",
-                url: "/School/DeleteSchoolgrades",
-                data: myformdata,
-                success: function (result) {
-                    //$("#loaderDiv").hide();
-                    if (result != "Error") {
-                        debugger
-                        //window.location.href = "/Teacher/Create";
-                        // $("#TeacherID").val(result);
-                        //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                        $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + result);
-                    }
-                    $("#deleteModel").modal("hide");
+    var ccc = function () {
 
+        debugger
+    
+        var myformdata = $("#Formgrddelete").serialize();
+        $.ajax({
 
+            type: "POST",
+            url: "/School/DeleteSchoolgrades",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                if (result != "Error") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+                    // $("#TeacherID").val(result);
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + result);
                 }
+                $("#deleteModel").modal("hide");
 
-            })
+
+            }
+
         })
 
-        $("#btnNo").click(function (e) {
-            debugger
-            $("#deleteModel").modal("hide");
-        })
 
-    })
+
+    }
+
+    //$(document).ready(function () {
+    //    debugger;
+    //    $("#btngrddSubmit").click(function (e) {
+    //        debugger
+    //        alert("Hello! I am an alert box!!");
+    //        var myformdata = $("#Formgrddelete").serialize();
+    //        $.ajax({
+
+    //            type: "POST",
+    //            url: "/School/DeleteSchoolgrades",
+    //            data: myformdata,
+    //            success: function (result) {
+    //                //$("#loaderDiv").hide();
+    //                if (result != "Error") {
+    //                    debugger
+    //                    //window.location.href = "/Teacher/Create";
+    //                    // $("#TeacherID").val(result);
+    //                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+    //                    $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + result);
+    //                }
+    //                $("#deleteModel").modal("hide");
+
+
+    //            }
+
+    //        })
+    //    })
+
+    //    $("#btnNo").click(function (e) {
+    //        debugger
+    //        $("#deleteModel").modal("hide");
+    //    })
+
+    //})
 
 
 </script>

@@ -9,10 +9,14 @@ namespace GDWEBSolution.Models.Schools
     public class SchoolModel
     {
 
-        
+
         [Display(Name = "School Id")]
         //[Required(ErrorMessage = "Please enter your full SchoolId")]
         public string SchoolId { get; set; }
+
+        [Display(Name = "School Id")]
+        //[Required(ErrorMessage = "Please enter your full SchoolId")]
+        public string SchoolId3 { get; set; }
 
         [Display(Name = "Province")]
         public Nullable<int> Province { get; set; }
@@ -41,7 +45,7 @@ namespace GDWEBSolution.Models.Schools
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public string Telephone { get; set; }
-        [Display(Name = "Minute for Period")]
+        [Display(Name = "Minutes for Period")]
 
         [Required(ErrorMessage = "You must provide a valid time period")]
      
@@ -52,7 +56,7 @@ namespace GDWEBSolution.Models.Schools
         [Display(Name = "Fax")]
         public string Fax { get; set; }
         [Display(Name = "Email")]
-        [Required(ErrorMessage = "The email address is required")]
+       
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
 
         
@@ -79,6 +83,11 @@ namespace GDWEBSolution.Models.Schools
         [Display(Name = "Address")]
         [Required(ErrorMessage = "Address is required")]
         public string Address1 { get; set; }
+
+
+        [Display(Name = "Address1")]
+       
+        public string Addresst { get; set; }
 
         [Display(Name = "Description")]
         public string Description { get; set; }
