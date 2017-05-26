@@ -1335,6 +1335,7 @@
     <Content Include="Views\SPMessage\InboxView.cshtml" />
     <Content Include="Views\SPMessage\ViewInboxMessage.cshtml" />
     <Content Include="Views\SPMessage\ViewMessage.cshtml" />
+    <Content Include="Views\Teacher\TeacherSchool.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
