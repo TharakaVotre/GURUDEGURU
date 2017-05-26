@@ -29,7 +29,7 @@
                 if (result != "Exception" && result != "Exits") {
                     $("#Teacher_ID").val(result);
                     $('#showsubjects').load('/Teacher/ShowTeacherSubjects?TeacherId=' + result);
-                    $("#SuccesLable").text("Teacher Subject Added");
+                    $("#SuccesLable").text("Subject Added to The Teacher Successfully’");
                     $("#SuccesModel").modal("show");
                 }
                 else if (result == "Exception") {

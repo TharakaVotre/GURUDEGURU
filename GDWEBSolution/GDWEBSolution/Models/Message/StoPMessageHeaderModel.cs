@@ -22,6 +22,9 @@ namespace GDWEBSolution.Models.Message
 
         public long SeqNo { get; set; }
         public long ParentId { get; set; }
+
+        public int []ParentIdArray { get; set; }
+
         public string ParentName { get; set; }
 
         //For dropdowns
@@ -30,5 +33,10 @@ namespace GDWEBSolution.Models.Message
         public string ExActivityCode { set; get; }
 
         public string whichParent { set; get; }
+
+        public IEnumerable<HttpPostedFileBase> AttachmentFiles { get; set; }
+        public HttpPostedFileBase Attachment_File { get; set; }
+
+        public List<tblSchoolToParentMessageAttachment> AttachmentList { get; set; }
     }
 }

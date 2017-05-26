@@ -118,6 +118,16 @@
         </div>
     </div>
     <div class="hr-dashed"></div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SchoolID, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-7">
+            @Html.DropDownListFor(model => model.SchoolID, ViewBag.ETSchools as SelectList, "", new { @class = "form-control", @placeholder = "Name of the Teacher" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ValidationMessageFor(model => model.SchoolID, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="hr-dashed"></div>
 
 
     <div class="hr-dashed"></div>

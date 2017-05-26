@@ -90,6 +90,7 @@ namespace GDWEBSolution.Models
         public DbSet<tblUser> tblUsers { get; set; }
         public DbSet<tblUserCategory> tblUserCategories { get; set; }
         public DbSet<tblUserCategoryFunction> tblUserCategoryFunctions { get; set; }
+        public DbSet<tblSchoolToParentMessageAttachment> tblSchoolToParentMessageAttachments { get; set; }
     
         public virtual ObjectResult<DCISgetSchool_Result> DCISgetSchool()
         {
@@ -2023,6 +2024,7 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getTeacherInbox_Result>("SMGT_getTeacherInbox", recepientUserParameter);
         }
     
+
         public virtual int SMGTDeleteParent(string isactive, string parentId, string modyfiedBy)
         {
             var isactiveParameter = isactive != null ?
@@ -2039,7 +2041,7 @@ namespace GDWEBSolution.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTDeleteParent", isactiveParameter, parentIdParameter, modyfiedByParameter);
         }
-    
+   
         public virtual int SMGTDeleteSchool(string isactive, string schoolId, string modyfiedBy)
         {
             var isactiveParameter = isactive != null ?
@@ -2730,5 +2732,19 @@ namespace GDWEBSolution.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTsetStudentOptionalSubject", schoolIdParameter, gradeIdParameter, createdByParameter, isActiveParameter, academicYearParameter, studentIdParameter, classIdParameter, subjectIdParameter);
         }
+    
+        public virtual ObjectResult<SMGTgetStoPMessageView_Result> SMGTgetStoPMessageView(Nullable<long> messageId, Nullable<long> parentId)
+        {
+            var messageIdParameter = messageId.HasValue ?
+                new ObjectParameter("MessageId", messageId) :
+                new ObjectParameter("MessageId", typeof(long));
+    
+            var parentIdParameter = parentId.HasValue ?
+                new ObjectParameter("ParentId", parentId) :
+                new ObjectParameter("ParentId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetStoPMessageView_Result>("SMGTgetStoPMessageView", messageIdParameter, parentIdParameter);
+        }
+
     }
 }

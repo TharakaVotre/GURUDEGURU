@@ -284,14 +284,21 @@ namespace GDWEBSolution.Controllers.Message
                 M.Sender = H.Sender;
 
 
-                //List<tblParentToSchollMessageAttachment> AList = Connection.tblParentToSchollMessageAttachments.Where(x => x.MessageId == MessageId).ToList();
-                //M.AttachmentList = AList;
+                List<tblSchoolToParentMessageAttachment> AList = Connection.tblSchoolToParentMessageAttachments.Where(x => x.MessageId == MessageId).ToList();
+                M.AttachmentList = AList;
             }
             catch (Exception Ex)
             {
                 Errorlog.ErrorManager.LogError("ActionResult ViewInboxMessage(long MessageId) @ PSMessageController", Ex);
             }
             return PartialView("InboxMsgView", M);
+        }
+
+        public ActionResult DownloadAttachmentInbox(long SeqNo)
+        {
+            var file = Connection.tblSchoolToParentMessageAttachments.FirstOrDefault(x => x.SeqNo == SeqNo);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(file.AttachmentPath));
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file.AttachmentName);
         }
     }
 }

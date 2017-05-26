@@ -164,7 +164,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/PSMessage/AttachmentUpload",
+                url: "/SPMessage/AttachmentUpload",
                 data: data,
                 contentType: false,
                 processData: false,
@@ -222,7 +222,9 @@
 
     var SendMessage = function () {
 
-        debugger
+        var myTest = new Array();
+        
+        
         var myformdata = new FormData;
         myformdata.append("MessageId", $("#MessageId").val());
         myformdata.append("Message", $("#Message").val());
@@ -230,12 +232,23 @@
         myformdata.append("Sender", $("#Sender").val());
         myformdata.append("Subject", $("#Subject").val());
 
-        if ($('#radioall').is(':checked')) { myformdata.append("ParentId", "%"); }
+        if ($('#radioall').is(':checked')) { myformdata.append("ParentId", -1); }
 
-        else if ($('#radiobygread').is(':checked')) { myformdata.append("ParentId", $("#GreadeParentId").val()); }
+        else if ($('#radiobygread').is(':checked')) {
+            myformdata.append("ParentId", 0)
+            idarrya = $("#GreadeParentId").val();
 
-        else { myformdata.append("ParentId", $("#ExParentid").val()); }//($('#radiobyex').is(':checked'))
-
+            for (i = 0; i < idarrya.length; i++) {
+                myformdata.append("ParentIdArray[" + i + "]", idarrya[i]);
+            }
+        }
+        else {
+            myformdata.append("ParentId", 0)
+            myTest = $("#ExParentid").val();
+            for (i = 0; i < idarrya.length; i++) {
+                myformdata.append("ParentIdArray[" + i + "]", idarrya[i]);
+            }
+        }
 
         $.ajax({
             type: "POST",
@@ -258,5 +271,26 @@
                 }
             }
         })
+    }
+
+    function DeleteAttachment(SeqNo) {
+        debugger
+        var data = new FormData;
+        data.append("SeqNo", parseInt(SeqNo));
+
+        $.ajax({
+            type: "POST",
+            url: "/SPMessage/DeleteAttachment",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if (result != "Error") {
+                    //$('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + result);
+                }
+                $("#" + SeqNo).hide();
+            }
+        })
+
     }
 </script>

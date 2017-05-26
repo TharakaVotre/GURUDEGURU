@@ -19,7 +19,7 @@ namespace GDWEBSolution.Controllers.Teacher
         public ActionResult Index()
         {
             
-            var TeacherList = Connection.SMGTgetAllTeachers("CKC","%","Y").ToList();
+            var TeacherList = Connection.SMGTgetAllTeachers("%","%","Y").ToList();
 
            
 
@@ -108,6 +108,9 @@ namespace GDWEBSolution.Controllers.Teacher
 
             List<tblQualification> TQlist = Connection.tblQualifications.ToList();
             ViewBag.QualificationList = new SelectList(TQlist, "QualificationId", "QualificationName");
+
+            List<tblSchool> TsList = Connection.tblSchools.ToList();
+            ViewBag.TScholls = new SelectList(TsList, "SchoolId", "SchoolName");
 
             TeacherDrpList();
 
@@ -269,7 +272,7 @@ namespace GDWEBSolution.Controllers.Teacher
                     var TID = Connection.tblTeachers.Where(b => b.UserId == Model.UserId).FirstOrDefault();
 
                     tblTeacherSchool ts = new tblTeacherSchool();
-                    ts.SchoolId = "CKC";
+                    ts.SchoolId = Model.SchoolID;
                     ts.TeacherCategoryId = TID.TeacherCategoryId;
                     ts.TeacherId = TID.TeacherId;
                     ts.CreatedBy = "ADMIN";
@@ -622,6 +625,9 @@ namespace GDWEBSolution.Controllers.Teacher
             List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
             ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
 
+            List<tblSchool> TSlist = Connection.tblSchools.ToList();
+            ViewBag.ETSchools = new SelectList(TSlist, "SchoolId", "SchoolName");
+
             TeacherModel TModel = new TeacherModel();
 
             tblTeacher TCtable = Connection.tblTeachers.SingleOrDefault(x => x.TeacherId == TeacherId);
@@ -641,8 +647,12 @@ namespace GDWEBSolution.Controllers.Teacher
             TModel.Passport = TCtable.Passport;
             TModel.DrivingLicense = TCtable.DrivingLicense;
             TModel.TeacherId = TCtable.TeacherId;
-
             TModel.TeacherCategoryId = TCtable.TeacherCategoryId;
+
+            tblTeacherSchool Tstbl = Connection.tblTeacherSchools.SingleOrDefault(x => x.TeacherId == TeacherId);
+            TModel.SchoolID = Tstbl.SchoolId;
+
+            
 
             return PartialView("EditTeacherDetailsView",TModel);
         }
@@ -681,6 +691,9 @@ namespace GDWEBSolution.Controllers.Teacher
                 Newt.NIC = Model.NIC;
                 Newt.Name = Model.Name;
                 Newt.Passport = Model.Passport;
+
+                tblTeacherSchool Tstbl = Connection.tblTeacherSchools.SingleOrDefault(x => x.TeacherId == Model.TeacherId);
+                Tstbl.SchoolId = Model.SchoolID;
 
                 Connection.SaveChanges();
 
