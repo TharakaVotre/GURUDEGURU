@@ -80,7 +80,8 @@
 
 
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+
+    <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -90,13 +91,14 @@
 
     </div>
 </div>
-
 @*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
 <script>
+    var opendiv = 0;
     var ShowView = function (bookid) {
         var Url = "/MaintainSubjectCategory/ShowAddView?code=" + bookid;
         $("#MyModelBody").load(Url, function () {
             $("#myModal").modal("show");
+            opendiv = 1;
         })
     }
 
@@ -104,6 +106,7 @@
         var Url = "/MaintainSubjectCategory/Edit?Code=" + CategoryId;
         $("#MyModelBody").load(Url, function () {
             $("#myModal").modal("show");
+            opendiv = 1;
         })
     }
 
@@ -111,7 +114,26 @@
         var Url = "/MaintainSubjectCategory/Delete?Code=" + CategoryId;
         $("#MyModelBody").load(Url, function () {
             $("#myModal").modal("show");
+            opendiv = 1;
         })
+
+        
+       
     }
+     
+    $(function () {
+        $("body").click(function (e) {
+            if (opendiv == 1) {
+                if (e.target.id == "MyModelBody" || $(e.target).parents("#MyModelBody").size()) {
+                   // alert("In");
+                }
+                else {
+                   // alert("out");
+                    window.location.href = "/MaintainSubjectCategory/Index";
+                }
+               
+            }
+        });
+    })
 </script>
 

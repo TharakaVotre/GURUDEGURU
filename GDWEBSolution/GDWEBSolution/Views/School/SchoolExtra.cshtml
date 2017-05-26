@@ -4,8 +4,16 @@
 }
 <form id="FrmSE" class="form-horizontal">
     <div class="form-group">
-        @Html.HiddenFor(model => model.SchoolId)
+        @*@Html.HiddenFor(model => model.SchoolId)*@
         @Html.HiddenFor(model => model.ActivityName)
+
+        @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadexcd(this.value)" })
+
+            @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
+
+        </div>
   
         @Html.LabelFor(m => m.ActivityName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
@@ -51,7 +59,7 @@
                     $("#SchoolId").val(result);
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showgrade').load('/School/ShowSchooEXActivity?SchoolId=' + result);
+                    $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + result);
                     $("#SuccesLable").text("Activity Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -80,8 +88,9 @@
         })
     }
 
-    var loadGrades = function (value) {
+    var loadexcd = function (value) {
         debugger
-        $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + value);
+      //  $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + value);
+        $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + value);
     }
     </script>

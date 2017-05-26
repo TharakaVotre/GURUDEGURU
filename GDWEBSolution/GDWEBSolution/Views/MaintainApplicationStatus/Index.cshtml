@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="row">
     <div class="col-md-12">
 
@@ -65,8 +66,8 @@
                 </td>
 
                 <td>
-                    <a href="#" class="hvr-buzz-out" onclick="EditView(@item.StatusCode)"> Edit </a>|
-                    <a href="#" class="hvr-buzz-out" onclick="DeleteView(@item.StatusCode)">Delete</a>
+                    <a href="#" class="btn btn-info btn-sm"  onclick="EditView(@item.StatusCode)"><span class="fa fa-pencil"></span> Edit </a>
+                    <a href="#" class="btn btn-danger btn-sm" onclick="DeleteView(@item.StatusCode)"><span class="fa fa-trash"></span> Delete</a>
                 </td>
             </tr>
                         }
@@ -93,6 +94,7 @@
 
 @*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
 <script>
+  
     var ShowView = function (bookid) {
         var Url = "/MaintainApplicationStatus/ShowAddApplicationStatus?id=" + bookid;
         $("#MyModelBody").load(Url, function () {

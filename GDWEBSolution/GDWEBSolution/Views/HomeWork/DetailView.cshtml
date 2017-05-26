@@ -20,15 +20,7 @@
             @Html.HiddenFor(model => model.AssignmentNo)
 
             <div class="modal-body">
-               
-                <div class="form-group">
-                    @Html.LabelFor(m => m.DueDate, new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.stringDueDate, new { @class = "form-control", @placeholder = "From Date", disabled = "disabled" })
-                        <span class="help-block m-b-none" id="DueDateError"></span>
-                    </div>
-                </div>
-
+               <div class="form-horizontal">
                 <div class="form-group">
                     @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
@@ -43,9 +35,33 @@
                     <div class="col-sm-8">
                         @Html.TextBoxFor(model => model.Class, new { @class = "form-control", disabled = "disabled" })
                         @Html.HiddenFor(m => m.ClassId)
-                        <span class="help-block m-b-none" ></span>
+                        <span class="help-block m-b-none"></span>
                     </div>
                 </div>
+
+                <div class="form-group">
+                       @Html.LabelFor(m => m.FilePath, new { @class = "col-sm-3 control-label" })
+                       <div class="col-sm-8">
+                           @Html.TextBoxFor(model => model.FilePath, new { @class = "form-control", disabled = "disabled" })
+                           <span class="help-block m-b-none" id="AcadamicError"></span>
+                           @Html.HiddenFor(model => model.FilePath)
+
+
+                           <label for="fileselect">Files to Download:</label>
+
+                           @Html.ActionLink("Download", "Download", new { path = @Model.FilePath })
+                       </div>
+                   </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DueDate, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.stringDueDate, new { @class = "form-control", @placeholder = "From Date", disabled = "disabled" })
+                        <span class="help-block m-b-none" id="DueDateError"></span>
+                    </div>
+                </div>
+
+               
                 <div class="form-group">
                     @Html.LabelFor(m => m.SubjectId, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
@@ -63,39 +79,10 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.BatchNo, new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.BatchNo, new { @class = "form-control", @placeholder = "To Date", disabled = "disabled" })
-                        <span class="help-block m-b-none" id="BatchNoError"></span>
-                    </div>
-                </div>
                
-                <div class="form-group">
-                    @Html.LabelFor(m => m.BatchDescription, new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.BatchDescription, new { @class = "form-control", @placeholder = "Acadamic Date", disabled = "disabled" })
-                        <span class="help-block m-b-none" id="BatchDescriptionError"></span>
-                    </div>
-                </div>
-
             
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.FilePath, new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.FilePath, new { @class = "form-control", disabled = "disabled" })
-                        <span class="help-block m-b-none" id="AcadamicError"></span>
-                        @Html.HiddenFor(model => model.FilePath)
-
-                        <br />
-                        <br />
-                    
-
-                        <label for="fileselect">Files to upload:</label>
-                      
-                           @Html.ActionLink("Download", "Download", new { path = @Model.FilePath })</div>
-                </div>
+              
                 
             </div>
             </div>

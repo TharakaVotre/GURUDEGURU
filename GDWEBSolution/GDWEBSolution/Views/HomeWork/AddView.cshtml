@@ -10,29 +10,19 @@
 <div>
 
     <form id="upload" action="~/HomeWork/Create" method="post" enctype="multipart/form-data" style="color: #000;">
-        <fieldset>
-          
-
- <div class="modal-header">
+       
+            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Add New Homework</h4>
             </div>
- <div class="modal-body">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.DueDate, new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.DueDate, new { @class = "form-control", @placeholder = "Due Date", required = "required" })
-                        <span class="help-block m-b-none" id="DueDateError"></span>
-                    </div>
-                </div>
+            <div class="modal-body">
 
-                <div class="form-group" >
+                <div class="form-horizontal" >
+                <div class="form-group">
                     @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
                         @Html.DropDownList("GradeId", ViewBag.country as List<SelectListItem>, "", new { @class = "form-control", required = "required" })
 
-
-                        <span class="help-block m-b-none" id="GradeIdError"></span>
                     </div>
                 </div>
 
@@ -42,7 +32,24 @@
                         @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
 
 
-                        <span class="help-block m-b-none" id="ClassIdError"></span>
+                        
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FilePath, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+
+                        <input type="file" id="uploadFile" name="File" required />
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DueDate, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.DueDate, new { @class = "form-control", @placeholder = "Due Date", required = "required" })
+                       
                     </div>
                 </div>
 
@@ -50,253 +57,50 @@
                     @Html.LabelFor(m => m.AssignmentDescription, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
                         @Html.TextAreaFor(model => model.AssignmentDescription, new { @class = "form-control", @placeholder = "Description", required = "required" })
-                        <span class="help-block m-b-none" id="AssignmentDescriptionError"></span>
+                       
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.BatchNo, new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.BatchNo, new { @class = "form-control", @placeholder = "Batch No", required = "required" })
-                        <span class="help-block m-b-none" id="BatchNoError"></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(m => m.BatchDescription, new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.BatchDescription, new { @class = "form-control", @placeholder = "Description", required = "required" })
-                        <span class="help-block m-b-none" id="BatchDescriptionError"></span>
-                    </div>
-                </div>
+            
 
                 <div class="form-group">
                     @Html.LabelFor(m => m.SubjectId, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                       
+
                         @Html.DropDownList("SubjectId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
-                        <span class="help-block m-b-none" id="AcadamicError"></span>
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    @Html.LabelFor(m => m.FilePath, new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-8">
                        
-                        <input type="file" id="uploadFile" name="File" required />
-
                     </div>
                 </div>
 
 </div>
-        
-            <div class="modal-footer" style="border-top: 1px solid #ffffff">
+
+
+            </div>
+
+            <div class="modal-footer">
                 <input type="submit" class="btn btn-primary" />
             </div>
-        </fieldset>
+
     </form>
-    <div class="progress">
-        <div class="progress-bar">0%</div>
-    </div>
+   
 
 
 </div>
 
 
-<script>
 
-    $(document).ready(function () {
-
-        $("#btnSubmit").click(function (e) {
-            debugger
-            var DueDate = $('#DueDate');
-            var DueDateError = $('#DueDateError');
-            var GradeId = $('#GradeId');
-            var GradeIdError = $('#GradeIdError');
-            var ClassId = $('#ClassId');
-            var ClassIdError = $('#ClassIdError');
-            var AssignmentDescription = $('#AssignmentDescription');
-            var AssignmentDescriptionError = $('#AssignmentDescriptionError');
-            var BatchNo = $('#BatchNo');
-            var BatchNoError = $('#BatchNoError');
-            var BatchDescription = $('#BatchDescription');
-            var BatchDescriptionError = $('#BatchDescriptionError');
-            var SubjectId = $('#SubjectId');
-            var SubjectIdError = $('#SubjectIdError');
-            var FilePath = $('#File');
-            var FilePathError = $('#FileError');
-
-
-            if (!DueDate.val()) {
-                // Add errors highlight
-                DueDate.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#DueDateError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            } else {
-                DueDate.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#DueDateError").text("");
-            }
-            if (!GradeId.val()) {
-                // Add errors highlight
-                GradeId.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#GradeIdError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            } else {
-                GradeId.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#GradeIdError").text("");
-            }
-
-            if (!ClassId.val()) {
-                // Add errors highlight
-                ClassId.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#ClassIdError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            } else {
-                ClassId.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#ClassIdError").text("");
-            }
-            if (!AssignmentDescription.val()) {
-               
-                // Add errors highlight
-                AssignmentDescription.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#AssignmentDescriptionError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            } else {
-                AssignmentDescription.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#AssignmentDescriptionError").text("");
-            }
-
-            if (!BatchNo.val()) {
-                
-                // Add errors highlight
-                BatchNo.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#BatchNoError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            } else {
-                BatchNo.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#BatchNoError").text("");
-            }
-
-            if (!BatchDescription.val()) {
-
-                // Add errors highlight
-                BatchDescription.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#BatchDescriptionError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            } else {
-                BatchDescription.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#BatchDescriptionError").text("");
-            }
-
-            if (!SubjectId.val()) {
-
-                // Add errors highlight
-                SubjectId.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#SubjectIdError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            } else {
-                SubjectId.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#SubjectIdError").text("");
-            }
-
-            if (!FilePath.val()) {
-
-                // Add errors highlight
-                FilePath.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#FileError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-               // return;
-            } else {
-                FilePath.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#FileError").text("");
-            }
-           
-            var myformdata = $("#myForm").serialize();
-           
-            $.ajax({
-
-                type: "POST",
-                url: "/HomeWork/Create",
-                data: myformdata,
-                success: function () {
-                    
-                    $("#myModal").modal("hide");
-                    window.location.href = "/HomeWork/Index";
-
-                }
-
-            })
-        })
-
-    })
-
-
-</script>
 
 
 
 <style>
     #GradeId {
-        border: 1px solid #e0e0e0;
-        padding: 5px 8px;
-        color: #616161;
-        background: #fff;
-        box-shadow: none !important;
-        display: block;
+       
         width: 100% !important;
-        height: 32px;
-        font-size: 14px;
-        line-height: 1.45;
-        border-radius: 2px;
-        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+ 
     }
 
-    #ClassId {
-        border: 1px solid #e0e0e0;
-        padding: 5px 8px;
-        color: #616161;
-        background: #fff;
-        box-shadow: none !important;
-        display: block;
-        width: 100%;
-        height: 32px;
-        font-size: 14px;
-        line-height: 1.45;
-        border-radius: 2px;
-        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    }
 
-    #SubjectId {
-        border: 1px solid #e0e0e0;
-        padding: 5px 8px;
-        color: #616161;
-        background: #fff;
-        box-shadow: none !important;
-        display: block;
-        width: 100%;
-        height: 32px;
-        font-size: 14px;
-        line-height: 1.45;
-        border-radius: 2px;
-        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    }
-
+   
     </style >
 <script type="text/javascript">
 

@@ -1474,7 +1474,7 @@
           <Property Name="Address2" Type="varchar" MaxLength="150" />
           <Property Name="Address3" Type="varchar" MaxLength="150" />
           <Property Name="Telephone" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="Email" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="WebUrl" Type="varchar" MaxLength="100" />
           <Property Name="Fax" Type="varchar" MaxLength="20" />
           <Property Name="Province" Type="int" />
@@ -5059,9 +5059,19 @@
         <Function Name="SMGT_getTeacherInbox" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RecepientUser" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SMGTDeleteParent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Isactive" Type="varchar" Mode="In" />
+          <Parameter Name="ParentId" Type="varchar" Mode="In" />
+          <Parameter Name="ModyfiedBy" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SMGTDeleteSchool" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Isactive" Type="varchar" Mode="In" />
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="ModyfiedBy" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SMGTDeleteStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Isactive" Type="varchar" Mode="In" />
+          <Parameter Name="studentId" Type="varchar" Mode="In" />
           <Parameter Name="ModyfiedBy" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SMGTDeleteTeacherExtraCurricularActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -5137,6 +5147,8 @@
         <Function Name="SMGTgetSchoolTeacher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SMGTgetSchoolteachers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
         <Function Name="SMGTgetStoPMessageView" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MessageId" Type="bigint" Mode="In" />
           <Parameter Name="ParentId" Type="bigint" Mode="In" />
@@ -5185,6 +5197,10 @@
         <Function Name="SMGTloadScholExtraCadd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
           <Parameter Name="StudentId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SMGTModifySchoolHouseStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+          <Parameter Name="HouseId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SMGTModifyStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
@@ -6711,7 +6727,7 @@
           <Parameter Name="ParentId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="SMGT_getSchoolExactivity" ReturnType="Collection(SchoolMGTModel.SMGT_getSchoolExactivity_Result)">
-          <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGT_getSchoolExactivityParent" ReturnType="Collection(SchoolMGTModel.SMGT_getSchoolExactivityParent_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
@@ -6723,18 +6739,29 @@
             <Parameter Name="ClassId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGT_getSchooltoParentSentMail" ReturnType="Collection(SchoolMGTModel.SMGT_getSchooltoParentSentMail_Result)">
-          <Parameter Name="CreatedBy" Mode="In" Type="String" />
+            <Parameter Name="CreatedBy" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGT_getStoPMessageView" ReturnType="Collection(SchoolMGTModel.SMGT_getStoPMessageView_Result)">
             <Parameter Name="MessageId" Mode="In" Type="Int64" />
             <Parameter Name="ParentId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="SMGT_getTeacherInbox" ReturnType="Collection(SchoolMGTModel.SMGT_getTeacherInbox_Result)">
+            <Parameter Name="RecepientUser" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGTDeleteParent">
+            <Parameter Name="Isactive" Mode="In" Type="String" />
+            <Parameter Name="ParentId" Mode="In" Type="String" />
+            <Parameter Name="ModyfiedBy" Mode="In" Type="String" />
           <Parameter Name="RecepientUser" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTDeleteSchool">
             <Parameter Name="Isactive" Mode="In" Type="String" />
             <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="ModyfiedBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGTDeleteStudent">
+            <Parameter Name="Isactive" Mode="In" Type="String" />
+            <Parameter Name="studentId" Mode="In" Type="String" />
             <Parameter Name="ModyfiedBy" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTDeleteTeacherExtraCurricularActivity">
@@ -6810,6 +6837,9 @@
           <FunctionImport Name="SMGTgetSchoolTeacher" ReturnType="Collection(SchoolMGTModel.SMGTgetSchoolTeacher_Result)">
           <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SMGTgetSchoolteachers" ReturnType="Collection(SchoolMGTModel.SMGTgetSchoolteachers_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SMGTGetStudent" ReturnType="Collection(SchoolMGTModel.SMGTGetStudent_Result)" />
           <FunctionImport Name="SMGTgetStudentExtraCadd" ReturnType="Collection(SchoolMGTModel.SMGTgetStudentExtraCadd_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
@@ -6854,6 +6884,10 @@
           <FunctionImport Name="SMGTloadScholExtraCadd" ReturnType="Collection(SchoolMGTModel.SMGTloadScholExtraCadd_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
             <Parameter Name="StudentId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGTModifySchoolHouseStatus">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+            <Parameter Name="HouseId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTModifyStudent">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
@@ -7639,7 +7673,7 @@
           <Property Name="Address2" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
           <Property Name="Address3" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
           <Property Name="Telephone" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="WebUrl" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="Fax" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="Province" Type="Int32" />
@@ -10929,7 +10963,7 @@
           <Property Type="String" Name="Address2" Nullable="true" MaxLength="150" />
           <Property Type="String" Name="Address3" Nullable="true" MaxLength="150" />
           <Property Type="String" Name="Telephone" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="WebUrl" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="Fax" Nullable="true" MaxLength="20" />
           <Property Type="Int32" Name="Province" Nullable="true" />
@@ -10947,7 +10981,6 @@
           <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="20" />
           <Property Type="Int32" Name="SchoolCategory" Nullable="false" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
-          <Property Type="String" Name="GroupName" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="SchoolCategoryName" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="GDgetAllApplicationStatus_Result">
@@ -11245,12 +11278,15 @@
           <Property Type="String" Name="AssignmentDescription" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
           <Property Type="String" Name="GradeId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="GradeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ClassName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ClassId" Nullable="false" MaxLength="20" />
           <Property Type="Int64" Name="TeacherId" Nullable="false" />
           <Property Type="String" Name="FilePath" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="BatchNo" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="BatchDescription" Nullable="true" MaxLength="200" />
           <Property Type="Int32" Name="SubjectId" Nullable="false" />
+          <Property Type="String" Name="SubjectName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="20" />
@@ -11548,6 +11584,10 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="UserId" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SMGTgetSchoolteachers_Result">
+          <Property Type="Int64" Name="TeacherId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="SMGTGetStudent_Result">
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
@@ -12741,7 +12781,6 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="SchoolCategory" ColumnName="SchoolCategory" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
                 <ScalarProperty Name="SchoolCategoryName" ColumnName="SchoolCategoryName" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -13185,12 +13224,15 @@
                 <ScalarProperty Name="AssignmentDescription" ColumnName="AssignmentDescription" />
                 <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
                 <ScalarProperty Name="ClassId" ColumnName="ClassId" />
                 <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
                 <ScalarProperty Name="FilePath" ColumnName="FilePath" />
                 <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
                 <ScalarProperty Name="BatchDescription" ColumnName="BatchDescription" />
                 <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
@@ -13378,7 +13420,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGTDeleteParent" FunctionName="SchoolMGTModel.Store.SMGTDeleteParent" />
           <FunctionImportMapping FunctionImportName="SMGTDeleteSchool" FunctionName="SchoolMGTModel.Store.SMGTDeleteSchool" />
+          <FunctionImportMapping FunctionImportName="SMGTDeleteStudent" FunctionName="SchoolMGTModel.Store.SMGTDeleteStudent" />
           <FunctionImportMapping FunctionImportName="SMGTDeleteTeacherExtraCurricularActivity" FunctionName="SchoolMGTModel.Store.SMGTDeleteTeacherExtraCurricularActivity" />
           <FunctionImportMapping FunctionImportName="SMGTgetAllSchoolExtraCurricularActivity" FunctionName="SchoolMGTModel.Store.SMGTgetAllSchoolExtraCurricularActivity">
             <ResultMapping>
@@ -13649,6 +13693,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGTgetSchoolteachers" FunctionName="SchoolMGTModel.Store.SMGTgetSchoolteachers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTgetSchoolteachers_Result">
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SMGTGetStudent" FunctionName="SchoolMGTModel.Store.SMGTGetStudent">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTGetStudent_Result">
@@ -13848,6 +13900,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGTModifySchoolHouseStatus" FunctionName="SchoolMGTModel.Store.SMGTModifySchoolHouseStatus" />
           <FunctionImportMapping FunctionImportName="SMGTModifyStudent" FunctionName="SchoolMGTModel.Store.SMGTModifyStudent" />
           <FunctionImportMapping FunctionImportName="SMGTSchoolCount" FunctionName="SchoolMGTModel.Store.SMGTSchoolCount" />
           <FunctionImportMapping FunctionImportName="SMGTsetParent" FunctionName="SchoolMGTModel.Store.SMGTsetParent" />

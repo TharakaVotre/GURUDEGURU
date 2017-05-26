@@ -14,8 +14,8 @@ namespace GDWEBSolution.Controllers
         //
         // GET: /HomeWork/
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "kamalasiri";
-        string SchoolId = "CKC";
+        string UserId = "Shirandie";
+        string SchoolId = "Scl11128";
        
         long TeacherId = 1;
         public ActionResult Index(string FromDate,string ToDate)
@@ -23,8 +23,9 @@ namespace GDWEBSolution.Controllers
             try
             {
                 if (FromDate == null && Session["FromDate"]==null) {
-                    FromDate="01/01/1111";
-                    ToDate = "01/01/1111";
+                    
+                    ToDate = DateTime.Now.ToShortDateString();
+                    FromDate = DateTime.Now.AddMonths(-3).ToShortDateString();
                 }
                 else
                 if (FromDate == null && ToDate == null && Session["FromDate"]!=null)
@@ -43,6 +44,8 @@ namespace GDWEBSolution.Controllers
                 DateTime EndDate = Convert.ToDateTime(ToDate);
                 string stDate = StartDate.ToString("yyyyMMdd");
                 string edDate = EndDate.ToString("yyyyMMdd");
+                ViewBag.FromDate = FromDate;
+                ViewBag.ToDate = ToDate;
                 var Grade = Connection.GDgetHomeWorkAdd(SchoolId, TeacherId, "Y", stDate, edDate);
                 List<GDgetHomeWorkAdd_Result> Gradelist = Grade.ToList();
 
@@ -106,11 +109,18 @@ namespace GDWEBSolution.Controllers
 
         public FileResult Download(string path)
         {
-            string Filepath =Server.MapPath("~/Uploads/" + path);
-            byte[] fileBytes = System.IO.File.ReadAllBytes(Filepath);
-            
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, path);
+            try
+            {
+                string Filepath = Server.MapPath("~/Uploads/" + path);
+                byte[] fileBytes = System.IO.File.ReadAllBytes(Filepath);
 
+                return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, path);
+            }
+            catch(Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return null;
+            }
         }
         //
 
@@ -155,7 +165,7 @@ namespace GDWEBSolution.Controllers
                         Model.File.SaveAs(_path);
                         string Filepath = _path;
 
-                        Connection.GDsetHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, filename, TeacherId, Model.BatchNo, Model.BatchDescription, Model.SubjectId, Model.AssignmentNo, Model.DueDate, dueId, UserId, "Y");
+                        Connection.GDsetHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, filename, TeacherId, "1", "1", Model.SubjectId, Model.AssignmentNo, Model.DueDate, dueId, UserId, "Y");
                         Connection.SaveChanges();
                     }
                     }
@@ -245,12 +255,12 @@ namespace GDWEBSolution.Controllers
                             _path = Path.Combine(Server.MapPath("~/Uploads"), filename );
                             Model.File.SaveAs(_path);
 
-                            Connection.GDModifyHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, filename, Model.BatchNo, Model.BatchDescription, Model.SubjectId, Model.AssignmentNo, duedate, dueId, UserId);                      
+                            Connection.GDModifyHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, filename,"1", "1", Model.SubjectId, Model.AssignmentNo, duedate, dueId, UserId);                      
                             Connection.SaveChanges();
                         }
                     }
                     else {
-                        Connection.GDModifyHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, Model.FilePath, Model.BatchNo, Model.BatchDescription, Model.SubjectId, Model.AssignmentNo, duedate, dueId, UserId);
+                        Connection.GDModifyHomeWork(Model.AssignmentDescription, SchoolId, Model.GradeId, Model.ClassId, Model.FilePath, "1","1", Model.SubjectId, Model.AssignmentNo, duedate, dueId, UserId);
                         Connection.SaveChanges();
                     }
 
@@ -323,6 +333,11 @@ namespace GDWEBSolution.Controllers
                 }
                 if (FromDate != "" && ToDate != "")
                 {
+                    FromDate = DateTime.Now.AddMonths(-3).ToShortDateString();
+                    ToDate = DateTime.Now.ToShortDateString();
+                }
+                ViewBag.FromDate = FromDate;
+                ViewBag.ToDate = ToDate;
                     DateTime StartDate = Convert.ToDateTime(FromDate);
                     DateTime EndDate = Convert.ToDateTime(ToDate);
                     string stDate = StartDate.ToString("yyyyMMdd");
@@ -340,20 +355,21 @@ namespace GDWEBSolution.Controllers
                         SchoolId = x.SchoolId,
                         GradeId = x.GradeId,
                         ClassId = x.ClassId,
-
+                        Class=x.ClassName,
+                        Grade=x.GradeName,
                         TeacherId = x.TeacherId,
                         FilePath = x.FilePath,
                         BatchNo = x.BatchNo,
                         BatchDescription = x.BatchDescription,
                         SubjectId = x.SubjectId,
+                        Subject=x.SubjectName,
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
 
 
                     }).ToList();
                     return View(tcmlist);
-                }
-                return View();
+               
 
             }
             catch (Exception ex)

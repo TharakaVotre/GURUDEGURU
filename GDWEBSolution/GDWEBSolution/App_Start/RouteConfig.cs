@@ -23,6 +23,12 @@ namespace GDWEBSolution
                          new { controller = "Student", action = "GetSchoolextracuricluar" },
                          new[] { "GDWEBSolution.Controllers.Student" });
 
+            routes.MapRoute("Houseincharge",
+                         "school/gethouseincharge/",
+                         new { controller = "School", action = "GetHouseIncharge" },
+                         new[] { "GDWEBSolution.Controllers.School" });
+
+
 
            
 

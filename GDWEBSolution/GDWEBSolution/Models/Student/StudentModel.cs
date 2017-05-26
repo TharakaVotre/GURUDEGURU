@@ -11,8 +11,12 @@ namespace GDWEBSolution.Models.Student
     {
 
         [Display(Name = "School Id")]
-        [Required(ErrorMessage = "Please Select School Name")]
+       // [Required(ErrorMessage = "Please Select School Name")]
         public string SchoolId { get; set; }
+
+        [Display(Name = "School Id")]
+   
+        public string SchoolIdw { get; set; }
 
 
         [Display(Name = "School Name")]

@@ -34,7 +34,12 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.CreatedDate)
                             </th>
-                         
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedDate)
+                            </th>
                            
                             <th></th>
                         </tr>
@@ -60,7 +65,12 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.CreatedDate)
                                     </td>
-                                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ModifiedBy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                    </td>
                                     <td>
                                         <a class="btn btn-info" onclick='EditView("@item.SubjectId")'><span class="fa fa-pencil"></span> Edit </a>
                                         <a class="btn btn-danger" onclick='DeleteView("@item.SubjectId")'><span class="fa fa-trash"></span> Delete</a>

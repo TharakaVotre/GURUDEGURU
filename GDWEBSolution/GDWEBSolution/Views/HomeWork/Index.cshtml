@@ -33,7 +33,7 @@
                     </div>
                     <lable class="col-sm-2 control-label">To Date</lable>
                     <div class="col-sm-3">
-
+                       
                        @Html.TextBox("ToDate")
 
                     </div>
@@ -51,29 +51,24 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.AssignmentNo)
+                            @Html.DisplayNameFor(model => model.Grade)
+
                         </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Class)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DueDate)
+                        </th>
+                       
                         <th>
                             @Html.DisplayNameFor(model => model.AssignmentDescription)
                         </th>
                        
                         <th>
-                            @Html.DisplayNameFor(model => model.Grade)
-                           
+                            @Html.DisplayNameFor(model => model.Subject)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Class)
-                        </th>
-                        
-                        
-                       
-                        <th>
-                            @Html.DisplayNameFor(model => model.BatchNo)
-                        </th>
-                        
-                        
-                        
-                       
                         <th></th>
                     </tr>
                 </thead>
@@ -84,36 +79,37 @@
                     {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.AssignmentNo)
+                                    @Html.DisplayFor(modelItem => item.Grade)
+                                    @Html.HiddenFor(modelItem => item.GradeId)
                                 </td>
-                               
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Class)
+                                    @Html.HiddenFor(modelItem => item.ClassId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DueDate)
+                                </td>
+                                
+                                    @Html.HiddenFor(modelItem => item.AssignmentNo)
                                
                                 <td>
                                     @Html.DisplayFor(modelItem => item.AssignmentDescription)
                                     
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Grade)
-                                   @Html.HiddenFor(modelItem => item.GradeId)
-                                </td>
-                               
-                               
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Class)
-                                    @Html.HiddenFor(modelItem => item.ClassId)
-                                </td>
-                               
-                                <td>
                                     @Html.DisplayFor(modelItem => item.Subject)
                                 </td>
-                               
-                               
                                 <td>
-                                    <a class="hvr-buzz-out" onclick='EditView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'> Edit </a>|
-                                    <a class="hvr-buzz-out" onclick='DetailView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'>Detail</a>|
-                                    <a class="hvr-buzz-out" onclick='DeleteView("@item.AssignmentNo")'> Delete</a>
-                          
-                                </td>
+                                    <center>
+                                    <a class="btn btn-info"  onclick='EditView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="fa fa-pencil"></span> Edit </a>
+                                    <a class="btn btn-primary"  onclick='DetailView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="glyphicon glyphicon-eye-open"></span> Detail</a>
+                                    <a class="btn btn-danger" onclick='DeleteView("@item.AssignmentNo")'><span class="fa fa-trash"></span> Delete</a>
+                                    @{
+                        string path = "../Uploads/" + item.FilePath;
+                       
+                                    }
+                                    <a href="@path" class="btn btn-primary"  download><span class="glyphicon glyphicon-cloud-download"></span> Download</a>
+</center></td>
                             </tr>
                     }
 

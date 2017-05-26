@@ -31,7 +31,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.StudentName)
                             </th>
-                           >
+                           
                             <th></th>
                         </tr>
                     </thead>
@@ -60,10 +60,12 @@
                                     </td>
                                   
                                     <td>
-                                        <a href="#" class="hvr-buzz-out" onclick="DetailView('@item.SchoolId','@item.StudentId')"> Details </a>|
-                                        <a href="#" class="hvr-buzz-out" onclick="EditView('@item.SchoolId','@item.StudentId')"> Edit </a>|
+                                        
 
-                                        <a href="#" class="hvr-buzz-out" onclick="DeleteView('@item.SchoolId')"> Delete</a>
+                                          <a class="btn btn-primary" onclick="DetailView('@item.SchoolId','@item.StudentId')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
+                                         <a class="btn btn-info" onclick="EditView('@item.SchoolId','@item.StudentId')"><span class="fa fa-pencil"></span> Edit </a>
+                                        <a class="btn btn-danger" onclick="DeleteView('@item.StudentId')"><span class="fa fa-trash"></span> Delete</a>
+
                                     </td>
                                 </tr>
                             }
@@ -116,7 +118,7 @@
     }
 
     var DeleteView = function (CategoryId) {
-        var Url = "/School/Delete?SchoolId=" + CategoryId;
+        var Url = "/Student/Delete?StudentId=" + CategoryId;
         $("#MyModelBody").load(Url, function () {
             $("#myModal").modal("show");
         })
