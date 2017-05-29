@@ -11,26 +11,21 @@ namespace GDWEBSolution.Models
 {
     using System;
     
-    public partial class SMGTGetStudent_Result
+    public partial class GDgetSchoolGrade_Result
     {
-        public string SchoolId { get; set; }
-        public string StudentId { get; set; }
-        public string AcademicYear { get; set; }
-        public string studentName { get; set; }
-        public Nullable<System.DateTime> DateofBirth { get; set; }
         public string GradeId { get; set; }
-        public string ClassId { get; set; }
-        public string Gender { get; set; }
-        public string UserId { get; set; }
-        public string HouseId { get; set; }
-        public string ImgUrl { get; set; }
-        public string CreatedBy { get; set; }
+        public string GradeName { get; set; }
         public System.DateTime CreatedDate { get; set; }
+        public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
-        public string SchoolName { get; set; }
-        public string GradeName { get; set; }
-        public string ClassName { get; set; }
+        public string SchoolId { get; set; }
+        public string GradeId1 { get; set; }
+        public System.DateTime CreatedDate1 { get; set; }
+        public string CreatedBy1 { get; set; }
+        public string ModifiedBy1 { get; set; }
+        public Nullable<System.DateTime> ModifiedDate1 { get; set; }
+        public string IsActive1 { get; set; }
     }
 }

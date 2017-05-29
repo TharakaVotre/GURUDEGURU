@@ -328,6 +328,9 @@
     <Compile Include="Models\GDgetSchoolCalenderEvent_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GDgetSchoolGrade_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GdgetStudentAttentionRequiredSubjects_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -335,6 +338,8 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HomeWork\HomeWorkModel.cs" />
+    <Compile Include="Models\Menu\Menu.cs" />
+    <Compile Include="Models\Menu\MenuItem.cs" />
     <Compile Include="Models\Parent\ParentModel.cs" />
     <Compile Include="Models\Message\StoPMessageDetailModel.cs" />
     <Compile Include="Models\Message\StoPMessageHeaderModel.cs" />
@@ -407,6 +412,9 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGTgetSchoolteachers_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGTgetSchoolTeacher_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMGTgetStoPMessageView_Result.cs">
@@ -699,6 +707,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\navigation.xml" />
     <Content Include="Content\css\awesome-bootstrap-checkbox.css" />
     <Content Include="Content\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\css\bootstrap-datepicker3.css" />
@@ -1341,9 +1350,9 @@
     <Content Include="Views\Student\StudentEXtra.cshtml" />
     <Content Include="Views\SPMessage\ViewMessage.cshtml" />
     <Content Include="Views\Teacher\TeacherSchool.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Attachments\" />
     <Folder Include="Controllers\School\" />
     <Folder Include="UploadedFiles\" />

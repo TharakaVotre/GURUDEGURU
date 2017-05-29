@@ -1,0 +1,28 @@
+﻿@model  GDWEBSolution.Models.Menu.Menu
+
+<ul id="menu" class="ts-sidebar-menu">
+    <li class="ts-label">Main</li>
+    <li><a href="index.html"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+
+    @* <li><a href="#"><i class="fa fa-ravelry"></i>Teacher</a>
+                    <ul>
+                        <li>@Html.ActionLink("Teacher Category", "Index", "TeacherCategory")</li>
+                        <li>@Html.ActionLink("New Teacher", "Index", "Teacher")</li>
+                        <li>@Html.ActionLink("Class Teacher", "Class", "Teacher")</li>
+                    </ul>
+                </li>*@
+    @foreach (var item in Model.Items)
+    {
+        <li><a href="~/@item.Link"><i class="fa fa-ellipsis-v "></i>@item.Name</a>
+            @if (item.ChildMenuItems.Any())
+            {
+                <ul>
+                    @foreach (var subitem in item.ChildMenuItems)
+                    {
+                        <li>@Html.ActionLink(@subitem.Name, @subitem.Action, @subitem.Controller)</li>
+                    }
+                </ul>
+            }
+        </li>
+    }
+</ul>

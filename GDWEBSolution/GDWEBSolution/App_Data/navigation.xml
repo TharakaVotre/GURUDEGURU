@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+
+<Navigations>
+
+  <Navigation title="Teacher" action="#" controller="#" url="#">
+    <Child title="Teacher Category" action="Index" controller="TeacherCategory" url="#"/>
+    <Child title="New Teacher" action="Index" controller="Teacher" url="#"/>
+    <Child title="Class Teacher" action="Class" controller="Teacher" url="#"/>
+  </Navigation>
+
+  <Navigation title="Teacher 2" action="#" controller="#" url="#" >
+    <Child title="Teacher Category" action="Index" controller="TeacherCategory" url="#"/>
+    <Child title="New Teacher" action="Index" controller="Teacher" url="#"/>
+    <Child title="Class Teacher" action="Class" controller="Teacher" url="#"/>
+  </Navigation>
+  <Navigation title="Teacher 3" action="#" controller="#" url="SPMessage/Index" ></Navigation>
+</Navigations>
