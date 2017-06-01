@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.User;
+using GDWEBSolution.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,36 @@ namespace GDWEBSolution.Controllers.User
     public class UserController : Controller
     {
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
+
+        static string DECKey = System.Configuration.ConfigurationManager.AppSettings["DecKey"];
+        string Password = DECKey.Substring(10);
         //
         // GET: /User/
 
         public ActionResult Index()
         {
-            return View();
+            List<tblUser> users = Connection.tblUsers.ToList();
+
+
+            TeacherCategoryModel tcm = new TeacherCategoryModel();
+
+            List<UserModel> tcmlist = users.Select(x => new UserModel
+            {
+                UserId = x.UserId,
+                UserCategory = x.UserCategory,
+                LoginEmail = x.LoginEmail,
+                PersonName = x.PersonName,
+                CreatedBy = x.CreatedBy,
+                CreatedDate = x.CreatedDate,
+                IsActive = x.IsActive,
+                ModifiedBy = x.ModifiedBy,
+                ModifiedDate = x.ModifiedDate
+
+            }).ToList();
+
+
+
+            return View(tcmlist);
         }
 
         public ActionResult Category()
@@ -40,6 +65,62 @@ namespace GDWEBSolution.Controllers.User
 
 
             return View(tcmlist);
+        }
+
+        public ActionResult NewUser()
+        {
+            List<tblUserCategory> UCategorylist = Connection.tblUserCategories.ToList();
+            ViewBag.UCategoryNameList = new SelectList(UCategorylist, "CategoryId", "CategoryName");
+
+            return View();
+        }
+        [AllowAnonymous]
+        public string IsUserNameExits(string input)
+        {
+
+            var count = Connection.tblUsers.Count(u => u.UserId == input);
+            if (count != 0)
+            {
+                return "Have";
+            }
+            else
+            {
+                return "NO";
+            }
+        }
+        [HttpPost]
+        public JsonResult NewUser(UserModel Model)
+        {
+            try
+            {
+                string pass = Encrypt_Decrypt.Encrypt(Model.Password, Password);
+
+                tblUser user = new tblUser();
+
+                user.PersonName = Model.PersonName;
+                user.CreatedBy = "ADMIN";
+                user.CreatedDate = DateTime.Now;
+                user.IsActive = "Y";
+                user.JobDescription = Model.JobDescription;
+                user.LoginEmail = Model.LoginEmail;
+                user.Mobile = Model.Mobile;
+                user.Password = pass;
+                user.UserCategory = Model.UserCategory;
+                user.UserId = Model.UserId;
+                user.SchoolId = "GD";
+
+                Connection.tblUsers.Add(user);
+                Connection.SaveChanges();
+
+                //return View();
+
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("NewUser(UserModel Model)@ UserController", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult Function() // UserCategoryFunction----

@@ -16,8 +16,13 @@ namespace GDWEBSolution
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional }
             );
+            //routes.MapRoute(
+            //    name: "Login",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional }
+            //);
             routes.MapRoute("Studentextracuricular",
                          "student/getschoolextracuricluar/",
                          new { controller = "Student", action = "GetSchoolextracuricluar" },

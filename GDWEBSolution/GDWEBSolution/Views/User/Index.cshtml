@@ -1,7 +1,137 @@
-﻿@model GDWEBSolution.Models.User.UserCategoryModel
+﻿@model  IEnumerable<GDWEBSolution.Models.User.UserModel>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>User</h3>
+
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button type="button" class="btn btn-primary" onclick="ShowView()"><span class="fa fa-plus"></span>Add New</button></div>
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UserId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PersonName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UserCategory)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.LoginEmail)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IsActive)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PersonName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserCategory)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LoginEmail)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModifiedBy)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                </td>
+                                @if (item.IsActive == "Y")
+                                {
+                                    <td>YES</td>
+                                }
+                                else
+                                {
+                                    <td>NO</td>
+                                }
+                                <td>
+                                    <a href="#" class="hvr-buzz-out"  onclick='EditView("@(item.UserId)");'>Edit </a> |
+                                   <a href="#" class="hvr-buzz-out"  onclick='DeleteView("@(item.UserId)");'>Delete</a>
+                                </td>
+                            </tr>
+    
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" id="MyModelBody">
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var ShowView = function (bookid) {
+        var Url = "/User/CreateCategory";
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var EditView = function (CategoryId) {
+        debugger
+        var Url = "/User/EditCategory?CategoryId=" + CategoryId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var DeleteView = function (CategoryId) {
+        //var Url = "/TeacherCategory/Delete?CategoryId=" + CategoryId;
+        //$("#MyModelBody").load(Url, function () {
+        //    $("#myModal").modal("show");
+        //})
+    }
+</script>

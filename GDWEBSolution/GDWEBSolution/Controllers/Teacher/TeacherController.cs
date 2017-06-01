@@ -77,7 +77,7 @@ namespace GDWEBSolution.Controllers.Teacher
         public string IsUserNameExits(string input)
         {
 
-            var count = Connection.tblTeachers.Count(u => u.UserId == input);
+            var count = Connection.tblUsers.Count(u => u.UserId == input);
             if (count != 0)
             {
                 return "Have";
@@ -253,7 +253,6 @@ namespace GDWEBSolution.Controllers.Teacher
                     Newt.Address1 = Model.Address1;
                     Newt.Address2 = Model.Address2;
                     Newt.Address3 = Model.Address3;
-
                     Newt.Telephone = Model.Telephone;
                     Newt.Gender = Model.Gender;
                     Newt.Description = Model.Description;
@@ -278,6 +277,22 @@ namespace GDWEBSolution.Controllers.Teacher
                     ts.CreatedBy = "ADMIN";
                     ts.CreatedDate = DateTime.Now;
                     ts.IsActive = "Y";
+
+                    //tblUser user = new tblUser();
+
+                    //user.PersonName = Model.Name;
+                    //user.CreatedBy = "ADMIN";
+                    //user.CreatedDate = DateTime.Now;
+                    //user.IsActive = "Y";
+                    //user.JobDescription = "School Teacher";
+                    //user.LoginEmail = Model.LoginEmail;
+                    //user.Mobile = Model.Telephone;
+                    //user.Password = Model.Password;
+                    //user.UserCategory = Model.UserCategory;
+                    //user.UserId = Model.UserId;
+                    //user.SchoolId = "GD";
+
+                    //Connection.tblUsers.Add(user);
 
                     Connection.tblTeacherSchools.Add(ts);
                     Connection.SaveChanges();

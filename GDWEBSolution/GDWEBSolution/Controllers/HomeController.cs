@@ -1,4 +1,8 @@
-﻿using GDWEBSolution.Models.Menu;
+﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Home;
+using GDWEBSolution.Models.Menu;
+using GDWEBSolution.Models.User;
+using GDWEBSolution.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +16,13 @@ namespace GDWEBSolution.Controllers
 {
     public class HomeController : Controller
     {
+        SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
+
+        UserSession USession = new UserSession();
+
+        static string DECKey = System.Configuration.ConfigurationManager.AppSettings["DecKey"];
+        string Password = DECKey.Substring(10);
+
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
@@ -19,12 +30,55 @@ namespace GDWEBSolution.Controllers
             return View();
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult Login(LoginModel login)
+        {
+            string result = "Error";
+            string pass = Encrypt_Decrypt.Encrypt(login.Password, Password);
+            var loggedU = Connection.SMGT_UserLogin(login.UserName, pass).FirstOrDefault();
+
+            if (loggedU != null)
+            {
+                USession.Email_ = loggedU.LoginEmail;
+                USession.Is_Active = loggedU.IsActive;
+                USession.Job_ = loggedU.JobDescription;
+                USession.Mobile_ = loggedU.Mobile;
+                USession.Person_Name = loggedU.PersonName;
+                USession.School_Id = loggedU.SchoolId;
+                USession.User_Category = loggedU.UserCategory;
+                USession.User_Id = loggedU.UserId;
+
+                result = "Succes";
+            }
+            else
+            {
+                result = "Failed";
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [ChildActionOnly]
         public ActionResult Menu()
         {
             var _menu = new Menu();
 
-            var xmlData = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/navigation.xml");
+            string naviga = "";
+
+            if (USession.User_Category == "Admin")
+            {
+                naviga = "~/App_Data/adminnavigation.xml";
+            }
+            else
+            {
+                naviga = "~/App_Data/navigation.xml";
+            }
+           
+            var xmlData = System.Web.HttpContext.Current.Server.MapPath(naviga);
             if (xmlData == null)
             {
                 throw new ArgumentNullException("xmlData");
