@@ -69,6 +69,7 @@
           <EntitySet Name="tblUser" EntityType="SchoolMGTModel.Store.tblUser" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblUserCategory" EntityType="SchoolMGTModel.Store.tblUserCategory" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblUserCategoryFunction" EntityType="SchoolMGTModel.Store.tblUserCategoryFunction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblUserCode" EntityType="SchoolMGTModel.Store.tblUserCode" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_tblApplicationStatus_tblUser" Association="SchoolMGTModel.Store.FK_tblApplicationStatus_tblUser">
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblApplicationStatus" EntitySet="tblApplicationStatus" />
@@ -1875,6 +1876,7 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="20" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsActive" Type="varchar" Nullable="false" MaxLength="1" />
+          <Property Name="NavigationPath" Type="varchar" MaxLength="350" />
         </EntityType>
         <EntityType Name="tblUserCategoryFunction">
           <Key>
@@ -1887,6 +1889,15 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="20" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="varchar" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="tblUserCode">
+          <Key>
+            <PropertyRef Name="Seqno" />
+          </Key>
+          <Property Name="Seqno" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="Code" Type="bigint" Nullable="false" />
           <Property Name="IsActive" Type="varchar" Nullable="false" MaxLength="1" />
         </EntityType>
         <Association Name="FK_tblApplicationStatus_tblUser">
@@ -6977,6 +6988,7 @@
             <Parameter Name="UserId" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tblUserCodes" EntityType="SchoolMGTModel.tblUserCode" />
         </EntityContainer>
         <EntityType Name="tblApplicationStatu">
           <Key>
@@ -8354,6 +8366,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="NavigationPath" MaxLength="350" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblUserCategoryFunction">
           <Key>
@@ -11805,6 +11818,15 @@
           <Property Type="String" Name="Mobile" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
         </ComplexType>
+        <EntityType Name="tblUserCode">
+          <Key>
+            <PropertyRef Name="Seqno" />
+          </Key>
+          <Property Type="Int64" Name="Seqno" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="UserId" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="Code" Nullable="false" />
+          <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12786,6 +12808,7 @@
           <EntitySetMapping Name="tblUserCategories">
             <EntityTypeMapping TypeName="SchoolMGTModel.tblUserCategory">
               <MappingFragment StoreEntitySet="tblUserCategory">
+                <ScalarProperty Name="NavigationPath" ColumnName="NavigationPath" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -14018,6 +14041,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblUserCodes">
+            <EntityTypeMapping TypeName="SchoolMGTModel.tblUserCode">
+              <MappingFragment StoreEntitySet="tblUserCode">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Seqno" ColumnName="Seqno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

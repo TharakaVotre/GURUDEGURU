@@ -6,12 +6,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Errorlog;
+using GDWEBSolution.Util;
+using System.Transactions;
 
 namespace GDWEBSolution.Controllers.Teacher
 {
     public class TeacherController : Controller
     {
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
+        static string DECKey = System.Configuration.ConfigurationManager.AppSettings["DecKey"];
+        string TeacherCatID = System.Configuration.ConfigurationManager.AppSettings["Teacher"];
+        string Password = DECKey.Substring(10);
         //
         // GET: /Teacher/
         TeacherModel tcm = new TeacherModel();
@@ -88,11 +93,26 @@ namespace GDWEBSolution.Controllers.Teacher
             }
         }
 
+       [AllowAnonymous]
+       public string IsLoginEmailExits(string loginEmail)
+       {
+
+           var count = Connection.tblUsers.Count(u => u.LoginEmail == loginEmail);
+           if (count != 0)
+           {
+               return "Have";
+           }
+           else
+           {
+               return "NO";
+           }
+       }
+
 
         public ActionResult Create()
         {
+            //ViewBag.SystemMessage = Msg;
             CQExCViewBags();
-
 
             SubjctViewBags();
 
@@ -236,95 +256,101 @@ namespace GDWEBSolution.Controllers.Teacher
         [HttpPost]
         public JsonResult CreateTeacher(TeacherModel Model)
         {
-            try
+            string result = "Error";
+            using (SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString())
             {
-                string result = "Error";
-                var count = Connection.tblTeachers.Count(u => u.UserId == Model.UserId);
-
-                if (count == 0)
+                using (var scope = new TransactionScope())
                 {
-                    tblTeacher Newt = new tblTeacher();
-
-                    Newt.CreatedBy = "ADMIN";
-                    Newt.CreatedDate = DateTime.Now;
-                    Newt.TeacherCategoryId = 0;
-                    Newt.TeacherCategoryId = Model.TeacherCategoryId;
-                    Newt.DateOfBirth = Model.DateOfBirth;
-                    Newt.Address1 = Model.Address1;
-                    Newt.Address2 = Model.Address2;
-                    Newt.Address3 = Model.Address3;
-                    Newt.Telephone = Model.Telephone;
-                    Newt.Gender = Model.Gender;
-                    Newt.Description = Model.Description;
-                    Newt.EmployeeNo = Model.EmployeeNo;
-                    Newt.DrivingLicense = Model.DrivingLicense;
-                    Newt.NIC = Model.NIC;
-                    Newt.Name = Model.Name;
-                    Newt.Passport = Model.Passport;
-                    Newt.UserId = Model.UserId;
-                    Newt.IsActive = "Y";
-
-
-                    Connection.tblTeachers.Add(Newt);
-                    Connection.SaveChanges();
-
-                    var TID = Connection.tblTeachers.Where(b => b.UserId == Model.UserId).FirstOrDefault();
-
-                    tblTeacherSchool ts = new tblTeacherSchool();
-                    ts.SchoolId = Model.SchoolID;
-                    ts.TeacherCategoryId = TID.TeacherCategoryId;
-                    ts.TeacherId = TID.TeacherId;
-                    ts.CreatedBy = "ADMIN";
-                    ts.CreatedDate = DateTime.Now;
-                    ts.IsActive = "Y";
-
-                    //tblUser user = new tblUser();
-
-                    //user.PersonName = Model.Name;
-                    //user.CreatedBy = "ADMIN";
-                    //user.CreatedDate = DateTime.Now;
-                    //user.IsActive = "Y";
-                    //user.JobDescription = "School Teacher";
-                    //user.LoginEmail = Model.LoginEmail;
-                    //user.Mobile = Model.Telephone;
-                    //user.Password = Model.Password;
-                    //user.UserCategory = Model.UserCategory;
-                    //user.UserId = Model.UserId;
-                    //user.SchoolId = "GD";
-
-                    //Connection.tblUsers.Add(user);
-
-                    Connection.tblTeacherSchools.Add(ts);
-                    Connection.SaveChanges();
-
-                    result = "Success";
-
-                }
-                else
-                {
-                    result = "UserExits";
-                }
-                //tblTeacherSchool Tschool = new tblTeacherSchool();
-
-                return Json(result,JsonRequestBehavior.AllowGet);
-            }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
-            {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
+                    try
                     {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        raise = new InvalidOperationException(message, raise);
+                        
+
+                        tblTeacher Newt = new tblTeacher();
+
+                        Newt.CreatedBy = "ADMIN";
+                        Newt.CreatedDate = DateTime.Now;
+                        Newt.TeacherCategoryId = 0;
+                        Newt.TeacherCategoryId = Model.TeacherCategoryId;
+                        Newt.DateOfBirth = Model.DateOfBirth;
+                        Newt.Address1 = Model.Address1;
+                        Newt.Address2 = Model.Address2;
+                        Newt.Address3 = Model.Address3;
+                        Newt.Telephone = Model.Telephone;
+                        Newt.Gender = Model.Gender;
+                        Newt.Description = Model.Description;
+                        Newt.EmployeeNo = Model.EmployeeNo;
+                        Newt.DrivingLicense = Model.DrivingLicense;
+                        Newt.NIC = Model.NIC;
+                        Newt.Name = Model.Name;
+                        Newt.Passport = Model.Passport;
+                        Newt.UserId = Model.UserId;
+                        Newt.IsActive = "Y";
+
+
+                        Connection.tblTeachers.Add(Newt);
+                        Connection.SaveChanges();
+
+                        var TID = Connection.tblTeachers.Where(b => b.UserId == Model.UserId).FirstOrDefault();
+
+                        //if (TID.TeacherId != 0)
+                        //{
+                        tblTeacherSchool ts = new tblTeacherSchool();
+                        ts.SchoolId = Model.SchoolID;
+                        ts.TeacherCategoryId = TID.TeacherCategoryId;
+                        ts.TeacherId = TID.TeacherId;
+                        ts.CreatedBy = "ADMIN";
+                        ts.CreatedDate = DateTime.Now;
+                        ts.IsActive = "Y";
+
+                        tblUser user = new tblUser();
+
+                        string pass = Encrypt_Decrypt.Encrypt(Model.Password, Password);
+
+                        user.PersonName = Model.Name;
+                        user.CreatedBy = "ADMIN";
+                        user.CreatedDate = DateTime.Now;
+                        user.IsActive = "Y";
+                        user.JobDescription = "School Teacher";
+                        user.LoginEmail = Model.LoginEmail;
+                        user.Mobile = Model.Telephone;
+                        user.Password = pass;
+                        user.UserCategory = TeacherCatID;
+                        user.UserId = Model.UserId;
+                        user.SchoolId = Model.SchoolID;
+
+                        Connection.tblUsers.Add(user);
+                        Connection.tblTeacherSchools.Add(ts);
+
+                        Connection.SaveChanges();
+
+                        result = "Success";
+                        scope.Complete();
+
+                        
                     }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        //Exception raise = dbEx;
+                        //foreach (var validationErrors in dbEx.EntityValidationErrors)
+                        //{
+                        //    foreach (var validationError in validationErrors.ValidationErrors)
+                        //    {
+                        //        string message = string.Format("{0}:{1}",
+                        //            validationErrors.Entry.Entity.ToString(),
+                        //            validationError.ErrorMessage);
+                        //        // raise a new exception nesting  
+                        //        // the current instance as InnerException  
+                        //        raise = new InvalidOperationException(message, raise);
+                        //    }
+                        //}
+                        Errorlog.ErrorManager.LogError("public JsonResult CreateTeacher(TeacherModel Model) @TeacherController", dbEx);
+                       // throw raise;
+                        
+                    }
+                    
                 }
-                throw raise;
             }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         

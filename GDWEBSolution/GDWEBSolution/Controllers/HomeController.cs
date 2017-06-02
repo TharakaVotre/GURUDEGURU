@@ -26,15 +26,12 @@ namespace GDWEBSolution.Controllers
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
             return View();
         }
-
         public ActionResult Login()
         {
             return View();
         }
-
         [HttpPost]
         public JsonResult Login(LoginModel login)
         {
@@ -58,6 +55,89 @@ namespace GDWEBSolution.Controllers
             else
             {
                 result = "Failed";
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            return View("Login");
+        }
+
+        [HttpPost]
+        public JsonResult Forgot(LoginModel login)
+        {
+            string result = "Success";
+            var loggedU = Connection.tblUsers.Where(u => u.LoginEmail == login.LoginEmail).FirstOrDefault();
+            if (loggedU != null)
+            {
+                tblUserCode Codex = new tblUserCode();
+
+                Codex.UserId = loggedU.UserId;
+                Codex.IsActive = "Y";
+                Codex.Code = Convert.ToInt64(GeneratenewRandom());
+                Connection.tblUserCodes.Add(Codex);
+                Connection.SaveChanges();
+            }
+            else
+            {
+                result = "Error";
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        private string GeneratenewRandom()
+        {
+            Random generator = new Random();
+            String r = generator.Next(0, 1000000).ToString("D6");
+            if (r.Distinct().Count() == 1)
+            {
+               r = GeneratenewRandom();
+            }
+            return r;
+        }
+        public ActionResult Verify()
+        {
+            return View();
+        }
+        [HttpPost]
+        public JsonResult Verify(LoginModel login)
+        {
+            string result = "Error";
+            long Code = Convert.ToInt64(login.Code);
+            tblUserCode Codex = Connection.tblUserCodes.Where(u => u.Code == Code & u.IsActive == "Y" ).FirstOrDefault();
+            if (Codex != null)
+            {
+                Codex.IsActive = "U";
+                Connection.SaveChanges();
+                Session["VerifiedUserID"] = Codex.UserId;
+                result = "Success";
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ChangePassword()
+        {
+            ViewBag.VerifiedUserId = Session["VerifiedUserID"].ToString();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(LoginModel login)
+        {
+            string result = "Error";
+            string Uid = Session["VerifiedUserID"].ToString();
+            tblUser Usre = Connection.tblUsers.Where(u => u.UserId == Uid ).FirstOrDefault();
+            string pass = Encrypt_Decrypt.Encrypt(login.Password, Password);
+            if (Usre != null)
+            {
+                Usre.Password = pass;
+                Connection.SaveChanges();
+                result = "Success";
+
+                Session.Abandon();
+                Session.Clear();
+                Session.RemoveAll();
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }

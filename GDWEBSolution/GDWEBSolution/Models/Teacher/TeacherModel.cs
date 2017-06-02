@@ -97,6 +97,19 @@ namespace GDWEBSolution.Models.Teacher
         [Display(Name = "School Name")]
         public string SchoolName { get; set; }
 
+        [Required(ErrorMessage = "User Role Required")]
+        [Display(Name = "User Role *")]
+        public string UserCategory { get; set; }
+
+        [Required(ErrorMessage = "E-Mail")]
+        [Display(Name = "Email *")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        public string LoginEmail { get; set; }
+
+        [Required(ErrorMessage = "Login Password")]
+        [Display(Name = "Password *")]
+        public string Password { get; set; }
+
         public List<QualificationModel> QualificationList { get; set; }
         public List<tblTeacherExtraCurricularActivity> ExCurricularList { get; set; }
         public List<tblTeacherSubject> SubjectList { get; set; }

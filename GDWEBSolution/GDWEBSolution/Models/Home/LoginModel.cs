@@ -12,5 +12,11 @@ namespace GDWEBSolution.Models.Home
         public string UserName { get; set; }
         [Required(ErrorMessage = "Password  Required")]
         public string Password { get; set; }
+
+        [Required(ErrorMessage = "Email  Required")]
+        public string LoginEmail { get; set; }
+
+        [Required(ErrorMessage = "Please Enter the Code")]
+        public string Code { get; set; }
     }
 }

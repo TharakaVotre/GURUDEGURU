@@ -281,6 +281,7 @@
         <AssociationConnector Association="SchoolMGTModel.FK_tblTimeTable_tblUser1" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblUserCategoryFunction_tblUser" ManuallyRouted="false" />
         <AssociationConnector Association="SchoolMGTModel.FK_tblUserCategoryFunction_tblUser1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SchoolMGTModel.tblUserCode" Width="1.5" PointX="6.1026658108935994" PointY="13.258403635238485" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

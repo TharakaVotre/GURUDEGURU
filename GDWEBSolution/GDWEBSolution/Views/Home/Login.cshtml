@@ -25,12 +25,12 @@
     <script src="~/Scripts/jquery.min.js"></script>
 </head>
 <body>
-        <div class="login-page bk-img img-responsive" style="background-image: url(img/login-bg.jpg);">
+        <div class="login-page bk-img img-responsive" style="background-image: url(../img/login-bg.jpg);">
         <div class="form-content" style="font-family:'Adobe Caslon Pro'">
             <div class="container">
                 <div class="row">
                     <div id="Div1" class="col-md-6" style="margin-top:100px;">
-                         <img src="img/gurugedara.png" class="img-responsive hvr-grow" alt="Cinque Terre"> 
+                         <img src="../img/gurugedara.png" class="img-responsive hvr-grow" alt="Cinque Terre"> 
                     </div>
                     <div id="loginbox" class="col-md-5" style="padding-left:70px;">
                         <h1 class="text-center text-bold text-light mt-4x">Sign in</h1>
@@ -63,41 +63,31 @@
                                 </form>
                             </div>
                         </div>
-                        @*<div class="text-center text-light">
+                        <div class="text-center text-light">
                             <!--<a href="#" class="hvr-grow">Forgot password?</a>-->
-                            <a href="#" class="text-light hvr-bounce-in" onclick="$('#loginbox').hide(); $('#signupbox').show()">Sign Up Here
+                            <a href="#" class="text-light hvr-bounce-in" onclick="$('#loginbox').hide(); $('#signupbox').show()">Forgot Password
                                         </a>
-                        </div>*@
+                        </div>
                     </div>
                     <!--				</div>
 
               <div class="row" style="display:none;">-->
-                    @*<div id="signupbox" class="col-md-5" style="display: none; padding-left:70px;">
+                    <div id="signupbox" class="col-md-5" style="display: none; padding-left:70px;">
                         <h1 class="text-center text-bold text-light mt-4x">Sign up</h1>
                         <div class="well row pt-2x pb-3x bk-light">
                             <div class="col-md-12">
-                                <form action="" class="mt">
+                                <form id="FrmFOGT">
 
-                                    <label for="" class="text-uppercase text-sm">Your Name</label>
-                                    <input type="text" placeholder="Full Name" class="form-control mb">
+                                    <label for="" class="text-uppercase text-sm">Your E-mail</label>
+                                    @Html.TextBoxFor(model => model.LoginEmail, new { @class = "form-control mb", @placeholder = "Your Email Address" })
 
-
-                                    <label for="" class="text-uppercase text-sm">School Name</label>
-                                    <input type="text" placeholder="School Name" class="form-control mb">
+                                    @Html.ValidationMessageFor(model => model.LoginEmail, null, new { @class = "text-danger" })
 
 
-                                    <label for="" class="text-uppercase text-sm">Email</label>
-                                    <input type="text" placeholder="Email" class="form-control mb">
+                                    <br />
+                                    <label for="" id="lblFError" class="text-sm" style="color:#f00"></label>
 
-                                    <label for="" class="text-uppercase text-sm">User Name</label>
-                                    <input type="text" placeholder="User name" class="form-control mb">
-
-
-                                    <label for="" class="text-uppercase text-sm">Password</label>
-                                    <input type="password" placeholder="Password" class="form-control mb">
-
-                                    <button class="btn btn-primary btn-block" type="submit">SIGN UP</button>
-
+                                    <button class="btn btn-primary btn-block hvr-icon-down" type="button" onclick="Forgot();">REQUEST CODE</button>
                                 </form>
                             </div>
                         </div>
@@ -105,7 +95,7 @@
                             <a href="#" class="text-light" onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign In
                                         </a>
                         </div>
-                    </div>*@
+                    </div>
                 </div>
             </div>
         </div>
@@ -134,9 +124,38 @@
                         $("#lblError").text("Incorrect User Name Or Password");
                     }
                     else {
-                        $("#ErrorLable").text("User Name Already Exits");
-                        $("#btnCreateTeacher").prop('value', 'Save');
-                        $("#myModal").modal("show");
+                        $("#lblError").text("Unable to Login ! Please Try Again !");
+                    }
+
+                }
+
+            })
+        }
+
+
+        var Forgot = function () {
+            var myformdata = $("#FrmFOGT").serialize();
+
+            if (!$("#FrmFOGT").valid()) {
+                return false;
+            }
+            //$("#loaderDiv").show();
+            //$("#btnCreateTeacher").prop('value', 'Saving');
+            $.ajax({
+
+                type: "POST",
+                url: "/Home/Forgot",
+                data: myformdata,
+                success: function (result) {
+                    if (result == "Success") {
+                        //window.location.href = "/Home/Index";
+                        $("#lblFError").text("Request Code Sent");
+                    }
+                    else if (result == "Error") {
+                        $("#lblError").text("Incorrect Email Address");
+                    }
+                    else {
+                        $("#lblError").text("Unable to Process the Request ! Please Try Again !");
                     }
 
                 }

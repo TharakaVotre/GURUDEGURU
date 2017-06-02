@@ -674,6 +674,9 @@
     <Compile Include="Models\tblUserCategoryFunction.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblUserCode.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TimeTable\TimeTableModel.cs" />
     <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Models\User\UserSession.cs" />
@@ -1347,6 +1350,8 @@
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\User\NewUser.cshtml" />
+    <Content Include="Views\Home\Verify.cshtml" />
+    <Content Include="Views\Home\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attachments\" />
