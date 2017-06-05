@@ -91,7 +91,6 @@ namespace GDWEBSolution.Models
         public DbSet<tblUser> tblUsers { get; set; }
         public DbSet<tblUserCategory> tblUserCategories { get; set; }
         public DbSet<tblUserCategoryFunction> tblUserCategoryFunctions { get; set; }
-
         public DbSet<tblUserCode> tblUserCodes { get; set; }
     
         public virtual ObjectResult<DCISgetSchool_Result> DCISgetSchool()
@@ -275,6 +274,23 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("LogoPath", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DCISsetSchool", schoolIdParameter, schoolGroupParameter, schoolNameParameter, schoolRankParameter, isActiveParameter, divisionParameter, districtParameter, descriptionParameter, createdByParameter, address1Parameter, address2Parameter, address3Parameter, emailParameter, faxParameter, imagePathParameter, minuteforPeriodParameter, telephoneParameter, schoolCategoryParameter, provinceParameter, webUrlParameter, logoPathParameter);
+        }
+    
+        public virtual ObjectResult<GDCheckStudentAccacdemicYear_Result> GDCheckStudentAccacdemicYear(string accYear, string gradeId, string classId)
+        {
+            var accYearParameter = accYear != null ?
+                new ObjectParameter("AccYear", accYear) :
+                new ObjectParameter("AccYear", typeof(string));
+    
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            var classIdParameter = classId != null ?
+                new ObjectParameter("ClassId", classId) :
+                new ObjectParameter("ClassId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDCheckStudentAccacdemicYear_Result>("GDCheckStudentAccacdemicYear", accYearParameter, gradeIdParameter, classIdParameter);
         }
     
         public virtual int GDdeleteAllApplicationStatus(string isactive, Nullable<long> statusCode, string modyfiedBy)

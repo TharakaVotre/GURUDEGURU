@@ -15,18 +15,5 @@ namespace GDWEBSolution.Models
     {
         public string GradeId { get; set; }
         public string GradeName { get; set; }
-      //
-        public System.DateTime CreatedDate { get; set; }
-        public string CreatedBy { get; set; }
-        public string ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string IsActive { get; set; }
-        public string SchoolId { get; set; }
-        public string GradeId1 { get; set; }
-        public System.DateTime CreatedDate1 { get; set; }
-        public string CreatedBy1 { get; set; }
-        public string ModifiedBy1 { get; set; }
-        public Nullable<System.DateTime> ModifiedDate1 { get; set; }
-        public string IsActive1 { get; set; }
     }
 }
