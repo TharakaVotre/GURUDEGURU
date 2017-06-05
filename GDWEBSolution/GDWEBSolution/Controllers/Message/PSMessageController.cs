@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 /* ===============================
@@ -89,49 +90,58 @@ namespace GDWEBSolution.Controllers.Message
         [HttpPost]
         public JsonResult SendParenttoSchoolMsg(PtoSMessageHeaderModel Model)
         {
-            string result = "Success";
-            try
+            string result = "Error";
+            using (SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString())
             {
-                tblParentToSchoolMessageHeader MsgHead = new tblParentToSchoolMessageHeader();
-                MsgHead.SchoolId = "CKC";
-                MsgHead.MessageId = Model.MessageId;
-                MsgHead.ParentId = 2;//session parent id
-                MsgHead.Message = Model.Message.Replace("\r\n", "<br />");
-                MsgHead.CreatedBy = "ADMIN";
-                MsgHead.CreatedDate = DateTime.Now;
-                MsgHead.MessageType = Model.MessageType;
-                MsgHead.IsActive = "Y";
-                MsgHead.Status = "N";
-                MsgHead.Subject = Model.Subject;
-                MsgHead.Attachments = 0;
+                using (var scope = new TransactionScope())
+                {
+                    try
+                    {
+                        tblParentToSchoolMessageHeader MsgHead = new tblParentToSchoolMessageHeader();
+                        MsgHead.SchoolId = "CKC";
+                        MsgHead.MessageId = Model.MessageId;
+                        MsgHead.ParentId = 2;//session parent id
+                        MsgHead.Message = Model.Message.Replace("\r\n", "<br />");
+                        MsgHead.CreatedBy = "ADMIN";
+                        MsgHead.CreatedDate = DateTime.Now;
+                        MsgHead.MessageType = Model.MessageType;
+                        MsgHead.IsActive = "Y";
+                        MsgHead.Status = "N";
+                        MsgHead.Subject = Model.Subject;
+                        MsgHead.Attachments = 0;
 
-                tblParentToSchoolMessageDetail MsgDetail = new tblParentToSchoolMessageDetail();
-                MsgDetail.SchoolId = "CKC";
-                MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
-                MsgDetail.RecepientUser = Model.RecepientUser;
-                MsgDetail.IsActive = "Y";
-                MsgDetail.Status = "N";
-                MsgDetail.AuthorizationDate = DateTime.Now;
-                MsgDetail.AuthorizedBy = "ADMIN";
-                MsgDetail.AuthStatus = "A";
-                MsgDetail.CreatedBy = "ADMIN";
-                MsgDetail.CreatedDate = DateTime.Now;
-                Connection.tblParentToSchoolMessageHeaders.Add(MsgHead);
-                
-                Connection.tblParentToSchoolMessageDetails.Add(MsgDetail);
-                Connection.SaveChanges();
-                return Json(result, JsonRequestBehavior.AllowGet);
+                        tblParentToSchoolMessageDetail MsgDetail = new tblParentToSchoolMessageDetail();
+                        MsgDetail.SchoolId = "CKC";
+                        MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
+                        MsgDetail.RecepientUser = Model.RecepientUser;
+                        MsgDetail.IsActive = "Y";
+                        MsgDetail.Status = "N";
+                        MsgDetail.AuthorizationDate = DateTime.Now;
+                        MsgDetail.AuthorizedBy = "ADMIN";
+                        MsgDetail.AuthStatus = "A";
+                        MsgDetail.CreatedBy = "ADMIN";
+                        MsgDetail.CreatedDate = DateTime.Now;
+                        Connection.tblParentToSchoolMessageHeaders.Add(MsgHead);
+
+                        Connection.tblParentToSchoolMessageDetails.Add(MsgDetail);
+                        Connection.SaveChanges();
+                        scope.Complete();
+                        result = "Success";
+                        
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", dbEx);
+                        result = "Validation";
+                    }
+                    catch (Exception Ex)
+                    {
+                        Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
+                        result = "Exception";
+                    }
+                }
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
-            {
-                Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", dbEx);
-                return Json("Validation", JsonRequestBehavior.AllowGet); 
-            }
-            catch (Exception Ex)
-            {
-                Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
-                return Json("Exception", JsonRequestBehavior.AllowGet);
-            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

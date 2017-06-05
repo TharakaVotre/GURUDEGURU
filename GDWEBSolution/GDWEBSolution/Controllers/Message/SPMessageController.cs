@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using GDWEBSolution.Models.Message;
 using System.IO;
+using System.Transactions;
 /* ===============================
  * AUTHOR     : G.M. Tharaka Madusanka
  * CREATE DATE     : May 5 2017
@@ -70,62 +71,69 @@ namespace GDWEBSolution.Controllers.Message
         public ActionResult NewMessage(StoPMessageHeaderModel Model)
         {
             string result = "Success";
-            try
+            using (SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString())
             {
-                tblSchoolToParentMessageHeader MsgHead = new tblSchoolToParentMessageHeader();
-                MsgHead.SchoolId = "CKC";
-                MsgHead.MessageId = Model.MessageId;
-                MsgHead.Message = Model.Message.Replace("\r\n", "<br />");
-                MsgHead.CreatedBy = "ADMIN";
-                MsgHead.CreatedDate = DateTime.Now;
-                MsgHead.MessageType = Model.MessageType;
-                MsgHead.IsActive = "Y";
-                MsgHead.Sender = Model.Sender;
-                MsgHead.Subject = Model.Subject;
-                Connection.SaveChanges();
-                //MsgHead.Attachments = 0;
-                Connection.tblSchoolToParentMessageHeaders.Add(MsgHead);
-                if (Model.ParentId != -1)
+                using (var scope = new TransactionScope())
                 {
-                    for (int i = 0; i < Model.ParentIdArray.Length; i++)
+                    try
                     {
-                        tblSchoolToParentMessageDetail MsgDetail = new tblSchoolToParentMessageDetail();
-                        MsgDetail.SchoolId = "CKC";
-                        MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
-                        MsgDetail.ParentId = Model.ParentIdArray[i];
-                        MsgDetail.IsActive = "Y";
-                        MsgDetail.Status = "N";
-                        MsgDetail.CreatedBy = "ADMIN";
-                        MsgDetail.CreatedDate = DateTime.Now;
-                        Connection.tblSchoolToParentMessageDetails.Add(MsgDetail);
+                        tblSchoolToParentMessageHeader MsgHead = new tblSchoolToParentMessageHeader();
+                        MsgHead.SchoolId = "CKC";
+                        MsgHead.MessageId = Model.MessageId;
+                        MsgHead.Message = Model.Message.Replace("\r\n", "<br />");
+                        MsgHead.CreatedBy = "ADMIN";
+                        MsgHead.CreatedDate = DateTime.Now;
+                        MsgHead.MessageType = Model.MessageType;
+                        MsgHead.IsActive = "Y";
+                        MsgHead.Sender = Model.Sender;
+                        MsgHead.Subject = Model.Subject;
                         Connection.SaveChanges();
+                        //MsgHead.Attachments = 0;
+                        Connection.tblSchoolToParentMessageHeaders.Add(MsgHead);
+                        if (Model.ParentId != -1)
+                        {
+                            for (int i = 0; i < Model.ParentIdArray.Length; i++)
+                            {
+                                tblSchoolToParentMessageDetail MsgDetail = new tblSchoolToParentMessageDetail();
+                                MsgDetail.SchoolId = "CKC";
+                                MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
+                                MsgDetail.ParentId = Model.ParentIdArray[i];
+                                MsgDetail.IsActive = "Y";
+                                MsgDetail.Status = "N";
+                                MsgDetail.CreatedBy = "ADMIN";
+                                MsgDetail.CreatedDate = DateTime.Now;
+                                Connection.tblSchoolToParentMessageDetails.Add(MsgDetail);
+                                Connection.SaveChanges();
+                            }
+                        }
+                        else
+                        {
+                            tblSchoolToParentMessageDetail MsgDetail = new tblSchoolToParentMessageDetail();
+                            MsgDetail.SchoolId = "CKC";
+                            MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
+                            MsgDetail.ParentId = -1;
+                            MsgDetail.IsActive = "Y";
+                            MsgDetail.Status = "N";
+                            MsgDetail.CreatedBy = "ADMIN";
+                            MsgDetail.CreatedDate = DateTime.Now;
+                            Connection.tblSchoolToParentMessageDetails.Add(MsgDetail);
+                            Connection.SaveChanges();
+                        }
+                        result = "Success";
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", dbEx);
+                        result = "Validation";
+                    }
+                    catch (Exception Ex)
+                    {
+                        Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
+                        result = "Exception";
                     }
                 }
-                else
-                {
-                    tblSchoolToParentMessageDetail MsgDetail = new tblSchoolToParentMessageDetail();
-                    MsgDetail.SchoolId = "CKC";
-                    MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
-                    MsgDetail.ParentId = -1;
-                    MsgDetail.IsActive = "Y";
-                    MsgDetail.Status = "N";
-                    MsgDetail.CreatedBy = "ADMIN";
-                    MsgDetail.CreatedDate = DateTime.Now;
-                    Connection.tblSchoolToParentMessageDetails.Add(MsgDetail);
-                    Connection.SaveChanges();
-                }
-                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
-            {
-                Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", dbEx);
-                return Json("Validation", JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception Ex)
-            {
-                Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
-                return Json("Exception", JsonRequestBehavior.AllowGet);
-            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
         public ActionResult ShowGradeClass(string GradeId)
         {
