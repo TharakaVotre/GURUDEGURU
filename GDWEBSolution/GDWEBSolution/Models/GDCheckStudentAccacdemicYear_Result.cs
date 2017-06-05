@@ -10,12 +10,20 @@
 namespace GDWEBSolution.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblUserCategory
+    public partial class GDCheckStudentAccacdemicYear_Result
     {
-        public string CategoryId { get; set; }
-        public string CategoryName { get; set; }
+        public string SchoolId { get; set; }
+        public string StudentId { get; set; }
+        public string AcademicYear { get; set; }
+        public string studentName { get; set; }
+        public Nullable<System.DateTime> DateofBirth { get; set; }
+        public string GradeId { get; set; }
+        public string ClassId { get; set; }
+        public string Gender { get; set; }
+        public string UserId { get; set; }
+        public string HouseId { get; set; }
+        public string ImgUrl { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
