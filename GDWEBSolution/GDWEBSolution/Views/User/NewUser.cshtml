@@ -1,0 +1,188 @@
+﻿@model GDWEBSolution.Models.User.UserModel
+
+@{
+    ViewBag.Title = "New User";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>Class Teacher</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">New User</div>
+            <div class="panel-body">
+                <form id="FrmNU" class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserCategory, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(model => model.UserCategory, ViewBag.UCategoryNameList as SelectList, "", new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.ValidationMessageFor(model => model.UserCategory, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserId, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @placeholder = "Enter a Login User Name", @maxlength = "20" })
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.ValidationMessageFor(model => model.UserId, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LoginEmail, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.LoginEmail, new { @class = "form-control", @placeholder = "Enter a Email Address", @maxlength = "50" })
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.ValidationMessageFor(model => model.LoginEmail, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PersonName, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.PersonName, new { @class = "form-control", @placeholder = "Name of the Person", @maxlength = "100" })
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.ValidationMessageFor(model => model.PersonName, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.JobDescription, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.JobDescription, new { @class = "form-control", @placeholder = "Name of the Job", @maxlength = "100" })
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.ValidationMessageFor(model => model.JobDescription, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Mobile, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", @placeholder = "Mobile Number", @maxlength = "10" })
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.ValidationMessageFor(model => model.Mobile, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Login Password", @maxlength = "30" })
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="hr-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <button type="reset" value="Save" id="btnCreateUser" onclick="NewUser()" class="btn btn-primary"><span class="fa fa-bookmark"></span>Save <span style="text-align: center; display: none" id="loaderDiv">
+                                <img src="~/img/ellipsis.gif" /></span></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content" id="MyModelBody">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Error !</h4>
+            </div>
+            <div class="modal-body">
+                <label id="ErrorLable" class="control-label" style="color: #e83a3a"></label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="SuccesModel" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content" id="SuccessModelBody">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Successful !</h4>
+            </div>
+            <div class="modal-body">
+                <label id="SuccesLable" class="control-label" style="color: #3bc91f"></label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/jscript">
+    $('#UserId').blur(function () {
+        var url = "/User/IsUserNameExits";
+        var name = $('#UserId').val();
+        debugger
+        $.get(url, { input: name }, function (data) {
+            if (data == "Have") {
+                $("#ErrorLable").text("User Name Already Exits");
+                $("#btnCreateUser").prop('value', 'Save');
+                $("#myModal").modal("show");
+            }
+        });
+    })
+
+    $('#LoginEmail').blur(function () {
+        var url = "/Teacher/IsLoginEmailExits";
+        var name = $('#LoginEmail').val();
+        debugger
+        $.get(url, { input: name }, function (data) {
+            if (data == "Have") {
+                $("#ErrorLable").text("This Email Is already assigned to a User");
+                $("#btnCreateUser").prop('value', 'Save');
+                $('#LoginEmail').val() = "";
+                $("#myModal").modal("show");
+            }
+        });
+    })
+</script>
+<script>
+
+    var NewUser = function () {
+        debugger
+        var myformdata = $("#FrmNU").serialize();
+        if (!$("#FrmNU").valid()) {
+            return false;
+        }
+        $("#loaderDiv").show();
+        $.ajax({
+
+            type: "POST",
+            url: "/User/NewUser",
+            data: myformdata,
+            success: function (result) {
+                $("#loaderDiv").hide();
+                if (result == "Success") {
+                    $("#SuccesLable").text("User Creation Successful");
+                    $("#SuccesModel").modal("show");
+                }
+                else if (result == "Exception") {
+                    $("#ErrorLable").text("An Exception Error Occurd");
+                    $("#myModal").modal("show");
+                }
+                else {
+                    $("#ErrorLable").text("Unable to Create the User");
+                    $("#myModal").modal("show");
+
+                }
+
+            }
+
+        })
+    }
+
+    $(document).ready(function () {
+        $(".select2_UCat").select2({
+            placeholder: "Select an User Category",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+</script>

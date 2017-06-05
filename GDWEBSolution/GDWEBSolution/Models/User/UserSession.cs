@@ -67,6 +67,12 @@ namespace GDWEBSolution.Models.User
             get { return Mobile; }
             set { Mobile = value; Save(); }
         }
+        string Navigation;
+        public string Navigation_
+        {
+            get { return Navigation; }
+            set { Navigation = value; Save(); }
+        }
 
         private void CheckExisting()
         {
@@ -81,6 +87,7 @@ namespace GDWEBSolution.Models.User
                 Person_Name = "";
                 Job_ = "";
                 Mobile = "";
+                Navigation = "";
             }
             else
             {
@@ -93,6 +100,7 @@ namespace GDWEBSolution.Models.User
                 this.Person_Name = oInfo.Person_Name;
                 this.Job_ = oInfo.Job;
                 this.Mobile_ = oInfo.Mobile_;
+                this.Navigation = oInfo.Navigation_;
 
                 oInfo = null;
             }

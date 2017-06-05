@@ -1,0 +1,98 @@
+﻿@model GDWEBSolution.Models.Home.LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,chrome=1">
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+    <!-- Sandstone Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <!-- Bootstrap file input -->
+    <link rel="stylesheet" href="~/Content/css/fileinput.min.css">
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/css/hover.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+</head>
+<body>
+        <div class="login-page bk-img img-responsive" style="background-image: url(../img/login-bg.jpg);">
+        <div class="form-content" style="font-family:'Adobe Caslon Pro'">
+            <div class="container">
+                <div class="row">
+                    <div id="Div1" class="col-md-6" style="margin-top:100px;">
+                         <img src="../img/gurugedara.png" class="img-responsive hvr-grow" alt="Cinque Terre"> 
+                    </div>
+                    <div id="loginbox" class="col-md-5" >
+                        <h1 class="text-center text-bold text-light mt-4x">Login Code Verify</h1>
+                        <div class="well row pt-2x pb-3x bk-light">
+                            <div class="col-md-12">
+                                <form class="mt" id="FrmCODE">
+
+                                    <label for="" class="text-uppercase text-sm">Enter the 6 Digit CODE</label>
+                                    @*<input type="text" placeholder="Username" class="form-control mb">*@
+                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control mb", @placeholder = "Your User Name" ,})
+
+                                    @Html.ValidationMessageFor(model => model.Code, null, new { @class = "text-danger" })<br />
+
+                                    <button class="btn btn-primary btn-block hvr-icon-down" type="button" onclick="verify();">Verify Code</button>
+                                    <br />
+                                    <label for="" id="lblError" class="text-sm" style="color:#f00"></label>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var verify = function () {
+            var myformdata = $("#FrmCODE").serialize();
+
+            if (!$("#FrmCODE").valid()) {
+                return false;
+            }
+            //$("#loaderDiv").show();
+            //$("#btnCreateTeacher").prop('value', 'Saving');
+            $.ajax({
+
+                type: "POST",
+                url: "/Home/Verify",
+                data: myformdata,
+                success: function (result) {
+                    if (result == "Success") {
+                        window.location.href = "/Home/ChangePassword";
+                    }
+                    else {
+                        $("#lblError").text("Faild to Process the Request ! Please Try Again !");
+                    }
+
+                }
+
+            })
+        }
+
+
+</script>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+
+    @Scripts.Render("~/Scripts/js")
+</body>
+</html>
