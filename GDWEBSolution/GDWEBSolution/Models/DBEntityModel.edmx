@@ -5058,6 +5058,7 @@
         <Function Name="SMGT_getParentInbox" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ParentId" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="SMGT_GETPasswordChangeEMailConfig" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SMGT_getSchoolExactivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
         </Function>
@@ -7001,6 +7002,7 @@
             <Parameter Name="UserId" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SMGT_GETPasswordChangeEMailConfig" ReturnType="Collection(SchoolMGTModel.SMGT_GETPasswordChangeEMailConfig_Result)" />
         </EntityContainer>
         <EntityType Name="tblApplicationStatu">
           <Key>
@@ -11844,6 +11846,10 @@
           <Property Type="String" Name="Mobile" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
         </ComplexType>
+        <ComplexType Name="SMGT_GETPasswordChangeEMailConfig_Result">
+          <Property Type="String" Name="ParameterId" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="ParameterValue" Nullable="false" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14074,6 +14080,14 @@
                 <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
                 <ScalarProperty Name="Mobile" ColumnName="Mobile" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGT_GETPasswordChangeEMailConfig" FunctionName="SchoolMGTModel.Store.SMGT_GETPasswordChangeEMailConfig">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGT_GETPasswordChangeEMailConfig_Result">
+                <ScalarProperty Name="ParameterId" ColumnName="ParameterId" />
+                <ScalarProperty Name="ParameterValue" ColumnName="ParameterValue" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

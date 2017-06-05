@@ -2792,5 +2792,10 @@ namespace GDWEBSolution.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_UserLogin_Result>("SMGT_UserLogin", userIdParameter, passwordParameter);
         }
+    
+        public virtual ObjectResult<SMGT_GETPasswordChangeEMailConfig_Result> SMGT_GETPasswordChangeEMailConfig()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_GETPasswordChangeEMailConfig_Result>("SMGT_GETPasswordChangeEMailConfig");
+        }
     }
 }

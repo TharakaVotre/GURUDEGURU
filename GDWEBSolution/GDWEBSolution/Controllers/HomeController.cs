@@ -80,6 +80,9 @@ namespace GDWEBSolution.Controllers
                 Codex.Code = Convert.ToInt64(GeneratenewRandom());
                 Connection.tblUserCodes.Add(Codex);
                 Connection.SaveChanges();
+
+                MailManager SendM = new MailManager();
+                SendM.SendEmail(loggedU.LoginEmail, "Password Recovery", "Your Password Recovery Code : " + Codex.Code + " Use It in the Link : http://124.43.22.85/Home/Verify");
             }
             else
             {

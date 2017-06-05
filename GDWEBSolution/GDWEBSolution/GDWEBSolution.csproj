@@ -464,6 +464,9 @@
     <Compile Include="Models\SMGT_getParentInbox_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGT_GETPasswordChangeEMailConfig_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGT_getSchoolExactivityParent_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -713,6 +716,7 @@
     <Compile Include="Models\User\UserCategoryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Encrypt_Decrypt.cs" />
+    <Compile Include="Util\MailManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\adminnavigation.xml" />

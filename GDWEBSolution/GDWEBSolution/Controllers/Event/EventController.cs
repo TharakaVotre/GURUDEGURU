@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.Event;
+using GDWEBSolution.Models.User;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,9 @@ namespace GDWEBSolution.Controllers.Event
     public class EventController : Controller
     {
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
+
+        UserSession _session = new UserSession();
+
         //
         // GET: /Event/
 
@@ -27,7 +31,7 @@ namespace GDWEBSolution.Controllers.Event
 
         public ActionResult getEvents()
         {
-            var STQlist = Connection.tblEventCalendars.Where(r => r.SchoolId == "CKC").ToList();
+            var STQlist = Connection.tblEventCalendars.Where(r => r.SchoolId == _session.School_Id).ToList();
 
             List<Events> List = STQlist.Select(x => new Events
             {
@@ -82,9 +86,9 @@ namespace GDWEBSolution.Controllers.Event
                 if (Model.EventNo == 0)
                 {
                     tblEventCalendar Events = new tblEventCalendar();
-                    Events.CreatedBy = "ADMIN";
+                    Events.CreatedBy = _session.User_Id;
                     Events.CreatedDate = DateTime.Now;
-                    Events.SchoolId = "CKC";
+                    Events.SchoolId = _session.School_Id;
                     Events.EventTitle = Model.EventName;
                     Events.EventCategory = Model.EventCategoryId;
                     Events.EventDescription = Model.EventDescription;
@@ -105,9 +109,9 @@ namespace GDWEBSolution.Controllers.Event
                 {
                     tblEventCalendar Events = Connection.tblEventCalendars.SingleOrDefault(x => x.EventNo == Model.EventNo);
 
-                    Events.CreatedBy = "ADMIN";
+                    Events.CreatedBy = _session.User_Id;
                     Events.CreatedDate = DateTime.Now;
-                    Events.SchoolId = "CKC";
+                    Events.SchoolId = _session.School_Id;
                     Events.EventTitle = Model.EventName;
                     Events.EventCategory = Model.EventCategoryId;
                     Events.EventDescription = Model.EventDescription;
