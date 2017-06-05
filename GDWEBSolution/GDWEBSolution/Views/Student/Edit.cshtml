@@ -53,7 +53,7 @@
                                     @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
                                         @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadSgrade(this.value)" })
-                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                       
                                     </div>
 
                                     <div class="col-sm-2">
@@ -65,7 +65,7 @@
                                     @Html.LabelFor(m => m.StudentId, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(model => model.StudentId, new { @class = "form-control", @placeholder = "School Name" })
-                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                       
                                     </div>
                                     <div class="col-sm-2">
                                         @Html.ValidationMessageFor(model => model.StudentId, null, new { @class = "text-danger" })
@@ -77,7 +77,7 @@
                                     @Html.LabelFor(m => m.StudentName, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(model => model.StudentName, new { @class = "form-control", @placeholder = "School Name" })
-                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                      
                                     </div>
                                     <div class="col-sm-2">
                                         @Html.ValidationMessageFor(model => model.StudentName, null, new { @class = "text-danger" })
@@ -88,7 +88,7 @@
                                     @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", @placeholder = "Date of Birth" })
-                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                     
                                     </div>
                                 </div>
 

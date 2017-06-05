@@ -25,13 +25,13 @@
             {
                 <div class="form-group">
                     <div class="row">
-                        <lable class="col-sm-2 control-label">From Date</lable>
+                        <lable class="col-sm-2 control-label" style="font-size:14px;color:black">From Date</lable>
                         <div class="col-sm-3">
 
                             @Html.TextBox("FromDate")
 
                         </div>
-                        <lable class="col-sm-2 control-label">To Date</lable>
+                        <lable class="col-sm-2 control-label" style="font-size:14px;color:black">To Date</lable>
                         <div class="col-sm-3">
 
                             @Html.TextBox("ToDate")
@@ -87,10 +87,16 @@
                                     @Html.DisplayFor(modelItem => item.DueDate)
                                 </td>
                                
-                                <td style="width:50px">
+                                <td>
+                                    <center>
                                      <a class="btn btn-primary" onclick='DetailView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="glyphicon glyphicon-eye-open"></span> Detail</a>
-                                   
-                                </td>
+                                    @{
+                        string path = "../Uploads/" + item.FilePath;
+                       
+                                    }
+                                    <a href="@path" class="btn btn-default"  download><span class="glyphicon glyphicon-cloud-download"></span> Download</a>
+                                </center>
+                                        </td>
                             </tr>
                         }
 

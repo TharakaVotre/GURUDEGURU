@@ -30,5 +30,7 @@ namespace GDWEBSolution.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
         public string SchoolName { get; set; }
+        public string GradeName { get; set; }
+        public string ClassName { get; set; }
     }
 }

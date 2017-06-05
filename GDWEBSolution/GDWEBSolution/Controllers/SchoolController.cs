@@ -438,7 +438,7 @@ namespace GDWEBSolution.Controllers
              ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
              SchoolGradeDrpList();
              SchoolHouseDrpListe(Schoold);
-             string GradeId = ""; ;
+            // string GradeId = ""; ;
              List<SchoolModel> List = LoadClasses(scid, gdid);
          //    string username = result.Consignor.Split('<')[0];
              return PartialView("ClassesList", List);
@@ -1122,36 +1122,48 @@ namespace GDWEBSolution.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (Model.File.ContentLength > 0)
+                    if (Model.File == null)
                     {
 
-
-                        string fnm = DateTime.Now.ToString("");
-                        string nwString22 = fnm.Replace("-", ".");
-                        string nwString = nwString22.Replace("/", ".");
-                        string nwString2 = nwString.Replace(" ", ".");
-                        string time = nwString2.Replace(":", ".");
-
-                        string _FileName = time+"_"+Path.GetFileName(Model.File.FileName);
-                        _path = Path.Combine(Server.MapPath("~/Uploads/Schools/Images"), _FileName);
-                        _path1 = "~/Uploads/Schools/Images/" + _FileName;
-                        Model.File.SaveAs(_path);
                     }
-
-                    if (Model.LogoFile.ContentLength > 0)
+                    else
                     {
-                        string fnm = DateTime.Now.ToString("");
-                         string nwString22 = fnm.Replace("-", ".");
-                         string nwString = nwString22.Replace("/", ".");
-                        string nwString2 = nwString.Replace(" ", ".");
-                        string time = nwString2.Replace(":", ".");
-                   
-                        string _FileName =time+"_" +Path.GetFileName(Model.LogoFile.FileName);
-                        _pathL = Path.Combine(Server.MapPath("~/Uploads/Schools/Logo"), _FileName);
-                        _pathL2 = "~/Uploads/Schools/Logo/" + _FileName;
-                        Model.LogoFile.SaveAs(_pathL);
-                    }
+                        if (Model.File.ContentLength > 0)
+                        {
 
+
+                            string fnm = DateTime.Now.ToString("");
+                            string nwString22 = fnm.Replace("-", ".");
+                            string nwString = nwString22.Replace("/", ".");
+                            string nwString2 = nwString.Replace(" ", ".");
+                            string time = nwString2.Replace(":", ".");
+
+                            string _FileName = time + "_" + Path.GetFileName(Model.File.FileName);
+                            _path = Path.Combine(Server.MapPath("~/Uploads/Schools/Images"), _FileName);
+                            _path1 = "~/Uploads/Schools/Images/" + _FileName;
+                            Model.File.SaveAs(_path);
+                        }
+                    }
+                    if (Model.LogoFile == null)
+                    {
+
+                    }
+                    else
+                    {
+                        if (Model.LogoFile.ContentLength > 0)
+                        {
+                            string fnm = DateTime.Now.ToString("");
+                            string nwString22 = fnm.Replace("-", ".");
+                            string nwString = nwString22.Replace("/", ".");
+                            string nwString2 = nwString.Replace(" ", ".");
+                            string time = nwString2.Replace(":", ".");
+
+                            string _FileName = time + "_" + Path.GetFileName(Model.LogoFile.FileName);
+                            _pathL = Path.Combine(Server.MapPath("~/Uploads/Schools/Logo"), _FileName);
+                            _pathL2 = "~/Uploads/Schools/Logo/" + _FileName;
+                            Model.LogoFile.SaveAs(_pathL);
+                        }
+                    }
                     //  ViewBag.Message = "File Uploaded Successfully!!";  
 
                     var schoolcount = Connection.SMGTSchoolCount().FirstOrDefault();
@@ -1164,7 +1176,7 @@ namespace GDWEBSolution.Controllers
                     Connection.SaveChanges();
 
 
-                    string result = "Success";
+                 //   string result = "Success";
                     ModelState.Clear();
              
                     //return View();

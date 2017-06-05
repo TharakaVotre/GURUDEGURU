@@ -25,13 +25,13 @@
 {
             <div class="form-group">
                 <div class="row">
-                    <lable class="col-sm-2 control-label">From Date</lable>
+                    <label class="col-sm-2 control-label" style="font-size:14px;color:black">From Date</label>
                     <div class="col-sm-3">
 
                         @Html.TextBox("FromDate")
 
                     </div>
-                    <lable class="col-sm-2 control-label">To Date</lable>
+                    <label class="col-sm-2 control-label" style="font-size:14px;color:black">To Date</label>
                     <div class="col-sm-3">
                        
                        @Html.TextBox("ToDate")
@@ -47,7 +47,7 @@
 
         </div>
         <div class="panel-body">
-            <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+            <table id="zctb" class="display table table-bordered table-hover" >
                 <thead>
                     <tr>
                         <th>
@@ -99,8 +99,8 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Subject)
                                 </td>
-                                <td>
-                                    <center>
+                                <td style="max-width:270px">
+                                  <center>  
                                     <a class="btn btn-info"  onclick='EditView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="fa fa-pencil"></span> Edit </a>
                                     <a class="btn btn-primary"  onclick='DetailView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="glyphicon glyphicon-eye-open"></span> Detail</a>
                                     <a class="btn btn-danger" onclick='DeleteView("@item.AssignmentNo")'><span class="fa fa-trash"></span> Delete</a>
@@ -108,8 +108,10 @@
                         string path = "../Uploads/" + item.FilePath;
                        
                                     }
-                                    <a href="@path" class="btn btn-primary"  download><span class="glyphicon glyphicon-cloud-download"></span> Download</a>
-</center></td>
+                                    <a href="@path" class="btn btn-default"  download><span class="glyphicon glyphicon-cloud-download"></span> Download</a>
+                            </center>
+
+                                </td>
                             </tr>
                     }
 

@@ -26,8 +26,15 @@ namespace GDWEBSolution.Models.Evaluation
         [Display(Name = "ScheduledDate")]
         public DateTime ScheduledDate { get; set; }
 
-        [Display(Name = "Scheduled Time")]
-        public TimeSpan ScheduledTime { get; set; }
+        [Display(Name = "Scheduled Time Start")]
+        public TimeSpan ScheduledTimeStart { get; set; }
+
+        public string ScheduledTimeStarts { get; set; }
+
+        [Display(Name = "Scheduled Time End")]
+        public TimeSpan ScheduledTimeEnd { get; set; }
+
+        public string ScheduledTimeEnds { get; set; }
 
          [Display(Name = "School Id")]
         public String  SchoolId { get; set; }

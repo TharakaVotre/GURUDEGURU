@@ -12,8 +12,20 @@ namespace GDWEBSolution.Models.Student
             [Display(Name = "School Name")]
             public string SchoolId { get; set; }
 
+            [Display(Name = "School Name")]
+            public string SchoolIdE { get; set; }
+
             [Display(Name = "Student Name")]
             public string StudentId { get; set; }
+        
+             [Display(Name = "Student Name")]
+            public string StudentIdE { get; set; }
+
+
+            [Display(Name = "Grade Name")]
+            public string GradeIdE { get; set; }
+            [Display(Name = "Class Name")]
+            public string ClassIdE { get; set; }
 
             [Display(Name = "Activity Code")]
             public string ActivityCode { get; set; }

@@ -25,11 +25,11 @@
                 <br>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in" id="bio">
-                        @using (Html.BeginForm("Create", "EvaluationbySchool",
+                        @*@using (Html.BeginForm("Create", "EvaluationbySchool",
     FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
+                        {*@
                             @Html.AntiForgeryToken()
-                            @*<form id="FrmANT" class="form-horizontal">*@
+                            <form id="FrmANT" class="form-horizontal">
                             <div class="form-horizontal">
 
 
@@ -49,42 +49,22 @@
                                         </div>
                                     </div>*@
 
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-8">
-                                        @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadEXactivse(this.value)" })
-
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.SchoolId, null, new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div id="showAcyr" style="display:none">
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.AcademicYear, new { @class = "col-sm-2 control-label" })
-                                        <div class="col-sm-8">
-
-                                            @Html.DropDownListFor(model => model.AcademicYear, ViewBag.Academicyrxlist as SelectList, "", new { @class = "form-control", @placeholder = "Student" })
-                                        </div>
-
-                                        <div class="col-sm-2">
-                                            @Html.ValidationMessageFor(model => model.SchoolId, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="showGradess" style="display:none">
+                               
+                              
+                                  
+                              
+                          
                                     <div class="form-group">
                                         @Html.LabelFor(m => m.EvaluationType, new { @class = "col-sm-2 control-label" })
                                         <div class="col-sm-4">
-                                            @Html.DropDownListFor(model => model.EvaluationType, ViewBag.EvaluationList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadClass(this.value)" })
+                                            @Html.DropDownListFor(model => model.EvaluationType, ViewBag.EvaluationList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
                                         </div>
                                         <div class="col-sm-2">
                                             @Html.ValidationMessageFor(model => model.EvaluationType, null, new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                </div>
-                                <div id="showStateLga" style="display:none">
+                             
+                                
 
                                     <div class="form-group">
                                         @Html.LabelFor(m => m.EvaluationDescription, new { @class = "col-sm-2 control-label" })
@@ -96,22 +76,22 @@
                                         </div>
                                     </div>
 
-                                </div>
+                               
 
 
-                                <div id="showsubs" style="display:none">
+                               
 
                                     <div class="form-group">
                                         @Html.LabelFor(m => m.TestPaperFee, new { @class = "col-sm-2 control-label" })
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(model => model.TestPaperFee, new { @class = "form-control", @placeholder = "School Name" })
+                                        <div class="col-sm-4">
+                                            @Html.TextBoxFor(model => model.TestPaperFee, new { @class = "form-control", @placeholder = "Test Paper Fee" })
                                             <span class="help-block m-b-none" id="CategoryNameError"></span>
                                         </div>
                                         <div class="col-sm-2">
                                             @Html.ValidationMessageFor(model => model.TestPaperFee, null, new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                </div>
+                              
 
 
                                
@@ -188,12 +168,23 @@
                                     <div class="col-sm-8 col-sm-offset-2">
                                         @*<button class="btn btn-default" type="submit">Cancel</button>*@
                                         @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
-                                        <button @*type="submit"*@ value="Save" id="btnSubmit" onclick="" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                                        <button type="button" id="btnAddQualification" onclick="AddEvaluation()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
                                     </div>
                                 </div>
                             </div>
-                        }
-                        @*</form>*@
+                        @*}*@
+                        </form>
+
+                        <div id="showEvaluations">
+
+                        </div>
+
+                         <div id="evaluationlistrender">
+                            @{Html.RenderAction("ShowEvaluationw");}
+
+                        </div>
+
+
                     </div>
                     <div class="tab-pane fade" id="EvaluatonClass">
 
@@ -257,23 +248,22 @@
     }
 </script>
 
-@if (ViewBag.successMessage == "Success")
-{
-    <div id="SuccesModel" style="overflow: hidden; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1050; background-color: rgba(0, 0, 0, 0.51); " role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content" id="SuccessModelBody">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" onclick="hideSuccesModel()">&times;</button>
-                    <h4 class="modal-title">Successful !</h4>
-                </div>
-                <div class="modal-body">
-                    <label id="SuccesLable" class="control-label" style="color: #3bc91f"></label>
-                </div>
+
+   <div id="SuccesModel" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" id="SuccessModelBody">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Successful !</h4>
+            </div>
+            <div class="modal-body">
+                <label id="SuccesLable" class="control-label" style="color: #3bc91f"></label>
             </div>
         </div>
     </div>
-}
+</div>
+
 <div id="deleteModel" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -298,6 +288,83 @@
 
 
 <script type="text/javascript">
+    var AddEvaluation = function () {
+        //debugger
+        var myformdata = $("#FrmANT").serialize();
+
+        //if (!$("#FrmANT").valid()) {
+        //    return false;
+        //}
+        var ddlStateswea = $("#EvaluationNo");
+        $.ajax({
+
+            type: "POST",
+            url: "/EvaluationbySchool/AddSchoolGrade",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                // $("#myModal").modal("hide");
+                if (result != "Exception" && result != "Exits") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+                    //  $("#SchoolId").val(result);
+
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $('#showgrade').load('/EvaluationbySchool/ShowEvaluation?SchoolId=' + result);
+                    
+                    $('#evaluationlistrender').load('/EvaluationbySchool/ShowEvaluation?SchoolId=' + result);
+                    $("#SuccesLable").text("Evaluation Added");
+                    // $("#btnAddQualification").prop('value', 'Save');
+                    $("#SuccesModel").modal("show");
+                }
+                else if (result == "Exception") {
+                    debugger
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Exception Error Occurd");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+                }
+                else if (result == "Exits") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("This Grade is Already Assigned to this School");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+                else {
+
+                }
+
+
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@(Url.RouteUrl("evaluationdropd"))",
+                       //  data: { "GradeId": GradeId, "SchoolId": SchoolId, "AcademicYear": AcademicYear, "ClassId": ClassId },
+            success: function (data) {
+                ddlStateswea.html('');
+                ddlStateswea.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStateswea.append($('<option></option>').val(option.EvaluationNo).html(option.EvaluationDescription));
+                });
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+
+            }
+                   });
+
+            }
+
+        });
+
+
+     
+    }
+
+
 
     $(function () {
         // This will make every element with the class "date-picker" into a DatePicker element

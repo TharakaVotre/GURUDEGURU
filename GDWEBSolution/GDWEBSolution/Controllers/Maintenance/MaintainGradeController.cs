@@ -88,7 +88,7 @@ namespace GDWEBSolution.Controllers
             }
             catch (Exception ex)
             {
-               // Errorlog.ErrorManager.LogError(ex);
+                Errorlog.ErrorManager.LogError(ex);
                 return Json("Exist", JsonRequestBehavior.AllowGet);
                 
             }

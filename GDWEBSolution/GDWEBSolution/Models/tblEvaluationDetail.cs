@@ -24,13 +24,14 @@ namespace GDWEBSolution.Models
         public string Grade { get; set; }
         public string Class { get; set; }
         public System.DateTime ScheduledDate { get; set; }
-        public System.TimeSpan ScheduledTime { get; set; }
+        public System.TimeSpan ScheduledTimeStart { get; set; }
         public string SchoolId { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
+        public System.TimeSpan ScheduledTimeEnd { get; set; }
     
         public virtual tblClass tblClass { get; set; }
         public virtual tblEvaluationHeader tblEvaluationHeader { get; set; }

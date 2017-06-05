@@ -3,68 +3,72 @@
 
 <form id="FrmEVClass" class="form-horizontal">
     <div class="form-group">
-
-
-
-
-        @Html.LabelFor(m => m.SchoolId1, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-3">
-            @Html.DropDownListFor(model => model.SchoolId1, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onchange = "loadGradese(this.value)" })
-
-            @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
-
-        </div>
+        @Html.Hidden("SchoolId1")
         <div class="div123">
-            @Html.LabelFor(m => m.Grade, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-4">
-                @Html.DropDownListFor(model => model.Grade, ViewBag.SchoolGradeList as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onchange = "loadClasse(this.value)" })
-            </div>
-        </div>
-        <br/><br/>
-
-        <div class="div123">
-            @Html.LabelFor(m => m.Class, new { @class = "col-sm-2 control-label" })
+            @Html.LabelFor(m => m.EvaluationNo, new { @class = "col-sm-2 control-label" })
             <div class="col-sm-3">
-                @Html.DropDownListFor(model => model.Class, ViewBag.classDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onclick = "GetStudentTable1(this.value)" })
+                @Html.DropDownListFor(model => model.EvaluationNo, ViewBag.EvaluationDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School " })
             </div>
         </div>
+
+
+      
+     
+      
+
+        
 
 
         
             @Html.LabelFor(m => m.ScheduledDate, new { @class = "col-sm-2 control-label" })
             <div class="col-sm-4">
-                @Html.TextBoxFor(model => model.ScheduledDate, "", new { @class = "form-control", @placeholder = "School Group" })
+                @Html.TextBoxFor(model => model.ScheduledDate, "", new { @class = "form-control", @placeholder = "Schedule Date" })
             </div>
-        <br/><br/>
+       <br/><br/>
             
        
         
-            @Html.LabelFor(m => m.ScheduledTime, new { @class = "col-sm-2 control-label" })
+            @Html.LabelFor(m => m.ScheduledTimeStart, new { @class = "col-sm-2 control-label" })
             <div class="col-sm-3">
-                @Html.TextBoxFor(model => model.ScheduledTime, "", new { @class = "form-control", @placeholder = "School Group" })
+                @Html.TextBoxFor(model => model.ScheduledTimeStarts, "", new { @class = "form-control", @placeholder = "School Group" })
             </div>
+
+        @Html.LabelFor(m => m.ScheduledTimeEnd, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.TextBoxFor(model => model.ScheduledTimeEnds, "", new { @class = "form-control", @placeholder = "School Group" })
+        </div>
+        <br/><br/>
            
         
-
-        
         <div class="div123">
-            @Html.LabelFor(m => m.EvaluationNo, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-4">
-                @Html.DropDownListFor(model => model.EvaluationNo, ViewBag.EvaluationDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onclick = "GetStudentTable1(this.value)" })
+            @Html.LabelFor(m => m.Grade, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-3">
+
+               
+                @Html.DropDownListFor(model => model.Grade, ViewBag.SchoolGradeList as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onchange = "GetClasslist(this.value)" })
             </div>
         </div>
 
-        <br/><br /><br/>
+        @*<div class="div123">
+            @Html.LabelFor(m => m.Class, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-3">
+                @Html.DropDownListFor(model => model.Class, ViewBag.classDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School " })
+            </div>
+        </div>*@
+        
+       
 
+       
 
-        <div id="showstds" style="display:none">
+        <br/><br />
+       
             <div style="text-align:center;">
-                <table class="table table-striped table-hover table-bordered" style="width:66%; margin: 0 auto; text-align:left;">
+                <table id="myTable" class="table table-striped table-hover table-bordered" style="width:66%; margin: 0 auto; text-align:left;">
                     <thead>
                         <tr>
 
-                            <th><input type="checkbox" name="chooseAllRecipient" id="chooseAllRecipient" /></th>
-                            <th class="center">Student Names</th>
+                            <th style=" width:10%"><input type="checkbox" onclick='checkAll()' name="chooseAllRecipient" id="chooseAllRecipient" /><label>SelectAll</label></th>
+                            <th style=" width:30%" >Classes</th>
 
                         </tr>
                     </thead>
@@ -73,13 +77,13 @@
                 </table>
 
             </div>
-        </div>
+       
 
      
 
 
-        <div class="col-sm-2">
-            <button type="reset" id="btnAddQualification" onclick="AddEvolutionclz()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+        <div class="col-sm-2" style="float:right">
+            <button type="button" id="btnAddQualification" onclick="AddEvolutionclz()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
         </div>
     </div>
     <div class="hr-dashed"></div>
@@ -89,6 +93,23 @@
 </form>
 
 <script>
+    $('#chooseAllRecipient').click(function () {
+        var chk = $(this).is(':checked');
+        var cnt = $('input[type=checkbox]', "#myTable").length;
+        $('input[type=checkbox]', "#myTable").each(function () {
+            if (chk) {
+                $(this).attr('checked', 'checked');
+            }
+            else {
+                $(this).removeAttr('checked');
+            }
+        });
+
+
+
+    });
+
+
 
     var AddEvolutionclz = function () {
         //debugger
@@ -190,6 +211,7 @@
         success: function (data) {
             ddlStates.html('');
             ddlStates.append($('<option></option>').val("").html(""));
+            ddlStates.append($('<option></option>').val("%").html("All"));
             $.each(data, function (ActivityCode, option) {
                 ddlStates.append($('<option></option>').val(option.ClassId).html(option.ClassName));
             });
@@ -219,7 +241,35 @@
             success: function (data) {
                 var row = "";
                 $.each(data, function (index, item) {
-                    row += "<tr><td><input type='checkbox'value='" + item.StudentIdL + "' name='chooseRecipient' class='my_chkBox' /></td><td>" + item.StudentName + "</td>";
+                    row += "<tr><td><input type='checkbox'value='" + item.StudentIdL + "' name='chooseRecipient'  class='my_chkBox' /></td><td>" + item.StudentName + "</td>";
+                });
+                $("#contacts").html(row);
+            },
+            error: function (result) {
+                alert("Error");
+            }
+        });
+    }
+
+  
+    var GetClasslist = function (value) {
+
+        var selectedItem = value;
+        var SchoolId1 = $("#SchoolId1").val();
+
+
+       // var ddlStates = $("#Class");
+
+        $.ajax({
+            url: "@(Url.RouteUrl("Studentclass"))",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: { "SchoolId": SchoolId1, "GradeId": selectedItem },
+            dataType: "json",
+            success: function (data) {
+                var row = "";
+                $.each(data, function (index, item) {
+                    row += "<tr><td><input type='checkbox'value='" + item.ClassId + "' name='chooseRecipient' class='my_chkBox' /></td><td>" + item.ClassName + "</td>";
                 });
                 $("#contacts").html(row);
             },
@@ -236,7 +286,8 @@
     $(function () {
         // This will make every element with the class "date-picker" into a DatePicker element
         $("#ScheduledDate").datepicker(); 
-        $("#ScheduledTime").timepicker();
+        $("#ScheduledTimeStarts").timepicker();
+        $("#ScheduledTimeEnds").timepicker();
     });
 </script>
 

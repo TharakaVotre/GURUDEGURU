@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.Evaluation;
+using GDWEBSolution.Models.Schools;
 using GDWEBSolution.Models.Student;
 using System;
 using System.Collections.Generic;
@@ -11,20 +12,22 @@ namespace GDWEBSolution.Controllers.Evaluation
 {
     public class EvaluationbySchoolController : Controller
     {
+
+        String SessionSchool = "Scl11124";
         //
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
         // GET: /EvaluationbySchool/
 
         public ActionResult Index()
         {
-            List<tblSchool> Schoollist = Connection.tblSchools.ToList();
+            List<tblSchool> Schoollist = Connection.tblSchools.Where(X=>X.IsActive=="Y").ToList();
             ViewBag.SchoolIdList = new SelectList(Schoollist, "SchoolId", "SchoolName");
-            List<tblGrade> Gradelist = Connection.tblGrades.ToList();
+            List<tblGrade> Gradelist = Connection.tblGrades.Where(X => X.IsActive == "Y").ToList();
             ViewBag.GradeIdList = new SelectList(Gradelist, "GradeId", "GradeName");
-            List<tblClass> Classlist = Connection.tblClasses.ToList();
+            List<tblClass> Classlist = Connection.tblClasses.Where(X => X.IsActive == "Y").ToList();
             ViewBag.ClassIdList = new SelectList(Classlist, "ClassId", "ClassName");
 
-            List<tblSubject> Subjlist = Connection.tblSubjects.ToList();
+            List<tblSubject> Subjlist = Connection.tblSubjects.Where(X => X.IsActive == "Y").ToList();
             ViewBag.SubjectIdDrpDown = new SelectList(Subjlist, "SubjectId", "SubjectName");
 
 
@@ -44,6 +47,7 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         public ActionResult Create()
         {
+            ViewBag.SchoolId1 = SessionSchool;
             dropdowns();
 
 
@@ -53,19 +57,19 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         private void dropdowns()
         {
-            List<tblEvaluationHeader> evallist = Connection.tblEvaluationHeaders.ToList();
+            List<tblEvaluationHeader> evallist = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" &&X.SchoolId==SessionSchool).ToList();
 
             ViewBag.EvaluationDrpDown = new SelectList(evallist, "EvaluationNo", "EvaluationDescription");
 
 
-            
-            String SchoolId = "11122221";
 
-            List<tblStudent> Studentlist = Connection.tblStudents.ToList();
+            String SchoolId = SessionSchool;
+
+            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
             ViewBag.StudentIdList = new SelectList(Studentlist, "", "");
-            List<tblSubject> Subjlist = Connection.tblSubjects.ToList();
+            List<tblSubject> Subjlist = Connection.tblSubjects.Where(X => X.IsActive == "Y").ToList();
             ViewBag.SubjectIdDrpDown = new SelectList(Subjlist, "", "");
-            List<tblSchool> Scllist = Connection.tblSchools.ToList();
+            List<tblSchool> Scllist = Connection.tblSchools.Where(X => X.IsActive == "Y").ToList();
 
             ViewBag.SchoolDrpDown = new SelectList(Scllist, "SchoolId", "SchoolName");
 
@@ -134,7 +138,7 @@ namespace GDWEBSolution.Controllers.Evaluation
 
 
 
-            List<tblEvaluationType> Scwwwllist = Connection.tblEvaluationTypes.ToList();
+            List<tblEvaluationType> Scwwwllist = Connection.tblEvaluationTypes.Where(X => X.IsActive == "Y").ToList();
 
             ViewBag.EvaluationList = new SelectList(Scwwwllist, "EvaluationTypeCode", "EvaluationTypeDesc");
 
@@ -200,6 +204,193 @@ namespace GDWEBSolution.Controllers.Evaluation
             ViewBag.excdropdown = new SelectList(excList2, "ActivityCode", "ActivityName");
 
         }
+        [AllowAnonymous]
+        public JsonResult AddSchoolGrade(EvaluationModel Model)
+        {
+            try
+            {
+                string result = "Error";
+
+                var count = Connection.tblEvaluationHeaders.Count(u => u.SchoolId == Model.SchoolId && u.EvaluationDescription == Model.EvaluationDescription);
+                if (count == 0)
+                {
+
+                    tblEvaluationHeader newscg = new tblEvaluationHeader();
+                    newscg.AccedamicYear = DateTime.Now.Year.ToString();
+                    newscg.CreatedBy = "User1";
+                    newscg.SchoolId = SessionSchool;
+                    newscg.EvaluationDescription = Model.EvaluationDescription;
+                    newscg.isActive = "Y";
+                    newscg.CreatedDate = DateTime.Now;
+                    newscg.EvaluationType = Model.EvaluationType;
+
+
+                    Connection.tblEvaluationHeaders.Add(newscg);
+                    Connection.SaveChanges();
+
+                    result = SessionSchool;
+
+                 //   ViewBag.SchoolId = Model.SchoolId;
+
+                }
+                else
+                {
+                    result = "Exits";
+                }
+                //ShowTeacherQualificatoin();
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+        //public ActionResult ShowEvaluation(string SchoolId)
+        //{
+        //    var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
+
+        //    List<SchoolGradeModel> List = STQlist.Select(x => new SchoolGradeModel
+        //    {
+
+        //        SchoolId = x.SchoolId,
+        //        GradeId = x.GradeId,
+        //        SchoolName = x.SchoolName,
+        //        GradeName = x.GradeName,
+
+        //        IsActive = x.IsActive,
+
+
+        //    }).ToList();
+        //    return PartialView("GradeList", List);
+        //}
+
+
+        public ActionResult ShowEvaluation(string SchoolId)
+        {
+            var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
+
+            var tableevaluation = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" && X.SchoolId == SessionSchool);
+
+            List<SchoolGradeModel> List = STQlist.Select(x => new SchoolGradeModel
+            {
+
+                SchoolId = x.SchoolId,
+                GradeId = x.GradeId,
+                SchoolName = x.SchoolName,
+                GradeName = x.GradeName,
+
+                IsActive = x.IsActive,
+
+
+            }).ToList();
+
+            List<EvaluationModel> Liste = tableevaluation.Select(x => new EvaluationModel
+            {
+
+                SchoolId = x.SchoolId,
+                EvaluationType = x.EvaluationType,
+                EvaluationDescription = x.EvaluationDescription
+
+
+
+
+
+
+            }).ToList();
+            //return PartialView("GradeList", List);
+            return PartialView("EvaluationList", Liste);
+        }
+
+
+
+        public ActionResult ShowEvaluationw()
+        {
+            var STQlist = Connection.SMGTgetSchoolGradeadd(SessionSchool).ToList();
+
+            var tableevaluation = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" && X.SchoolId == SessionSchool);
+
+            List<SchoolGradeModel> List = STQlist.Select(x => new SchoolGradeModel
+            {
+
+
+                SchoolId = x.SchoolId,
+                GradeId = x.GradeId,
+                SchoolName = x.SchoolName,
+                GradeName = x.GradeName,
+
+                IsActive = x.IsActive,
+
+
+            }).ToList();
+
+            List<EvaluationModel> Liste = tableevaluation.Select(x => new EvaluationModel
+            {
+
+
+                SchoolId = x.SchoolId,
+                EvaluationType = x.EvaluationType,
+                EvaluationDescription = x.EvaluationDescription
+
+
+
+
+
+
+            }).ToList();
+            //return PartialView("GradeList", List);
+            return PartialView("EvaluationList", Liste);
+        }
+
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult GetEvaluationDropdown()
+        {
+                   List<tblEvaluationHeader> evallist = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" &&X.SchoolId==SessionSchool).ToList();
+
+            ViewBag.EvaluationDrpDown = new SelectList(evallist, "EvaluationNo", "EvaluationDescription");
+
+
+
+            if (String.IsNullOrEmpty(SessionSchool))
+            {
+                throw new ArgumentNullException("countryId");
+            }
+            //int id = 0;
+            //bool isValid = Int32.TryParse(SchoolId, out id);
+
+
+
+
+
+            //  var StudentSextra = Connection.SMGTloadScholExtraCadd(SchoolId, "%").ToList();
+
+            var result2 = (from s in evallist
+                           select new
+                           {
+                               EvaluationNo = s.EvaluationNo,
+                               EvaluationDescription = s.EvaluationDescription
+
+
+                           }).ToList();
+
+
+
+            //   ViewBag.excdropdown = new SelectList(excList2, "ActivityCode", "ActivityName");
+
+            //var states = _repository.GetAllStatesByCountryId(id);
+            //var result = (from s in states
+            //              select new
+            //              {
+            //                  id = s.Id,
+            //                  name = s.Name
+            //              }).ToList();
+            return Json(result2, JsonRequestBehavior.AllowGet);
+        }
+
 
         //
         // POST: /EvaluationbySchool/Create
@@ -211,14 +402,16 @@ namespace GDWEBSolution.Controllers.Evaluation
             {
                 tblEvaluationHeader tbl = new tblEvaluationHeader();
 
-                tbl.AccedamicYear = Model.AcademicYear;
+                tbl.AccedamicYear = DateTime.Now.Year.ToString();
                 tbl.CreatedBy = "User1";
                 tbl.CreatedDate = DateTime.Today;
                 tbl.EvaluationDescription = Model.EvaluationDescription;
                 tbl.EvaluationType = Model.EvaluationType;
                 tbl.isActive = "Y";
-                tbl.SchoolId = Model.SchoolId;
+                tbl.TestPaperFee = Model.TestPaperFee;
+                tbl.SchoolId = SessionSchool;
                 Connection.tblEvaluationHeaders.Add(tbl);
+               
                 Connection.SaveChanges();
 
 
@@ -237,28 +430,72 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         public ActionResult Addevaluationdataforclass(EvaluationModel Model, string[] chooseRecipient)
         {
-
+            string b = "";
+            string c = "";
+            
             try
             {
+                var check1=Model.ScheduledTimeStarts.Split('A');
+             //   string checkS = check1[1];
+                if (check1.Length<2)
+                {
 
-                tblEvaluationDetail te = new tblEvaluationDetail();
-                te.Class = Model.Class;
-                te.CreatedBy = "User1";
-                te.CreatedDate = DateTime.Now;
-                te.Grade = Model.Grade;
-                te.EvaluationNo = Model.EvaluationNo;
-                te.ScheduledDate = Model.ScheduledDate;
-                te.ScheduledTime = Model.ScheduledTime;
-                te.SchoolId = Model.SchoolId;
-                te.IsActive = "Y";
-                Connection.tblEvaluationDetails.Add(te);
-                Connection.SaveChanges();
+                    var a = Model.ScheduledTimeStarts.Split('P');
+                   b = a[0];
+                }
+                else {
 
-                ModelState.Clear();
+                    b = check1[0];
+                
+                }
+
+                var check2 = Model.ScheduledTimeEnds.Split('A');
+                //   string checkS = check1[1];
+                if (check1.Length < 2)
+                {
+
+                    var a = Model.ScheduledTimeEnds.Split('P');
+                    c = a[0];
+                }
+                else
+                {
+
+                    c = check1[0];
+
+                }
+
+                for (int i = 0; i < chooseRecipient.Length; i++)
+                {
+                    string classname = chooseRecipient[i];
+
+                    var count = Connection.tblEvaluationDetails.Count(u => u.Class == classname && u.EvaluationNo == Model.EvaluationNo);
+
+                    if (count == 0)
+                    {
 
 
-             
+                        tblEvaluationDetail te = new tblEvaluationDetail();
+                        te.ScheduledTimeStart = TimeSpan.Parse(b);
+                        te.ScheduledTimeEnd = TimeSpan.Parse(c); ;
+                        te.Class = classname;
+                        te.CreatedBy = "User1";
+                        te.CreatedDate = DateTime.Now;
+                        te.Grade = Model.Grade;
+                        te.EvaluationNo = Model.EvaluationNo;
+                        //  te.ScheduledTimeStart=
+                        te.ScheduledDate = Model.ScheduledDate;
+                      //  te.ScheduledTimeStart = Model.ScheduledTimeStart;
 
+                        te.SchoolId = SessionSchool;
+                        te.IsActive = "Y";
+                        Connection.tblEvaluationDetails.Add(te);
+                        Connection.SaveChanges();
+
+                        ModelState.Clear();
+
+                    }
+
+                }
 
 
 

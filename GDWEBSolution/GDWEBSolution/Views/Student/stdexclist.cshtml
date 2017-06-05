@@ -6,7 +6,7 @@
         {
             <div class="col-md-12">
                 <div class="well">
-                    No House is set to display
+                    No  Activity is set to display
                 </div>
             </div>
         }
@@ -20,7 +20,8 @@
                     <div class="well">
                         <i class="glyphicon glyphicon-bell" aria-hidden="true"></i>
 
-                        @Html.HiddenFor(model => item.SchoolId)
+                        @Html.HiddenFor(model => item.SchoolIdE)
+                        @Html.HiddenFor(model => item.StudentIdE)
                         @Html.DisplayFor(modelItem => item.ActivityName)
                         <button type="button" class="close" onclick='DeleteSchoolexc("@item.SchoolId","@(item.ActivityCode)","@(item.ActivityName)");'>&times;</button>
                     </div>

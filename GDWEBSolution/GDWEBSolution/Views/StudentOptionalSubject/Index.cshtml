@@ -14,7 +14,7 @@
             <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
             @*<div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView2(1)"><span class="fa fa-plus"></span> Add file</button></div>*@
             <div class="panel-body">
-                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+                <table id="zctb" class="display table table-bordered table-hover">
                     <thead>
                         <tr>
                             
@@ -45,7 +45,13 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.ClassName)
                             </th>
+                             <th>
+                                @Html.DisplayNameFor(model => model.SubjectId)
+                            </th>
                            
+                            <th>
+                                @Html.DisplayNameFor(model => model.SubjectName)
+                            </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -81,6 +87,12 @@
                                     </th>
                                     <th>
                                         @Html.DisplayFor(modelItem => item.ClassName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.SubjectId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.SubjectName)
                                     </th>
 
                                     <td>

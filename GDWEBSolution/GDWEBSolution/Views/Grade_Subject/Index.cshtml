@@ -30,13 +30,13 @@
 
                         <div class="form-group">
                             <div class="row">
-                                <lable class="col-sm-2 control-label">Academic Year</lable>
+                                <lable class="col-sm-2 control-label" style="font-size:14px;color:black">Academic Year</lable>
                                 <div class="col-sm-2">
                                     @Html.TextBox("AcademicYear")
                                    
 
                                 </div>
-                                <lable class="col-sm-2 control-label">Grade</lable>
+                                <lable class="col-sm-2 control-label" style="font-size:14px;color:black">Grade</lable>
                                 <div class="col-sm-2">
 
                                     @Html.DropDownList("GradeId", String.Empty)
@@ -44,6 +44,8 @@
                                 </div>
                             </div>
                         </div>
+                        <a href="~/Grade_Subject/Detail" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span>Go Back</a>
+
                     </div>
                     <div class="panel-body">
                         <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">

@@ -11,7 +11,7 @@
             <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
             @*<div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView2(1)"><span class="fa fa-plus"></span> Add file</button></div>*@
             <div class="panel-body">
-                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+                <table id="zctb" class="display table table-bordered table-hover" >
                     <thead>
                         <tr>
                             <th>
@@ -21,7 +21,7 @@
                                 @Html.DisplayNameFor(model => model.ParentId)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.RelationshipId)
+                                @Html.DisplayNameFor(model => model.RelationshipName)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.PersonalEmail)
@@ -43,7 +43,7 @@
                                         @Html.DisplayFor(modelItem => item.ParentId)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.RelationshipId)
+                                        @Html.DisplayFor(modelItem => item.RelationshipName)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.PersonalEmail)
@@ -53,10 +53,13 @@
                                
 
                                     <td>
-                                        <a href="#" class="hvr-buzz-out" onclick="DetailView('@item.ParentId')"> Details </a>|
-                                        <a href="#" class="hvr-buzz-out" onclick="EditView('@item.ParentId','@item.ParentName')"> Edit </a>|
+                                          <a class="btn btn-primary" onclick="DetailView('@item.ParentId')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
+                                         <a class="btn btn-info" onclick='EditView("@item.ParentId")'><span class="fa fa-pencil"></span> Edit </a>
+                                        <a class="btn btn-danger" onclick='DeleteView("@item.ParentId")'><span class="fa fa-trash"></span> Delete</a>
 
-                                        <a href="#" class="hvr-buzz-out" onclick="DeleteView('@item.ParentId')"> Delete</a>
+
+
+                                     
                                     </td>
                                 </tr>
                             }
@@ -93,8 +96,8 @@
         window.location.href = Url;
     }
 
-    var EditView = function (SchoolId, StudentId) {
-        var Url = "/Student/Edit?SchoolId=" + SchoolId + "&StudentId=" + StudentId;
+    var EditView = function (ParentId) {
+        var Url = "/Parent/Edit?ParentId=" + ParentId;
         //$("#MyModelBody").load(Url, function () {
         //    $("#myModal").modal("show");
         //})
@@ -109,7 +112,7 @@
     }
 
     var DeleteView = function (CategoryId) {
-        var Url = "/School/Delete?SchoolId=" + CategoryId;
+        var Url = "/Parent/Delete?ParentId=" + CategoryId;
         $("#MyModelBody").load(Url, function () {
             $("#myModal").modal("show");
         })
