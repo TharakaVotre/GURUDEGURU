@@ -1134,13 +1134,14 @@
           <Property Name="Grade" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="Class" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="ScheduledDate" Type="date" Nullable="false" />
-          <Property Name="ScheduledTime" Type="time" Nullable="false" />
+          <Property Name="ScheduledTimeStart" Type="time" Nullable="false" />
           <Property Name="SchoolId" Type="varchar" Nullable="false" MaxLength="14" />
           <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="20" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsActive" Type="varchar" Nullable="false" MaxLength="1" />
+          <Property Name="ScheduledTimeEnd" Type="time" Nullable="false" />
         </EntityType>
         <EntityType Name="tblEvaluationHeader">
           <Key>
@@ -4557,6 +4558,11 @@
           <Parameter Name="WebUrl" Type="varchar" Mode="In" />
           <Parameter Name="LogoPath" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GDCheckStudentAccacdemicYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AccYear" Type="varchar" Mode="In" />
+          <Parameter Name="GradeId" Type="varchar" Mode="In" />
+          <Parameter Name="ClassId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GDdeleteAllApplicationStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Isactive" Type="varchar" Mode="In" />
           <Parameter Name="StatusCode" Type="bigint" Mode="In" />
@@ -4907,6 +4913,7 @@
           <Parameter Name="StudentId" Type="varchar" Mode="In" />
           <Parameter Name="gradeId" Type="varchar" Mode="In" />
           <Parameter Name="ClassId" Type="varchar" Mode="In" />
+          <Parameter Name="AccYear" Type="varchar" Mode="In" />
           <Parameter Name="userId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GDModifyStudentLeaver" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -6606,6 +6613,7 @@
             <Parameter Name="StudentId" Mode="In" Type="String" />
             <Parameter Name="gradeId" Mode="In" Type="String" />
             <Parameter Name="ClassId" Mode="In" Type="String" />
+            <Parameter Name="AccYear" Mode="In" Type="String" />
             <Parameter Name="userId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDModifyStudentLeaver">
@@ -6984,11 +6992,17 @@
             <Parameter Name="ClassId" Mode="In" Type="String" />
             <Parameter Name="SubjectId" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GDCheckStudentAccacdemicYear" ReturnType="Collection(SchoolMGTModel.GDCheckStudentAccacdemicYear_Result)">
+            <Parameter Name="AccYear" Mode="In" Type="String" />
+            <Parameter Name="GradeId" Mode="In" Type="String" />
+            <Parameter Name="ClassId" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SMGT_UserLogin" ReturnType="Collection(SchoolMGTModel.SMGT_UserLogin_Result)">
             <Parameter Name="UserId" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tblUserCodes" EntityType="SchoolMGTModel.tblUserCode" />
+
         </EntityContainer>
         <EntityType Name="tblApplicationStatu">
           <Key>
@@ -7260,13 +7274,14 @@
           <Property Name="Grade" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="Class" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="ScheduledDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ScheduledTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="ScheduledTimeStart" Type="Time" Nullable="false" Precision="7" />
           <Property Name="SchoolId" Type="String" Nullable="false" MaxLength="14" Unicode="false" FixedLength="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="ScheduledTimeEnd" Type="Time" Nullable="false" Precision="7" />
           <NavigationProperty Name="tblClass" Relationship="SchoolMGTModel.FK_tblEvaluationDetail_tblClass" FromRole="tblEvaluationDetail" ToRole="tblClass" />
           <NavigationProperty Name="tblEvaluationHeader" Relationship="SchoolMGTModel.FK_tblEvaluationDetail_tblEvaluationHeader" FromRole="tblEvaluationDetail" ToRole="tblEvaluationHeader" />
           <NavigationProperty Name="tblGrade" Relationship="SchoolMGTModel.FK_tblEvaluationDetail_tblGrade" FromRole="tblEvaluationDetail" ToRole="tblGrade" />
@@ -11178,10 +11193,8 @@
           <Property Type="String" Name="GradeName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ClassId" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="ClassName" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="HouseName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Gender" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="UserId" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="HouseId" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="ImgUrl" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
@@ -11553,6 +11566,7 @@
           <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="20" />
           <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="RelashionshipName" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="SMGTgetParentStudentadd_Result">
           <Property Type="Int64" Name="ParentId" Nullable="false" />
@@ -11807,6 +11821,24 @@
           <Property Type="String" Name="ActivityName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
         </ComplexType>
+        <ComplexType Name="GDCheckStudentAccacdemicYear_Result">
+          <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
+          <Property Type="String" Name="StudentId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="AcademicYear" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="studentName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="DateofBirth" Nullable="true" />
+          <Property Type="String" Name="GradeId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ClassId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Gender" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="UserId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="HouseId" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ImgUrl" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+        </ComplexType>
         <ComplexType Name="SMGT_UserLogin_Result">
           <Property Type="String" Name="UserId" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="LoginEmail" Nullable="false" MaxLength="50" />
@@ -12046,13 +12078,14 @@
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="Class" ColumnName="Class" />
                 <ScalarProperty Name="ScheduledDate" ColumnName="ScheduledDate" />
-                <ScalarProperty Name="ScheduledTime" ColumnName="ScheduledTime" />
+                <ScalarProperty Name="ScheduledTimeStart" ColumnName="ScheduledTimeStart" />
                 <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ScheduledTimeEnd" ColumnName="ScheduledTimeEnd" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -13104,10 +13137,8 @@
                 <ScalarProperty Name="GradeName" ColumnName="GradeName" />
                 <ScalarProperty Name="ClassId" ColumnName="ClassId" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
-                <ScalarProperty Name="HouseName" ColumnName="HouseName" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="HouseId" ColumnName="HouseId" />
                 <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -13663,6 +13694,7 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RelashionshipName" ColumnName="RelashionshipName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -14026,6 +14058,24 @@
           <FunctionImportMapping FunctionImportName="SMGTsetSchoolGrade" FunctionName="SchoolMGTModel.Store.SMGTsetSchoolGrade" />
           <FunctionImportMapping FunctionImportName="SMGTsetStudent" FunctionName="SchoolMGTModel.Store.SMGTsetStudent" />
           <FunctionImportMapping FunctionImportName="SMGTsetStudentOptionalSubject" FunctionName="SchoolMGTModel.Store.SMGTsetStudentOptionalSubject" />
+          <FunctionImportMapping FunctionImportName="GDCheckStudentAccacdemicYear" FunctionName="SchoolMGTModel.Store.GDCheckStudentAccacdemicYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.GDCheckStudentAccacdemicYear_Result">
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="AcademicYear" ColumnName="AcademicYear" />
+                <ScalarProperty Name="studentName" ColumnName="studentName" />
+                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="HouseId" ColumnName="HouseId" />
+                <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <FunctionImportMapping FunctionImportName="SMGT_UserLogin" FunctionName="SchoolMGTModel.Store.SMGT_UserLogin">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SchoolMGTModel.SMGT_UserLogin_Result">
@@ -14041,6 +14091,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+
           <EntitySetMapping Name="tblUserCodes">
             <EntityTypeMapping TypeName="SchoolMGTModel.tblUserCode">
               <MappingFragment StoreEntitySet="tblUserCode">

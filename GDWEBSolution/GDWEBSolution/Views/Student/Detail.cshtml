@@ -65,10 +65,10 @@
                                     @Html.LabelFor(m => m.StudentId, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(model => model.StudentId, new { @class = "form-control", @placeholder = "School Name", @readonly = "readonly" })
-                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                 
                                     </div>
                                     <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.StudentId, null, new { @class = "text-danger" })
+                                     
                                     </div>
                                 </div>
 
@@ -77,18 +77,16 @@
                                     @Html.LabelFor(m => m.StudentName, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(model => model.StudentName, new { @class = "form-control", @placeholder = "School Name", @readonly = "readonly" })
-                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                        
                                     </div>
-                                    <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.StudentName, null, new { @class = "text-danger" })
                                     </div>
-                                </div>
+                              
 
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", @placeholder = "Date of Birth", @readonly = "readonly" })
-                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                      
                                     </div>
                                 </div>
 
@@ -100,18 +98,14 @@
                                         
                                         @Html.TextBoxFor(model => model.HouseId, new { @class = "form-control", @placeholder = "", @readonly = "readonly" })
                                     </div>
-                                    <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.HouseId, null, new { @class = "text-danger" })
-                                    </div>
+                                  
                                 </div>
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-4">
                                         @Html.TextBoxFor(model => model.GradeId, new { @class = "form-control", @placeholder = "", @readonly = "readonly" })
                                     </div>
-                                    <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.GradeId, null, new { @class = "text-danger" })
-                                    </div>
+                                  
                                 </div>
 
                                 <div class="form-group">
@@ -119,9 +113,7 @@
                                     <div class="col-sm-4">
                                         @Html.TextBoxFor(model => model.ClassId, new { @class = "form-control", @placeholder = "", @readonly = "readonly" })
                                     </div>
-                                    <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.ClassId, null, new { @class = "text-danger" })
-                                    </div>
+                                 
                                 </div>
 
 

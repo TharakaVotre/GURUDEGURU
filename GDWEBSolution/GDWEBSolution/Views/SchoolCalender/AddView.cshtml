@@ -120,17 +120,7 @@
                 DateComment.closest('.form-group').removeClass('has-error').addClass('has-success');
                 $("#DateCommentError").text("");
             }
-            if (!SpecialComment.val()) {
-                // Add errors highlight
-                SpecialComment.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#CommentError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            } else {
-                SpecialComment.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#CommentError").text("");
-            }
+            
           
            
             var myformdata = $("#myForm").serialize();

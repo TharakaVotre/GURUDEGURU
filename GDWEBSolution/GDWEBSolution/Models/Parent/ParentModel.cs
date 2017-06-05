@@ -17,8 +17,12 @@ namespace GDWEBSolution.Models.Parent
         [Display(Name = "Student Name")]
         public string StudentId { get; set; }
 
+
+        [Display(Name = "Student Name")]
+        public string StudentId1 { get; set; }
+
         [Display(Name = "User Name")]
-     
+    
         public string UserId { get; set; }
 
 
@@ -53,7 +57,7 @@ namespace GDWEBSolution.Models.Parent
 
         [Display(Name = "Relationship Name")]
 
-        public int RelationshipName { get; set; }
+        public string RelationshipName { get; set; }
 
 
         [Display(Name = "Address")]
@@ -140,14 +144,14 @@ namespace GDWEBSolution.Models.Parent
         [Display(Name = "Password")]
             [DataType(DataType.Password)]
             [StringLength(255, MinimumLength = 8)]
-           
+       
             [MembershipPassword()]
             public string Password { get; set; }
         [Display(Name = " Confirm Password")]
             [Compare("Password")]
             [DataType(DataType.Password)]
             [StringLength(255, MinimumLength = 8)]
-        
+           
             [MembershipPassword()]
             public string ConfirmPassword { get; set; }
 

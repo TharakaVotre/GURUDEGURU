@@ -192,8 +192,8 @@
     <Compile Include="Controllers\Maintenance\MaintainSubjectController.cs" />
     <Compile Include="Controllers\MarkSheet\MarksheetController.cs" />
     <Compile Include="Controllers\Message\PSMessageController.cs" />
-    <Compile Include="Controllers\Parent\ParentController.cs" />
     <Compile Include="Controllers\Message\SPMessageController.cs" />
+    <Compile Include="Controllers\Parent\ParentController.cs" />
     <Compile Include="Controllers\Report\StudentReportController.cs" />
     <Compile Include="Controllers\SchoolCalender\SchoolCalenderController.cs" />
     <Compile Include="Controllers\SchoolController.cs" />
@@ -342,6 +342,7 @@
     <Compile Include="Models\Parent\ParentModel.cs" />
     <Compile Include="Models\Message\StoPMessageDetailModel.cs" />
     <Compile Include="Models\Message\StoPMessageHeaderModel.cs" />
+    <Compile Include="Models\Parent\ParentModel.cs" />
     <Compile Include="Models\Report\AttentionRequiredSubjectsSchoolModel.cs" />
     <Compile Include="Models\Report\ClassReportModel.cs" />
     <Compile Include="Models\Report\GradeWiseReportModel.cs" />
@@ -1062,6 +1063,16 @@
     <Content Include="img\login-bg.jpg" />
     <Content Include="img\logo.jpg" />
     <Content Include="img\wheel.gif" />
+    <Content Include="Models\DBEntityModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DBEntityModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-popover.js" />
     <Content Include="Scripts\bootstrap-select.js" />
@@ -1082,18 +1093,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBEntityModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\DBEntityModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\DBEntityModel.edmx.diagram">
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\DBEntityModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
@@ -1214,15 +1215,6 @@
     <Content Include="Views\StudentOptionalSubject\Create.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Delete.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Index.cshtml" />
-    <Content Include="Views\Parent\AddChild.cshtml" />
-    <Content Include="Views\Parent\ChildrenList.cshtml" />
-    <Content Include="Views\Parent\Childtest.cshtml" />
-    <Content Include="Views\Parent\ChildtestList.cshtml" />
-    <Content Include="Views\Parent\Create.cshtml" />
-    <Content Include="Views\Parent\DeleteParent.cshtml" />
-    <Content Include="Views\Parent\Details.cshtml" />
-    <Content Include="Views\Parent\Edit.cshtml" />
-    <Content Include="Views\Parent\Index.cshtml" />
     <Content Include="Views\SPMessage\Index.cshtml" />
     <Content Include="Views\SPMessage\Sent.cshtml" />
     <Content Include="Views\SPMessage\SentView.cshtml" />
@@ -1231,21 +1223,12 @@
     <Content Include="Views\SPMessage\loadClass.cshtml" />
     <Content Include="Views\SPMessage\loadParent.cshtml" />
     <Content Include="Views\SPMessage\loadExParent.cshtml" />
-    <Content Include="Views\EvaluationbySchool\Create.cshtml" />
-    <Content Include="Views\EvaluationbySchool\Evaluationbyclass.cshtml" />
-    <Content Include="Views\EvaluationbySchool\Index.cshtml" />
     <Content Include="Views\StudentReport\AttentionRequiredSubjectsParents.cshtml" />
     <Content Include="Views\StudentReport\ClassReports.cshtml" />
     <Content Include="Views\StudentReport\Index.cshtml" />
     <Content Include="Views\StudentReport\StudantReports.cshtml" />
     <Content Include="Views\Marksheet\Index.cshtml" />
-    <Content Include="Views\SchoolCalender\AddView.cshtml" />
-    <Content Include="Views\SchoolCalender\DeleteView.cshtml" />
-    <Content Include="Views\SchoolCalender\EditView.cshtml" />
-    <Content Include="Views\SchoolCalender\Index.cshtml" />
-    <Content Include="Views\SchoolCalender\ParentView.cshtml" />
     <Content Include="Views\StudentGradeAdvance\DeleteView.cshtml" />
-    <Content Include="Views\StudentGradeAdvance\Detail.cshtml" />
     <Content Include="Views\StudentGradeAdvance\EditView.cshtml" />
     <Content Include="Views\StudentGradeAdvance\Index.cshtml" />
     <Content Include="Views\School\Class.cshtml" />
@@ -1338,6 +1321,8 @@
     <Content Include="Views\School\EditGrade.cshtml" />
     <Content Include="Views\HomeWork\ParentView.cshtml" />
     <Content Include="Views\School\Subject.cshtml" />
+    <Content Include="Views\SPMessage\ViewMessage.cshtml" />
+    <Content Include="Views\Teacher\TeacherSchool.cshtml" />
     <Content Include="Views\Student\Create.cshtml" />
     <Content Include="Views\Student\Delete.cshtml" />
     <Content Include="Views\Student\Detail.cshtml" />
@@ -1345,6 +1330,27 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\stdexclist.cshtml" />
     <Content Include="Views\Student\StudentEXtra.cshtml" />
+    <Content Include="Views\Parent\AddChild.cshtml" />
+    <Content Include="Views\Parent\ChildrenList.cshtml" />
+    <Content Include="Views\Parent\Childtest.cshtml" />
+    <Content Include="Views\Parent\ChildtestList.cshtml" />
+    <Content Include="Views\Parent\Create.cshtml" />
+    <Content Include="Views\Parent\DeleteParent.cshtml" />
+    <Content Include="Views\Parent\Details.cshtml" />
+    <Content Include="Views\Parent\Edit.cshtml" />
+    <Content Include="Views\Parent\Index.cshtml" />
+    <Content Include="Views\EvaluationbySchool\Create.cshtml" />
+    <Content Include="Views\EvaluationbySchool\Evaluationbyclass.cshtml" />
+    <Content Include="Views\EvaluationbySchool\GradeList.cshtml" />
+    <Content Include="Views\EvaluationbySchool\Index.cshtml" />
+    <Content Include="Views\EvaluationbySchool\EvaluationList.cshtml" />
+    <Content Include="Views\StudentGradeAdvance\Detail.cshtml" />
+    <Content Include="Views\SchoolCalender\AddView.cshtml" />
+    <Content Include="Views\SchoolCalender\DeleteView.cshtml" />
+    <Content Include="Views\SchoolCalender\EditView.cshtml" />
+    <Content Include="Views\SchoolCalender\Index.cshtml" />
+    <Content Include="Views\SchoolCalender\ParentView.cshtml" />
+    <Content Include="Views\Parent\DeleteChild.cshtml" />
     <Content Include="Views\SPMessage\ViewMessage.cshtml" />
     <Content Include="Views\Teacher\TeacherSchool.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />

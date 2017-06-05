@@ -135,8 +135,8 @@ namespace GDWEBSolution.Controllers
 
         private void DropDownList(string id)
         {
-             var Grade = Connection.GDgetAllGradeMaintenance("Y");
-            List<GDgetAllGradeMaintenance_Result> Gradelist = Grade.ToList();
+             var Grade = Connection.GDgetSchoolGrade(SchoolId,"Y");
+             List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
 
             ViewBag.GradeId = new SelectList(Gradelist, "GradeId", "GradeName");
            

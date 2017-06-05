@@ -18,24 +18,32 @@
             <div class="panel-heading">
                 <div class="form-group">
                     <div class="row"> 
-                        <lable class="col-sm-3 control-label">Selected Year:-@ViewBag.CurentYear</lable>
+                        <lable class="col-sm-3 control-label" style="font-size:14px;">Selected Year:-@ViewBag.CurentYear</lable>
                         
-                        <lable class="col-sm-3 control-label">Selected Grade:-@ViewBag.CurentGrade</lable>
+                        <lable class="col-sm-3 control-label" style="font-size:14px;">Selected Grade:-@ViewBag.CurentGrade</lable>
                        
-                        <lable class="col-sm-3 control-label">Selected Class:-@ViewBag.CurentClass</lable>
+                        <lable class="col-sm-3 control-label" style="font-size:14px;">Selected Class:-@ViewBag.CurentClass</lable>
                        
                 </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @if (ViewBag.ErrorMsg == true)
+                            {
+                                <h4 style="color:red">Plese Update Accademic Year</h4>
+                               
+                            }
+                        </div>
+                    </div>
                     </div>
                 <hr />
                 <div class="form-group">
                     <div class="row">
-                        <lable class="col-sm-2 control-label">Advance to Year</lable>
+                        <lable class="col-sm-2 control-label" style="font-size:14px;color:black">Advance to Year</lable>
                         <div class="col-sm-3">
 
-                            @Html.TextBox("AcedamicYear", "")
-
+                            @Html.TextBox("ParameterAcedamicYear", (string)ViewBag.ParameterAcedamicYear, new { @class = "form-control", disabled = "disabled" })
                         </div>
-                        <lable class="col-sm-2 control-label">Advance to Grade</lable>
+                        <lable class="col-sm-2 control-label" style="font-size:14px;color:black">Advance to Grade</lable>
                         <div class="col-sm-3">
                             @Html.DropDownList("GradeId", ViewBag.country as List<SelectListItem>, "", new { @class = "form-control" })
                         </div>
@@ -43,16 +51,20 @@
                     </div>
                         <div class="form-group">
                             <div class="row">
-                                <lable class="col-sm-2 control-label">Advance to Class</lable>
+                                <lable class="col-sm-2 control-label" style="font-size:14px;color:black">Advance to Class</lable>
                                 <div class="col-sm-3">
-                                    @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                    @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "--School Leaver--", new { @class = "form-control" })
                                 </div>
-                                <div>
-                                    <button type="submit" class="btn btn-primary"><span class="fa fa-flag"></span> Save</button>
-                                </div>
+                                <div class="col-sm-5">
+                                    @if (ViewBag.ErrorMsg == false)
+                                    {
+                                    <button type="submit" style="float:right;" id="123" class="btn btn-primary"><span class="fa fa-flag"></span> Save</button>
+                               
+                                    }                       
+                                 </div>
                             </div>
                         </div>
-                        <a href="~/StudentGradeAdvance/Index" class="btn btn-primary"><span class="fa fa-plus"></span>Go Back</a>
+                        <a href="~/StudentGradeAdvance/Index" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span>Go Back</a>
 
                     </div>
             <div class="panel-body">
@@ -111,7 +123,7 @@
     </div>
 }
 <style>
-    #AcedamicYear {
+    #ParameterAcedamicYear {
         border: 1px solid #e0e0e0;
         padding: 5px 8px;
         color: #616161;

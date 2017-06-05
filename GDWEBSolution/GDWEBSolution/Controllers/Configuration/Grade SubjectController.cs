@@ -15,8 +15,8 @@ namespace GDWEBSolution.Controllers.Configuration
         //
         // GET: /Grade Subject/
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
-        
+        string UserId = "Shirandie";
+        string SchoolId = "Scl11128";
         string Accyear = null;
         string gradeid = null;
         public ActionResult Index()
@@ -102,8 +102,8 @@ namespace GDWEBSolution.Controllers.Configuration
 
 
 
-            var Grade = Connection.GDgetAllGradeMaintenance("Y");
-            List<GDgetAllGradeMaintenance_Result> Gradelist = Grade.ToList();
+            var Grade = Connection.GDgetSchoolGrade(SchoolId,"Y");
+            List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
 
             var SubjectCategory = Connection.GDgetAllSubjectCategory("Y");
             List<GDgetAllSubjectCategory_Result> SubjectCategorylist = SubjectCategory.ToList();

@@ -9,6 +9,16 @@
                     <div class="form-group">
                        
                         @Html.HiddenFor(m => m.UserId)
+                        @Html.LabelFor(m => m.ParentId, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-4">
+
+                            @Html.DropDownListFor(model => model.ParentId, ViewBag.ParentlList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadrstudent(this.value)" })
+
+                            @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
+
+                        </div>
+
+
 
                         @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-2 control-label" })
                         <div class="col-sm-4">
@@ -19,28 +29,28 @@
 
                         </div>
                        
-
+                        <br /><br />
                     
                             @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.DropDownListFor(model => model.GradeId, ViewBag.SchoolGradeList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadClass(this.value)" })
                             </div>
                           
-                    <br/><br/><br />
+                  
                         
                             @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-4">
-                                @Html.DropDownListFor(model => model.ClassId, ViewBag.classDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Class", @onchange = "loadStudentsSS(this.value)" })
+                                @Html.DropDownListFor(model => model.ClassId, ViewBag.classDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Class", @onchange = "loadStudents(this.value)" })
                             </div>
                            
                      
-
+                        <br/><br />
 
                             @Html.LabelFor(m => m.StudentId, new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-4">
                                 @*@Html.DropDownListFor(model => model.StudentId, ViewBag.StudentIdList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })*@
                                 @*@Html.DropDownListFor(model=>model.StudentId,Model.GetStudentList.Select(x=>new SelectListItem{Text=x.StudentName,Value=x.StudentId}),new {@class="form-control ",@multiple="true"})*@
-                                @Html.DropDownListFor(model => model.StudentId, ViewBag.StudentIdList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+                                @Html.DropDownListFor(model => model.StudentId1, ViewBag.StudentIdList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
                                 <span class="help-block m-b-none" id="CategoryNameError"></span>
                             </div>
                             
@@ -55,7 +65,7 @@
                        
 
                         <div class="col-sm-12">
-                            <button type="Submit" id="btnAddQualification" onclick="AddChild()" class="btn btn-primary" style="float:right"><span class="fa fa-bookmark"></span> Save</button>
+                            <button type="button" id="btnAddQualification" onclick="AddChild()" class="btn btn-primary" style="float:right"><span class="fa fa-bookmark"></span> Save</button>
                         </div>
                    </div>
                     <div class="hr-dashed"></div>
@@ -87,7 +97,7 @@
                 if (result != "Exception" && result != "Exits") {
                     debugger
                     //window.location.href = "/Teacher/Create";
-                    $("#ParentId").val(result);
+                   // $("#ParentId").val(result);
 
                     @*var url = '@Url.Action("ShowchildAdd", "Parent")';
                    
@@ -99,13 +109,13 @@
                     $('#showChild').load('/Parent/ShowchildAdd?ParentId=' + result);
                   
 
-                    $('.nav-tabs a[href="#AddChild"]').tab('show');
+                  //  $('.nav-tabs a[href="#AddChild"]').tab('show');
                  
 
 
-                    $("#SuccesLable").text("Child Added");
-                    // $("#btnAddQualification").prop('value', 'Save');
-                    $("#SuccesModel").modal("show");
+                    //$("#SuccesLable").text("Child Added");
+                    //// $("#btnAddQualification").prop('value', 'Save');
+                    //$("#SuccesModel").modal("show");
                 }
                 else if (result == "Exception") {
                     debugger
@@ -122,9 +132,7 @@
 
 
                 }
-                else {
-
-                }
+              
 
             }
 
@@ -138,10 +146,13 @@
     </script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('.nav-tabs a[href="#AddChild"]').tab('show');
-    });
-
+    //$(document).ready(function () {
+    //    $('.nav-tabs a[href="#AddChild"]').tab('show');
+    //});
+    var loadrstudent = function (value) {
+        debugger
+        $('#showChild').load('/Parent/ShowchildAdd?ParentId=' + value);
+    }
 
     $(function () {
         // This will make every element with the class "date-picker" into a DatePicker element
@@ -151,14 +162,14 @@
 
 
 
-    var loadStudentsSS = function (value) {
+    var loadStudents = function (value) {
         var selectedItem = value;
         var SchoolId = $("#SchoolId").val();
         var AcademicYear = "%";
         var GradeId = $("#GradeId").val();
         var ClassId = $("#ClassId").val();
 
-        var ddlStates = $("#StudentId");
+        var ddlStates = $("#StudentId1");
         //var statesProgress = $("#states-loading-progress");
         //statesProgress.show();
         $.ajax({
@@ -196,6 +207,7 @@
             data: { "GradeId": selectedItem, "SchoolId": SchoolId },
             success: function (data) {
                 ddlStates.html('');
+
                 ddlStates.append($('<option></option>').val("").html(""));
                 $.each(data, function (ActivityCode, option) {
                     ddlStates.append($('<option></option>').val(option.ClassId).html(option.ClassName));
@@ -226,7 +238,6 @@
             data: { "GradeId": GradeId, "SchoolId": SchoolId, "AcademicYear": AcademicYear },
             success: function (data) {
                 ddlStates.html('');
-                ddlStates.append($('<option></option>').val("").html(""));
                 $.each(data, function (ActivityCode, option) {
                     ddlStates.append($('<option></option>').val(option.SubjectId).html(option.SubjectName));
                 });

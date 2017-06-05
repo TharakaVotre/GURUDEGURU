@@ -12,7 +12,7 @@
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New Parent</a></li>
-                    <li class=""><a href="#AddChild" data-toggle="tab" aria-expanded="false">Add Child</a></li>
+                    <li class=""><a href="#AddChild" data-toggle="tab" aria-expanded="false">Add Student</a></li>
                     @*<li class=""><a href="#qualification" data-toggle="tab" aria-expanded="false">Grade</a></li>*@
                     @*<li class=""><a href="#excactivity" data-toggle="tab" aria-expanded="false">EXtra Curicular</a></li>*@
                     @*<li class="disabled"><a>Disabled</a></li>
@@ -57,22 +57,9 @@
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.ParentName, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
-                                        @Html.TextBoxFor(model => model.ParentName, new { @class = "form-control", @placeholder = "Parent Name" })
+                                        @Html.TextBoxFor(model => model.ParentName, new { @class = "form-control", @placeholder = "School Name" })
                                       
-                                      
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.ParentName, null, new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                 <div class="form-group">
-                                    @Html.LabelFor(m => m.ParentId, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-8">
-                                        @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @placeholder = "Parent Id" })
-                                      
-                                       
+                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
                                     </div>
 
                                     <div class="col-sm-2">
@@ -150,7 +137,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.Occupation, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-4">
-                                        @Html.TextBoxFor(model => model.Occupation, new { @class = "form-control", @placeholder = "Occupation" })
+                                        @Html.TextBoxFor(model => model.Occupation, new { @class = "form-control", @placeholder = "Telephone No" })
 
                                     </div>
                                     <div class="col-sm-2">
@@ -160,7 +147,7 @@
                            
 
                                 <div class="form-group">
-                                    @Html.LabelFor(m => m.Address1, new { @class = "col-sm-2 control-label" })
+                                    @Html.LabelFor(m => m.OfficeAddress1, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-6">
                                         @Html.TextBoxFor(model => model.OfficeAddress1, new { @class = "form-control input-lg mb", @placeholder = "Address " })
                                         @Html.TextBoxFor(model => model.OfficeAddress2, new { @class = "form-control mb", @placeholder = "Address **" })
@@ -296,7 +283,7 @@
                         @{Html.RenderPartial("AddChild");}
                         <div id="showChild">
                            
-                            @{Html.RenderAction("ShowchildAdd", new { ParentIds = "0" });}
+                            @{Html.RenderAction("ShowchildAdd", new { ParentId1 = "0" });}
 
                         </div>
 

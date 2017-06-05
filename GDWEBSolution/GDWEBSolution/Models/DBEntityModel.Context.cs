@@ -91,6 +91,7 @@ namespace GDWEBSolution.Models
         public DbSet<tblUser> tblUsers { get; set; }
         public DbSet<tblUserCategory> tblUserCategories { get; set; }
         public DbSet<tblUserCategoryFunction> tblUserCategoryFunctions { get; set; }
+
         public DbSet<tblUserCode> tblUserCodes { get; set; }
     
         public virtual ObjectResult<DCISgetSchool_Result> DCISgetSchool()
@@ -1443,7 +1444,7 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyStudentEvaluationType", descriptionParameter, statusCodeParameter, modyfiedByParameter);
         }
     
-        public virtual int GDModifyStudentGradeAdvance(string schoolId, string studentId, string gradeId, string classId, string userId)
+        public virtual int GDModifyStudentGradeAdvance(string schoolId, string studentId, string gradeId, string classId, string accYear, string userId)
         {
             var schoolIdParameter = schoolId != null ?
                 new ObjectParameter("schoolId", schoolId) :
@@ -1461,11 +1462,15 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("ClassId", classId) :
                 new ObjectParameter("ClassId", typeof(string));
     
+            var accYearParameter = accYear != null ?
+                new ObjectParameter("AccYear", accYear) :
+                new ObjectParameter("AccYear", typeof(string));
+    
             var userIdParameter = userId != null ?
                 new ObjectParameter("userId", userId) :
                 new ObjectParameter("userId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyStudentGradeAdvance", schoolIdParameter, studentIdParameter, gradeIdParameter, classIdParameter, userIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GDModifyStudentGradeAdvance", schoolIdParameter, studentIdParameter, gradeIdParameter, classIdParameter, accYearParameter, userIdParameter);
         }
     
         public virtual int GDModifyStudentLeaver(string schoolId, string studentId, string userId, string isActive)

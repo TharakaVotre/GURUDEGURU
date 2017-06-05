@@ -18,6 +18,9 @@
                         @Html.DisplayNameFor(model => model.ToDate)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.DateComment)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.SpecialComment)
                     </th>
                     <th>
@@ -85,6 +88,9 @@
                                     <p>@item.ToDate</p>
                                 }
                                         }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateComment)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.SpecialComment)

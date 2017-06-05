@@ -12,7 +12,7 @@
             <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
             @*<div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView2(1)"><span class="fa fa-plus"></span> Add file</button></div>*@
             <div class="panel-body">
-                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+                <table id="zctb" class="display table table-bordered table-hover" >
                     <thead>
                         <tr>
                             <th>
@@ -24,12 +24,16 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.StudentId)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CreatedDate)
-                            </th>
+                           
 
                             <th>
                                 @Html.DisplayNameFor(model => model.StudentName)
+                            </th>
+                               <th>
+                                @Html.DisplayNameFor(model => model.ClassId)
+                            </th>
+                               <th>
+                                @Html.DisplayNameFor(model => model.GradeId)
                             </th>
                            
                             <th></th>
@@ -50,14 +54,20 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.StudentId)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                                    </td>
+                                  
+
 
 
                                     <td>
                                         @Html.DisplayFor(modelItem => item.StudentName)
                                     </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GradeId)
+                                    </td>
+                                     <td>
+                                        @Html.DisplayFor(modelItem => item.ClassId)
+                                    </td>
+                                     
                                   
                                     <td>
                                         

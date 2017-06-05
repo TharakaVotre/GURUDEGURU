@@ -19,11 +19,11 @@
                
                 <div class="form-group">
                     <div class="row">
-                        <lable class="col-sm-2 control-label"> Acadamic year</lable>
+                        <lable class="col-sm-2 control-label" style="font-size:14px;color:black"> Acadamic year</lable>
                         <div class="col-sm-3">
                             @Html.TextBox("AcedamicYear")
                         </div>
-                        <lable class="col-sm-2 control-label"> Grade</lable>
+                        <lable class="col-sm-2 control-label" style="font-size:14px;color:black"> Grade</lable>
                         <div class="col-sm-3">
                             @Html.DropDownList("GradeId", ViewBag.country as List<SelectListItem>, "", new { @class = "form-control" })
                         </div>
@@ -31,7 +31,7 @@
                     </div>
                         <div class="form-group">
                             <div class="row">
-                                <lable class="col-sm-2 control-label"> Class</lable>
+                                <lable class="col-sm-2 control-label" style="font-size:14px;color:black"> Class</lable>
                                 <div class="col-sm-3">
                                     @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
                                 </div>
@@ -60,10 +60,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.ClassName)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.HouseName)
-                            </th>
-
+                          
                             <th></th>
                         </tr>
                     </thead>
@@ -88,9 +85,7 @@
                                         @Html.DisplayFor(modelItem => item.ClassName)
                                     </td>
 
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.HouseName)
-                                    </td>
+                                   
 
                                     <td></td>
                                 </tr>

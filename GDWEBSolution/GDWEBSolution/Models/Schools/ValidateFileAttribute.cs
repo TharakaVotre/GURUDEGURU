@@ -17,7 +17,8 @@ namespace GDWEBSolution.Models.Schools
             var file = value as HttpPostedFileBase;
 
             if (file == null)
-                return false;
+                //  return false;
+                return true;
             else if (!AllowedFileExtensions.Contains(file.FileName.Substring(file.FileName.LastIndexOf('.'))))
             {
                 ErrorMessage = "Please upload Your Photo of type: " + string.Join(", ", AllowedFileExtensions);

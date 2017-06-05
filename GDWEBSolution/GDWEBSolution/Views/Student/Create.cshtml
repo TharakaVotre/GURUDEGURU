@@ -9,7 +9,7 @@
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New Student</a></li>
-                    <li class=""><a href="#OptionalSubject" data-toggle="tab" aria-expanded="false">Optional Subject</a></li>
+                    @*<li class=""><a href="#OptionalSubject" data-toggle="tab" aria-expanded="false">Optional Subject</a></li>*@
                     <li class=""><a href="#excactivity" data-toggle="tab" aria-expanded="false">EXtra Curicular</a></li>
                     @*<li class="disabled"><a>Disabled</a></li>
                         <li class="dropdown">
@@ -72,15 +72,20 @@
                                     </div>
                                 </div>
 
+                                
+
+
                                 <div class="form-group">
-                                    @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+                                    @Html.LabelFor(m => m.UserId, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
-                                        @Html.DropDownListFor(model => model.SchoolIdw, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadEXactivsess(this.value)" })
                                         
+
+                                        @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @placeholder = "Student Name" })
+
                                     </div>
 
                                     <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.SchoolId, null, new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.UserId, null, new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -97,7 +102,17 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-8">
+                                        @Html.DropDownListFor(model => model.SchoolIdw, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadEXactivsess(this.value)" })
 
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.SchoolIdw, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.HouseId, new { @class = "col-sm-2 control-label" })
@@ -204,10 +219,10 @@
 
                     </div>
                     <div class="tab-pane fade" id="excactivity">
-                       
+                        @{Html.RenderPartial("StudentEXtra");}
                         <div id="showexactivity">
-                            @{Html.RenderPartial("StudentEXtra");}
                            
+                            @*@{Html.RenderAction("ShowstudentExactivty", new { SchoolId = "0",StudentId="0" });}*@
 
                         </div>
 
@@ -343,6 +358,32 @@
 
             }
         });
+
+
+        var ddlStatess = $("#HouseId");
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("SchoolHouse"))",
+            data: { "SchoolId": selectedItem },
+            success: function (data) {
+                ddlStatess.html('');
+                ddlStatess.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStatess.append($('<option></option>').val(option.HouseId).html(option.HouseName));
+                });
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+
+            }
+        });
+
+
+
        }
 
 

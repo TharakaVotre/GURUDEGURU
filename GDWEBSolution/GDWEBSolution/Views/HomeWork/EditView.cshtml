@@ -1,7 +1,9 @@
 ﻿@model GDWEBSolution.Models.HomeWork.HomeWorkModel
 <script>
     $(function () {
-        $("#stringDueDate").datepicker();
+        $("#stringDueDate").datepicker({
+            minDate: new Date()
+        })
     });
 
 

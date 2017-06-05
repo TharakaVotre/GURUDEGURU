@@ -83,25 +83,12 @@ namespace GDWEBSolution.Controllers
 
                 //return View();
 
-                return RedirectToAction("Index");
+                return Json("Success", JsonRequestBehavior.AllowGet);
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception ex)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException 
-                        Errorlog.ErrorManager.LogError(dbEx);
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                Errorlog.ErrorManager.LogError(ex);
+                return Json("Exit", JsonRequestBehavior.AllowGet);
             }
         }
 

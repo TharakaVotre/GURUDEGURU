@@ -41,7 +41,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
                 GradeName=x.GradeName,
                 ClassId=x.ClassId,
                 ClassName=x.ClassName,
-                SubjectId=x.StudentId,
+                SubjectId=x.SubjectId.ToString(),
                 SubjectName=x.SubjectName
 
 
@@ -508,8 +508,8 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
         [HttpPost]
             public ActionResult Create(OptionalSubjectModel Model, string[] chooseRecipient)
         {
-            string _path = "";
-            string _pathL = "";
+          //  string _path = "";
+           // string _pathL = "";
 
             Model.StudentId=chooseRecipient[0];
             Model.CreatedBy = "User1";
@@ -549,7 +549,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
                         ViewBag.successMessage = "Success";
                     }
                     else {
-                        string result = "Exist";
+                     //   string result = "Exist";
                     
                     }
                   
@@ -918,7 +918,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
         {
             string _path = "";
 
-            string _pathL = "";
+          //  string _pathL = "";
             string _path1 = "";
 
             string _pathL2 = "";
