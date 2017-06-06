@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,chrome=1">
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+    <!-- Sandstone Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/css/hover.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+</head>
+<body>
+        <div class="login-page bk-img img-responsive" style="background-image: url(../img/login-bg.jpg);">
+        <div class="form-content" style="font-family:'Adobe Caslon Pro'">
+            <div class="container">
+                <div class="row">
+                    <div id="loginbox" class="col-md-12">
+                        <h1 class="text-center text-bold text-light mt-4x">Error</h1>
+                        <div class="text-center text-light">
+                            <!--<a href="#" class="hvr-grow">Forgot password?</a>-->
+                            <h1 class="text-center text-bold text-light mt-4x">Request Page is not Accessible !</h1>
+                            <a href="#" class="text-light hvr-bounce-in mt-4x">Go Back 
+                                        </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    @Scripts.Render("~/Scripts/js")
+</body>
+</html>

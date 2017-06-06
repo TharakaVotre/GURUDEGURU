@@ -32,6 +32,11 @@ namespace GDWEBSolution.Controllers
         {
             return View();
         }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
         [HttpPost]
         public JsonResult Login(LoginModel login)
         {

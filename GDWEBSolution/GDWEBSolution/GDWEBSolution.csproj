@@ -204,6 +204,7 @@
     <Compile Include="Controllers\TimeTable\TimeTableController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\User\UserController.cs" />
+    <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1217,7 +1218,6 @@
     <Content Include="Views\TimeTable\Display.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\AddEvent.cshtml" />
-    <Content Include="Views\Event\Index1.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Create.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Delete.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Index.cshtml" />
@@ -1364,11 +1364,13 @@
     <Content Include="Views\User\NewUser.cshtml" />
     <Content Include="Views\Home\Verify.cshtml" />
     <Content Include="Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\Forbidden.cshtml" />
+    <Content Include="Views\Event\Calendar.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attachments\" />
     <Folder Include="Controllers\School\" />
-    <Folder Include="Filters\" />
     <Folder Include="UploadedFiles\" />
     <Folder Include="Uploads\Student\Photo\" />
     <Folder Include="Views\Account\" />

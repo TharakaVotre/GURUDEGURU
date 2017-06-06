@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Event;
 using GDWEBSolution.Models.User;
 using Newtonsoft.Json;
@@ -21,17 +22,21 @@ namespace GDWEBSolution.Controllers.Event
 
         //
         // GET: /Event/
-
+        //[UserFilter(Function_Id = "EVENT2")]
         public ActionResult Index()
         {
             List<tblEventcategory> EventList = Connection.tblEventcategories.ToList();
             ViewBag.EventList = new SelectList(EventList, "EventCategoryId", "EventCategoryDesc");
             return View();
         }
+        public ActionResult Calendar()
+        {
+            return View();
+        }
 
         public ActionResult getEvents()
         {
-            var STQlist = Connection.tblEventCalendars.Where(r => r.SchoolId == _session.School_Id).ToList();
+            var STQlist = Connection.tblEventCalendars.Where(r => r.SchoolId == "CKC").ToList();
 
             List<Events> List = STQlist.Select(x => new Events
             {
