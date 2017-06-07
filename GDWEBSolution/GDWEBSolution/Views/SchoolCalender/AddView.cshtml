@@ -1,13 +1,28 @@
 ﻿@model GDWEBSolution.Models.SchoolCalender.SchoolCalenderModel
 <script>
-    $(function () {
-        $("#ToDate").datepicker();
+    $(document).ready(function () {
+        var date_input = $('input[name="ToDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
-    $(function () {
-        $("#FromDate").datepicker();
+    $(document).ready(function () {
+        var date_input = $('input[name="FromDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
-    $(function () {
-        $("#AcadamicDate").datepicker();
+    $(document).ready(function () {
+        var date_input = $('input[name="AcadamicDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
 </script>
 

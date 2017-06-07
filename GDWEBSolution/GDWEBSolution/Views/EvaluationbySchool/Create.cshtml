@@ -168,7 +168,7 @@
                                     <div class="col-sm-8 col-sm-offset-2">
                                         @*<button class="btn btn-default" type="submit">Cancel</button>*@
                                         @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
-                                        <button type="button" id="btnAddQualification" onclick="AddEvaluation()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                                        <button type="reset" id="btnAddQualification" onclick="AddEvaluation()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -176,11 +176,6 @@
                         </form>
 
                         <div id="showEvaluations">
-
-                        </div>
-
-                         <div id="evaluationlistrender">
-                            @{Html.RenderAction("ShowEvaluationw");}
 
                         </div>
 
@@ -295,7 +290,7 @@
         //if (!$("#FrmANT").valid()) {
         //    return false;
         //}
-        var ddlStateswea = $("#EvaluationNo");
+
         $.ajax({
 
             type: "POST",
@@ -307,12 +302,10 @@
                 if (result != "Exception" && result != "Exits") {
                     debugger
                     //window.location.href = "/Teacher/Create";
-                    //  $("#SchoolId").val(result);
+                  //  $("#SchoolId").val(result);
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
                     $('#showgrade').load('/EvaluationbySchool/ShowEvaluation?SchoolId=' + result);
-                    
-                    $('#evaluationlistrender').load('/EvaluationbySchool/ShowEvaluation?SchoolId=' + result);
                     $("#SuccesLable").text("Evaluation Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -336,32 +329,9 @@
 
                 }
 
-
-                $.ajax({
-                    cache: false,
-                    type: "GET",
-                    url: "@(Url.RouteUrl("evaluationdropd"))",
-                       //  data: { "GradeId": GradeId, "SchoolId": SchoolId, "AcademicYear": AcademicYear, "ClassId": ClassId },
-            success: function (data) {
-                ddlStateswea.html('');
-                ddlStateswea.append($('<option></option>').val("").html(""));
-                $.each(data, function (ActivityCode, option) {
-                    ddlStateswea.append($('<option></option>').val(option.EvaluationNo).html(option.EvaluationDescription));
-                });
-
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert('Failed to retrieve states.');
-
-            }
-                   });
-
             }
 
-        });
-
-
-     
+        })
     }
 
 

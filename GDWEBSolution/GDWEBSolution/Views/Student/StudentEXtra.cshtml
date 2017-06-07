@@ -35,7 +35,7 @@
 
 
             <div class="col-sm-2">
-                <button type="reset" id="btnAddQualification" onclick="AddActivity()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                <button type="button" id="btnAddQualification" onclick="AddActivity()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
             </div>
         </div>
     <div class="hr-dashed"></div>
@@ -271,7 +271,9 @@
     var loadEXactivsescl = function (value) {
         var selectedItem = value;
         var SchoolId = $("#SchoolIdE").val();
-            var ddlStates = $("#ActivityCode");
+        var ddlStates = $("#ActivityCode");
+
+       
             //var statesProgress = $("#states-loading-progress");
             //statesProgress.show();
             $.ajax({
@@ -292,6 +294,8 @@
                  
                 }
             });
+        $('#showexactivity').load('/Student/ShowstudentExactivty?SchoolId=' + SchoolId + '&StudentId=' + selectedItem);
+
         }
    //});
 

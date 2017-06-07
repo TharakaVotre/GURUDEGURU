@@ -46,7 +46,7 @@
                      
                         <br/><br />
 
-                            @Html.LabelFor(m => m.StudentId, new { @class = "col-sm-2 control-label" })
+                            @Html.LabelFor(m => m.StudentId1, new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-4">
                                 @*@Html.DropDownListFor(model => model.StudentId, ViewBag.StudentIdList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })*@
                                 @*@Html.DropDownListFor(model=>model.StudentId,Model.GetStudentList.Select(x=>new SelectListItem{Text=x.StudentName,Value=x.StudentId}),new {@class="form-control ",@multiple="true"})*@
@@ -66,6 +66,7 @@
 
                         <div class="col-sm-12">
                             <button type="button" id="btnAddQualification" onclick="AddChild()" class="btn btn-primary" style="float:right"><span class="fa fa-bookmark"></span> Save</button>
+                             
                         </div>
                    </div>
                     <div class="hr-dashed"></div>
@@ -76,6 +77,12 @@
 
 
     <script>
+
+        var ShowView2 = function (bookid) {
+            var Url = "/Parent/Index";
+            window.location.href = Url;
+        }
+
 
         var AddChild = function () {
         //debugger

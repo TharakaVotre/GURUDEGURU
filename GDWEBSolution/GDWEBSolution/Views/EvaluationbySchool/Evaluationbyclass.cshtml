@@ -40,14 +40,14 @@
         <br/><br/>
            
         
-        <div class="div123">
+        @*<div class="div123">
             @Html.LabelFor(m => m.Grade, new { @class = "col-sm-2 control-label" })
             <div class="col-sm-3">
 
                
                 @Html.DropDownListFor(model => model.Grade, ViewBag.SchoolGradeList as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onchange = "GetClasslist(this.value)" })
             </div>
-        </div>
+        </div>*@
 
         @*<div class="div123">
             @Html.LabelFor(m => m.Class, new { @class = "col-sm-2 control-label" })
@@ -68,7 +68,7 @@
                         <tr>
 
                             <th style=" width:10%"><input type="checkbox" onclick='checkAll()' name="chooseAllRecipient" id="chooseAllRecipient" /><label>SelectAll</label></th>
-                            <th style=" width:30%" >Classes</th>
+                            <th style=" width:30%">Grade</th> <th style=" width:30%" >Classes</th>
 
                         </tr>
                     </thead>
@@ -83,7 +83,7 @@
 
 
         <div class="col-sm-2" style="float:right">
-            <button type="button" id="btnAddQualification" onclick="AddEvolutionclz()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+            <button type="reset" id="btnAddQualification" onclick="AddEvolutionclz()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
         </div>
     </div>
     <div class="hr-dashed"></div>
@@ -252,24 +252,27 @@
     }
 
   
-    var GetClasslist = function (value) {
+   // var GetClasslist = function (value) {
+    $(document).ready(function () {
 
-        var selectedItem = value;
+
+
+        //  var selectedItem = value;
         var SchoolId1 = $("#SchoolId1").val();
 
 
-       // var ddlStates = $("#Class");
+        // var ddlStates = $("#Class");
 
         $.ajax({
-            url: "@(Url.RouteUrl("Studentclass"))",
+            url: "@(Url.RouteUrl("Studentgradeclass"))",
             type: "GET",
             contentType: "application/json; charset=utf-8",
-            data: { "SchoolId": SchoolId1, "GradeId": selectedItem },
+            data: { "SchoolId": SchoolId1, "GradeId": "%" },
             dataType: "json",
             success: function (data) {
                 var row = "";
                 $.each(data, function (index, item) {
-                    row += "<tr><td><input type='checkbox'value='" + item.ClassId + "' name='chooseRecipient' class='my_chkBox' /></td><td>" + item.ClassName + "</td>";
+                    row += "<tr><td><input type='checkbox'value='" + item.ClassId + "' name='chooseRecipient' class='my_chkBox' /></td><td>" + item.GradeName + "</td><td>" + item.ClassName + "</td>";
                 });
                 $("#contacts").html(row);
             },
@@ -277,7 +280,7 @@
                 alert("Error");
             }
         });
-    }
+    });
 
     
 </script>
@@ -285,9 +288,19 @@
 <script type="text/javascript">
     $(function () {
         // This will make every element with the class "date-picker" into a DatePicker element
-        $("#ScheduledDate").datepicker(); 
+      //  $("#ScheduledDate").datepicker(); 
         $("#ScheduledTimeStarts").timepicker();
         $("#ScheduledTimeEnds").timepicker();
+    });
+</script>
+<script >
+    $(document).ready(function () {
+        var date_input = $('input[name="ScheduledDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
 </script>
 

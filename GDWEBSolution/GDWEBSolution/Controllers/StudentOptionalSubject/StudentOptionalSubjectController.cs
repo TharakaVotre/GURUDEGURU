@@ -153,11 +153,11 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
             //OptionalSubjectModel osm = new OptionalSubjectModel();
 
             //osm.GetStudentList = Connection.tblStudents.Select(s => new OptionalSubjectModel { StudentId = s.StudentId, StudentName = s.studentName }).ToList();
-            List<tblStudent> Studentlist = Connection.tblStudents.ToList();
+            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
             ViewBag.StudentIdList = new SelectList(Studentlist,"","");
-            List<tblSubject> Subjlist = Connection.tblSubjects.ToList();
+            List<tblSubject> Subjlist = Connection.tblSubjects.Where(X => X.IsActive == "Y").ToList();
             ViewBag.SubjectIdDrpDown = new SelectList(Subjlist, "", "");
-            List<tblSchool> Scllist = Connection.tblSchools.ToList();
+            List<tblSchool> Scllist = Connection.tblSchools.Where(X=>X.IsActive=="Y").ToList();
 
             ViewBag.SchoolDrpDown = new SelectList(Scllist, "SchoolId", "SchoolName");
 
@@ -240,7 +240,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
             }).ToList();
 
 
-            var SchoolGrade = Connection.SMGTgetSchoolGrade(sclid).ToList();//Need to Pass a Session Schoolid
+            var SchoolGrade = Connection.SMGTgetSchoolGrade(sclid).Where(X => X.IsActive == "Y").ToList();//Need to Pass a Session Schoolid
             List<tblGrade> SchoolGradeList = SchoolGrade.Select(x => new tblGrade
             {
                 GradeId = x.GradeId,
@@ -249,7 +249,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
 
             }).ToList();
 
-            var schoolclass = Connection.SMGTgetclassadd(sclid,"%").ToList();
+            var schoolclass = Connection.SMGTgetclassadd(sclid, "%").ToList();
 
             List<tblClass> SchoolclassList = schoolclass.Select(x => new tblClass
             {

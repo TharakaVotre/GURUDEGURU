@@ -36,7 +36,7 @@
 
     function DeleteSchoolexc(SchoolId, ActivityCode, ActivityName) {
         debugger
-        var Url = "/School/Deletescexc?SchoolId=" + SchoolId + "&ActivityCode=" + ActivityCode + "&ActivityName=" + ActivityName;
+        var Url = "/School/Deletescexc?SchoolId=" + SchoolId + "&ActivityCode=" + ActivityCode ;
         $("#DeleteModelBody").load(Url, function () {
             $("#deleteModel").modal("show");
         })

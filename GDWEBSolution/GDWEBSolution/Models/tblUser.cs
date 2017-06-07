@@ -16,6 +16,8 @@ namespace GDWEBSolution.Models
     {
         public tblUser()
         {
+            this.tblAccadamicYears = new HashSet<tblAccadamicYear>();
+            this.tblAccadamicYears1 = new HashSet<tblAccadamicYear>();
             this.tblApplicationStatus = new HashSet<tblApplicationStatu>();
             this.tblApplicationStatus1 = new HashSet<tblApplicationStatu>();
             this.tblAssignmentDueDates = new HashSet<tblAssignmentDueDate>();
@@ -147,6 +149,8 @@ namespace GDWEBSolution.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string IsActive { get; set; }
     
+        public virtual ICollection<tblAccadamicYear> tblAccadamicYears { get; set; }
+        public virtual ICollection<tblAccadamicYear> tblAccadamicYears1 { get; set; }
         public virtual ICollection<tblApplicationStatu> tblApplicationStatus { get; set; }
         public virtual ICollection<tblApplicationStatu> tblApplicationStatus1 { get; set; }
         public virtual ICollection<tblAssignmentDueDate> tblAssignmentDueDates { get; set; }

@@ -1,0 +1,97 @@
+﻿@model GDWEBSolution.Models.Student.StudentExtraCModel
+<div>
+    <form id="FormexdDelete" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5 class="modal-title">Are you sure you want to Delete this Activity ? </h5>
+            @Html.HiddenFor(m => m.ActivityCode)
+            @Html.HiddenFor(m => m.StudentId)
+            @Html.HiddenFor(m => m.SchoolId)
+
+        </div>
+        <div class="modal-footer">
+
+            <a href="#" id="btnexdSubmit" onclick="vbc()" class="btn btn-primary">YES</a>
+            <a href="#" id="btnNo" onclick="nbc()" class="btn btn-default">NO</a>
+        </div>
+    </form>
+    @*    <div style="text-align: center; display: none" id="loaderDiv">
+            Loading
+        </div>*@
+</div>
+<script>
+    
+    var nbc = function () {
+
+        debugger
+        $("#deleteModel").modal("hide");
+
+
+
+    }
+
+
+    var vbc = function () {
+
+        var myformdata = $("#FormexdDelete").serialize();
+        $.ajax({
+
+            type: "POST",
+            url: "/Student/DeleteStudentexcactivities",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                if (result != "Error") {
+                    debugger
+                    var res = result.split("!");
+                    //window.location.href = "/Teacher/Create";
+                    // $("#TeacherID").val(result);
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $('#showexactivity').load('/Student/ShowstudentExactivty?SchoolId=' + res[0] + '&StudentId=' + res[1]);
+                }
+                $("#deleteModel").modal("hide");
+
+
+            }
+
+        })
+
+
+    }
+
+    //$(document).ready(function () {
+
+    //    $("#btnexdSubmit").click(function (e) {
+    //        debugger
+    //        var myformdata = $("#FormexdDelete").serialize();
+    //        $.ajax({
+
+    //            type: "POST",
+    //            url: "/School/DeleteSchoolexcactivities",
+    //            data: myformdata,
+    //            success: function (result) {
+    //                //$("#loaderDiv").hide();
+    //                if (result != "Error") {
+    //                    debugger
+    //                    //window.location.href = "/Teacher/Create";
+    //                    // $("#TeacherID").val(result);
+    //                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+    //                    $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + result);
+    //                }
+    //                $("#deleteModel").modal("hide");
+
+
+    //            }
+
+    //        })
+    //    })
+
+    //    $("#btnNo").click(function (e) {
+    //        debugger
+    //        $("#deleteModel").modal("hide");
+    //    })
+
+    //})
+
+
+</script>

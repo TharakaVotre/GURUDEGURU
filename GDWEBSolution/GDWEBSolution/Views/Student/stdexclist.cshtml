@@ -19,11 +19,11 @@
                 <div class="col-md-6">
                     <div class="well">
                         <i class="glyphicon glyphicon-bell" aria-hidden="true"></i>
-
-                        @Html.HiddenFor(model => item.SchoolIdE)
-                        @Html.HiddenFor(model => item.StudentIdE)
+                        @Html.HiddenFor(model => item.ActivityCode)
+                        @Html.HiddenFor(model => item.SchoolId)
+                        @Html.HiddenFor(model => item.StudentId)
                         @Html.DisplayFor(modelItem => item.ActivityName)
-                        <button type="button" class="close" onclick='DeleteSchoolexc("@item.SchoolId","@(item.ActivityCode)","@(item.ActivityName)");'>&times;</button>
+                        <button type="button" class="close" onclick='DeleteStudentexc("@item.SchoolId","@(item.StudentId)","@(item.ActivityCode)");'>&times;</button>
                     </div>
                 </div>
 
@@ -34,9 +34,9 @@
 </div>
 <script>
 
-    function DeleteSchoolexc(SchoolId, ActivityCode, ActivityName) {
+    function DeleteStudentexc(SchoolId, StudentId, ActivityCode) {
         debugger
-        var Url = "/School/Deletescexc?SchoolId=" + SchoolId + "&ActivityCode=" + ActivityCode + "&ActivityName=" + ActivityName;
+        var Url = "/Student/Deletescexc?SchoolId=" + SchoolId + "&StudentId=" + StudentId + "&ActivityCode=" + ActivityCode;
         $("#DeleteModelBody").load(Url, function () {
             $("#deleteModel").modal("show");
         })

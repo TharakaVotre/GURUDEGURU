@@ -12,7 +12,7 @@
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New Parent</a></li>
-                    <li class=""><a href="#AddChild" data-toggle="tab" aria-expanded="false">Add Student</a></li>
+                    <li class=""><a href="#AddChild" data-toggle="tab" aria-expanded="false">Add Child</a></li>
                     @*<li class=""><a href="#qualification" data-toggle="tab" aria-expanded="false">Grade</a></li>*@
                     @*<li class=""><a href="#excactivity" data-toggle="tab" aria-expanded="false">EXtra Curicular</a></li>*@
                     @*<li class="disabled"><a>Disabled</a></li>
@@ -59,7 +59,7 @@
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(model => model.ParentName, new { @class = "form-control", @placeholder = "School Name" })
                                       
-                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                      
                                     </div>
 
                                     <div class="col-sm-2">
@@ -76,7 +76,7 @@
                                     <div class="col-sm-8">
                                       
                                         @Html.DropDownListFor(model => model.RelationshipId, ViewBag.RelationshipList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
-                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                    
                                     </div>
                                     <div class="col-sm-2">
                                         @Html.ValidationMessageFor(model => model.RelationshipId, null, new { @class = "text-danger" })
@@ -117,11 +117,11 @@
                                     @Html.LabelFor(m => m.PersonalEmail, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-4">
                                         @Html.TextBoxFor(model => model.PersonalEmail, new { @class = "form-control", @placeholder = "Telephone No" })
-
+                                        <div class="col-sm-12">
+                                            @Html.ValidationMessageFor(model => model.PersonalEmail, null, new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                    <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.PersonalEmail, null, new { @class = "text-danger" })
-                                    </div>
+                                   
                                 </div>
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.PersonalMobile, new { @class = "col-sm-2 control-label" })
@@ -251,7 +251,8 @@
                                     <div class="col-sm-8 col-sm-offset-2">
                                         @*<button class="btn btn-default" type="submit">Cancel</button>*@
                                         @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
-                                        <button type="submit"  id="btnSubmit" onclick="" class="btn btn-primary"><span class="fa fa-bookmark"></span> Continue</button>
+                                        <button type="submit"  id="btnSubmit" onclick="" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                                        <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Back</button>
                                     </div>
                                 </div>
                             </div>
@@ -352,6 +353,12 @@
 
 <script>
 
+    var ShowView = function (bookid) {
+        var Url = "/Parent/Index";
+        window.location.href = Url;
+    }
+
+
     var loadSgrade = function (value) {
         debugger
         //     $('#myTabContent').load('/Student/Createe?SchoolId=' + value);
@@ -364,10 +371,14 @@
 
 </script>
 
-<script type="text/javascript">
-    $(function () {
-        // This will make every element with the class "date-picker" into a DatePicker element
-        $("#DateofBirth").datepicker();
+<script >
+    $(document).ready(function () {
+        var date_input = $('input[name="DateofBirth"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
 </script>
 

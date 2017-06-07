@@ -27,7 +27,7 @@
                                 @Html.DisplayNameFor(model => model.PersonalEmail)
                             </th>
                             
-                            <th></th>
+                            <th style="max-width:180px"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,11 +53,12 @@
                                
 
                                     <td>
+                                        <center>
                                           <a class="btn btn-primary" onclick="DetailView('@item.ParentId')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
                                          <a class="btn btn-info" onclick='EditView("@item.ParentId")'><span class="fa fa-pencil"></span> Edit </a>
                                         <a class="btn btn-danger" onclick='DeleteView("@item.ParentId")'><span class="fa fa-trash"></span> Delete</a>
 
-
+                                        </center>
 
                                      
                                     </td>
@@ -97,7 +98,7 @@
     }
 
     var EditView = function (ParentId) {
-        var Url = "/Parent/Edit?ParentId=" + ParentId;
+        var Url = "/Parent/EditParent?ParentId=" + ParentId;
         //$("#MyModelBody").load(Url, function () {
         //    $("#myModal").modal("show");
         //})

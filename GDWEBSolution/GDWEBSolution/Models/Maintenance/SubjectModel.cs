@@ -38,5 +38,8 @@ namespace GDWEBSolution.Models.Maintenance
 
         [Display(Name = "Active")]
         public string IsActive { get; set; }
+
+         [Display(Name = "Optional")]
+        public string Optional { get; set; }
     }
 }

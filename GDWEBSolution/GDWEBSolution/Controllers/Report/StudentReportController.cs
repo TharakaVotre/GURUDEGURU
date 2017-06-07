@@ -1,5 +1,7 @@
 ﻿using GDWEBSolution.Models;
+using GDWEBSolution.Models.Maintenance;
 using GDWEBSolution.Models.Report;
+using GDWEBSolution.Models.Student;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace GDWEBSolution.Controllers.Report
     public class StudentReportController : Controller
     {
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string SchooId = "CKC";
+        string SchoolId = "Scl11128";
         string UserId = "PARENT1";
        
 
@@ -45,7 +47,7 @@ namespace GDWEBSolution.Controllers.Report
 
                     long EvealuationType = Convert.ToInt64(Session["EvealuationTypes"]);
 
-                    var Group = Connection.GDgetAttentionRequiredSubjectsSchool(SchooId, Session["AccYear"].ToString(), EvealuationType, "");
+                    var Group = Connection.GDgetAttentionRequiredSubjectsSchool(SchoolId, Session["AccYear"].ToString(), EvealuationType, "");
                      
                      List<GDgetAttentionRequiredSubjectsSchool_Result> Grouplist = Group.ToList();
                     
@@ -59,7 +61,7 @@ namespace GDWEBSolution.Controllers.Report
                          Subject = x.SubjectName
                      }).ToList();
                      ViewBag.Subject = tcmlist;
-                      var Group1 = Connection.GDgetAttentionRequiredSubjectsGradeWiseSchool(SchooId, AccYear, EvealuationType, "");
+                      var Group1 = Connection.GDgetAttentionRequiredSubjectsGradeWiseSchool(SchoolId, AccYear, EvealuationType, "");
 
                      List<GDgetAttentionRequiredSubjectsGradeWiseSchool_Result> Grouplist1 = Group1.ToList();
 
@@ -88,8 +90,8 @@ namespace GDWEBSolution.Controllers.Report
 
         private void Dropdowns()
         {
-            var Grade = Connection.GDgetAllGradeMaintenance("Y");
-            List<GDgetAllGradeMaintenance_Result> Gradelist = Grade.ToList();
+            var Grade = Connection.GDgetSchoolGrade(SchoolId,"Y");
+            List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
 
             ViewBag.GradeId = new SelectList(Gradelist, "GradeId", "GradeName");
             ViewBag.stGradeId = new SelectList(Gradelist, "GradeId", "GradeName");
@@ -102,7 +104,7 @@ namespace GDWEBSolution.Controllers.Report
 
         public JsonResult getClass(string id)
         {
-            var states = Connection.GDgetGradeActiveClass(id, SchooId, "Y");
+            var states = Connection.GDgetGradeActiveClass(id, SchoolId, "Y");
             List<SelectListItem> listates = new List<SelectListItem>();
             listates.Add(new SelectListItem { Text = "", Value = "" });
             if (states != null)
@@ -118,7 +120,7 @@ namespace GDWEBSolution.Controllers.Report
 
         public JsonResult getStudent(string id, string cId)
         {
-            var states = Connection.SMGTgetStudentforoptionalSubject(SchooId,id,"%",cId);
+            var states = Connection.SMGTgetStudentforoptionalSubject(SchoolId,id,"%",cId);
             List<SelectListItem> listates = new List<SelectListItem>();
             listates.Add(new SelectListItem { Text = "", Value = "" });
             if (states != null)
@@ -126,6 +128,21 @@ namespace GDWEBSolution.Controllers.Report
                 foreach (var x in states)
                 {
                     listates.Add(new SelectListItem { Text = x.StudentName, Value = x.StudentId });
+                }
+            }
+            return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
+        }
+
+             public JsonResult getSubject(string Gid)
+        {
+            var states = Connection.GDgetGradeSubject(SchoolId,Gid,"Y");
+            List<SelectListItem> listates = new List<SelectListItem>();
+            listates.Add(new SelectListItem { Text = "", Value = "" });
+            if (states != null)
+            {
+                foreach (var x in states)
+                {
+                    listates.Add(new SelectListItem { Text = x.SubjectName, Value = x.SubjectId.ToString() });
                 }
             }
             return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
@@ -212,6 +229,108 @@ namespace GDWEBSolution.Controllers.Report
                 Errorlog.ErrorManager.LogError(ex);
                 return PartialView("AttentionRequiredSubjectsParents");
             }
+        }
+
+
+        private void Dropdown2()
+        {
+            var Grade = Connection.GDgetSchoolGrade(SchoolId, "Y");
+            List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
+
+            ViewBag.GradeId = new SelectList(Gradelist, "GradeId", "GradeName");
+            ViewBag.ClassGradeId = new SelectList(Gradelist, "GradeId", "GradeName");
+            ViewBag.SubGradeId = new SelectList(Gradelist, "GradeId", "GradeName");
+
+           
+            var ExtraCurriculerActivity = Connection.GDgetSchoolExtraCurriculerActivity(SchoolId, "Y");
+            List<GDgetSchoolExtraCurriculerActivity_Result> ExtraCurriculerActivitylist = ExtraCurriculerActivity.ToList();
+
+            ViewBag.ExtraCurriculerActivity = new SelectList(ExtraCurriculerActivitylist, "ActivityCode", "ActivityName");
+        }
+        public ActionResult StudentSubjectIndex()
+        {
+            Dropdown2();
+            return View();
+        }
+        public ActionResult StudentSubject(string AccYear,string GradeId, string StudentId)
+        {
+            var Subject = Connection.GDgetStudentSubject(SchoolId, AccYear, GradeId, StudentId, "Y");
+            List<GDgetStudentSubject_Result> Subjectlist = Subject.ToList();
+
+            SubjectModel tcm = new SubjectModel();
+
+            List<SubjectModel> tcmlist = Subjectlist.Select(x => new SubjectModel
+            {
+                SubjectId = x.SubjectId,
+                ShortName = x.ShortName,
+                SubjectName = x.SubjectName,
+                Optional=x.Optional
+
+            }).ToList();
+
+
+
+            return PartialView("StudentsSubjects", tcmlist);
+        }
+
+        public ActionResult StudentInClass( string ClassId,string GradeId)
+        {
+            if (ClassId == "")
+            {
+                ClassId = "%";
+            }
+            var Student = Connection.GDgetStudentInClass(SchoolId, GradeId, ClassId, "Y");
+            List<GDgetStudentInClass_Result> Studentlist = Student.ToList();
+
+            StudentModel tcm = new StudentModel();
+
+            List<StudentModel> tcmlist = Studentlist.Select(x => new StudentModel
+            {
+                StudentId = x.StudentId,
+                StudentName = x.studentName,
+                Gender = x.Gender ,
+                DateOfBirth = x.DateofBirth
+
+            }).ToList();
+            return PartialView("StudentInClasss", tcmlist);
+        }
+
+        public ActionResult StudentInExtraActivity(string ActivityId)
+        {
+           
+            var Student = Connection.GDgetExtraCurriculerStudent(SchoolId, ActivityId, "Y");
+            List<GDgetExtraCurriculerStudent_Result> Studentlist = Student.ToList();
+
+            StudentModel tcm = new StudentModel();
+
+            List<StudentModel> tcmlist = Studentlist.Select(x => new StudentModel
+            {
+                StudentId = x.StudentId,
+                StudentName = x.studentName,
+                Gender = x.Gender,
+                DateOfBirth = x.DateofBirth
+
+            }).ToList();
+            return PartialView("StudentInExtraCurriculerActivity", tcmlist);
+        }
+
+        public ActionResult StudentInSubject(string GradeId, string ClassId, string SubjectId)
+        {
+            int subId = Convert.ToInt32(SubjectId);
+            var Student = Connection.GDgetSubjectStudent(SchoolId, GradeId, ClassId, subId);
+            List<GDgetSubjectStudent_Result> Studentlist = Student.ToList();
+
+            StudentModel tcm = new StudentModel();
+
+            List<StudentModel> tcmlist = Studentlist.Select(x => new StudentModel
+            {
+                StudentId = x.StudentId,
+                StudentName = x.studentName,
+                Gender = x.Gender,
+                DateOfBirth = x.DateofBirth
+
+            }).ToList();
+            return PartialView("StudentInSubjects", tcmlist);
         }
     }
 }

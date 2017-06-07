@@ -20,9 +20,11 @@
 <Child title="MaintainStudentEvaluationType" action="Index" controller="Student Evaluation Type" url="#"/>
 <Child title="MaintainSubject" action="Index" controller="Subject" url="#"/>
 <Child title="Subject Category" action="Index" controller="MaintainSubjectCategory" url="#"/>
+  <Child title="Update Accdemic Year" action="UpdateAccedemicYear" controller="StudentGradeAdvance" url="#"/>
 </Navigation>
 <Navigation title="School" action="#" controller="#" url="School/Index" ></Navigation>
 <Navigation title="Student" action="#" controller="#" url="Student/Index" ></Navigation>
+  <Navigation title="Parent" action="#" controller="#" url="Parent/Index" ></Navigation>
 <Navigation title="Optional Subjects" action="#" controller="#" url="StudentOptionalSubject/Index" ></Navigation>
 <Navigation title="Home Work" action="#" controller="#" url="#">
 <Child title="Home Work" action="Index" controller="HomeWork" url="#"/>
@@ -41,6 +43,7 @@
 <Navigation title="Report" action="#" controller="#" url="#">
 <Child title="Attention required Subject" action="Index" controller="StudentReport" url="#"/>
 <Child title="Attention required Subject Parent View" action="ParentReport" controller="StudentReport" url="#"/>
+  <Child title="Student Report" action="StudentSubjectIndex" controller="StudentReport" url="#"/>
 </Navigation>
 <Navigation title="Evaluation" action="#" controller="#" url="#">
 <Child title="Evaluation By School" action="Create" controller="EvaluationbySchool" url="#"/>

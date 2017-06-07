@@ -1,0 +1,91 @@
+﻿@model GDWEBSolution.Models.Parent.ParentModel
+
+@{
+    ViewBag.Title = "Edit Teacher Details";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>Edit Parent</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">Parent   </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">Edit Parent</a></li>
+                    @*                    <li class=""><a href="#school" data-toggle="tab" aria-expanded="false">Teacher School</a></li>*@
+                    @*<li class=""><a href="#qualification" data-toggle="tab" aria-expanded="false">Qualification</a></li>*@
+                   
+                </ul>
+                <br />
+                <div id="myTabContent" class="tab-content">
+
+                    <div class="tab-pane fade active in" id="bio">
+                        @{ Html.RenderAction("ShowEditParent", new { ParentId = @ViewBag.EditParentID }); }
+                    </div>
+                    @*                    <div class="tab-pane fade" id="school">
+
+                        </div>*@
+                    @*<div class="tab-pane fade" id="qualification">
+                        @{Html.RenderPartial("QualificationEdit");}
+                        <div id="showqualification">
+                            @{ Html.RenderAction("ShowTeacherQualification", new { TeacherId = @ViewBag.EditTeacherID }); }
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="extra">
+                        @{Html.RenderPartial("ExtraCurricularActivityEdit");}
+                        <div id="showexactivity">
+                           @{ Html.RenderAction("ShowTeacherExActivity", new { TeacherId = @ViewBag.EditTeacherID }); }
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="subjects">
+                        @{Html.RenderPartial("SubjectEdit");}
+
+                        <div id="showsubjects">
+                            @{ Html.RenderAction("ShowTeacherSubjects", new { TeacherId = @ViewBag.EditTeacherID }); }
+                        </div>
+                    </div>*@
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content" id="MyModelBody">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Error !</h4>
+            </div>
+            <div class="modal-body">
+                <label id="ErrorLable" class="control-label" style="color: #e83a3a"></label>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="SuccesModel" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content" id="SuccessModelBody">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Successful !</h4>
+            </div>
+            <div class="modal-body">
+                <label id="SuccesLable" class="control-label" style="color: #3bc91f"></label>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="deleteModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" id="DeleteModelBody">
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#Teacher_ID").val(@ViewBag.EditTeacherID);
+        $("#Teacher_Id").val(@ViewBag.EditTeacherID);
+    })
+</script>

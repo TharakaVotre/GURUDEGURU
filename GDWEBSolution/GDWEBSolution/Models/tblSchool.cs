@@ -16,6 +16,7 @@ namespace GDWEBSolution.Models
     {
         public tblSchool()
         {
+            this.tblAccadamicYears = new HashSet<tblAccadamicYear>();
             this.tblAssignmentDueDates = new HashSet<tblAssignmentDueDate>();
             this.tblAssignmentHeaders = new HashSet<tblAssignmentHeader>();
             this.tblAssignmentQuestionAids = new HashSet<tblAssignmentQuestionAid>();
@@ -74,6 +75,7 @@ namespace GDWEBSolution.Models
         public int SchoolCategory { get; set; }
         public string IsActive { get; set; }
     
+        public virtual ICollection<tblAccadamicYear> tblAccadamicYears { get; set; }
         public virtual ICollection<tblAssignmentDueDate> tblAssignmentDueDates { get; set; }
         public virtual ICollection<tblAssignmentHeader> tblAssignmentHeaders { get; set; }
         public virtual ICollection<tblAssignmentQuestionAid> tblAssignmentQuestionAids { get; set; }

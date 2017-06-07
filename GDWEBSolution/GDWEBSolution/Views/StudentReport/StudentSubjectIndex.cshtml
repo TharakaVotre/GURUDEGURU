@@ -1,0 +1,492 @@
+﻿@{
+    ViewBag.Title = "StudentSubjectIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Student Report</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#Subject" data-toggle="tab" aria-expanded="true">Student's Subjects</a></li>
+                    <li class=""><a href="#ClassStudent" data-toggle="tab" aria-expanded="false">Class Student </a></li>
+                    <li class=""><a href="#ExtraStudent" data-toggle="tab" aria-expanded="false">Extra Curriculer Activity Students</a></li>
+                    <li class=""><a href="#SubStudent" data-toggle="tab" aria-expanded="false">Subject's Students</a></li>
+
+
+                </ul>
+                <br>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in" id="Subject">
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <lable class="col-sm-2 control-label"> Accedamic Year</lable>
+                                    <div class="col-sm-3">
+                                        @Html.TextBox("AccYear", "", new { @class = "form-control" })
+                                        <span class="help-block m-b-none" style="color:red" id="AccYearError"></span>
+                                    </div>
+                                    <lable class="col-sm-2 control-label">Grade</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("GradeId", ViewBag.GradeId as List<SelectListItem>, "", new { @class = "form-control" })
+                                        <span class="help-block m-b-none" id="GradeIdError" style="color:red"></span>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <lable class="col-sm-2 control-label">Class</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                        <span class="help-block m-b-none" id="ClassIdError" style="color:red"></span>
+                                    </div>
+                                    <lable class="col-sm-2 control-label">Student</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("StudentId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                        <span class="help-block m-b-none" id="StudentIdError" style="color:red"></span>
+                                    </div>
+                                        <div class="col-sm-2">
+                                            <button type="submit" style="float:right" onclick="getStudent()" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <br />
+                            <hr />
+                            <div id="SubjectModal">
+                                <div>
+
+                                    <!-- Modal content-->
+                                    <div id="SubjectModelBody">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      
+
+                    <script>
+
+                        var getStudent = function () {
+                            
+                            var AccYear = $('#AccYear');
+                            var GradeId = $('#GradeId');
+                            var ClassId = $('#ClassId');
+                            var StudentId = $('#StudentId');
+                            var errorCal1 = 0;
+                            if (!AccYear.val()) {
+                                $("#AccYearError").text("Required");
+                                errorCal1 = 1;
+                            } else {
+                                $("#AccYearError").text("");
+                            }
+                            if (!GradeId.val()) {
+                                $("#GradeIdError").text("Required");
+                                errorCal1 = 1;
+                            } else {
+                                $("#GradeIdError").text("");
+                            }
+                            if (!ClassId.val()) {
+                                $("#ClassIdError").text("Required");
+                                errorCal1 = 1;
+                            } else {
+                                $("#ClassIdError").text("");
+                            }
+                            if (!StudentId.val()) {
+                                $("#StudentIdError").text("Required");
+                                errorCal1 = 1;
+                            } else {
+                                $("#StudentIdError").text("");
+                            }
+                            if(errorCal1 !=0){
+                                return;
+                            }
+                            var AccYear = document.getElementById("AccYear").value;
+                            var b = document.getElementById("GradeId");
+                            var GradeId = b.options[b.selectedIndex].value;
+                            var c = document.getElementById("StudentId");
+                            var StudentId = c.options[c.selectedIndex].value;
+                            var Url = "/StudentReport/StudentSubject?AccYear=" + AccYear + "&GradeId=" +GradeId+ "&StudentId=" + StudentId;
+                            $("#SubjectModelBody").load(Url, function () {
+                                $("#SubjectModal").data("show");
+                            })
+                        }
+
+
+
+
+
+    $(document).ready(function () {
+        $("#GradeId").change(function () {
+            $("#ClassId").empty();
+            $("#StudentId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getClass")',
+
+                dataType: 'json',
+
+                data: { id: $("#GradeId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#ClassId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+        $("#ClassId").change(function () {
+            $("#StudentId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getStudent")',
+
+                dataType: 'json',
+
+                data: { id: $("#GradeId").val(), cId: $("#ClassId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#StudentId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+    })
+                    </script>
+                <div class="tab-pane fade" id="ClassStudent">
+                    <div id="showgrade">
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <lable class="col-sm-2 control-label">Grade</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("ClassGradeId", ViewBag.GradeId as List<SelectListItem>, "", new { @class = "form-control" })
+                                        <span class="help-block m-b-none" id="ClassGradeIdError" style="color:red"></span>
+                                    </div>
+                                    <lable class="col-sm-2 control-label">Class</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("ClassClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+
+                                    </div>
+                                    
+                                    <div class="col-sm-2">
+                                        <button type="submit" onclick="getClassStudent()" style="float:right" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <br />
+                            <hr />
+                            <div id="ClassModal">
+                                <div>
+
+                                    <!-- Modal content-->
+                                    <div id="ClassModelBody">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <script>
+
+
+                        var getClassStudent = function () {
+                            var ClassGradeId = $('#ClassGradeId');
+                            if (!ClassGradeId.val()) {
+                                $("#ClassGradeIdError").text("Required");
+                                return;
+                            } else {
+                                $("#ClassGradeIdError").text("");
+                            }
+                            var b = document.getElementById("ClassGradeId");
+                            var GradeId = b.options[b.selectedIndex].value;
+                            var c = document.getElementById("ClassClassId");
+                            var classId = c.options[c.selectedIndex].value;
+                            var Url = "/StudentReport/StudentInClass?&ClassId=" + classId + "&GradeId=" + GradeId;
+                            $("#ClassModelBody").load(Url, function () {
+                                $("#ClassModal").data("show");
+                            })
+                        }
+
+
+
+
+
+    $(document).ready(function () {
+        $("#ClassGradeId").change(function () {
+            $("#ClassClassId").empty();
+           
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getClass")',
+
+                dataType: 'json',
+
+                data: { id: $("#ClassGradeId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#ClassClassId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+       
+    })
+                    </script>
+                <div class="tab-pane fade" id="ExtraStudent">
+                    <div id="showHouse">
+                        <div class="panel-body">
+
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                   
+
+                                    <lable class="col-sm-3 control-label">Extra Curriculer Activity</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("ExtraCurriculerActivity", ViewBag.ExtraCurriculerActivity as List<SelectListItem>, "", new { @class = "form-control", required = "required" })
+                                        <span class="help-block m-b-none" id="ExtraCurriculerActivityError" style="color:red"></span>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a class="btn btn-primary" style="float:right" onclick="getExStudent()"><span class="fa fa-search"></span> Search</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="exModal">
+                            <div>
+
+                                <!-- Modal content-->
+                                <div id="exModelBody">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                    <script>
+
+
+                        var getExStudent = function () {
+                            var ExtraCurriculerActivity = $('#ExtraCurriculerActivity')
+                            if (!ExtraCurriculerActivity.val()) {
+                                $("#ExtraCurriculerActivityError").text("Required");
+                                return;
+                            } else {
+                                $("#ExtraCurriculerActivityError").text("");
+                            }
+                           
+                            var c = document.getElementById("ExtraCurriculerActivity");
+                            var ActivityId = c.options[c.selectedIndex].value;
+                            var Url = "/StudentReport/StudentInExtraActivity?ActivityId=" + ActivityId;
+                            $("#exModelBody").load(Url, function () {
+                                $("#exModal").data("show");
+                            })
+                        }
+</script>
+
+
+                <div class="tab-pane fade" id="SubStudent">
+                    <div id="showStudent">
+
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+
+                                    <lable class="col-sm-2 control-label">Grade</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("SubGradeId", ViewBag.GradeId as List<SelectListItem>, "", new { @class = "form-control", required = "required" })
+                                        <span class="help-block m-b-none" id="SubGradeIdError" style="color:red"></span>
+                                    </div>
+                                    <lable class="col-sm-2 control-label">Class</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("SubClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
+                                        <span class="help-block m-b-none" id="SubClassIdError" style="color:red"></span>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    
+
+                                    <lable class="col-sm-2 control-label">Subject</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("SubjectId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
+                                        <span class="help-block m-b-none" id="SubjectIdError" style="color:red"></span>
+                                    </div>
+
+
+                                    <div class="col-sm-5">
+                                        <a class="btn btn-primary" style="float:right" onclick="getSubjectInStudent(1)"><span class="fa fa-search"></span> Search</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="subModal">
+                            <div>
+
+                                <!-- Modal content-->
+                                <div id="subModelBody">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <script>
+
+
+                        var getSubjectInStudent = function () {
+                            var SubGradeId = $('#SubGradeId');
+                            var SubClassId = $('#SubClassId');
+                            var SubjectId = $('#SubjectId');
+                            var errorCal2 = 0;
+                            if (!SubGradeId.val()) {
+                                $("#SubGradeIdError").text("Required");
+                                errorCal2=1;
+                            } else {
+                                $("#SubGradeIdError").text("");
+                            }
+                            if (!SubClassId.val()) {
+                                $("#SubClassIdError").text("Required");
+                                errorCal2 = 1;
+                            } else {
+                                $("#SubClassIdError").text("");
+                            }
+                            if (!SubjectId.val()) {
+                                $("#SubjectIdError").text("Required");
+                                errorCal2 = 1;
+                            } else {
+                                $("#SubjectIdError").text("");
+                            }
+                            if (errorCal2 !=0) {
+                                return;
+                            }
+                           
+                            var a = document.getElementById("SubGradeId");
+                            var GradeId = a.options[a.selectedIndex].value;
+                            var b = document.getElementById("SubClassId");
+                            var ClassId = b.options[b.selectedIndex].value;
+                            var c = document.getElementById("SubjectId");
+                            var SubjectId = c.options[c.selectedIndex].value;
+                            var Url = "/StudentReport/StudentInSubject?GradeId=" + GradeId + "&ClassId=" + ClassId + "&SubjectId=" + SubjectId;
+                            $("#subModelBody").load(Url, function () {
+                                $("#subModal").data("show");
+                            })
+                        }
+
+
+
+    $(document).ready(function () {
+        $("#SubGradeId").change(function () {
+            $("#SubClassId").empty();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getClass")',
+
+                dataType: 'json',
+
+                data: { id: $("#SubGradeId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#SubClassId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+
+        $("#SubGradeId").change(function () {
+            $("#SubjectId").empty();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getSubject")',
+
+                dataType: 'json',
+
+                data: { Gid: $("#SubGradeId").val() },
+
+
+                success: function (subject) {
+
+
+                    $.each(subject, function (i, subject) {
+                        $("#SubjectId").append('<option value="' + subject.Value + '">' +
+                             subject.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+
+    })
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
