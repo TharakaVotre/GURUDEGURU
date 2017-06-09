@@ -687,9 +687,6 @@
     <Compile Include="Models\TimeTable\TimeTableModel.cs" />
     <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Models\User\UserSession.cs" />
-    <Compile Include="MUHandler.ashx.cs">
-      <DependentUpon>MUHandler.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Models\Configuration\Grade SubjectModel.cs" />
     <Compile Include="Models\Maintenance\ApplicationStatusModel.cs" />
     <Compile Include="Models\Maintenance\EventCategoryModel.cs" />
@@ -1084,7 +1081,6 @@
     <Content Include="Scripts\chartData.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\fileinput.js" />
-    <Content Include="MUHandler.ashx" />
     <Content Include="Content\css\rstyle.css" />
     <EntityDeploy Include="Models\DBEntityModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -1147,8 +1143,6 @@
     </Content>
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -1367,6 +1361,8 @@
     <Content Include="Views\Shared\Forbidden.cshtml" />
     <Content Include="Views\Event\Calendar.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\Logout.cshtml" />
+    <Content Include="Views\Home\PasswordChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attachments\" />

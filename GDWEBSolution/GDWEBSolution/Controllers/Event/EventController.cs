@@ -20,8 +20,6 @@ namespace GDWEBSolution.Controllers.Event
 
         UserSession _session = new UserSession();
 
-        //
-        // GET: /Event/
         //[UserFilter(Function_Id = "EVENT2")]
         public ActionResult Index()
         {
@@ -29,6 +27,7 @@ namespace GDWEBSolution.Controllers.Event
             ViewBag.EventList = new SelectList(EventList, "EventCategoryId", "EventCategoryDesc");
             return View();
         }
+
         public ActionResult Calendar()
         {
             return View();
@@ -37,7 +36,6 @@ namespace GDWEBSolution.Controllers.Event
         public ActionResult getEvents()
         {
             var STQlist = Connection.tblEventCalendars.Where(r => r.SchoolId == "CKC").ToList();
-
             List<Events> List = STQlist.Select(x => new Events
             {
                 id = x.EventNo.ToString(),
@@ -61,33 +59,16 @@ namespace GDWEBSolution.Controllers.Event
             return Json(List, JsonRequestBehavior.AllowGet);
         }
 
-        //
-        // GET: /Event/Details/5
-
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        //
-        // GET: /Event/Create
-
-        public ActionResult Create()
-        {
-
-            return Json("", JsonRequestBehavior.AllowGet);
-        }
-
-        //
-        // POST: /Event/Create
-
         [HttpPost]
         public ActionResult Create(EventModel Model)
         {
             try
-            {
-                
-
+            {             
                 if (Model.EventNo == 0)
                 {
                     tblEventCalendar Events = new tblEventCalendar();
@@ -103,6 +84,7 @@ namespace GDWEBSolution.Controllers.Event
 
                     DateTime F = DateTime.Parse(Model.SFromTime);
                     DateTime T = DateTime.Parse(Model.SToTime);
+
                     Events.FromTime = TimeSpan.Parse(F.ToString("HH:mm"));
                     Events.ToTime = TimeSpan.Parse(T.ToString("HH:mm"));
                     Events.IsActive = "Y";
@@ -132,7 +114,6 @@ namespace GDWEBSolution.Controllers.Event
 
                     Connection.SaveChanges();
                 }
-                //return View();
                 return Json("Succsess", JsonRequestBehavior.AllowGet);
             }
             catch (Exception Ex)
@@ -143,43 +124,6 @@ namespace GDWEBSolution.Controllers.Event
             }
         }
 
-        //
-        // GET: /Event/Edit/5
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Event/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Event/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Event/Delete/5
-
         [HttpPost]
         public ActionResult Delete(EventModel Model)
         {
@@ -189,7 +133,6 @@ namespace GDWEBSolution.Controllers.Event
                 Connection.tblEventCalendars.Remove(DEvents);
                 Connection.SaveChanges();
                 return Json(true, JsonRequestBehavior.AllowGet);
-                //return RedirectToAction("Index");
             }
             catch(Exception Ex)
             {

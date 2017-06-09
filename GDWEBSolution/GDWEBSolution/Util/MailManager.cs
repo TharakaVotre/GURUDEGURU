@@ -5,7 +5,10 @@ using System.Linq;
 using System.Net.Mail;
 using System.Web;
 using GDWEBSolution.Models;
-
+/*
+ * Created Date : 2017/6/3
+ * Author : Tharaka Madusanka
+ */
 namespace GDWEBSolution.Util
 {
     public class MailManager
@@ -14,8 +17,7 @@ namespace GDWEBSolution.Util
         public int SendEmail(string To, string Subject, string Body)
         {
             try
-            {
-                
+            {               
                 string DECKey = System.Configuration.ConfigurationManager.AppSettings["DecKey"];
                 var Eresult = Connection.SMGT_GETPasswordChangeEMailConfig().ToList();
 
@@ -60,11 +62,9 @@ namespace GDWEBSolution.Util
             }
             catch (Exception Ex)
             {
-
                 Errorlog.ErrorManager.LogError("Mail Send Faild (MailManager->SendEmail())", Ex);
                 return 0;
             }
-
         }
 
         public static void LogMail(string To,string Code, string Msg)

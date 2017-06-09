@@ -25,14 +25,14 @@
     <script src="~/Scripts/jquery.min.js"></script>
 </head>
 <body>
-        <div class="login-page bk-img img-responsive" style="background-image: url(../img/login-bg.jpg);">
-        <div class="form-content" style="font-family:'Adobe Caslon Pro'">
+    <div class="login-page bk-img img-responsive" style="background-image: url(../img/login-bg.jpg);">
+        <div class="form-content" style="font-family: 'Adobe Caslon Pro'">
             <div class="container">
                 <div class="row">
-                    <div id="Div1" class="col-md-6" style="margin-top:100px;">
-                         <img src="../img/gurugedara.png" class="img-responsive hvr-grow" alt="Cinque Terre"> 
+                    <div id="Div1" class="col-md-6" style="margin-top: 100px;">
+                        <img src="../img/gurugedara.png" class="img-responsive hvr-grow" alt="Cinque Terre">
                     </div>
-                    <div id="loginbox" class="col-md-5" style="padding-left:70px;">
+                    <div id="loginbox" class="col-md-5" style="padding-left: 70px;">
                         <h1 class="text-center text-bold text-light mt-4x">Sign in</h1>
                         <div class="well row pt-2x pb-3x bk-light">
                             <div class="col-md-12">
@@ -40,7 +40,7 @@
 
                                     <label for="" class="text-uppercase text-sm">User name</label>
                                     @*<input type="text" placeholder="Username" class="form-control mb">*@
-                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control mb", @placeholder = "Your User Name" ,})
+                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control mb", @placeholder = "Your User Name", })
 
                                     @Html.ValidationMessageFor(model => model.UserName, null, new { @class = "text-danger" })<br />
 
@@ -59,20 +59,20 @@
 
                                     <button class="btn btn-primary btn-block hvr-icon-down" type="button" onclick="Login();">LOGIN</button>
                                     <br />
-                                    <label for="" id="lblError" class="text-sm" style="color:#f00"></label>
+                                    <label for="" id="lblError" class="text-sm" style="color: #f00"></label>
                                 </form>
                             </div>
                         </div>
                         <div class="text-center text-light">
                             <!--<a href="#" class="hvr-grow">Forgot password?</a>-->
                             <a href="#" class="text-light hvr-bounce-in" onclick="$('#loginbox').hide(); $('#signupbox').show()">Forgot Password
-                                        </a>
+                            </a>
                         </div>
                     </div>
                     <!--				</div>
 
               <div class="row" style="display:none;">-->
-                    <div id="signupbox" class="col-md-5" style="display: none; padding-left:70px;">
+                    <div id="signupbox" class="col-md-5" style="display: none; padding-left: 70px;">
                         <h1 class="text-center text-bold text-light mt-4x">Sign up</h1>
                         <div class="well row pt-2x pb-3x bk-light">
                             <div class="col-md-12">
@@ -85,7 +85,7 @@
 
 
                                     <br />
-                                    <label for="" id="lblFError" class="text-sm" style="color:#f00"></label>
+                                    <label for="" id="lblFError" class="text-sm" style="color: #f00"></label>
 
                                     <button class="btn btn-primary btn-block hvr-icon-down" type="button" onclick="Forgot();">REQUEST CODE</button>
                                 </form>
@@ -93,7 +93,7 @@
                         </div>
                         <div class="text-center text-light">
                             <a href="#" class="text-light" onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign In
-                                        </a>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,7 @@
                 data: myformdata,
                 success: function (result) {
                     if (result == "Succes") {
-                        window.location.href = "/Home/Index";                   
+                        window.location.href = "/Home/Index";
                     }
                     else if (result == "Failed") {
                         $("#lblError").text("Incorrect User Name Or Password");
@@ -164,7 +164,7 @@
         }
 
 
-</script>
+    </script>
 
     <script src="~/Scripts/bootstrap.min.js"></script>
 

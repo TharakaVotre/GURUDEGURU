@@ -28,6 +28,7 @@ namespace GDWEBSolution.Controllers
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
             return View();
         }
+
         public ActionResult Login()
         {
             return View();
@@ -37,6 +38,7 @@ namespace GDWEBSolution.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public JsonResult Login(LoginModel login)
         {
@@ -68,7 +70,7 @@ namespace GDWEBSolution.Controllers
             Session.Abandon();
             Session.Clear();
             Session.RemoveAll();
-            return View("Login");
+            return View();
         }
 
         [HttpPost]
@@ -106,10 +108,12 @@ namespace GDWEBSolution.Controllers
             }
             return r;
         }
+
         public ActionResult Verify()
         {
             return View();
         }
+
         [HttpPost]
         public JsonResult Verify(LoginModel login)
         {
@@ -125,11 +129,13 @@ namespace GDWEBSolution.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult ChangePassword()
         {
             ViewBag.VerifiedUserId = Session["VerifiedUserID"].ToString();
             return View();
         }
+
         [HttpPost]
         public ActionResult ChangePassword(LoginModel login)
         {
@@ -142,10 +148,34 @@ namespace GDWEBSolution.Controllers
                 Usre.Password = pass;
                 Connection.SaveChanges();
                 result = "Success";
-
-                Session.Abandon();
-                Session.Clear();
-                Session.RemoveAll();
+                Session.Remove("VerifiedUserID");
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult PasswordChange()
+        {
+            ViewBag.userId = USession.User_Id;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult PasswordChange(LoginModel login)
+        {
+            string result = "Error";
+            tblUser Usre = Connection.tblUsers.Where(u => u.UserId == USession.User_Id).FirstOrDefault();
+            string oldpass = Encrypt_Decrypt.Encrypt(login.Password, Password);
+            string newpass = Encrypt_Decrypt.Encrypt(login.NewPassword,Password);
+            if (Usre != null)
+            {
+                if (Usre.Password == oldpass)
+                {
+                    Usre.Password = newpass;
+                    Connection.SaveChanges();
+                    result = "Success";
+                }
+                else
+                {
+                    result = "Wrong";
+                }
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -165,27 +195,21 @@ namespace GDWEBSolution.Controllers
             {
                 naviga = "~/App_Data/navigation.xml";
             }
-           
+          
             var xmlData = System.Web.HttpContext.Current.Server.MapPath(naviga);
             if (xmlData == null)
             {
                 throw new ArgumentNullException("xmlData");
             }
-
             var xmldoc = new XmlDataDocument();
-
             var fs = new FileStream(xmlData, FileMode.Open, FileAccess.Read);
             xmldoc.Load(fs);
-
             var xmlnode = xmldoc.GetElementsByTagName("Navigation");
-
             for (var i = 0; i <= xmlnode.Count - 1; i++)
             {
                 var xmlAttributeCollection = xmlnode[i].Attributes;
-
                 if (xmlAttributeCollection != null)
                 {
-                    //var nodeMenu = new MenuItem() { MenuItemName = xmlAttributeCollection["title"].Value; MenuItemPath = xmlAttributeCollection["title"].Value; };
                     var nodeMenu = new MenuItem()
                     {
                         Name = xmlAttributeCollection["title"].Value,
@@ -193,12 +217,10 @@ namespace GDWEBSolution.Controllers
                         Controller = xmlAttributeCollection["controller"].Value,
                         Link = xmlAttributeCollection["url"].Value,
                     };
-
                     if (xmlnode[i].ChildNodes.Count != 0)
                     {
                         for (var j = 0; j < xmlnode[i].ChildNodes.Count; j++)
                         {
-
                            var xmlNode = xmlnode[i].ChildNodes.Item(j);
                             if (xmlNode != null)
                             {
@@ -216,41 +238,10 @@ namespace GDWEBSolution.Controllers
                             }
                         }
                     }
-
                     _menu.Items.Add(nodeMenu);
                 }
             }
-
-            //var _google = new MenuItem()
-            //{
-            //    MenuItemName = "Google",
-            //    MenuItemPath = "http://google.com/",
-            //};
-
-            //_google.ChildMenuItems.Add(new MenuItem()
-            //{
-            //    MenuItemName = "Google Images",
-            //    MenuItemPath = "http://google.com/images/"
-            //});
-
-            //var _bing = new MenuItem()
-            //{
-            //    MenuItemName = "Bing",
-            //    MenuItemPath = "http://bing.com/"
-            //};
-
-            //_bing.ChildMenuItems.Add(new MenuItem()
-            //{
-            //    MenuItemName = "Bing Images",
-            //    MenuItemPath = "http://bing.com/images/"
-            //});
-
-            //_menu.Items.Add(_google);
-            //_menu.Items.Add(_bing);
-
             return PartialView("_Menu", _menu);
         }
-
-
     }
 }

@@ -13,6 +13,12 @@ namespace GDWEBSolution.Models.Home
         [Required(ErrorMessage = "Password  Required")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "New Password  Required")]
+        public string NewPassword { get; set; }
+
+        [Required(ErrorMessage = "Confirm Password  Required")]
+        public string ConfirmPassword { get; set; }
+
         [Required(ErrorMessage = "Email  Required")]
         public string LoginEmail { get; set; }
 
