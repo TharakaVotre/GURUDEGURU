@@ -22,7 +22,7 @@ namespace GDWEBSolution.Controllers.Parent
         {
             var parent = Connection.SMGTGetParent("%", "%");
 
-            List<SMGTGetParent_Result> Parentlist = parent.ToList();
+            List<SMGTGetParent_Result> Parentlist = parent.Where(X=>X.ParentId !=-1).ToList();
             StudentModel schl = new StudentModel();
 
             List<ParentModel> Parenlist = Parentlist.Select(x => new ParentModel
@@ -41,6 +41,7 @@ namespace GDWEBSolution.Controllers.Parent
                 UserId=x.UserId,
                 RelationshipId=x.RelationshipId,
                RelationshipName=x.RelashionshipName,
+               HomeTelephone=x.HomeTelephone,
 
                 IsActive = x.IsActive,
                 ModifiedBy = x.ModifiedBy,

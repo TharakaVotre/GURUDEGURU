@@ -15,15 +15,23 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.ParentName)
-                            </th>
-                            <th>
                                 @Html.DisplayNameFor(model => model.ParentId)
                             </th>
                             <th>
+                                @Html.DisplayNameFor(model => model.ParentName)
+                            </th>
+
+                           
+                          
+                            <th>
                                 @Html.DisplayNameFor(model => model.RelationshipName)
                             </th>
-                            <th>
+                           
+                              
+                             <th>
+                                @Html.DisplayNameFor(model => model.HomeTelephone)
+                            </th>
+                             <th>
                                 @Html.DisplayNameFor(model => model.PersonalEmail)
                             </th>
                             
@@ -36,20 +44,24 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ParentName)
-                                    </td>
-                                    <td>
+                                     <td>
                                         @Html.DisplayFor(modelItem => item.ParentId)
                                     </td>
                                     <td>
+                                        @Html.DisplayFor(modelItem => item.ParentName)
+                                    </td>
+                                   
+                                    <td>
                                         @Html.DisplayFor(modelItem => item.RelationshipName)
+                                    </td>
+                                     <td>
+                                        @Html.DisplayFor(modelItem => item.HomeTelephone)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.PersonalEmail)
                                     </td>
 
-
+                                    
                                
 
                                     <td>
