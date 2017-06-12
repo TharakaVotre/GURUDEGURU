@@ -402,6 +402,9 @@
     <Compile Include="Models\SMGTgetOptionalSubjectadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGTGetParentschildern_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGTgetParentStudentadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
