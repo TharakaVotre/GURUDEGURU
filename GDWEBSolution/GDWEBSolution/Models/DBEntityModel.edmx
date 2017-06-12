@@ -7168,11 +7168,6 @@
             <Parameter Name="ClassId" Mode="In" Type="String" />
             <Parameter Name="SubjectId" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SMGT_UserLogin" ReturnType="Collection(SchoolMGTModel.SMGT_UserLogin_Result)">
-            <Parameter Name="UserId" Mode="In" Type="String" />
-            <Parameter Name="Password" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SMGT_GETPasswordChangeEMailConfig" ReturnType="Collection(SchoolMGTModel.SMGT_GETPasswordChangeEMailConfig_Result)" />
         </EntityContainer>
         <EntityType Name="tblAccadamicYear">
           <Key>
@@ -12124,21 +12119,6 @@
           <Property Type="String" Name="ActivityName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
         </ComplexType>
-        <ComplexType Name="SMGT_UserLogin_Result">
-          <Property Type="String" Name="UserId" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="LoginEmail" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Password" Nullable="false" MaxLength="150" />
-          <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
-          <Property Type="String" Name="UserCategory" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="PersonName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="JobDescription" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Mobile" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
-        </ComplexType>
-        <ComplexType Name="SMGT_GETPasswordChangeEMailConfig_Result">
-          <Property Type="String" Name="ParameterId" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="ParameterValue" Nullable="false" MaxLength="50" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14473,29 +14453,6 @@
           <FunctionImportMapping FunctionImportName="SMGTsetSchoolGrade" FunctionName="SchoolMGTModel.Store.SMGTsetSchoolGrade" />
           <FunctionImportMapping FunctionImportName="SMGTsetStudent" FunctionName="SchoolMGTModel.Store.SMGTsetStudent" />
           <FunctionImportMapping FunctionImportName="SMGTsetStudentOptionalSubject" FunctionName="SchoolMGTModel.Store.SMGTsetStudentOptionalSubject" />
-          <FunctionImportMapping FunctionImportName="SMGT_UserLogin" FunctionName="SchoolMGTModel.Store.SMGT_UserLogin">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGT_UserLogin_Result">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="LoginEmail" ColumnName="LoginEmail" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
-                <ScalarProperty Name="UserCategory" ColumnName="UserCategory" />
-                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
-                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SMGT_GETPasswordChangeEMailConfig" FunctionName="SchoolMGTModel.Store.SMGT_GETPasswordChangeEMailConfig">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGT_GETPasswordChangeEMailConfig_Result">
-                <ScalarProperty Name="ParameterId" ColumnName="ParameterId" />
-                <ScalarProperty Name="ParameterValue" ColumnName="ParameterValue" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
