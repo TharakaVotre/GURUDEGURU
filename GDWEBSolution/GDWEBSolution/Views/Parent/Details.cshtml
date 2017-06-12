@@ -11,7 +11,7 @@
                    <form id="frm1">
                             @Html.AntiForgeryToken()
                             @*<form id="FrmANT" class="form-horizontal">*@
-                       <div class="form-horizontal">
+                       <Div class="form-horizontal">
 
 
                            @*<form id="FrmANT" action="/School/Create"
@@ -28,19 +28,17 @@
                     <span class="help-block m-b-none" id="CategoryNameError"></span>
                     @Html.ValidationMessageFor(model => model.SchoolId, null, new { @class = "text-danger" })
                 </div>
-            </div>*@
+            </div>*@<Div class="col-sm-8">
 
                            <div class="form-group">
                                @Html.LabelFor(m => m.ParentName, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-8">
-                                   @Html.TextBoxFor(model => model.ParentName, new { @class = "form-control", @placeholder = "School Name" })
+                                   @Html.TextBoxFor(model => model.ParentName, new { @class = "form-control", @placeholder = "School Name", @readonly = "readonly" })
 
                                    
                                </div>
 
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.ParentName, null, new { @class = "text-danger" })
-                               </div>
+                              
                            </div>
 
 
@@ -50,13 +48,20 @@
                            <div class="form-group">
                                @Html.LabelFor(m => m.RelationshipId, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-8">
-                                   @Html.TextBoxFor(model => model.RelationshipId, new { @class = "form-control", @placeholder = "School Name" })
+                                   @Html.TextBoxFor(model => model.RelationshipName, new { @class = "form-control", @placeholder = "School Name", @readonly = "readonly" })
                                    
                                 
                                </div>
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.RelationshipId, null, new { @class = "text-danger" })
+                              
+                           </div>
+                            <div class="form-group">
+                               @Html.LabelFor(m => m.Children, new { @class = "col-sm-2 control-label" })
+                               <div class="col-sm-8">
+                                   @Html.TextBoxFor(model => model.Children, new { @class = "form-control", @placeholder = "Children", @readonly = "readonly" })
+                                   
+                                
                                </div>
+                              
                            </div>
 
 
@@ -65,69 +70,56 @@
                            <div class="form-group">
                                @Html.LabelFor(m => m.Address1, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-6">
-                                   @Html.TextBoxFor(model => model.Address1, new { @class = "form-control input-lg mb", @placeholder = "Address " })
-                                   @Html.TextBoxFor(model => model.Address2, new { @class = "form-control mb", @placeholder = "Address **" })
-                                   @Html.TextBoxFor(model => model.Address3, new { @class = "form-control input-sm", @placeholder = "Address **" })
+                                   @Html.TextBoxFor(model => model.Address1, new { @class = "form-control input-lg mb", @placeholder = "Address ", @readonly = "readonly" })
+                                   @Html.TextBoxFor(model => model.Address2, new { @class = "form-control mb", @placeholder = "Address **", @readonly = "readonly" })
+                                   @Html.TextBoxFor(model => model.Address3, new { @class = "form-control input-sm", @placeholder = "Address **", @readonly = "readonly" })
 
                                </div>
 
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.Address1, null, new { @class = "text-danger" })
-                               </div>
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.Address2, null, new { @class = "text-danger" })
-                               </div>
+                             
                            </div>
 
                            <div class="form-group">
                                @Html.LabelFor(m => m.HomeTelephone, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-4">
-                                   @Html.TextBoxFor(model => model.HomeTelephone, new { @class = "form-control", @placeholder = "Telephone No" })
+                                   @Html.TextBoxFor(model => model.HomeTelephone, new { @class = "form-control", @placeholder = "Telephone No", @readonly = "readonly" })
 
                                </div>
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.HomeTelephone, null, new { @class = "text-danger" })
-                               </div>
+                              
                            </div>
                            <div class="form-group">
                                @Html.LabelFor(m => m.PersonalEmail, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-4">
-                                   @Html.TextBoxFor(model => model.PersonalEmail, new { @class = "form-control", @placeholder = "Telephone No" })
+                                   @Html.TextBoxFor(model => model.PersonalEmail, new { @class = "form-control", @placeholder = "Telephone No", @readonly = "readonly" })
 
                                </div>
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.PersonalEmail, null, new { @class = "text-danger" })
-                               </div>
+                              
                            </div>
                            <div class="form-group">
                                @Html.LabelFor(m => m.PersonalMobile, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-4">
-                                   @Html.TextBoxFor(model => model.PersonalMobile, new { @class = "form-control", @placeholder = "Telephone No" })
+                                   @Html.TextBoxFor(model => model.PersonalMobile, new { @class = "form-control", @placeholder = "Telephone No", @readonly = "readonly" })
 
                                </div>
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.PersonalMobile, null, new { @class = "text-danger" })
-                               </div>
+                              
                            </div>
 
                            <div class="form-group">
                                @Html.LabelFor(m => m.Occupation, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-4">
-                                   @Html.TextBoxFor(model => model.Occupation, new { @class = "form-control", @placeholder = "Telephone No" })
+                                   @Html.TextBoxFor(model => model.Occupation, new { @class = "form-control", @placeholder = "Telephone No", @readonly = "readonly" })
 
                                </div>
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.Occupation, null, new { @class = "text-danger" })
-                               </div>
+                             
                            </div>
 
 
                            <div class="form-group">
                                @Html.LabelFor(m => m.Address1, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-6">
-                                   @Html.TextBoxFor(model => model.OfficeAddress1, new { @class = "form-control input-lg mb", @placeholder = "Address " })
-                                   @Html.TextBoxFor(model => model.OfficeAddress2, new { @class = "form-control mb", @placeholder = "Address **" })
-                                   @Html.TextBoxFor(model => model.OfficeAddress3, new { @class = "form-control input-sm", @placeholder = "Address **" })
+                                   @Html.TextBoxFor(model => model.OfficeAddress1, new { @class = "form-control input-lg mb", @placeholder = "Address ", @readonly = "readonly" })
+                                   @Html.TextBoxFor(model => model.OfficeAddress2, new { @class = "form-control mb", @placeholder = "Address **", @readonly = "readonly" })
+                                   @Html.TextBoxFor(model => model.OfficeAddress3, new { @class = "form-control input-sm", @placeholder = "Address **", @readonly = "readonly" })
 
                                </div>
 
@@ -137,46 +129,38 @@
                            <div class="form-group">
                                @Html.LabelFor(m => m.OfficePhone, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-8">
-                                   @Html.TextBoxFor(model => model.OfficePhone, new { @class = "form-control", @placeholder = "School Name" })
+                                   @Html.TextBoxFor(model => model.OfficePhone, new { @class = "form-control", @placeholder = "School Name", @readonly = "readonly" })
 
                                    <span class="help-block m-b-none" id="CategoryNameError"></span>
                                </div>
 
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.OfficePhone, null, new { @class = "text-danger" })
-                               </div>
+                             
                            </div>
 
                            <div class="form-group">
                                @Html.LabelFor(m => m.officeEmail, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-4">
-                                   @Html.TextBoxFor(model => model.officeEmail, new { @class = "form-control", @placeholder = "Telephone No" })
+                                   @Html.TextBoxFor(model => model.officeEmail, new { @class = "form-control", @placeholder = "Telephone No", @readonly = "readonly" })
 
                                </div>
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.officeEmail, null, new { @class = "text-danger" })
-                               </div>
+                              
                            </div>
 
                            <div class="form-group">
                                @Html.LabelFor(m => m.NIC, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-4">
-                                   @Html.TextBoxFor(model => model.NIC, new { @class = "form-control", @placeholder = "Telephone No" })
+                                   @Html.TextBoxFor(model => model.NIC, new { @class = "form-control", @placeholder = "Telephone No", @readonly = "readonly" })
 
                                </div>
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.NIC, null, new { @class = "text-danger" })
-                               </div>
+                               
                            </div>
                            <div class="form-group">
                                @Html.LabelFor(m => m.DateofBirth, new { @class = "col-sm-2 control-label" })
                                <div class="col-sm-4">
-                                   @Html.TextBoxFor(model => model.DateofBirth, new { @class = "form-control", @placeholder = "Telephone No" })
+                                   @Html.TextBoxFor(model => model.datetimestring, new { @class = "form-control", @placeholder = "Not Given", @readonly = "readonly" })
 
                                </div>
-                               <div class="col-sm-2">
-                                   @Html.ValidationMessageFor(model => model.DateofBirth, null, new { @class = "text-danger" })
-                               </div>
+                              
                            </div>
                            
 
@@ -217,13 +201,23 @@
 
 
 
-                           <div class="form-group">
-                               <div class="col-sm-8 col-sm-offset-2">
-                                   @*<button class="btn btn-default" type="submit">Cancel</button>*@
-                                   @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
-                                   <button type="submit" id="btnSubmit" onclick="" class="btn btn-primary"><span class="fa fa-bookmark"></span> Continue</button>
-                               </div>
+                           <div class="col-sm-3" style="float:right">
+
+                               <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="glyphicon glyphicon-step-backward"></span> Back</button>
+
+
+                               @* <a href="#" id="btnSubmit" class="btn btn-success btn-block">@if(Model.EmployeeId>0){<span>Update</span> }else{<span>Save</span>} </a>*@
                            </div>
+
+                           </Div>
+                           <Div class="col-sm-4">
+
+                                <img src="@Url.Content(Model.ImagePath)"  alt="Image" style="height:40%;width:40%;margin-left:20%" />
+
+                           </Div>
+
+
+
                        </div>
                         </form>
                         @*</form>*@
@@ -234,3 +228,14 @@
         </div>
     </div>
 </div>
+<script>
+
+
+
+    var ShowView = function (bookid) {
+        var Url = "/Parent/Index";
+        window.location.href = Url;
+    }
+
+
+</script>

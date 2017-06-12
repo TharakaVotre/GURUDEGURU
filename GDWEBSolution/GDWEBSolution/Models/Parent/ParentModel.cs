@@ -18,26 +18,29 @@ namespace GDWEBSolution.Models.Parent
         public string StudentId { get; set; }
 
 
-        [Display(Name = "Student Name")]
+        [Display(Name = "Student ")]
         public string StudentId1 { get; set; }
+
+        [Display(Name = "Student Names")]
+        public string ParentStudent { get; set; }
 
         [Display(Name = "User Name")]
     
         public string UserId { get; set; }
 
 
-        [Display(Name = "Class Name")]
+        [Display(Name = "Class ")]
         public string ClassId { get; set; }
 
-        [Display(Name = "Grade Name")]
+        [Display(Name = "Grade ")]
         public string GradeId { get; set; }
 
-        [Display(Name = "School Name")]
+        [Display(Name = "School ")]
 
         public string SchoolId { get; set; }
 
 
-        [Display(Name = "School Name")]
+        [Display(Name = "School ")]
 
         public string SchoolName { get; set; }
 
@@ -46,16 +49,16 @@ namespace GDWEBSolution.Models.Parent
     
         public string ParentName { get; set; }
 
-                [Display(Name = "Parent Id")]
+                [Display(Name = "Parent ")]
 
         public string ParentId { get; set; }
 
 
-        [Display(Name = "Relationship Name")]
+        [Display(Name = "Relationship ")]
       
         public int RelationshipId { get; set; }
 
-        [Display(Name = "Relationship Name")]
+        [Display(Name = "Relationship")]
 
         public string RelationshipName { get; set; }
 
@@ -111,6 +114,14 @@ namespace GDWEBSolution.Models.Parent
             public string OfficeAddress1 { get; set; }
 
 
+            [Display(Name = "Children/Child")]
+
+            public string Children { get; set; }
+
+
+            public string datetimestring { get; set; }
+
+
 
 
 
@@ -139,7 +150,7 @@ namespace GDWEBSolution.Models.Parent
 
 
 
-            [Display(Name = "Identy Card No")]
+            [Display(Name = "NIC")]
             public string NIC { get; set; }
         [Display(Name = "Password")]
             [DataType(DataType.Password)]

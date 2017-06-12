@@ -30,6 +30,8 @@
                             @*<form id="FrmANT" class="form-horizontal">*@
                             <div class="form-horizontal">
 
+                                 <div class="col-sm-8">
+
 
                                 @*<form id="FrmANT" action="/School/Create"
                                     enctype="multipart/form-data"
@@ -47,6 +49,8 @@
                                         </div>
                                     </div>*@
 
+
+
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-6">
@@ -55,10 +59,7 @@
                                      
                                     </div>
 
-                                    <div class="col-sm-3">
-                                        <img src="@Url.Content(Model.ImagePathname)" alt="Image" style="height:40%;width:40%;margin-left:70%" />
-
-                                    </div>
+                                   
                                 </div>
 
                                 <div class="form-group">
@@ -85,7 +86,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
-                                        @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", @placeholder = "Date of Birth", @readonly = "readonly" })
+                                        @Html.TextBoxFor(model => model.datetimestring, new { @class = "form-control", @placeholder = "Date of Birth", @readonly = "readonly" })
                                       
                                     </div>
                                 </div>
@@ -117,13 +118,16 @@
                                 </div>
 
 
+</div>
 
 
+                                 
 
 
+                                <div class="col-sm-3">
+                                        <img src="@Url.Content(Model.ImagePathname)" alt="Image" style="height:40%;width:40%;margin-left:70%" />
 
-
-
+                                    </div>
 
 
 

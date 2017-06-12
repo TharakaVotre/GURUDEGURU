@@ -24,6 +24,7 @@
 </Navigation>
   <Navigation title="School" action="#" controller="#" url="School/Index" ></Navigation>
   <Navigation title="Student" action="#" controller="#" url="Student/Index" ></Navigation>
+  <Navigation title="Parent" action="#" controller="#" url="Parent/Index" ></Navigation>
   <Navigation title="Optional Subjects" action="#" controller="#" url="StudentOptionalSubject/Index" ></Navigation>
 <Navigation title="Home Work" action="#" controller="#" url="#">
 <Child title="Home Work" action="Index" controller="HomeWork" url="#"/>

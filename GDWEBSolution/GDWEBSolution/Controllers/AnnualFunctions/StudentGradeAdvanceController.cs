@@ -40,7 +40,7 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
         {
             try
             {
-                tblParameter Ttable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "AY");
+                tblAccadamicYear Ttable = Connection.tblAccadamicYears.SingleOrDefault(x => x.SchoolId == SchoolId);
                 
                 Dropdownlistdata(SchoolId);
                
@@ -66,8 +66,8 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
                 ViewBag.CurentClass = classtable.ClassName;
 
                
-                ViewBag.ParameterAcedamicYear = Ttable.ParameterValue;
-                if (Ttable.ParameterValue != AcedamicYear)
+                ViewBag.ParameterAcedamicYear = Ttable.AccadamicYear;
+                if (Ttable.AccadamicYear != AcedamicYear)
                 {
                     ViewBag.ErrorMsg = false;
                 }
@@ -198,8 +198,41 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
 
 
             return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
-        }  
-    
+        }
+
+
+
+        public ActionResult UpdateAccedemicYear()
+        {
+            try
+            {
+                tblAccadamicYear Ttable = Connection.tblAccadamicYears.SingleOrDefault(x => x.SchoolId == SchoolId);
+                ViewBag.AccYear = Ttable.AccadamicYear;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+            }
+        }
+        [HttpPost]
+
+        public ActionResult UpdateAccYear(string AccYear)
+        {
+            try
+            {
+                Connection.GDModifySchoolAccademicYear(SchoolId,AccYear);
+                return RedirectToAction("UpdateAccedemicYear");
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+            }
+        }
+
+
     }
 }
       

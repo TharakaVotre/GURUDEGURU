@@ -249,26 +249,6 @@ namespace GDWEBSolution.Controllers.Evaluation
             }
         }
 
-        //public ActionResult ShowEvaluation(string SchoolId)
-        //{
-        //    var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
-
-        //    List<SchoolGradeModel> List = STQlist.Select(x => new SchoolGradeModel
-        //    {
-
-        //        SchoolId = x.SchoolId,
-        //        GradeId = x.GradeId,
-        //        SchoolName = x.SchoolName,
-        //        GradeName = x.GradeName,
-
-        //        IsActive = x.IsActive,
-
-
-        //    }).ToList();
-        //    return PartialView("GradeList", List);
-        //}
-
-
         public ActionResult ShowEvaluation(string SchoolId)
         {
             var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
@@ -292,12 +272,12 @@ namespace GDWEBSolution.Controllers.Evaluation
             {
 
                 SchoolId = x.SchoolId,
-                EvaluationType = x.EvaluationType,
-                EvaluationDescription = x.EvaluationDescription
+                EvaluationType=x.EvaluationType,
+                EvaluationDescription=x.EvaluationDescription
+            
+               
 
-
-
-
+            
 
 
             }).ToList();
@@ -307,15 +287,16 @@ namespace GDWEBSolution.Controllers.Evaluation
 
 
 
-        public ActionResult ShowEvaluationw()
+        public ActionResult ShowEvaluationI()
         {
-            var STQlist = Connection.SMGTgetSchoolGradeadd(SessionSchool).ToList();
+            string SchoolId = SessionSchool;
+
+            var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
 
             var tableevaluation = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" && X.SchoolId == SessionSchool);
 
             List<SchoolGradeModel> List = STQlist.Select(x => new SchoolGradeModel
             {
-
 
                 SchoolId = x.SchoolId,
                 GradeId = x.GradeId,
@@ -329,7 +310,7 @@ namespace GDWEBSolution.Controllers.Evaluation
 
             List<EvaluationModel> Liste = tableevaluation.Select(x => new EvaluationModel
             {
-
+                EvaluationNo=x.EvaluationNo,
 
                 SchoolId = x.SchoolId,
                 EvaluationType = x.EvaluationType,
@@ -342,53 +323,7 @@ namespace GDWEBSolution.Controllers.Evaluation
 
             }).ToList();
             //return PartialView("GradeList", List);
-            return PartialView("EvaluationList", Liste);
-        }
-
-
-        [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult GetEvaluationDropdown()
-        {
-                   List<tblEvaluationHeader> evallist = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" &&X.SchoolId==SessionSchool).ToList();
-
-            ViewBag.EvaluationDrpDown = new SelectList(evallist, "EvaluationNo", "EvaluationDescription");
-
-
-
-            if (String.IsNullOrEmpty(SessionSchool))
-            {
-                throw new ArgumentNullException("countryId");
-            }
-            //int id = 0;
-            //bool isValid = Int32.TryParse(SchoolId, out id);
-
-
-
-
-
-            //  var StudentSextra = Connection.SMGTloadScholExtraCadd(SchoolId, "%").ToList();
-
-            var result2 = (from s in evallist
-                           select new
-                           {
-                               EvaluationNo = s.EvaluationNo,
-                               EvaluationDescription = s.EvaluationDescription
-
-
-                           }).ToList();
-
-
-
-            //   ViewBag.excdropdown = new SelectList(excList2, "ActivityCode", "ActivityName");
-
-            //var states = _repository.GetAllStatesByCountryId(id);
-            //var result = (from s in states
-            //              select new
-            //              {
-            //                  id = s.Id,
-            //                  name = s.Name
-            //              }).ToList();
-            return Json(result2, JsonRequestBehavior.AllowGet);
+            return View("EvaluationList", Liste);
         }
 
 
@@ -466,7 +401,13 @@ namespace GDWEBSolution.Controllers.Evaluation
 
                 for (int i = 0; i < chooseRecipient.Length; i++)
                 {
-                    string classname = chooseRecipient[i];
+
+                    var a = chooseRecipient[i].Split('!');
+
+                    string classname = a[0];
+                    Model.Grade = a[1];
+
+
 
                     var count = Connection.tblEvaluationDetails.Count(u => u.Class == classname && u.EvaluationNo == Model.EvaluationNo);
 
@@ -586,5 +527,53 @@ namespace GDWEBSolution.Controllers.Evaluation
                 return View();
             }
         }
+
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult GetSchoolgrdclass(string SchoolId, string GradeId)
+        {
+            if (String.IsNullOrEmpty(SchoolId))
+            {
+                throw new ArgumentNullException("countryId");
+            }
+            //int id = 0;
+            //bool isValid = Int32.TryParse(SchoolId, out id);
+
+            var SchoolClass = Connection.SMGTgetGradeclassadd(SchoolId, GradeId).ToList();//Need to Pass a Session Schoolid
+
+
+
+
+
+            //  var StudentSextra = Connection.SMGTloadScholExtraCadd(SchoolId, "%").ToList();
+
+            var result2 = (from s in SchoolClass
+                           select new
+                           {
+                               ClassId = s.ClassId+"!"+s.GradeId,
+                               ClassName = s.ClassName,
+                               GradeName=s.GradeName
+
+
+                           }).ToList();
+
+
+
+            //   ViewBag.excdropdown = new SelectList(excList2, "ActivityCode", "ActivityName");
+
+            //var states = _repository.GetAllStatesByCountryId(id);
+            //var result = (from s in states
+            //              select new
+            //              {
+            //                  id = s.Id,
+            //                  name = s.Name
+            //              }).ToList();
+            return Json(result2, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
     }
 }

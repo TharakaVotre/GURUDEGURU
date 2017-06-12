@@ -37,6 +37,7 @@ namespace GDWEBSolution.Models.Student
         [Display(Name = "Date of Birth *")]
         public Nullable<System.DateTime> DateOfBirth { get; set; }
 
+        public string datetimestring { get; set; }
         [Display(Name = "Student Image")]
         [ValidateFile]
         public HttpPostedFileBase StudentImageFile { get; set; }

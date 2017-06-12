@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using GDWEBSolution.Models.Schools;
 using System.IO;
 using GDWEBSolution.Models.Teacher;
+using GDWEBSolution.Models.Student;
 //DBEntityModel.edmx
 //SchoolMGTEntitiesConnectionString
 namespace GDWEBSolution.Controllers
@@ -96,14 +97,15 @@ namespace GDWEBSolution.Controllers
             TModel.Province = TCtable.Province;
             TModel.ImagePath = TCtable.ImagePath;
             TModel.LogoPath = TCtable.LogoPath;
-            if (TCtable.ImagePath == null ) { 
-            
-            TModel.ImagePath="~/Uploads/Schools/Logo/logo.png";
-            }
-            if (TCtable.LogoPath == null)
+            if (TCtable.ImagePath == null || TCtable.ImagePath=="")
             {
 
-                TModel.LogoPath = "~/Uploads/Schools/Logo/logo.png";
+                TModel.ImagePath = "~/Uploads/Schools/Logo/no_image.jpg";
+            }
+            if (TCtable.LogoPath == null || TCtable.LogoPath=="")
+            {
+
+                TModel.LogoPath = "~/Uploads/Schools/Logo/no_image.jpg";
             }
             academicyear();
             
@@ -871,12 +873,13 @@ namespace GDWEBSolution.Controllers
              Model.SchoolId = SchoolId;
              return PartialView("DeleteSchoolSubjects", Model);
          }
-         public ActionResult Deletescexc(string SchoolId, string ActivityCode,string ActivityName)
+         public ActionResult Deletescexc(string SchoolId, string ActivityCode)
          {
              SchoolExtraModel Model = new SchoolExtraModel();
              Model.ActivityCode = ActivityCode;
              Model.SchoolId = SchoolId;
-             Model.ActivityName = ActivityName;
+         
+
              return PartialView("DeleteSchoolEXactvity", Model);
          }
          public ActionResult DeleteHouse(string HouseId, string SchoolId)
@@ -938,6 +941,15 @@ namespace GDWEBSolution.Controllers
                  tblSchoolExtraCurricularActivity Tble = Connection.tblSchoolExtraCurricularActivities.Find(Model.SchoolId, Model.ActivityCode);
                  Connection.tblSchoolExtraCurricularActivities.Remove(Tble);
                  Connection.SaveChanges();
+                 Connection.SMGTdeleteextraCstudent(Model.SchoolId, Model.ActivityCode);
+                 Connection.SaveChanges();
+
+                 var item = Connection.tblStudentExtraCurricularActivities.FirstOrDefault(i => i.SchoolId == Model.SchoolId && i.ActivityCode == Model.ActivityCode);
+
+                 //tblStudentExtraCurricularActivity Tblew = Connection.tblStudentExtraCurricularActivities.Find(item.ActivityCode);
+
+                 //Connection.tblStudentExtraCurricularActivities.Remove(Tblew);
+               //  Connection.SaveChanges();
 
 
                  return Json(Model.SchoolId, JsonRequestBehavior.AllowGet);

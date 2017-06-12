@@ -1,0 +1,54 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Maintenance.SubjectModel>
+@{
+    ViewBag.Title = "AttentionRequiredSubjectsSchool";
+ }
+<div>
+    <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SubjectId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShortName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SubjectName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Optional)
+                </th>
+           
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubjectId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShortName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubjectName)
+                    </td>
+                    <td>
+                        @if(item.Optional=="N"){<div>Compulsary</div>}
+                        else
+                        {<div>Optional</div>}
+                        
+
+                    </td>
+                   
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+
+</div>

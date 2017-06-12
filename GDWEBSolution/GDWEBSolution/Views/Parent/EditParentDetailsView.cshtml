@@ -1,0 +1,210 @@
+﻿@model GDWEBSolution.Models.Parent.ParentModel
+
+<form id="FrmEDITP" class="form-horizontal">
+
+    <div class="hr-dashed"></div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ParentName, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-8">
+            @Html.HiddenFor(m => m.ParentId)
+            @Html.TextBoxFor(model => model.ParentName, new { @class = "form-control", @placeholder = "School Name" })
+
+            <span class="help-block m-b-none" id="CategoryNameError"></span>
+        </div>
+
+        <div class="col-sm-2">
+            @Html.ValidationMessageFor(model => model.ParentName, null, new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.RelationshipId, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-8">
+
+            @Html.DropDownListFor(model => model.RelationshipId, ViewBag.RelationshipList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+            <span class="help-block m-b-none" id="CategoryNameError"></span>
+        </div>
+        <div class="col-sm-2">
+            @Html.ValidationMessageFor(model => model.RelationshipId, null, new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address1, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-6">
+            @Html.TextBoxFor(model => model.Address1, new { @class = "form-control input-lg mb", @placeholder = "Address " })
+            @Html.TextBoxFor(model => model.Address2, new { @class = "form-control mb", @placeholder = "Address **" })
+            @Html.TextBoxFor(model => model.Address3, new { @class = "form-control input-sm", @placeholder = "Address **" })
+
+        </div>
+
+        <div class="col-sm-2">
+            @Html.ValidationMessageFor(model => model.Address1, null, new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-2">
+            @Html.ValidationMessageFor(model => model.Address2, null, new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.HomeTelephone, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(model => model.HomeTelephone, new { @class = "form-control", @placeholder = "Telephone No" })
+
+        </div>
+        <div class="col-sm-2">
+            @Html.ValidationMessageFor(model => model.HomeTelephone, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PersonalEmail, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(model => model.PersonalEmail, new { @class = "form-control", @placeholder = "Telephone No" })
+            <div class="col-sm-12">
+                @Html.ValidationMessageFor(model => model.PersonalEmail, null, new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PersonalMobile, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(model => model.PersonalMobile, new { @class = "form-control", @placeholder = "Telephone No" })
+
+        </div>
+        <div class="col-sm-2">
+            @Html.ValidationMessageFor(model => model.PersonalMobile, null, new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Occupation, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(model => model.Occupation, new { @class = "form-control", @placeholder = "Telephone No" })
+
+        </div>
+        <div class="col-sm-2">
+            @Html.ValidationMessageFor(model => model.Occupation, null, new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.OfficeAddress1, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-6">
+            @Html.TextBoxFor(model => model.OfficeAddress1, new { @class = "form-control input-lg mb", @placeholder = "Address " })
+            @Html.TextBoxFor(model => model.OfficeAddress2, new { @class = "form-control mb", @placeholder = "Address **" })
+            @Html.TextBoxFor(model => model.OfficeAddress3, new { @class = "form-control input-sm", @placeholder = "Address **" })
+
+        </div>
+
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.OfficePhone, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-8">
+            @Html.TextBoxFor(model => model.OfficePhone, new { @class = "form-control", @placeholder = "School Name" })
+
+            <span class="help-block m-b-none" id="CategoryNameError"></span>
+        </div>
+
+        <div class="col-sm-2">
+            @Html.ValidationMessageFor(model => model.OfficePhone, null, new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.officeEmail, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(model => model.officeEmail, new { @class = "form-control", @placeholder = "Telephone No" })
+
+        </div>
+        <div class="col-sm-2">
+            @Html.ValidationMessageFor(model => model.officeEmail, null, new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.NIC, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(model => model.NIC, new { @class = "form-control", @placeholder = "Telephone No" })
+
+        </div>
+        <div class="col-sm-2">
+            @Html.ValidationMessageFor(model => model.NIC, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateofBirth, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(model => model.DateofBirth, new { @class = "form-control", @placeholder = "Telephone No" })
+
+        </div>
+        <div class="col-sm-2">
+            @Html.ValidationMessageFor(model => model.DateofBirth, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.File, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.File, new { type = "file", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.File, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="hr-dashed"></div>
+    <div class="form-group">
+        <div class="col-sm-8 col-sm-offset-2">
+            <button type="button" value="Save" id="btnEditParent" onclick="EditParent()" class="btn btn-primary"><span class="fa fa-bookmark"></span>Save</button>
+            <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Back</button>
+        </div>
+    </div>
+
+
+
+</form>
+
+
+<script>
+    var EditParent = function () {
+        debugger
+        var myformdata = $("#FrmEDITP").serialize();
+        if (!$("#FrmEDITP").valid()) {
+            return;
+        }
+        $("#btnEditParent").prop('value', 'Saving Details ...');
+        $.ajax({
+
+            type: "POST",
+            url: "/Parent/EditParentDetails",
+            data: myformdata,
+            success: function (result) {
+                if (result != "Error") {
+                    $("#SuccesLable").text("Parent Details Changed Succesfully");
+                    $("#SuccesModel").modal("show");
+                }
+                else {
+                    $("#ErrorLable").text("Error Occured When Changing Please Try Again Later");
+                    $("#myModal").modal("show");
+                }
+            }
+        })
+    }
+
+    var ShowView = function (bookid) {
+        var Url = "/Parent/Index";
+        window.location.href = Url;
+    }
+</script>

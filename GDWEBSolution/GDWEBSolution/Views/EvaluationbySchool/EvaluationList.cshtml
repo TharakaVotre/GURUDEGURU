@@ -1,18 +1,20 @@
 ﻿@model IEnumerable<GDWEBSolution.Models.Evaluation.EvaluationModel>
 <div class="row">
+
+    <h3>School Evaluation</h3>
     <div class="col-md-12">
        
         <!-- Zero Configuration Table -->
         <div class="panel panel-default">
+            <div class="panel-heading">
+                <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button>
+            </div>
           
             @*<div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView2(1)"><span class="fa fa-plus"></span> Add file</button></div>*@
             <div class="panel-body">
                 <table id="zctb" class="display table table-bordered table-hover" >
                     <thead>
                         <tr>
-
-
-
                             <th>
                                 @Html.DisplayNameFor(model => model.EvaluationType)
                             </th>
@@ -35,10 +37,8 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-
-
                                     <td>
-                                         @Html.HiddenFor(modelItem => item.SchoolId)
+                                        @Html.HiddenFor(modelItem => item.EvaluationNo)
                                         @Html.DisplayFor(modelItem => item.EvaluationType)
                                     </td>
                                     <td>
