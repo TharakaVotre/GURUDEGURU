@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using GDWEBSolution.Models.Message;
 using System.IO;
 using System.Transactions;
+using GDWEBSolution.Models.User;
+using GDWEBSolution.Filters;
 /* ===============================
  * AUTHOR     : G.M. Tharaka Madusanka
  * CREATE DATE     : May 5 2017
@@ -18,25 +20,23 @@ namespace GDWEBSolution.Controllers.Message
         //
         // GET: /SPMessage/
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
+        UserSession _session = new UserSession();
+
+        [UserFilter(Function_Id = "SPMSi")]
         public ActionResult Index()
         {
             return View();
         }
-
-        //
-        // GET: /SPMessage/Details/5
 
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        //
-        // GET: /SPMessage/Create
-
+        [UserFilter(Function_Id = "SPNMG")]
         public ActionResult NewMessage()
         {
-            var SchoolGrade = Connection.SMGTgetSchoolGrade("CKC").ToList();//Need to Pass a Session Schoolid
+            var SchoolGrade = Connection.SMGTgetSchoolGrade(_session.School_Id).ToList();//Need to Pass a Session Schoolid
             List<tblGrade> SchoolGradeList = SchoolGrade.Select(x => new tblGrade
             {
                 GradeId = x.GradeId,
@@ -45,7 +45,7 @@ namespace GDWEBSolution.Controllers.Message
 
             }).ToList();
             ViewBag.SchoolGrades = new SelectList(SchoolGradeList, "GradeId", "GradeName");
-            List<SMGT_getSchoolExactivity_Result> ex = Connection.SMGT_getSchoolExactivity("CKC").ToList();//Need to Pass a Session Schoolid
+            List<SMGT_getSchoolExactivity_Result> ex = Connection.SMGT_getSchoolExactivity(_session.School_Id).ToList();//Need to Pass a Session Schoolid
 
             ViewBag.SchoolExactivity = new SelectList(ex, "ActivityCode", "ActivityName");
 
@@ -64,9 +64,6 @@ namespace GDWEBSolution.Controllers.Message
             return View();
         }
 
-        //
-        // POST: /SPMessage/Create
-
         [HttpPost]
         public ActionResult NewMessage(StoPMessageHeaderModel Model)
         {
@@ -78,10 +75,10 @@ namespace GDWEBSolution.Controllers.Message
                     try
                     {
                         tblSchoolToParentMessageHeader MsgHead = new tblSchoolToParentMessageHeader();
-                        MsgHead.SchoolId = "CKC";
+                        MsgHead.SchoolId = _session.School_Id;
                         MsgHead.MessageId = Model.MessageId;
                         MsgHead.Message = Model.Message.Replace("\r\n", "<br />");
-                        MsgHead.CreatedBy = "ADMIN";
+                        MsgHead.CreatedBy = _session.User_Id;
                         MsgHead.CreatedDate = DateTime.Now;
                         MsgHead.MessageType = Model.MessageType;
                         MsgHead.IsActive = "Y";
@@ -95,12 +92,12 @@ namespace GDWEBSolution.Controllers.Message
                             for (int i = 0; i < Model.ParentIdArray.Length; i++)
                             {
                                 tblSchoolToParentMessageDetail MsgDetail = new tblSchoolToParentMessageDetail();
-                                MsgDetail.SchoolId = "CKC";
+                                MsgDetail.SchoolId = _session.School_Id;
                                 MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
                                 MsgDetail.ParentId = Model.ParentIdArray[i];
                                 MsgDetail.IsActive = "Y";
                                 MsgDetail.Status = "N";
-                                MsgDetail.CreatedBy = "ADMIN";
+                                MsgDetail.CreatedBy = _session.User_Id;
                                 MsgDetail.CreatedDate = DateTime.Now;
                                 Connection.tblSchoolToParentMessageDetails.Add(MsgDetail);
                                 Connection.SaveChanges();
@@ -109,12 +106,12 @@ namespace GDWEBSolution.Controllers.Message
                         else
                         {
                             tblSchoolToParentMessageDetail MsgDetail = new tblSchoolToParentMessageDetail();
-                            MsgDetail.SchoolId = "CKC";
+                            MsgDetail.SchoolId = _session.School_Id;
                             MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
                             MsgDetail.ParentId = -1;
                             MsgDetail.IsActive = "Y";
                             MsgDetail.Status = "N";
-                            MsgDetail.CreatedBy = "ADMIN";
+                            MsgDetail.CreatedBy = _session.User_Id;
                             MsgDetail.CreatedDate = DateTime.Now;
                             Connection.tblSchoolToParentMessageDetails.Add(MsgDetail);
                             Connection.SaveChanges();
@@ -135,23 +132,26 @@ namespace GDWEBSolution.Controllers.Message
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult ShowGradeClass(string GradeId)
         {
-            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == _session.School_Id && r.GradeId == GradeId).ToList();
             ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
 
             return PartialView("loadClass");
         }
+
         public ActionResult ShowParentByClass(string GradeId,string ClassId)
         {
-            List<SMGT_getSchoolGreadClassParent_Result> gcp = Connection.SMGT_getSchoolGreadClassParent("CKC",GradeId,ClassId).ToList();
+            List<SMGT_getSchoolGreadClassParent_Result> gcp = Connection.SMGT_getSchoolGreadClassParent(_session.School_Id, GradeId, ClassId).ToList();
             ViewBag.GradeClassseParent = new MultiSelectList(gcp, "ParentId", "ParentName");
 
             return PartialView("loadParent");
         }
+
         public ActionResult ShowParentByExActivity(string ExActivityId)
         {
-            List<SMGT_getSchoolExactivityParent_Result> exl = Connection.SMGT_getSchoolExactivityParent("CKC",ExActivityId).ToList();
+            List<SMGT_getSchoolExactivityParent_Result> exl = Connection.SMGT_getSchoolExactivityParent(_session.School_Id, ExActivityId).ToList();
             ViewBag.ExactParents = new MultiSelectList(exl, "ParentId", "ParentName");
 
             return PartialView("loadExParent");
@@ -159,7 +159,7 @@ namespace GDWEBSolution.Controllers.Message
 
         public ActionResult ShowInboxMessages()
         {
-            var STQlist = Connection.SMGT_getTeacherInbox("bond").ToList(); //ParentId session
+            var STQlist = Connection.SMGT_getTeacherInbox(_session.User_Id).ToList();
             List<PtoSMessageHeaderModel> List = STQlist.Select(x => new PtoSMessageHeaderModel
             {
                 SchoolId = x.SchoolId,
@@ -209,13 +209,15 @@ namespace GDWEBSolution.Controllers.Message
             return PartialView("ViewInboxMessage", M);
         }
 
+        [UserFilter(Function_Id = "SPMSs")]
         public ActionResult Sent()
         {
             return View();
         }
+
         public ActionResult ShowSentMessages()
         {
-            var STQlist = Connection.SMGT_getSchooltoParentSentMail("ADMIN").ToList(); //ParentId session
+            var STQlist = Connection.SMGT_getSchooltoParentSentMail(_session.User_Id).ToList(); //ParentId session
             List<StoPMessageHeaderModel> List = STQlist.Select(x => new StoPMessageHeaderModel
             {
                 SchoolId = x.SchoolId,
@@ -232,8 +234,7 @@ namespace GDWEBSolution.Controllers.Message
             }).ToList();
             return PartialView("SentView", List);
         }
-        //
-        // GET: /SPMessage/Edit/5
+
         public ActionResult ViewSPMessage(long MessageId,long ParentId)
         {
             StoPMessageHeaderModel M = new StoPMessageHeaderModel();
@@ -317,65 +318,20 @@ namespace GDWEBSolution.Controllers.Message
                 return Json("Error", JsonRequestBehavior.AllowGet);
             }
         }
+
         public ActionResult DownloadAttachment(long SeqNo)
         {
             var file = Connection.tblSchoolToParentMessageAttachments.FirstOrDefault(x => x.SeqNo == SeqNo);
             byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(file.AttachmentPath));
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file.AttachmentName);
         }
+
         public ActionResult DownloadAttachmentInbox(long SeqNo)
         {
             var file = Connection.tblParentToSchollMessageAttachments.FirstOrDefault(x => x.SeqNo == SeqNo);
             byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(file.AttachementPath));
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file.AttachementName);
         }
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        //
-        // POST: /SPMessage/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /SPMessage/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /SPMessage/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

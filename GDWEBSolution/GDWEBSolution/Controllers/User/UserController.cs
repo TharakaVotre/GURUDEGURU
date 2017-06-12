@@ -6,7 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+/*
+ * Created Date : 2017/6/2
+ * Author : Tharaka Madusanka
+ */
 namespace GDWEBSolution.Controllers.User
 {
     public class UserController : Controller
@@ -15,16 +18,11 @@ namespace GDWEBSolution.Controllers.User
 
         static string DECKey = System.Configuration.ConfigurationManager.AppSettings["DecKey"];
         string Password = DECKey.Substring(10);
-        //
-        // GET: /User/
 
         public ActionResult Index()
         {
             List<tblUser> users = Connection.tblUsers.ToList();
-
-
             TeacherCategoryModel tcm = new TeacherCategoryModel();
-
             List<UserModel> tcmlist = users.Select(x => new UserModel
             {
                 UserId = x.UserId,
@@ -38,18 +36,13 @@ namespace GDWEBSolution.Controllers.User
                 ModifiedDate = x.ModifiedDate
 
             }).ToList();
-
-
-
             return View(tcmlist);
         }
 
         public ActionResult Category()
         {
             List<tblUserCategory> Categorylist = Connection.tblUserCategories.ToList();
-
             TeacherCategoryModel tcm = new TeacherCategoryModel();
-
             List<UserCategoryModel> tcmlist = Categorylist.Select(x => new UserCategoryModel
             {
                 CategoryId = x.CategoryId,
@@ -61,9 +54,6 @@ namespace GDWEBSolution.Controllers.User
                 ModifiedDate = x.ModifiedDate
 
             }).ToList();
-
-
-
             return View(tcmlist);
         }
 
@@ -74,27 +64,21 @@ namespace GDWEBSolution.Controllers.User
 
             return View();
         }
+
         [AllowAnonymous]
         public string IsUserNameExits(string input)
         {
-
             var count = Connection.tblUsers.Count(u => u.UserId == input);
-            if (count != 0)
-            {
-                return "Have";
-            }
-            else
-            {
-                return "NO";
-            }
+            if (count != 0){ return "Have";}
+            else{return "NO";}
         }
+
         [HttpPost]
         public JsonResult NewUser(UserModel Model)
         {
             try
             {
                 string pass = Encrypt_Decrypt.Encrypt(Model.Password, Password);
-
                 tblUser user = new tblUser();
 
                 user.PersonName = Model.PersonName;
@@ -112,8 +96,6 @@ namespace GDWEBSolution.Controllers.User
                 Connection.tblUsers.Add(user);
                 Connection.SaveChanges();
 
-                //return View();
-
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
             catch (Exception Ex)
@@ -126,7 +108,6 @@ namespace GDWEBSolution.Controllers.User
         public ActionResult Function() // UserCategoryFunction----
         {
             var Flist = Connection.SMGTgetUserCategoryFunction("%").ToList();
-
             UCategoryFunctionModel tcm = new UCategoryFunctionModel();
 
             List<UCategoryFunctionModel> tcmlist = Flist.Select(x => new UCategoryFunctionModel
@@ -143,8 +124,6 @@ namespace GDWEBSolution.Controllers.User
 
             }).ToList();
 
-
-
             return View(tcmlist);
         }
 
@@ -156,16 +135,7 @@ namespace GDWEBSolution.Controllers.User
             List<tblUserCategory> UCategorylist = Connection.tblUserCategories.ToList();
             ViewBag.UCategoryNameList = new SelectList(UCategorylist, "CategoryId", "CategoryName");
         }
-        //
-        // GET: /User/Details/5
 
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /User/Create
         public ActionResult Create()
         {
             return PartialView("Add");
@@ -181,7 +151,6 @@ namespace GDWEBSolution.Controllers.User
         {
             try
             {
-
                 tblUserCategory Category = new tblUserCategory();
 
                 Category.CreatedBy = "ADMIN";
@@ -194,8 +163,6 @@ namespace GDWEBSolution.Controllers.User
                 Connection.tblUserCategories.Add(Category);
                 Connection.SaveChanges();
 
-                //return View();
-
                 return RedirectToAction("Category");
             }
             catch (Exception Ex)
@@ -204,7 +171,6 @@ namespace GDWEBSolution.Controllers.User
                 return RedirectToAction("Category");
             }
         }
-
 
         public ActionResult EditCategory(string CategoryId)
         {
@@ -225,7 +191,6 @@ namespace GDWEBSolution.Controllers.User
         {
             try
             {
-
                 tblUserCategory TCtable = Connection.tblUserCategories.SingleOrDefault(x => x.CategoryId == Model.CategoryId);
 
                 if (Model.Active == true) { TCtable.IsActive = "Y"; }
@@ -248,12 +213,12 @@ namespace GDWEBSolution.Controllers.User
             LoadUCFDropdowns();
             return PartialView("UCFunctions");
         }
+
         [HttpPost]
         public ActionResult NewUCFunction(UCategoryFunctionModel Model)
         {
             try
             {
-
                 tblUserCategoryFunction Category = new tblUserCategoryFunction();
 
                 Category.CreatedBy = "ADMIN";
@@ -265,9 +230,6 @@ namespace GDWEBSolution.Controllers.User
 
                 Connection.tblUserCategoryFunctions.Add(Category);
                 Connection.SaveChanges();
-
-                //return View();
-
                 return RedirectToAction("Category");
             }
             catch (Exception Ex)
@@ -299,75 +261,6 @@ namespace GDWEBSolution.Controllers.User
             catch
             {
                 return Json("Error", JsonRequestBehavior.AllowGet);
-            }
-        }
-        //
-        // POST: /User/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /User/Edit/5
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /User/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /User/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /User/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
             }
         }
     }

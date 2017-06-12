@@ -1,6 +1,8 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Message;
 using GDWEBSolution.Models.Teacher;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,12 +20,18 @@ namespace GDWEBSolution.Controllers.Message
     {
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
 
+        UserSession _session = new UserSession();
+
+        [UserFilter(Function_Id = "PSMSi")]
         public ActionResult Index()
         {
+            tblParent Parent = Connection.tblParents.Where(p => p.UserId == _session.User_Id).FirstOrDefault();
+            Session["PTSParentId"] = Parent.ParentId;
             Dropdowns();
             return View();
         }
 
+        [UserFilter(Function_Id = "PSMSs")]
         public ActionResult Sent()
         {
             Dropdowns();
@@ -37,7 +45,7 @@ namespace GDWEBSolution.Controllers.Message
                 List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
                 ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
 
-                var TeacherList = Connection.SMGTgetAllTeachers("CKC", "%", "Y").ToList(); // Order by teacher category
+                var TeacherList = Connection.SMGTgetAllTeachers(_session.School_Id, "%", "Y").ToList(); // Order by teacher category
                 List<TeacherModel> tcmlist = TeacherList.Select(x => new TeacherModel
                 {
                     TeacherCategoryId = x.TeacherCategoryId,
@@ -58,7 +66,7 @@ namespace GDWEBSolution.Controllers.Message
         {
             try
             {
-                var TeacherList = Connection.SMGTgetAllTeachers("CKC", "%", "Y").ToList(); // Order by teacher category
+                var TeacherList = Connection.SMGTgetAllTeachers(_session.School_Id, "%", "Y").ToList(); // Order by teacher category
                 List<TeacherModel> tcmlist = TeacherList.Select(x => new TeacherModel
                 {
                     TeacherCategoryId = x.TeacherCategoryId,
@@ -98,11 +106,11 @@ namespace GDWEBSolution.Controllers.Message
                     try
                     {
                         tblParentToSchoolMessageHeader MsgHead = new tblParentToSchoolMessageHeader();
-                        MsgHead.SchoolId = "CKC";
+                        MsgHead.SchoolId = _session.School_Id;
                         MsgHead.MessageId = Model.MessageId;
-                        MsgHead.ParentId = 2;//session parent id
+                        MsgHead.ParentId = Convert.ToInt64(Session["PTSParentId"]);//session parent id
                         MsgHead.Message = Model.Message.Replace("\r\n", "<br />");
-                        MsgHead.CreatedBy = "ADMIN";
+                        MsgHead.CreatedBy = _session.User_Id;
                         MsgHead.CreatedDate = DateTime.Now;
                         MsgHead.MessageType = Model.MessageType;
                         MsgHead.IsActive = "Y";
@@ -111,15 +119,15 @@ namespace GDWEBSolution.Controllers.Message
                         MsgHead.Attachments = 0;
 
                         tblParentToSchoolMessageDetail MsgDetail = new tblParentToSchoolMessageDetail();
-                        MsgDetail.SchoolId = "CKC";
+                        MsgDetail.SchoolId = _session.School_Id;
                         MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
                         MsgDetail.RecepientUser = Model.RecepientUser;
                         MsgDetail.IsActive = "Y";
                         MsgDetail.Status = "N";
                         MsgDetail.AuthorizationDate = DateTime.Now;
-                        MsgDetail.AuthorizedBy = "ADMIN";
+                        MsgDetail.AuthorizedBy = _session.User_Id;
                         MsgDetail.AuthStatus = "A";
-                        MsgDetail.CreatedBy = "ADMIN";
+                        MsgDetail.CreatedBy = _session.User_Id;
                         MsgDetail.CreatedDate = DateTime.Now;
                         Connection.tblParentToSchoolMessageHeaders.Add(MsgHead);
 
@@ -185,13 +193,14 @@ namespace GDWEBSolution.Controllers.Message
 
         public ActionResult ShowSentMessages()
         {
-            var STQlist = Connection.SMGTgetParentToSchoolSentMail(2).ToList(); //ParentId session
+            Int64 pid = Convert.ToInt64(Session["PTSParentId"]); 
+            var STQlist = Connection.SMGTgetParentToSchoolSentMail(pid).ToList(); //ParentId session
             List<PtoSMessageHeaderModel> List = STQlist.Select(x => new PtoSMessageHeaderModel
             {
                 SchoolId = x.SchoolId,
                 MessageId = x.MessageId,
                 MessageTypeDes = x.MessageTypeDescription,
-                //ParentId = x.ParentId, 
+                ParentId = x.ParentId, 
                 Message= x.Message.Replace("<br />", " "),  
                 Status = x.Status,   
                 IsActive = x.IsActive,
@@ -251,6 +260,7 @@ namespace GDWEBSolution.Controllers.Message
             }
             return PartialView("ViewMessage", M);
         }
+
         public ActionResult DownloadAttachment(long SeqNo)
         {
             var file = Connection.tblParentToSchollMessageAttachments.FirstOrDefault(x => x.SeqNo == SeqNo);
@@ -260,7 +270,8 @@ namespace GDWEBSolution.Controllers.Message
 
         public ActionResult ShowInbox()
         {
-            var STQlist = Connection.SMGT_getParentInbox(2).ToList(); //ParentId session
+            Int64 pid = Convert.ToInt64(Session["PTSParentId"]); 
+            var STQlist = Connection.SMGT_getParentInbox(pid).ToList(); //ParentId session
             List<StoPMessageHeaderModel> List = STQlist.Select(x => new StoPMessageHeaderModel
             {
                 SchoolId = x.SchoolId,

@@ -13,8 +13,6 @@ namespace GDWEBSolution.Controllers.TimeTable
 {
     public class TimeTableController : Controller
     {
-        //
-        // GET: /TimeTable/
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
         public ActionResult Index()
         {
@@ -41,16 +39,10 @@ namespace GDWEBSolution.Controllers.TimeTable
             ViewBag.Gread = GreadId;
             ViewBag.School = SchoolId;
             ViewBag.Day = Day;
-            if (ForEditDelte)
-            {
-                return PartialView("EditView", List);
-            }
-            else
-            {
-                return PartialView("TimeSlotlist", List);
-            }
-        }
 
+            if (ForEditDelte){return PartialView("EditView", List);}
+            else{return PartialView("TimeSlotlist", List);}
+        }
 
         public ActionResult DisplayTimeTable(string ClassId, string GreadId)
         {
@@ -59,8 +51,6 @@ namespace GDWEBSolution.Controllers.TimeTable
             Model.GradeId = GreadId;
             return PartialView("Display", Model);
         }
-        //
-        // GET: /TimeTable/Details/5
 
         public ActionResult AddEditTimeTable()
         {
@@ -114,11 +104,8 @@ namespace GDWEBSolution.Controllers.TimeTable
             DateTime F = DateTime.Parse(TCtable.FromTime.ToString());
             DateTime T = DateTime.Parse(TCtable.ToTime.ToString());
 
-           // F.Subtract(-TimeSpan.FromHours(Convert.ToDouble(F.ToString("HH")))).ToShortTimeString();
-
             TModel.FromTime_String = F.ToString("hh:mm tt");
             TModel.ToTime_String = T.ToString("hh:mm tt");
-
             TModel.SubjectId = TCtable.SubjectId;
             TModel.GradeId = TCtable.GradeId;
             TModel.ClassId = TCtable.ClassId;
@@ -168,8 +155,6 @@ namespace GDWEBSolution.Controllers.TimeTable
                         string message = string.Format("{0}:{1}",
                             validationErrors.Entry.Entity.ToString(),
                             validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
                         raise = new InvalidOperationException(message, raise);
                     }
                 }
@@ -177,16 +162,10 @@ namespace GDWEBSolution.Controllers.TimeTable
             }
         }
 
-        //
-        // GET: /TimeTable/Create
-
         public ActionResult Create()
         {
             return View();
         }
-
-        //
-        // POST: /TimeTable/Create
 
         [HttpPost]
         public ActionResult Create(TimeTableModel Model)
@@ -197,7 +176,6 @@ namespace GDWEBSolution.Controllers.TimeTable
 
                 TimeTbl.CreatedBy = "ADMIN";
                 TimeTbl.CreatedDate = DateTime.Now;
-
                 TimeTbl.AcademicYear = "2017"; // Parameter
                 TimeTbl.SchoolId = "CKC"; //Session
                 TimeTbl.GradeId = Model.GradeId;
@@ -210,13 +188,12 @@ namespace GDWEBSolution.Controllers.TimeTable
 
                 TimeTbl.FromTime = TimeSpan.Parse(F.ToString("HH:mm"));
                 TimeTbl.ToTime = TimeSpan.Parse(T.ToString("HH:mm"));
-
                 TimeTbl.IsActive = "Y";
                 TimeTbl.PeriodSequenceNo = Model.PeriodSeqNo; 
 
                 Connection.tblTimeTables.Add(TimeTbl);
                 Connection.SaveChanges();
-                //return View();
+
                 var result = new { r = "S" , Grade = Model.GradeId, Class = Model.ClassId , Day = Model.Day };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
@@ -228,34 +205,10 @@ namespace GDWEBSolution.Controllers.TimeTable
             }
         }
 
-        //
-        // GET: /TimeTable/Edit/5
-
         public ActionResult Edit(int id)
         {
             return View();
         }
-
-        //
-        // POST: /TimeTable/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /TimeTable/Delete/5
 
         public ActionResult Delete(int SeqNo)
         {
@@ -263,9 +216,6 @@ namespace GDWEBSolution.Controllers.TimeTable
             TModel.SeqNo = SeqNo;
             return PartialView("DeleteTimeSlot", TModel);
         }
-
-        //
-        // POST: /TimeTable/Delete/5
 
         [HttpPost]
         public ActionResult Delete(TimeTableModel Model)
@@ -276,13 +226,11 @@ namespace GDWEBSolution.Controllers.TimeTable
                 Connection.tblTimeTables.Remove(TCtable);
                 Connection.SaveChanges();
 
-
                 return Json(true, JsonRequestBehavior.AllowGet);
-                //return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
 

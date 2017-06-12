@@ -1,15 +1,15 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
-
+﻿
 @{
-    ViewBag.Title = "Error";
     Layout = null;
 }
+
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <meta charset="utf-8" />
-    <title>Error</title>
+    <title>Login</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="X-UA-Compatible" content="IE=9,chrome=1">
@@ -28,17 +28,22 @@
             <div class="container">
                 <div class="row">
                     <div id="loginbox" class="col-md-12">
-                        <h1 class="text-center text-bold text-light mt-4x">Error</h1>
+                        <h1 class="text-center text-bold text-light mt-4x">Logged Out</h1>
                         <div class="text-center text-light">
-                            <h1 class="text-center text-bold text-light mt-4x">An error occurred while processing your request.</h1>
-                            @*<a href="~/" class="text-light hvr-bounce-in mt-4x">Go Back </a>*@
+                            <!--<a href="#" class="hvr-grow">Forgot password?</a>-->
+                            <h1 class="text-center text-bold text-light mt-4x">You Have Logged Out From The System !</h1>
+                            <a href="~/Home/Login" class="text-light hvr-bounce-in mt-4x">Go To Login 
+                                        </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
     <script src="~/Scripts/bootstrap.min.js"></script>
+
     @Scripts.Render("~/Scripts/js")
 </body>
 </html>

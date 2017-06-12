@@ -44,7 +44,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.IsActive)
                             </th>
-                            <th></th>
+                            @*<th></th>*@
                         </tr>
                     </thead>
                     <tbody>
@@ -85,10 +85,10 @@
                                 {
                                     <td>NO</td>
                                 }
-                                <td>
+                                @*<td>
                                     <a href="#" class="hvr-buzz-out"  onclick='EditView("@(item.UserId)");'>Edit </a> |
-                                   <a href="#" class="hvr-buzz-out"  onclick='DeleteView("@(item.UserId)");'>Delete</a>
-                                </td>
+                                   <a href="#" class="hvr-buzz-out"  onclick='DeleteView("@(item.UserId)");'>Deactivate</a>
+                                </td>*@
                             </tr>
     
                             }
@@ -114,10 +114,8 @@
 
 <script>
     var ShowView = function (bookid) {
-        var Url = "/User/CreateCategory";
-        $("#MyModelBody").load(Url, function () {
-            $("#myModal").modal("show");
-        })
+        var Url = "/User/NewUser";
+        window.location.href= Url;
     }
 
     var EditView = function (CategoryId) {

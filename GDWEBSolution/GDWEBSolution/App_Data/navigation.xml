@@ -1,4 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+* Created Date : 2017/6/3
+* Author : Tharaka Madusanka
+-->
 <Navigations>
 <Navigation title="Teacher" action="#" controller="#" url="#">
 <Child title="Teacher Category" action="Index" controller="TeacherCategory" url="#"/>
@@ -47,5 +51,11 @@
 </Navigation>
 <Navigation title="Evaluation" action="#" controller="#" url="#">
 <Child title="Evaluation By School" action="Create" controller="EvaluationbySchool" url="#"/>
+</Navigation>
+
+<Navigation title="User" action="#" controller="#" url="#">
+<Child title="Users" action="Index" controller="User" url="#"/>
+<Child title="User Category" action="Category" controller="User" url="#"/>
+<Child title="User Function" action="Function" controller="User" url="#"/>
 </Navigation>
 </Navigations>

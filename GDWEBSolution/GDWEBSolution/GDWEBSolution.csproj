@@ -201,6 +201,7 @@
     <Compile Include="Controllers\TimeTable\TimeTableController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\User\UserController.cs" />
+    <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -707,9 +708,6 @@
     <Compile Include="Models\TimeTable\TimeTableModel.cs" />
     <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Models\User\UserSession.cs" />
-    <Compile Include="MUHandler.ashx.cs">
-      <DependentUpon>MUHandler.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Models\Configuration\Grade SubjectModel.cs" />
     <Compile Include="Models\Maintenance\ApplicationStatusModel.cs" />
     <Compile Include="Models\Maintenance\EventCategoryModel.cs" />
@@ -737,6 +735,7 @@
     <Compile Include="Models\User\UserCategoryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Encrypt_Decrypt.cs" />
+    <Compile Include="Util\MailManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\adminnavigation.xml" />
@@ -1115,7 +1114,6 @@
     <Content Include="Scripts\chartData.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\fileinput.js" />
-    <Content Include="MUHandler.ashx" />
     <Content Include="Content\css\rstyle.css" />
     <EntityDeploy Include="Models\DBEntityModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -1168,8 +1166,6 @@
     </Content>
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -1239,7 +1235,6 @@
     <Content Include="Views\TimeTable\Display.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\AddEvent.cshtml" />
-    <Content Include="Views\Event\Index1.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Create.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Delete.cshtml" />
     <Content Include="Views\StudentOptionalSubject\Index.cshtml" />
@@ -1395,11 +1390,15 @@
     <Content Include="Views\StudentGradeAdvance\Index.cshtml" />
     <Content Include="Views\StudentGradeAdvance\UpdateAccedemicYear.cshtml" />
     <Content Include="Views\Student\DeleteStudentEXactvity.cshtml" />
+    <Content Include="Views\Shared\Forbidden.cshtml" />
+    <Content Include="Views\Event\Calendar.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\Logout.cshtml" />
+    <Content Include="Views\Home\PasswordChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attachments\" />
     <Folder Include="Controllers\School\" />
-    <Folder Include="Filters\" />
     <Folder Include="UploadedFiles\" />
     <Folder Include="Uploads\Parent\Photo\" />
     <Folder Include="Uploads\Student\Photo\" />
