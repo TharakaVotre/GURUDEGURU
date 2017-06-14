@@ -23,6 +23,7 @@ namespace GDWEBSolution.Models.Home
         public string LoginEmail { get; set; }
 
         [Required(ErrorMessage = "Please Enter the Code")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please Enter Valid 6 Digit Number")]
         public string Code { get; set; }
     }
 }

@@ -117,6 +117,7 @@ namespace GDWEBSolution.Controllers.Message
                             Connection.SaveChanges();
                         }
                         result = "Success";
+                        scope.Complete();
                     }
                     catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
                     {

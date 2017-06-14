@@ -304,7 +304,6 @@ namespace GDWEBSolution.Controllers.Message
                 M.Subject = H.Subject;
                 M.Sender = H.Sender;
 
-
                 List<tblSchoolToParentMessageAttachment> AList = Connection.tblSchoolToParentMessageAttachments.Where(x => x.MessageId == MessageId).ToList();
                 M.AttachmentList = AList;
             }
