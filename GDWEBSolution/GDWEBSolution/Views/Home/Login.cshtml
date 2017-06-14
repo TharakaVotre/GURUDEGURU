@@ -57,7 +57,7 @@
 										</label>
 									</div>-->
 
-                                    <button class="btn btn-primary btn-block hvr-icon-down" type="button" onclick="Login();">LOGIN</button>
+                                    <button class="btn btn-primary btn-block hvr-icon-down" type="button" onclick="Login();">LOGIN &nbsp;&nbsp;&nbsp;<span style="text-align: center; display: none" id="loaderDivlogin"><img  src="~/img/ellipsis.gif"/></span></button>
                                     <br />
                                     <label for="" id="lblError" class="text-sm" style="color: #f00"></label>
                                 </form>
@@ -78,16 +78,12 @@
                             <div class="col-md-12">
                                 <form id="FrmFOGT">
 
-                                    <label for="" class="text-uppercase text-sm">Your E-mail</label>
-                                    @Html.TextBoxFor(model => model.LoginEmail, new { @class = "form-control mb", @placeholder = "Your Email Address" })
-
+                                    <label for="" class="text-uppercase text-sm">Your E-mail </label> 
                                     @Html.ValidationMessageFor(model => model.LoginEmail, null, new { @class = "text-danger" })
-
-
-                                    <br />
+                                    @Html.TextBoxFor(model => model.LoginEmail, new { @class = "form-control mb", @placeholder = "Your Email Address" })
+                                    <button class="btn btn-primary btn-block hvr-icon-down" type="button" onclick="Forgot();">REQUEST CODE  &nbsp;&nbsp;&nbsp;<span style="text-align: center; display: none" id="loaderDiv"><img  src="~/img/ellipsis.gif"/></span></button>
+                                    
                                     <label for="" id="lblFError" class="text-sm" style="color: #f00"></label>
-
-                                    <button class="btn btn-primary btn-block hvr-icon-down" type="button" onclick="Forgot();">REQUEST CODE</button>
                                 </form>
                             </div>
                         </div>
@@ -109,7 +105,7 @@
             if (!$("#FrmLOG").valid()) {
                 return false;
             }
-            //$("#loaderDiv").show();
+            $("#loaderDivlogin").show();
             //$("#btnCreateTeacher").prop('value', 'Saving');
             $.ajax({
 
@@ -122,9 +118,11 @@
                     }
                     else if (result == "Failed") {
                         $("#lblError").text("Incorrect User Name Or Password");
+                        $("#loaderDivlogin").hide();
                     }
                     else {
                         $("#lblError").text("Unable to Login ! Please Try Again !");
+                        $("#loaderDivlogin").hide();
                     }
 
                 }
@@ -139,7 +137,7 @@
             if (!$("#FrmFOGT").valid()) {
                 return false;
             }
-            //$("#loaderDiv").show();
+            $("#loaderDiv").show();
             //$("#btnCreateTeacher").prop('value', 'Saving');
             $.ajax({
 
@@ -148,13 +146,15 @@
                 data: myformdata,
                 success: function (result) {
                     if (result == "Success") {
-                        //window.location.href = "/Home/Index";
-                        $("#lblFError").text("Request Code Sent");
+                        window.location.href = "/Home/Verify";
+                       // $("#lblFError").text("Request Code Sent");
                     }
                     else if (result == "Error") {
+                        $("#loaderDiv").hide();
                         $("#lblError").text("Incorrect Email Address");
                     }
                     else {
+                        $("#loaderDiv").hide();
                         $("#lblError").text("Unable to Process the Request ! Please Try Again !");
                     }
 

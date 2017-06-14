@@ -294,7 +294,7 @@ namespace GDWEBSolution.Controllers.Message
             StoPMessageHeaderModel M = new StoPMessageHeaderModel();
             try
             {
-                var H = Connection.SMGT_getStoPMessageView(MessageId,2).SingleOrDefault();
+                var H = Connection.SMGT_getStoPMessageView(MessageId).SingleOrDefault();
                 M.MessageId = H.MessageId;
                 M.Message = H.Message.Replace("<br />", "\r\n");
                 M.MessageType = Convert.ToInt64(H.MessageType);
@@ -303,7 +303,6 @@ namespace GDWEBSolution.Controllers.Message
                 M.SeqNo = H.SeqNo;
                 M.Subject = H.Subject;
                 M.Sender = H.Sender;
-
 
                 List<tblSchoolToParentMessageAttachment> AList = Connection.tblSchoolToParentMessageAttachments.Where(x => x.MessageId == MessageId).ToList();
                 M.AttachmentList = AList;

@@ -44,7 +44,7 @@
 
                                     @Html.ValidationMessageFor(model => model.Code, null, new { @class = "text-danger" })<br />
 
-                                    <button class="btn btn-primary btn-block hvr-icon-down" type="button" onclick="verify();">Verify Code</button>
+                                    <button class="btn btn-primary btn-block hvr-icon-down" type="button" onclick="verify();">Verify Code &nbsp;&nbsp;&nbsp;<span style="text-align: center; display: none" id="loaderDiv"><img  src="~/img/ellipsis.gif"/></span></button>
                                     <br />
                                     <label for="" id="lblError" class="text-sm" style="color:#f00"></label>
                                 </form>
@@ -64,7 +64,7 @@
             if (!$("#FrmCODE").valid()) {
                 return false;
             }
-            //$("#loaderDiv").show();
+            $("#loaderDiv").show();
             //$("#btnCreateTeacher").prop('value', 'Saving');
             $.ajax({
 
@@ -76,6 +76,7 @@
                         window.location.href = "/Home/ChangePassword";
                     }
                     else {
+                        $("#loaderDiv").hide();
                         $("#lblError").text("Faild to Process the Request ! Please Try Again !");
                     }
 

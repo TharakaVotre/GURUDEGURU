@@ -2170,17 +2170,13 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchooltoParentSentMail_Result>("SMGT_getSchooltoParentSentMail", createdByParameter);
         }
     
-        public virtual ObjectResult<SMGT_getStoPMessageView_Result> SMGT_getStoPMessageView(Nullable<long> messageId, Nullable<long> parentId)
+        public virtual ObjectResult<SMGT_getStoPMessageView_Result> SMGT_getStoPMessageView(Nullable<long> messageId)
         {
             var messageIdParameter = messageId.HasValue ?
                 new ObjectParameter("MessageId", messageId) :
                 new ObjectParameter("MessageId", typeof(long));
     
-            var parentIdParameter = parentId.HasValue ?
-                new ObjectParameter("ParentId", parentId) :
-                new ObjectParameter("ParentId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getStoPMessageView_Result>("SMGT_getStoPMessageView", messageIdParameter, parentIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getStoPMessageView_Result>("SMGT_getStoPMessageView", messageIdParameter);
         }
     
         public virtual ObjectResult<SMGT_getTeacherInbox_Result> SMGT_getTeacherInbox(string recepientUser)

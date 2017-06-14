@@ -36,7 +36,7 @@
                 @Html.TextAreaFor(model => model.Message, new { @class = "form-control", rows = "8", cols = "20", @readonly = "readonly" })
             </div>
         </div>
-        <div class="row">      
+        <div class="row">    
             @foreach (var item in Model.AttachmentList)
             {
                 <div class="col-sm-12">
@@ -44,6 +44,7 @@
                        <a href="#" onclick="dwnload(@item.SeqNo)">@item.AttachmentName</a>
                         </div></div></div>
             }
+           
         </div>
     </form>
 </div>

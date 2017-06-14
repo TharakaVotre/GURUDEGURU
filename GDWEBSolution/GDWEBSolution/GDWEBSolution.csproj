@@ -1075,6 +1075,7 @@
     <Content Include="img\12.jpg" />
     <Content Include="img\circulloading.gif" />
     <Content Include="img\default.gif" />
+    <Content Include="img\Double_Ring.gif" />
     <Content Include="img\ellipsis.gif" />
     <Content Include="img\gears.gif" />
     <Content Include="img\loader.gif" />
