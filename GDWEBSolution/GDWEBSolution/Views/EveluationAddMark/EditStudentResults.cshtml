@@ -1,0 +1,225 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Report.StudentReportModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>Student Result</h3>
+
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default">
+            <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
+            <div class="panel-body">
+                <form action="EditStudentResult" method="post">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+
+                            <lable class="col-sm-2 control-label">Grade</lable>
+                            <div class="col-sm-3">
+                                @Html.DropDownList("EditGradeId", ViewBag.EditGradeId as List<SelectListItem>, "", new { @class = "form-control" })
+                                <span class="help-block m-b-none" id="GradeIdError" style="color:red"></span>
+                            </div>
+                            <lable class="col-sm-2 control-label">Class</lable>
+                            <div class="col-sm-3">
+                                @Html.DropDownList("EditClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                <span class="help-block m-b-none" id="EditClassIdError" style="color:red"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <lable class="col-sm-2 control-label">Subject</lable>
+                            <div class="col-sm-3">
+                                @Html.DropDownList("EditSubjectId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                <span class="help-block m-b-none" id="EditSubjectIdError" style="color:red"></span>
+                            </div>
+                            <lable class="col-sm-2 control-label"> Eveluation</lable>
+                            <div class="col-sm-3">
+                                @Html.DropDownList("EditEveluation", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                <span class="help-block m-b-none" style="color:red" id="EditEveluationError"></span>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="submit" style="float:right" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <br />
+                <hr />
+                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StudentId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StudentName)
+                            </th>
+                            <th>
+                                Marks
+                            </th>
+                            <th>
+
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+
+                            foreach (var item in Model)
+                            {
+
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StudentId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StudentName)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Mark)
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-info" onclick="EditView('@item.StudentId',@item.Mark,@item.Seq)"><span class="fa fa-pencil"></span> Edit </a>
+                                        <a href="#" class="btn btn-danger" onclick="DeleteView(@item.Seq)"><span class="fa fa-trash"></span> Delete</a>
+                                    </td>
+
+                                </tr>
+
+                            }
+                        }
+                    </tbody>
+                </table>
+
+</div>
+            </div>
+        </div>
+    </div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" id="MyModelBody">
+
+        </div>
+
+    </div>
+</div>
+
+
+                <script>
+
+
+                    var EditView = function (StudentId,Mark,seq) {
+                      
+                        var Url = "/EveluationAddMark/Edit?StudentId=" + StudentId + "&ResultId=" + seq + "&Mark=" + Mark;
+                        $("#MyModelBody").load(Url, function () {
+                            $("#myModal").modal("show");
+                        })
+                    }
+
+                    var DeleteView = function (ResultSeq) {
+                        var Url = "/EveluationAddMark/Delete?ResultId=" + ResultSeq;
+                        $("#MyModelBody").load(Url, function () {
+                            $("#myModal").modal("show");
+                        })
+                    }
+                </script>
+
+
+<script>
+
+                        
+
+
+
+
+                        $(document).ready(function () {
+                            $("#EditGradeId").change(function () {
+                                $("#EditClassId").empty();
+                                $("#EditSubjectId").empty();
+                                $("#EditEveluation").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("getClass")',
+
+                                    dataType: 'json',
+
+                                    data: { id: $("#EditGradeId").val() },
+
+
+                                    success: function (states) {
+
+
+                                        $.each(states, function (i, state) {
+                                            $("#EditClassId").append('<option value="' + state.Value + '">' +
+                                                 state.Text + '</option>');
+
+                                        });
+                                    },
+                                    error: function (ex) {
+                                        alert('Failed to retrieve states.' + ex);
+                                    }
+                                });
+                                return false;
+                            })
+
+                            $("#EditClassId").change(function () {
+                                $("#EditSubjectId").empty();
+                                $("#EditEveluation").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("getSubject")',
+
+                                    dataType: 'json',
+
+                                    data: { Gid: $("#EditGradeId").val(), cId: $("#EditClassId").val() },
+
+
+                                    success: function (states) {
+
+
+                                        $.each(states, function (i, state) {
+                                            $("#EditSubjectId").append('<option value="' + state.Value + '">' +
+                                                 state.Text + '</option>');
+
+                                        });
+                                    },
+                                    error: function (ex) {
+                                        alert('Failed to retrieve states.' + ex);
+                                    }
+                                });
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("getClassEveluation")',
+
+                                    dataType: 'json',
+
+                                    data: { Gid: $("#EditGradeId").val(), cId: $("#EditClassId").val() },
+
+
+                                    success: function (states) {
+
+
+                                        $.each(states, function (i, state) {
+                                            $("#EditEveluation").append('<option value="' + state.Value + '">' +
+                                                 state.Text + '</option>');
+
+                                        });
+                                    },
+                                    error: function (ex) {
+                                        alert('Failed to retrieve states.' + ex);
+                                    }
+                                });
+                                return false;
+                            })
+
+                        })
+</script>

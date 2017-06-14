@@ -126,6 +126,7 @@
         var selectedItem = value;
         
         var ddlStates = $("#GradeId");
+        ddlStates.append($('<option></option>').val("").html(""));
         //var statesProgress = $("#states-loading-progress");
         //statesProgress.show();
         $.ajax({

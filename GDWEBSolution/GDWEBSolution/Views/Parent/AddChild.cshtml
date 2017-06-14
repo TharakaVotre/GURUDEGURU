@@ -9,7 +9,7 @@
                     <div class="form-group">
                        
                         @Html.HiddenFor(m => m.UserId)
-                        @Html.LabelFor(m => m.ParentId, new { @class = "col-sm-2 control-label" })
+                        @Html.LabelFor(m => m.ParentName, new { @class = "col-sm-2 control-label" })
                         <div class="col-sm-4">
 
                             @Html.DropDownListFor(model => model.ParentId, ViewBag.ParentlList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadrstudent(this.value)" })

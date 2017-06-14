@@ -426,7 +426,34 @@
             alert('Failed to retrieve states.');
                  
         }
-    });
+        });
+
+        $("#showstds").show();
+        var SchoolId1 = $("#SchoolId").val();
+        var AcademicYear1 = $("#AcademicYear").val();
+        var GradeId1 = $("#GradeId").val();
+        var ClassId1 = $("#ClassId").val();
+
+        $.ajax({
+            url: "/StudentOptionalSubject/GetAllContacts",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: { "GradeId1": GradeId1, "SchoolId1": SchoolId1, "AcademicYear1": AcademicYear1, "ClassId1": ClassId1 },
+            dataType: "json",
+            success: function (data) {
+                var row = "";
+                $.each(data, function (index, item) {
+                    row += "<tr><td><input type='checkbox'value='" + item.StudentIdL + "' name='chooseRecipient' class='my_chkBox' /></td><td>" + item.StudentName + "</td>";
+                });
+                $("#contacts").html(row);
+            },
+            error: function (result) {
+                alert("Error");
+            }
+        });
+
+
+
     }
 
 

@@ -317,7 +317,7 @@ namespace GDWEBSolution.Controllers.Report
         public ActionResult StudentInSubject(string GradeId, string ClassId, string SubjectId)
         {
             int subId = Convert.ToInt32(SubjectId);
-            var Student = Connection.GDgetSubjectStudent(SchoolId, GradeId, ClassId, subId);
+            var Student = Connection.GDgetSubjectStudent(SchoolId, GradeId, ClassId, subId,0);
             List<GDgetSubjectStudent_Result> Studentlist = Student.ToList();
 
             StudentModel tcm = new StudentModel();

@@ -441,7 +441,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
                            select new
                            {
                                SubjectId = s.SubjectId,
-                               SubjectName = s.ShortName
+                               SubjectName = s.SubjectName
 
 
                            }).ToList();

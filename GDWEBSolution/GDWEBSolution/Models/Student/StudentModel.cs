@@ -73,7 +73,7 @@ namespace GDWEBSolution.Models.Student
         [Display(Name = "Active")]
         public string IsActive { get; set; }
 
-
+        public string Optional { get; set; }
 
 
 

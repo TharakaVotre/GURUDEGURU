@@ -1,0 +1,372 @@
+﻿@{
+    ViewBag.Title = "StudentSubjectIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Student Eveluation</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#AddMarks" data-toggle="tab" aria-expanded="true">Add Marks</a></li>
+                    <li class=""><a href="#ClassStudent" data-toggle="tab" aria-expanded="false">Student Result In Class</a></li>
+                    
+                </ul>
+                <br>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in" id="AddMarks">
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    
+                                    <lable class="col-sm-2 control-label">Grade</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("GradeId", ViewBag.GradeId as List<SelectListItem>, "", new { @class = "form-control" })
+                                        <span class="help-block m-b-none" id="GradeIdError" style="color:red"></span>
+                                    </div>
+                                    <lable class="col-sm-2 control-label">Class</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                        <span class="help-block m-b-none" id="ClassIdError" style="color:red"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                   
+                                    <lable class="col-sm-2 control-label">Subject</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("SubjectId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                        <span class="help-block m-b-none" id="SubjectIdError" style="color:red"></span>
+                                    </div>
+                                    <lable class="col-sm-2 control-label"> Eveluation</lable>
+                                    <div class="col-sm-3">
+                                        @Html.DropDownList("Eveluation", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                        <span class="help-block m-b-none" style="color:red" id="EveluationError"></span>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="submit" style="float:right" onclick="AddStudentMark()" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+                            <hr />
+                            <div id="AddMarkModal">
+                                <div>
+
+                                    <!-- Modal content-->
+                                    <div id="AddMarkModelBody">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <script>
+
+                        var AddStudentMark = function () {
+
+                            var Eveluation = $('#Eveluation');
+                            var GradeId = $('#GradeId');
+                            var ClassId = $('#ClassId');
+                            var SubjectId = $('#SubjectId');
+                            var errorCal1 = 0;
+                            if (!Eveluation.val()) {
+                                $("#EveluationError").text("Required");
+                                errorCal1 = 1;
+                            } else {
+                                $("#EveluationError").text("");
+                            }
+                            if (!GradeId.val()) {
+                                $("#GradeIdError").text("Required");
+                                errorCal1 = 1;
+                            } else {
+                                $("#GradeIdError").text("");
+                            }
+                            if (!ClassId.val()) {
+                                $("#ClassIdError").text("Required");
+                                errorCal1 = 1;
+                            } else {
+                                $("#ClassIdError").text("");
+                            }
+                            if (!SubjectId.val()) {
+                                $("#SubjectIdError").text("Required");
+                                errorCal1 = 1;
+                            } else {
+                                $("#SubjectIdError").text("");
+                            }
+                            if (errorCal1 != 0) {
+                                return;
+                            } 
+                            var a = document.getElementById("ClassId");
+                            var ClassId = a.options[a.selectedIndex].value;
+                          
+                            var b = document.getElementById("GradeId");
+                            var GradeId = b.options[b.selectedIndex].value;
+                            var c = document.getElementById("SubjectId");
+                            var SubjectId = c.options[c.selectedIndex].value;
+                            var d = document.getElementById("Eveluation");
+                            var Eveluation = d.options[d.selectedIndex].value;
+                            var Url = "/EveluationAddMark/AddStudentSubjectMark?Eveluation=" + Eveluation + "&GradeId=" + GradeId + "&ClassId=" + ClassId + "&SubjectId=" + SubjectId;
+                            $("#AddMarkModelBody").load(Url, function () {
+                                $("#AddMarkModal").data("show");
+                            })
+                        }
+
+
+
+
+
+                        $(document).ready(function () {
+                            $("#GradeId").change(function () {
+                                $("#ClassId").empty();
+                                $("#SubjectId").empty(); 
+                                $("#Eveluation").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("getClass")',
+
+                                    dataType: 'json',
+
+                                    data: { id: $("#GradeId").val() },
+
+
+                                    success: function (states) {
+
+
+                                        $.each(states, function (i, state) {
+                                            $("#ClassId").append('<option value="' + state.Value + '">' +
+                                                 state.Text + '</option>');
+
+                                        });
+                                    },
+                                    error: function (ex) {
+                                        alert('Failed to retrieve states.' + ex);
+                                    }
+                                });
+                                return false;
+                            })
+
+                            $("#ClassId").change(function () {
+                                $("#SubjectId").empty(); 
+                                $("#Eveluation").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("getSubject")',
+
+                                    dataType: 'json',
+
+                                    data: { Gid: $("#GradeId").val(), cId: $("#ClassId").val() },
+
+
+                                    success: function (states) {
+
+
+                                        $.each(states, function (i, state) {
+                                            $("#SubjectId").append('<option value="' + state.Value + '">' +
+                                                 state.Text + '</option>');
+
+                                        });
+                                    },
+                                    error: function (ex) {
+                                        alert('Failed to retrieve states.' + ex);
+                                    }
+                                });
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("getClassEveluation")',
+
+                                    dataType: 'json',
+
+                                    data: { Gid: $("#GradeId").val(), cId: $("#ClassId").val() },
+
+
+                                    success: function (states) {
+
+
+                                        $.each(states, function (i, state) {
+                                            $("#Eveluation").append('<option value="' + state.Value + '">' +
+                                                 state.Text + '</option>');
+
+                                        });
+                                    },
+                                    error: function (ex) {
+                                        alert('Failed to retrieve states.' + ex);
+                                    }
+                                });
+                                return false;
+                            })
+
+                        })
+                    </script>
+                    <div class="tab-pane fade" id="ClassStudent">
+                        <div id="showgrade">
+                            <div class="panel-body">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+
+                                        <lable class="col-sm-2 control-label">Grade</lable>
+                                        <div class="col-sm-3">
+                                            @Html.DropDownList("ResultGradeId", ViewBag.ResultGradeId as List<SelectListItem>, "", new { @class = "form-control" })
+                                            <span class="help-block m-b-none" id="GradeIdError" style="color:red"></span>
+                                        </div>
+                                        <lable class="col-sm-2 control-label">Class</lable>
+                                        <div class="col-sm-3">
+                                            @Html.DropDownList("ResultClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                            <span class="help-block m-b-none" id="ClassIdError" style="color:red"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <lable class="col-sm-2 control-label"> Eveluation</lable>
+                                        <div class="col-sm-3">
+                                            @Html.DropDownList("ResultEveluation", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
+                                            <span class="help-block m-b-none" style="color:red" id="EveluationError"></span>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <button type="submit" style="float:right" onclick="StudentResult()" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <hr />
+                                <div id="ClassResultModal">
+                                    <div>
+
+                                        <!-- Modal content-->
+                                        <div id="ClassResultModelBody">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+
+    
+
+                        var StudentResult = function () {
+
+                            var ResultEveluation = $('#ResultEveluation');
+                            var ResultGradeId = $('#ResultGradeId');
+                            var ResultClassId = $('#ResultClassId');
+                           
+                            var errorCal1 = 0;
+                            if (!ResultEveluation.val()) {
+                                $("#ResultEveluationError").text("Required");
+                                errorCal1 = 1;
+                            } else {
+                                $("#ResultEveluationError").text("");
+                            }
+                            if (!ResultGradeId.val()) {
+                                $("#ResultGradeIdError").text("Required");
+                                errorCal1 = 1;
+                            } else {
+                                $("#ResultGradeIdError").text("");
+                            }
+                            if (!ResultClassId.val()) {
+                                $("#ResultClassIdError").text("Required");
+                                errorCal1 = 1;
+                            } else {
+                                $("#ResultClassIdError").text("");
+                            }
+                           
+                            if (errorCal1 != 0) {
+                                return;
+                            }
+                            var a = document.getElementById("ResultClassId");
+                            var ClassId = a.options[a.selectedIndex].value;
+
+                            var b = document.getElementById("ResultGradeId");
+                            var GradeId = b.options[b.selectedIndex].value;
+                           
+                            var d = document.getElementById("ResultEveluation");
+                            var Eveluation = d.options[d.selectedIndex].value;
+                             var Url = "/EveluationAddMark/ShowResult?Eveluation=" + Eveluation + "&ClassId=" + ClassId + "&GradeId=" + GradeId;
+                            //var Url = "/EveluationAddMark/AddStudentSubjectMark?Eveluation=5&GradeId=GR2&ClassId=A&SubjectId=5";
+                            $("#ClassResultModelBody").load(Url, function () {
+                                $("#ClassResultModal").data("show");
+                            })
+                        }
+
+
+
+
+
+                        $(document).ready(function () {
+                            $("#ResultGradeId").change(function () {
+                                $("#ResultClassId").empty();
+                               
+                                $("#ResultEveluation").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("getClass")',
+
+                                    dataType: 'json',
+
+                                    data: { id: $("#ResultGradeId").val() },
+
+
+                                    success: function (states) {
+
+
+                                        $.each(states, function (i, state) {
+                                            $("#ResultClassId").append('<option value="' + state.Value + '">' +
+                                                 state.Text + '</option>');
+
+                                        });
+                                    },
+                                    error: function (ex) {
+                                        alert('Failed to retrieve states.' + ex);
+                                    }
+                                });
+                                return false;
+                            })
+
+                            $("#ResultClassId").change(function () {
+                               
+                                $("#ResultEveluation").empty();
+                               
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("getClassEveluation")',
+
+                                    dataType: 'json',
+
+                                    data: { Gid: $("#ResultGradeId").val(), cId: $("#ResultClassId").val() },
+
+
+                                    success: function (states) {
+
+
+                                        $.each(states, function (i, state) {
+                                            $("#ResultEveluation").append('<option value="' + state.Value + '">' +
+                                                 state.Text + '</option>');
+
+                                        });
+                                    },
+                                    error: function (ex) {
+                                        alert('Failed to retrieve states.' + ex);
+                                    }
+                                });
+                                return false;
+                            })
+
+                        })
+                    </script>
+                   
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

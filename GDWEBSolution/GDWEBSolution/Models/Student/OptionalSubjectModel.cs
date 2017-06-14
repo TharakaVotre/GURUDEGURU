@@ -53,7 +53,7 @@ namespace GDWEBSolution.Models.Student
 
 
 
-        [Display(Name = "Grade Id")]
+        [Display(Name = "Grade")]
 
         [Required(ErrorMessage = "Grade Name is required")]
         public string GradeId { get; set; }
@@ -62,7 +62,7 @@ namespace GDWEBSolution.Models.Student
         [Display(Name = "Grade Name")]     
         public string GradeName { get; set; }
 
-        [Display(Name = "Class Id")]
+        [Display(Name = "Class")]
         [Required(ErrorMessage = "Class Name is required")]
         public string ClassId { get; set; }
 
@@ -74,7 +74,7 @@ namespace GDWEBSolution.Models.Student
 
 
 
-        [Display(Name = "Subject Id")]
+        [Display(Name = "Subject")]
         public string SubjectId { get; set; }
 
         [Display(Name = "Subject Name")]

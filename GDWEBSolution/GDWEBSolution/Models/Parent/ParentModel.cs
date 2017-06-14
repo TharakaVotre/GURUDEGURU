@@ -49,7 +49,7 @@ namespace GDWEBSolution.Models.Parent
     
         public string ParentName { get; set; }
 
-                [Display(Name = "Parent ")]
+                [Display(Name = "Parent Id ")]
 
         public string ParentId { get; set; }
 

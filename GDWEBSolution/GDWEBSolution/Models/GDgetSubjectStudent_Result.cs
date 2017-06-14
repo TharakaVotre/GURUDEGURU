@@ -17,5 +17,6 @@ namespace GDWEBSolution.Models
         public string StudentId { get; set; }
         public string Gender { get; set; }
         public Nullable<System.DateTime> DateofBirth { get; set; }
+        public string Optional { get; set; }
     }
 }

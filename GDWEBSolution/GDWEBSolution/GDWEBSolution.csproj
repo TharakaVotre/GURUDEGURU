@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AnnualFunctions\StudentGradeAdvanceController.cs" />
     <Compile Include="Controllers\Configuration\Grade SubjectController.cs" />
     <Compile Include="Controllers\Evaluation\EvaluationbySchoolController.cs" />
+    <Compile Include="Controllers\Evaluation\EveluationAddMarkController.cs" />
     <Compile Include="Controllers\Event\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeWork\HomeWorkController.cs" />
@@ -303,6 +304,15 @@
     <Compile Include="Models\GDgetClassAttentionRequiredSubjects_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GDgetClassEveluation_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetEveluationResult_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetEveluationSubject_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GDgetExtraCurriculerStudent_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -346,6 +356,9 @@
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GDgetStudentSubject_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GDgetSubjectsResult_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GDgetSubjectStudent_Result.cs">
@@ -1357,7 +1370,6 @@
     <Content Include="Views\School\DeleteSchoolHouse.cshtml" />
     <Content Include="Views\School\DeleteSchoolSubjects.cshtml" />
     <Content Include="Views\School\Detail.cshtml" />
-    <Content Include="Views\School\Edit.cshtml" />
     <Content Include="Views\School\EditGrade.cshtml" />
     <Content Include="Views\School\ExcList.cshtml" />
     <Content Include="Views\School\Grade.cshtml" />
@@ -1398,6 +1410,21 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\Logout.cshtml" />
     <Content Include="Views\Home\PasswordChange.cshtml" />
+    <Content Include="Views\School\Edit.cshtml" />
+    <Content Include="Views\School\EditHouses.cshtml" />
+    <Content Include="Views\School\EditSchoolExtra.cshtml" />
+    <Content Include="Views\School\EditSchoolView.cshtml" />
+    <Content Include="Views\School\EditSubject.cshtml" />
+    <Content Include="Views\School\SchoolGradeEdit.cshtml" />
+    <Content Include="Views\School\EditClass.cshtml" />
+    <Content Include="Views\Student\Copy of StudentEXtra.cshtml" />
+    <Content Include="Views\Student\StudentEditView.cshtml" />
+    <Content Include="Views\EveluationAddMark\AddStudentSubjectMark.cshtml" />
+    <Content Include="Views\EveluationAddMark\DeleteView.cshtml" />
+    <Content Include="Views\EveluationAddMark\EditStudentResults.cshtml" />
+    <Content Include="Views\EveluationAddMark\EditView.cshtml" />
+    <Content Include="Views\EveluationAddMark\Index.cshtml" />
+    <Content Include="Views\EveluationAddMark\ShowResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attachments\" />
