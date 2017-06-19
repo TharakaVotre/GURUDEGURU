@@ -12,10 +12,16 @@ namespace GDWEBSolution.Models.Teacher
         public string SchoolId { get; set; }
         [Display(Name = "Teacher Id")]
         public string TeacherId { get; set; }
+        [Display(Name = "Teacher Name")]
+        public string TeacherName { get; set; }
         [Display(Name = "Grade Id")]
         public string GradeId { get; set; }
+        [Display(Name = "Grade")]
+        public string GradeName { get; set; }
         [Display(Name = "Class Id")]
         public string ClassId { get; set; }
+        [Display(Name = "Class")]
+        public string ClassName { get; set; }
         [Display(Name = "Accedamic Year")]
         public string AccedamicYear { get; set; }
         public string CreatedBy { get; set; }
@@ -24,5 +30,7 @@ namespace GDWEBSolution.Models.Teacher
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         [Display(Name = "Active")]
         public string IsActive { get; set; }
+
+        public List<ClassTeacherModel> ClassTeacherList { get; set; }
     }
 }

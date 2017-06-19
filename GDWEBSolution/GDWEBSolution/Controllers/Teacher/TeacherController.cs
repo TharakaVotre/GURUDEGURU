@@ -55,13 +55,34 @@ namespace GDWEBSolution.Controllers.Teacher
                 ModifiedDate = x.ModifiedDate
 
             }).ToList();
+
             return View(tcmlist);
         }
 
         public ActionResult Class()
         {
+            ClassTeacherModel Model = new ClassTeacherModel();
             SubjctViewBags();
-            return View();
+            var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == "CKC").FirstOrDefault();
+            var STQlist = Connection.SMGT_getSchoolClassTeachersList("CKC", AY.AccadamicYear).ToList();
+
+            Model.ClassTeacherList = STQlist.Select(x => new ClassTeacherModel
+            {
+                SchoolId = x.SchoolId,
+                TeacherId = x.TeacherId,
+                TeacherName = x.Name,
+                GradeId = x.GradeId,
+                GradeName = x.GradeName,
+                ClassId = x.ClassId,
+                ClassName = x.ClassName,
+                AccedamicYear = x.AccedamicYear,
+                CreatedBy = x.CreatedBy,
+                CreatedDate = x.CreatedDate,
+                ModifiedBy = x.ModifiedBy,
+                ModifiedDate = x.ModifiedDate,
+                IsActive = x.IsActive,
+            }).ToList();
+            return View(Model);
         }
 
         public ActionResult Details(long TeacherId)
@@ -158,6 +179,22 @@ namespace GDWEBSolution.Controllers.Teacher
             return PartialView("QualificationList", List);
         }
 
+        public ActionResult ShowTeacherQualificationDetails(int TeacherId)
+        {
+            var STQlist = Connection.SMGTgetTeacherQualification(TeacherId).ToList();
+
+            List<QualificationModel> List = STQlist.Select(x => new QualificationModel
+            {
+                Teacher_Id = x.TeacherId,
+                SchoolId = x.SchoolId,
+                QualificationName = x.QualificationName,
+                IsActive = x.IsActive,
+                QualificationId = x.QualificationId
+
+            }).ToList();
+            return PartialView("QualificationListDView", List);
+        }
+
         public ActionResult ShowTeacherExActivity(int TeacherId)
         {
             var STQlist = Connection.SMGTgetTeacherExActivity(TeacherId).ToList();
@@ -172,6 +209,22 @@ namespace GDWEBSolution.Controllers.Teacher
 
             }).ToList();
             return PartialView("ExtraCurricularActivityList", List);
+        }
+
+        public ActionResult ShowTeacherExActivityDetails(int TeacherId)
+        {
+            var STQlist = Connection.SMGTgetTeacherExActivity(TeacherId).ToList();
+
+            List<ExtraActivityModel> List = STQlist.Select(x => new ExtraActivityModel
+            {
+                TeacherID = x.TeacherId,
+                SchoolId = x.SchoolId,
+                ActivityCode = x.ActivityCode,
+                ActivityName = x.ActivityName,
+                IsActive = x.IsActive,
+
+            }).ToList();
+            return PartialView("ExtraAcitvityDView", List);
         }
 
         public ActionResult ShowTeacherSubjects(int TeacherId)
@@ -189,6 +242,23 @@ namespace GDWEBSolution.Controllers.Teacher
 
             }).ToList();
             return PartialView("TeacherSubjects", List);
+        }
+
+        public ActionResult ShowTeacherSubjectsDetails(int TeacherId)
+        {
+            var STQlist = Connection.SMGTgetTeacherSubjects(TeacherId).ToList();
+
+            List<TSubjectModel> List = STQlist.Select(x => new TSubjectModel
+            {
+                GradeName = x.GradeName,
+                ClassId = x.ClassId,
+                SubjectName = x.SubjectName,
+                IsActive = x.IsActive,
+                Teacher_ID = x.TeacherId,
+                TeacherSubjectSeqNo = x.TeacherSubjectSeqNo
+
+            }).ToList();
+            return PartialView("TeacherSubjectDetails", List);
         }
 
         public ActionResult ShowGradeClasses(string GradeId)
@@ -430,13 +500,14 @@ namespace GDWEBSolution.Controllers.Teacher
             try
             {
                 string result = "Error";
+                var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == "CKC").FirstOrDefault();
+               // List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
+                int countt = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId && u.AccedamicYear == AY.AccadamicYear);
 
-                var TCount = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId && u.AccedamicYear == Model.AccedamicYear && u.SchoolId == Model.SchoolId);
+                int Ccount = Connection.tblClassTeachers.Count(u => u.ClassId == Model.ClassId 
+                    && u.AccedamicYear == AY.AccadamicYear && u.GradeId == Model.GradeId && u.SchoolId == "CKC" );
 
-                var Ccount = Connection.tblClassTeachers.Count(u => u.ClassId == Model.ClassId 
-                    && u.AccedamicYear == Model.AccedamicYear && u.GradeId == Model.GradeId && u.SchoolId == Model.SchoolId );
-
-                if (TCount != 0)
+                if (countt != 0)
                 {
                     result = "TExits";
                     //ViewBag.TeacherId = Model.TeacherID.ToString();
@@ -452,8 +523,8 @@ namespace GDWEBSolution.Controllers.Teacher
                     NewQ.CreatedBy = "ADMIN";
                     NewQ.CreatedDate = DateTime.Now;
                     NewQ.IsActive = "Y";
-                    NewQ.AccedamicYear = "2017";
-                    NewQ.SchoolId = "CKC";
+                    NewQ.AccedamicYear = AY.AccadamicYear;
+                    NewQ.SchoolId = AY.SchoolId;
                     NewQ.GradeId = Model.GradeId;
                     NewQ.ClassId = Model.ClassId;
                     NewQ.TeacherId = Model.TeacherId;
@@ -472,6 +543,29 @@ namespace GDWEBSolution.Controllers.Teacher
             }
         }
 
+        public ActionResult ShowClassTeachers()
+        {
+            var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == "CKC").FirstOrDefault();
+            var STQlist = Connection.SMGT_getSchoolClassTeachersList("CKC",AY.AccadamicYear).ToList();
+
+            List<ClassTeacherModel> List = STQlist.Select(x => new ClassTeacherModel
+            {
+                SchoolId = x.SchoolId,
+                TeacherId = x.TeacherId,
+                TeacherName = x.Name,
+                GradeId = x.GradeId,
+                GradeName = x.GradeName,
+                ClassId = x.ClassId,
+                ClassName = x.ClassName,
+                AccedamicYear = x.AccedamicYear,
+                CreatedBy = x.CreatedBy,
+                CreatedDate = x.CreatedDate,
+                ModifiedBy = x.ModifiedBy,
+                ModifiedDate = x.ModifiedDate,
+                IsActive = x.IsActive,
+            }).ToList();
+            return PartialView("ClassTeacherView", List);
+        }
 
         public ActionResult DeleteExActivity(int Teacherid,string Schoolid, string Activitycode)
         {

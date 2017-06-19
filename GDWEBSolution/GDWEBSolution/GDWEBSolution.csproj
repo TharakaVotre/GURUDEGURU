@@ -486,6 +486,12 @@
     <Compile Include="Models\SMGT_GETPasswordChangeEMailConfig_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGT_getSchoolClassTeachersList_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMGT_getSchoolClassTeachers_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGT_getSchoolExactivityParent_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -1314,14 +1320,12 @@
     <Content Include="Views\HomeWork\Index.cshtml" />
     <Content Include="Views\HomeWork\ParentView.cshtml" />
     <Content Include="Views\SPMessage\ViewMessage.cshtml" />
-    <Content Include="Views\Teacher\TeacherSchool.cshtml" />
     <Content Include="Views\SchoolCalender\AddView.cshtml" />
     <Content Include="Views\SchoolCalender\DeleteView.cshtml" />
     <Content Include="Views\SchoolCalender\EditView.cshtml" />
     <Content Include="Views\SchoolCalender\Index.cshtml" />
     <Content Include="Views\SchoolCalender\ParentView.cshtml" />
     <Content Include="Views\SPMessage\ViewMessage.cshtml" />
-    <Content Include="Views\Teacher\TeacherSchool.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\User\NewUser.cshtml" />
@@ -1396,6 +1400,10 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\Logout.cshtml" />
     <Content Include="Views\Home\PasswordChange.cshtml" />
+    <Content Include="Views\Teacher\ExtraAcitvityDView.cshtml" />
+    <Content Include="Views\Teacher\TeacherSubjectDetails.cshtml" />
+    <Content Include="Views\Teacher\QualificationListDView.cshtml" />
+    <Content Include="Views\Teacher\ClassTeacherView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attachments\" />
