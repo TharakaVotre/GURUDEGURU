@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-
+//Created by TM
 namespace GDWEBSolution.Models.Event
 {
     public class EventModel
