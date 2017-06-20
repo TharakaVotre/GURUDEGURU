@@ -26,10 +26,11 @@ $(document).ready(function () {
                 url: "/Teacher/DeleteClassTeacher",
                 data: myformdata,
                 success: function (result) {
-                    //if (result != "Error") {
-                    //    $('#showsubjects').load('/Teacher/ShowTeacherSubjects?TeacherId=' + result);
-                    //}
-                    $("#deleteModel").modal("hide");
+                    $("#myModal").modal("hide");
+                    if (result != "Error") {
+                        debugger
+                        window.location.href = "/Teacher/Class";
+                    }
                 }
 
             })
