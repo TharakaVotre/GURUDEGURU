@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,32 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainFunction/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        string UserId = null;
+        UserSession USession = new UserSession();
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+               
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
+            }
+        }
         public ActionResult Index()
         {
+            Authentication("MaFun");
             try{
             var Function = Connection.GDgetAllFunction("Y");
             List<GDgetAllFunction_Result> Functionlist = Function.ToList();
@@ -66,6 +90,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Create()
         {
+            Authentication("MaFun");
             return View();
         }
 
@@ -75,6 +100,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Create(tblFunction Model)
         {
+            Authentication("MaFun");
+            UserId = USession.User_Id;
             try
             {
 
@@ -85,23 +112,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception ex)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        Errorlog.ErrorManager.LogError(dbEx);
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
             }
         }
 
@@ -116,6 +130,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(string Code)
         {
+            Authentication("MaFun");
             try{
                 string url = Request.Url.AbsoluteUri;
             FunctionModel TModel = new FunctionModel();
@@ -142,6 +157,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Edit(FunctionModel Model)
         {
+            Authentication("MaFun");
+            UserId = USession.User_Id;
             try
             {
 
@@ -171,6 +188,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(string Code)
         {
+            Authentication("MaFun");
             try
             {
                 FunctionModel TModel = new FunctionModel();
@@ -191,6 +209,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Delete(FunctionModel Model)
         {
+            Authentication("MaFun");
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteFunction("N", Model.FunctionId, UserId);

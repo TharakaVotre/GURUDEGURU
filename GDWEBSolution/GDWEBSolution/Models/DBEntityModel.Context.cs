@@ -99,6 +99,48 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DCISgetSchool_Result>("DCISgetSchool");
         }
     
+        public virtual int DCISgetSupportingDocumentDown(string status, string requestID, string reqstID)
+        {
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            var requestIDParameter = requestID != null ?
+                new ObjectParameter("requestID", requestID) :
+                new ObjectParameter("requestID", typeof(string));
+    
+            var reqstIDParameter = reqstID != null ?
+                new ObjectParameter("reqstID", reqstID) :
+                new ObjectParameter("reqstID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DCISgetSupportingDocumentDown", statusParameter, requestIDParameter, reqstIDParameter);
+        }
+    
+        public virtual int DCISgetSupportingDocumentDownDate(string status, string requestID, string reqstID, string startDate, string endDate)
+        {
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            var requestIDParameter = requestID != null ?
+                new ObjectParameter("requestID", requestID) :
+                new ObjectParameter("requestID", typeof(string));
+    
+            var reqstIDParameter = reqstID != null ?
+                new ObjectParameter("reqstID", reqstID) :
+                new ObjectParameter("reqstID", typeof(string));
+    
+            var startDateParameter = startDate != null ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(string));
+    
+            var endDateParameter = endDate != null ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DCISgetSupportingDocumentDownDate", statusParameter, requestIDParameter, reqstIDParameter, startDateParameter, endDateParameter);
+        }
+    
         public virtual int DCISModifySchool(string schoolId, Nullable<long> schoolGroup, string schoolName, Nullable<int> schoolRank, string isActive, Nullable<int> division, Nullable<int> district, string description, string modifiedBy, string address1, string address2, string address3, string email, string fax, string imagePath, Nullable<int> minuteforPeriod, string telephone, Nullable<int> schoolCategory, Nullable<int> province, string webUrl, string logoPath)
         {
             var schoolIdParameter = schoolId != null ?
@@ -2293,19 +2335,6 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_GETPasswordChangeEMailConfig_Result>("SMGT_GETPasswordChangeEMailConfig");
         }
     
-        public virtual ObjectResult<SMGT_getSchoolClassTeachers_Result> SMGT_getSchoolClassTeachers(string schoolid, string accademicYear)
-        {
-            var schoolidParameter = schoolid != null ?
-                new ObjectParameter("Schoolid", schoolid) :
-                new ObjectParameter("Schoolid", typeof(string));
-    
-            var accademicYearParameter = accademicYear != null ?
-                new ObjectParameter("AccademicYear", accademicYear) :
-                new ObjectParameter("AccademicYear", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchoolClassTeachers_Result>("SMGT_getSchoolClassTeachers", schoolidParameter, accademicYearParameter);
-        }
-    
         public virtual ObjectResult<SMGT_getSchoolClassTeachersList_Result> SMGT_getSchoolClassTeachersList(string schoolid, string accademicYear)
         {
             var schoolidParameter = schoolid != null ?
@@ -2631,6 +2660,15 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTGetParent_Result>("SMGTGetParent", studentIDParameter, schoolIdParameter);
         }
     
+        public virtual ObjectResult<SMGTGetParentschildern_Result> SMGTGetParentschildern(string parentId)
+        {
+            var parentIdParameter = parentId != null ?
+                new ObjectParameter("ParentId", parentId) :
+                new ObjectParameter("ParentId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTGetParentschildern_Result>("SMGTGetParentschildern", parentIdParameter);
+        }
+    
         public virtual ObjectResult<SMGTgetParentStudentadd_Result> SMGTgetParentStudentadd(string parentId, string schoolId)
         {
             var parentIdParameter = parentId != null ?
@@ -2902,6 +2940,39 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("StudentId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTloadScholExtraCadd_Result>("SMGTloadScholExtraCadd", schoolIdParameter, studentIdParameter);
+        }
+    
+        public virtual int SMGTModifyAdminUser(string schoolId, string adminid, string personName, string mobile, string password, string loginEmail, string modifiedby)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var adminidParameter = adminid != null ?
+                new ObjectParameter("Adminid", adminid) :
+                new ObjectParameter("Adminid", typeof(string));
+    
+            var personNameParameter = personName != null ?
+                new ObjectParameter("PersonName", personName) :
+                new ObjectParameter("PersonName", typeof(string));
+    
+            var mobileParameter = mobile != null ?
+                new ObjectParameter("Mobile", mobile) :
+                new ObjectParameter("Mobile", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var loginEmailParameter = loginEmail != null ?
+                new ObjectParameter("LoginEmail", loginEmail) :
+                new ObjectParameter("LoginEmail", typeof(string));
+    
+            var modifiedbyParameter = modifiedby != null ?
+                new ObjectParameter("Modifiedby", modifiedby) :
+                new ObjectParameter("Modifiedby", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTModifyAdminUser", schoolIdParameter, adminidParameter, personNameParameter, mobileParameter, passwordParameter, loginEmailParameter, modifiedbyParameter);
         }
     
         public virtual int SMGTModifyClassStatus(string schoolId, string classId, string gradeId)

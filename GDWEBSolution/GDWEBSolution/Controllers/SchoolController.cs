@@ -2098,5 +2098,109 @@ namespace GDWEBSolution.Controllers
 
 
 
+        public ActionResult ShowEditSchooladmin(string SchoolId)
+        {
+            List<tblUser> usr = Connection.tblUsers.Where(X => X.IsActive == "Y" && X.SchoolId == SchoolId && X.UserCategory == "ADMIN").ToList();
+
+
+            ViewBag.UseradminList = new SelectList(usr, "UserId", "PersonName");
+
+
+
+
+
+
+            return PartialView("EditSchoolAdminC");
+        }
+
+
+        public ActionResult Admindetails(string AdminUserId)
+        {
+
+
+
+
+
+
+
+
+            tblUser sclgrp = Connection.tblUsers.SingleOrDefault(x => x.UserId == AdminUserId);
+            string adminname = sclgrp.PersonName;
+            string email = sclgrp.LoginEmail;
+            string telephone = sclgrp.Mobile;
+
+
+
+
+            var details = new { Name = adminname, Email = email, Contact = telephone };
+
+
+
+
+
+
+            return Json(details, JsonRequestBehavior.AllowGet);
+            //Hard coded for demo. You may replace it with data from db.
+
+        }
+
+
+        [AllowAnonymous]
+        public JsonResult EditSchoolAdmin(SchoolAdminModel Model)
+        {
+            try
+            {
+                string result = "Error";
+                if (Model.SchoolId == null || Model.AdminName == null || Model.Password == null || Model.AdminPersonalEmail == null)
+                {
+
+                    result = "notfilled";
+
+                }
+                else
+                {
+
+
+
+                    tblUser usr = new tblUser();
+
+
+                    usr.SchoolId = Model.SchoolId;
+                    usr.UserId = Model.AdminUserId;
+
+                    usr.Mobile = Model.PersonalMobile;
+                    usr.ModifiedBy = UserId;
+
+                    usr.PersonName = Model.AdminName;
+                    usr.UserId = Model.AdminUserId;
+                    string pass = Encrypt_Decrypt.Encrypt(Model.Password, Password);
+
+                    usr.Password = pass;
+                    usr.LoginEmail = Model.AdminPersonalEmail;
+                    Connection.SMGTModifyAdminUser(usr.SchoolId, usr.UserId, usr.PersonName, usr.Mobile, usr.Password, usr.LoginEmail,usr.ModifiedBy);
+
+
+
+                    Connection.SaveChanges();
+
+                    result = Model.SchoolId;
+
+
+
+
+                    //ShowTeacherQualificatoin();
+                }
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+
+
     }
 }

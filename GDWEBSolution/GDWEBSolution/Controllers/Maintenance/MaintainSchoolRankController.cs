@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,33 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainSchoolRank/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+               
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
+            }
+        }
         public ActionResult Index()
         {
+            Authentication("MaSRa");
             try
             {
                 var Group = Connection.GDgetAllSchoolRank("Y");
@@ -68,6 +93,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Create()
         {
+            Authentication("MaSRa");
             return View();
         }
 
@@ -77,6 +103,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Create(tblSchoolRank Model)
         {
+            Authentication("MaSRa");
+            UserId = USession.User_Id;
             try
             {
 
@@ -118,6 +146,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(int Code)
         {
+            Authentication("MaSRa");
+           
             try
             {
                 SchoolRankModel TModel = new SchoolRankModel();
@@ -144,6 +174,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Edit(SchoolRankModel Model)
         {
+            Authentication("MaSRa");
+            UserId = USession.User_Id;
             try
             {
 
@@ -173,6 +205,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(int Code)
         {
+            Authentication("MaSRa");
             try{
             SchoolRankModel TModel = new SchoolRankModel();
             TModel.SchoolRankId = Code;
@@ -192,6 +225,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Delete(SchoolRankModel Model)
         {
+            Authentication("MaSRa");
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteSchoolRank("N", Model.SchoolRankId, UserId);

@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.SchoolCalender;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,37 @@ namespace GDWEBSolution.Controllers.SchoolCalender
         //
         // GET: /SchoolCalender/
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string SchooId = "CKC";
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        // GET: /TeacherCategory/
+        string SchooId = null;
+        string UserId = null;
         string AcademicYear = null;
+
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+               
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
+            }
+        }
         public ActionResult Index(string AcademicYear)
         {
+            Authentication("ScCal");
+            SchooId = USession.School_Id;
             try
             {
                 if (AcademicYear == null & Session["AcademicYear"] == null)
@@ -77,6 +104,9 @@ namespace GDWEBSolution.Controllers.SchoolCalender
         [HttpPost]
         public ActionResult Create(SchoolCalenderModel Model)
         {
+            Authentication("ScCal");
+            SchooId = USession.School_Id;
+            UserId = USession.User_Id;
             try
             {
                 
@@ -131,27 +161,39 @@ namespace GDWEBSolution.Controllers.SchoolCalender
 
         public ActionResult Edit(long SeqNo)
         {
-            drplist();
-            SchoolCalenderModel TModel = new SchoolCalenderModel();
-
-            tblSchoolCalendar TCtable = Connection.tblSchoolCalendars.SingleOrDefault(x => x.CalenderSeqNo == SeqNo);
-            TModel.CalenderSeqNo = SeqNo;
-            TModel.AcadamicYear = TCtable.AcadamicYear;
-            TModel.FromDate = TCtable.FromDate;
-            TModel.ToDate = TCtable.ToDate;
-            TModel.SpecialComment = TCtable.SpecialComment;
-            TModel.IsHoliday = TCtable.IsHoliday;
-            TModel.DateComment = TCtable.DateComment;
+            Authentication("ScCal");
             
-           
+            try
+            {
+                drplist();
+                SchoolCalenderModel TModel = new SchoolCalenderModel();
 
-            return PartialView("EditView", TModel);
+                tblSchoolCalendar TCtable = Connection.tblSchoolCalendars.SingleOrDefault(x => x.CalenderSeqNo == SeqNo);
+                TModel.CalenderSeqNo = SeqNo;
+                TModel.AcadamicYear = TCtable.AcadamicYear;
+                TModel.FromDate = TCtable.FromDate;
+                TModel.ToDate = TCtable.ToDate;
+                TModel.SpecialComment = TCtable.SpecialComment;
+                TModel.IsHoliday = TCtable.IsHoliday;
+                TModel.DateComment = TCtable.DateComment;
+
+
+
+                return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+            }
         }
 
 
         [HttpPost]
         public ActionResult Edit(SchoolCalenderModel Model, string IsHoliday1)
         {
+            Authentication("ScCal");
+            UserId = USession.User_Id;
             try
             {
                 string holiday = IsHoliday1;
@@ -176,6 +218,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
 
         public ActionResult Delete(long SeqNo)
         {
+            Authentication("ScCal");
             try
             {
                 SchoolCalenderModel TModel = new SchoolCalenderModel();
@@ -193,6 +236,8 @@ namespace GDWEBSolution.Controllers.SchoolCalender
         [HttpPost]
         public ActionResult Delete(SchoolCalenderModel Model)
         {
+            Authentication("ScCal");
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDDeleteSchoolCalenderActivity(Model.CalenderSeqNo, UserId,"N");
@@ -215,6 +260,8 @@ namespace GDWEBSolution.Controllers.SchoolCalender
 
         public ActionResult ParentView(string AcademicYear)
         {
+            Authentication("ScClP");
+            SchooId = USession.School_Id;
             try
             {
                 if (AcademicYear == null & Session["AcademicYear"] == null)

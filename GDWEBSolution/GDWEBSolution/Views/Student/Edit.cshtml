@@ -8,7 +8,7 @@
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">Edit Student</a></li>                 
-                    <li class=""><a href="#ExtraCuricular" data-toggle="tab" aria-expanded="false">EXtra Curicular</a></li>
+                    <li class=""><a href="#esextra" data-toggle="tab" aria-expanded="false">EXtra Curicular</a></li>
                     @*<li class="disabled"><a>Disabled</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -28,13 +28,13 @@
                         @{ Html.RenderAction("ShowEditStudent", new { SchoolId = ViewBag.EditSchoolID, StudentId = ViewBag.EditStudentID }); }
                     </div>
                     
-
                     
-                    <div class="tab-pane fade" id="qualification">
+                    
+                    <div class="tab-pane fade" id="esextra">
+                         @{ Html.RenderAction("ShowEditExtra", new { SchoolId = ViewBag.EditSchoolID, StudentId = ViewBag.EditStudentID }); }
 
-
-                        <div id="showgrade">
-
+                        <div id="showestaudente">
+                             @{ Html.RenderAction("ShowstudentExactivty", new { SchoolId = ViewBag.EditSchoolID, StudentId = ViewBag.EditStudentID }); }
                         </div>
 
                     </div>

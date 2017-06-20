@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,33 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainParentObservationType/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+               
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
+            }
+        }
         public ActionResult Index()
         {
+            Authentication("MaPao");
             try{
             var Observation = Connection.GDgetAllParentObservationType("Y");
             List<GDgetAllParentObservationType_Result> Observationlist = Observation.ToList();
@@ -66,6 +91,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Create()
         {
+            Authentication("MaPao");
             return View();
         }
 
@@ -75,6 +101,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Create(tblParentObservationType Model)
         {
+            Authentication("MaPao");
+            UserId = USession.User_Id;
             try
             {
 
@@ -116,6 +144,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(int Code)
         {
+            Authentication("MaPao");
+           
             try{
             ParentObservationTypeModel TModel = new ParentObservationTypeModel();
 
@@ -141,6 +171,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Edit(ParentObservationTypeModel Model)
         {
+            Authentication("MaPao");
+            UserId = USession.User_Id;
             try
             {
 
@@ -170,6 +202,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(int Code)
         {
+            Authentication("MaPao");
+           
             try
             {
                 ParentObservationTypeModel TModel = new ParentObservationTypeModel();
@@ -190,6 +224,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Delete(ParentObservationTypeModel Model)
         {
+            Authentication("MaPao");
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteParentObservationType("N", Model.ObTypeId, UserId);

@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,11 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainExtraCurricularActivity/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
         public ActionResult Index()
         {
+            Authentication("MaExA");
             try{
             var Activity = Connection.GDgetAllExtraCurricularActivity("Y");
             List<GDgetAllExtraCurricularActivity_Result> Categorylist = Activity.ToList();
@@ -66,6 +69,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Create()
         {
+            Authentication("MaExA");
             return View();
         }
 
@@ -75,6 +79,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Create(tblExtraCurricularActivity Model)
         {
+            Authentication("MaExA");
+            UserId = USession.User_Id;
             try
             {
 
@@ -103,6 +109,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(string Code)
         {
+            Authentication("MaExA");
             try{
             ExtraCurricularActivityModel TModel = new ExtraCurricularActivityModel();
 
@@ -128,6 +135,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Edit(ExtraCurricularActivityModel Model)
         {
+            Authentication("MaExA");
+            UserId = USession.User_Id;
             try
             {
 
@@ -158,6 +167,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(string Code)
         {
+            Authentication("MaExA");
             ExtraCurricularActivityModel TModel = new ExtraCurricularActivityModel();
             TModel.ActivityCode = Code;
             return PartialView("DeleteView", TModel);
@@ -169,6 +179,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Delete(ExtraCurricularActivityModel Model)
         {
+            Authentication("MaExA");
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteExtraCurricularActivity("N", Model.ActivityCode, UserId);
@@ -183,6 +195,27 @@ namespace GDWEBSolution.Controllers
                 Errorlog.ErrorManager.LogError(ex);
                 return View();
                 
+            }
+        }
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+                
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
             }
         }
     }

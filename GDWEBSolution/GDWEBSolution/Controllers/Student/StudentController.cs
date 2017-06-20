@@ -719,6 +719,54 @@ namespace GDWEBSolution.Controllers.Student
         }
 
 
+        [AllowAnonymous]
+        public JsonResult EAddStudentExcActivity(StudentExtraCModel Model)
+        {
+            try
+            {
+                string result = "Error";
+                //    var count2 = Connection.tblStudentExtraCurricularActivities.Count();
+                // Model.HouseId = count2.ToString();
+                var count = Connection.tblStudentExtraCurricularActivities.Count(u => u.ActivityCode == Model.ActivityCode && u.SchoolId == Model.SchoolId && u.StudentId == Model.StudentId);
+                if (count == 0)
+                {
+                    // Model.SchoolId = Schoold;
+                    tblStudentExtraCurricularActivity newscg = new tblStudentExtraCurricularActivity();
+
+                    newscg.CreatedBy = "User1";
+                    newscg.CreatedDate = DateTime.Now;
+                    newscg.SchoolId = Model.SchoolId;
+                    newscg.StudentId = Model.StudentId;
+                    newscg.ActivityCode = Model.ActivityCode;
+                    newscg.IsActive = "Y";
+
+
+                    Connection.tblStudentExtraCurricularActivities.Add(newscg);
+
+                    Connection.SaveChanges();
+
+                    result = Model.SchoolId + "!" + Model.StudentId;
+
+                    //  ViewBag.SchoolId = Model.SchoolId;
+
+                }
+                else
+                {
+                    result = "Exits";
+                }
+                //ShowTeacherQualificatoin();
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+
         public ActionResult ShowstudentExactivty(string SchoolId, string StudentId)
         {
 
@@ -936,6 +984,70 @@ namespace GDWEBSolution.Controllers.Student
 
 
             return PartialView("StudentEditView", TModel);
+        }
+
+
+
+        public ActionResult ShowEditExtra(string StudentId, string SchoolId)
+        {
+
+
+
+
+
+
+            StudentExtraCModel TModel = new StudentExtraCModel();
+
+            tblStudent TCtable = Connection.tblStudents.SingleOrDefault(x => x.StudentId == StudentId && x.SchoolId == SchoolId);
+
+            tblSchool schl = Connection.tblSchools.SingleOrDefault(x => x.SchoolId == SchoolId);
+            //  TModel.IsActive = TCtable.IsActive;
+
+            string SchoolName = schl.SchoolName;
+            TModel.StudentId = TCtable.StudentId;
+            TModel.StudentName = TCtable.studentName;
+            TModel.SchoolName = SchoolName;
+
+
+            var StudentSextra = Connection.SMGTloadScholExtraCadd(SchoolId, "%").ToList();
+
+          
+
+            List<tblExtraCurricularActivity> result = StudentSextra.Select(x => new tblExtraCurricularActivity
+            {
+                ActivityCode = x.ActivityCode,
+                ActivityName = x.ActivityName
+
+            }).ToList();
+            ViewBag.studentextrac = new SelectList(StudentSextra, "ActivityCode", "ActivityName");
+
+       
+
+
+          
+
+
+
+        
+           
+
+
+           
+
+
+        
+         
+            TModel.SchoolId = TCtable.SchoolId;
+
+
+
+
+
+
+
+
+
+            return PartialView("EditStudentEXtra", TModel);
         }
 
 

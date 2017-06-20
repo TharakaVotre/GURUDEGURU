@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,33 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainStudentEvaluationType/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+               
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
+            }
+        }
         public ActionResult Index()
         {
+            Authentication("MaStE");
             try{
             var Group = Connection.GDgetAllEvaluationType("Y");
             List<GDgetAllEvaluationType_Result> Grouplist = Group.ToList();
@@ -66,6 +91,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Create()
         {
+            Authentication("MaStE");
             return View();
         }
 
@@ -75,6 +101,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Create(tblEvaluationType Model)
         {
+            Authentication("MaStE");
+            UserId=USession.User_Id;
             try
             {
 
@@ -116,6 +144,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(long Code)
         {
+            Authentication("MaStE");
             try{
             StudentEvaluationTypeModel TModel = new StudentEvaluationTypeModel();
 
@@ -141,6 +170,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Edit(StudentEvaluationTypeModel Model)
         {
+            Authentication("MaStE");
+            UserId = USession.User_Id;
             try
             {
 
@@ -170,6 +201,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(long Code)
         {
+            Authentication("MaStE");
             try
             {
                 StudentEvaluationTypeModel TModel = new StudentEvaluationTypeModel();
@@ -190,6 +222,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Delete(StudentEvaluationTypeModel Model)
         {
+            Authentication("MaStE");
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteEvaluationType("N", Model.EvaluationTypeCode, UserId);

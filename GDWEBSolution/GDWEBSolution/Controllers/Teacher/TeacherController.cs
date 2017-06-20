@@ -502,10 +502,10 @@ namespace GDWEBSolution.Controllers.Teacher
                 string result = "Error";
                 var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == "CKC").FirstOrDefault();
                // List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
-                int countt = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId && u.AccedamicYear == AY.AccadamicYear);
+                int countt = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId && u.AccedamicYear == AY.AccadamicYear && u.IsActive == "Y");
 
-                int Ccount = Connection.tblClassTeachers.Count(u => u.ClassId == Model.ClassId 
-                    && u.AccedamicYear == AY.AccadamicYear && u.GradeId == Model.GradeId && u.SchoolId == "CKC" );
+                int Ccount = Connection.tblClassTeachers.Count(u => u.ClassId == Model.ClassId
+                    && u.AccedamicYear == AY.AccadamicYear && u.GradeId == Model.GradeId && u.SchoolId == "CKC" && u.IsActive == "Y");
 
                 if (countt != 0)
                 {
@@ -800,7 +800,7 @@ namespace GDWEBSolution.Controllers.Teacher
         }
 
         [HttpPost]
-        public ActionResult DeleteClassTeacher(ClassTeacherModel Model)
+        public JsonResult DeleteClassTeacher(ClassTeacherModel Model)
         {
             try
             {
@@ -813,11 +813,11 @@ namespace GDWEBSolution.Controllers.Teacher
                 TCtable.IsActive = "D";
                 Connection.SaveChanges();
 
-                return RedirectToAction("Class");
+                return Json("Sucses", JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return View();
+                return Json("Error", JsonRequestBehavior.AllowGet);
             }
         }
 

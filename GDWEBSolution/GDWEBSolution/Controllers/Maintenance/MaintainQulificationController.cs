@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,33 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainQulification/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+               
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
+            }
+        }
         public ActionResult Index()
         {
+            Authentication("MaQul");
             try
             {
                 var Qualification = Connection.GDgetAllQualification("Y");
@@ -68,6 +93,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Create()
         {
+            Authentication("MaQul");
             return View();
         }
 
@@ -77,6 +103,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Create(tblQualification Model)
         {
+            Authentication("MaQul");
+            UserId = USession.User_Id;
             try
             {
 
@@ -118,6 +146,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(int Code)
         {
+            Authentication("MaQul");
+            
             try{
             QulificationModel TModel = new QulificationModel();
 
@@ -143,6 +173,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Edit(QulificationModel Model)
         {
+            Authentication("MaQul");
+            UserId = USession.User_Id;
             try
             {
 
@@ -172,6 +204,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(int Code)
         {
+            Authentication("MaQul");
+            
             try
             {
                 QulificationModel TModel = new QulificationModel();
@@ -192,6 +226,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Delete(QulificationModel Model)
         {
+            Authentication("MaQul");
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteQualification("N", Model.QualificationId, UserId);

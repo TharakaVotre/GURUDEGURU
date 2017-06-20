@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,33 @@ namespace GDWEBSolution.Controllers
         //
         // GET: /MaintainMessageType/
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+                
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
+            }
+        }
         public ActionResult Index()
         {
+            Authentication("MaMsg");
             try
             {
                 var msg = Connection.GDgetAllMassageType("Y");
@@ -66,6 +91,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Create()
         {
+            Authentication("MaMsg");
             return View();
         }
 
@@ -75,6 +101,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Create(tblMessageType Model)
         {
+            Authentication("MaMsg");
+            UserId = USession.User_Id;
             try
             {
 
@@ -85,23 +113,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception ex)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        Errorlog.ErrorManager.LogError(dbEx);
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
             }
         }
 
@@ -116,6 +131,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(long Code)
         {
+            Authentication("MaMsg");
+           
             try{
             MessageTypeModel TModel = new MessageTypeModel();
 
@@ -141,6 +158,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Edit(MessageTypeModel Model)
         {
+            Authentication("MaMsg");
+            UserId = USession.User_Id;
             try
             {
 
@@ -170,6 +189,8 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(long Code)
         {
+            Authentication("MaMsg");
+            
             try{
             MessageTypeModel TModel = new MessageTypeModel();
             TModel.MessageTypeId = Code;
@@ -189,6 +210,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Delete(MessageTypeModel Model)
         {
+            Authentication("MaMsg");
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteMassageType("N", Model.MessageTypeId, UserId);

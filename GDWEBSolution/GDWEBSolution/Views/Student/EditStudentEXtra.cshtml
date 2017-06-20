@@ -3,30 +3,26 @@
 <form id="FrmSE" class="form-horizontal">
     <div class="form-group">
         @Html.HiddenFor(model => model.SchoolId)
+
+        @Html.HiddenFor(model => model.StudentId)
        
         @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-4">
-            @Html.DropDownListFor(model => model.SchoolIdE, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadEXactivsewe(this.value)" })
+            @Html.TextBoxFor(model => model.SchoolName, new { @class = "form-control", @placeholder = "School Name" , @readonly = "readonly" })
             </div>
-        @Html.LabelFor(m => m.GradeIdE, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-4">
-            @Html.DropDownListFor(model => model.GradeIdE, ViewBag.SGradeDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadClassse(this.value)" })
-        </div>
+      
         <br/><br />
-        @Html.LabelFor(m => m.ClassIdE, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-4">
-            @Html.DropDownListFor(model => model.ClassIdE, ViewBag.classDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadStudentsse(this.value)" })
-        </div>
+      
 
-        @Html.LabelFor(m => m.StudentIdE, new { @class = "col-sm-2 control-label" })
+        @Html.LabelFor(m => m.StudentId, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-4">
-            @Html.DropDownListFor(model => model.StudentIdE, ViewBag.classDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadEXactivsescl(this.value)" })
+           @Html.TextBoxFor(model => model.StudentName, new { @class = "form-control", @placeholder = "School Name" , @readonly = "readonly" })
         </div>
         <br /><br />
 
             @Html.LabelFor(m => m.ActivityName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-4">
-                @Html.DropDownListFor(model => model.ActivityCode, ViewBag.excdropdown as SelectList, "", new { @class = "form-control", @placeholder = "Activity" })
+                @Html.DropDownListFor(model => model.ActivityCode, ViewBag.studentextrac as SelectList, "", new { @class = "form-control", @placeholder = "Activity" })
 
                 @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
 
@@ -213,7 +209,7 @@
         $.ajax({
 
             type: "POST",
-            url: "/Student/AddStudentExcActivity",
+            url: "/Student/EAddStudentExcActivity",
             data: myformdata,
             success: function (result) {
                 //$("#loaderDiv").hide();
@@ -224,7 +220,7 @@
                   
                    var res = result.split("!");
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                   $('#showexactivity').load('/Student/ShowstudentExactivty?SchoolId=' +  res[0] + '&StudentId='+ res[1]);
+                   $('#showestaudente').load('/Student/ShowstudentExactivty?SchoolId=' + res[0] + '&StudentId=' + res[1]);
                     $("#SuccesLable").text("Activity Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -298,6 +294,44 @@
 
         }
    //});
+
+
+</script>
+
+<script>
+    $(document).ready(function () {
+
+
+
+        var selectedItem = value;
+        var SchoolId = $("#SchoolIdE").val();
+        var ddlStates = $("#ActivityCode");
+
+
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("Studentextracuricular"))",
+            data: { "SchoolId": SchoolId },
+            success: function (data) {
+                ddlStates.html('');
+                ddlStates.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStates.append($('<option></option>').val(option.ActivityCode).html(option.ActivityName));
+                });
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+
+            }
+        });
+        $('#showexactivity').load('/Student/ShowstudentExactivty?SchoolId=' + SchoolId + '&StudentId=' + selectedItem);
+
+    });
+
 
 
 </script>

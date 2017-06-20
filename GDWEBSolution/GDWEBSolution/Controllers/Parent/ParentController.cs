@@ -15,7 +15,7 @@ namespace GDWEBSolution.Controllers.Parent
     public class ParentController : Controller
     {
         string Sessparent="2";
-        string SessionSchool = "Scl11128";
+        string SessionSchool = "Scl13137";
 
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
         //
@@ -168,6 +168,7 @@ namespace GDWEBSolution.Controllers.Parent
         // GET: /Parent/Create
         public ActionResult Create()
         {
+            ViewBag.SchoolIDc = SessionSchool;
 
             List<tblParent> prntRlist = Connection.tblParents.OrderBy(X=>X.ParentName).Where(X => X.IsActive == "Y").ToList();
             ViewBag.ParentlList = new SelectList(prntRlist, "ParentId", "ParentName");

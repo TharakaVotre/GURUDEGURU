@@ -1,5 +1,6 @@
 ﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,12 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainEventCategory/
 
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        //
+        UserSession USession = new UserSession();
         // GET: /TeacherCategory/
-        string UserId = "ADMIN";
+        string UserId = null;
         public ActionResult Index()
         {
+            Authentication("MaECa");
             try
             {
                 var Category = Connection.GDgetAllEventCategory("Y");
@@ -72,7 +74,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Create()
         {
-           
+            Authentication("MaECa");
             return View();
         }
 
@@ -82,8 +84,10 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Create(tblEventcategory Model)
         {
+            Authentication("MaECa");
             try
             {
+                UserId = USession.User_Id;
                 string Message = Request.Form["Message"];
                 string Approve = Request.Form["Approval"];
                 Connection.GDsetEventCategory(Model.EventCategoryDesc, Message, Approve, UserId, "Y");
@@ -93,23 +97,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception ex)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        Errorlog.ErrorManager.LogError(dbEx);
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
             }
         }
 
@@ -124,6 +115,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(long CategoryId)
         {
+            Authentication("MaECa");
             try
             {
                 EventCategoryModel TModel = new EventCategoryModel();
@@ -152,6 +144,8 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Edit(EventCategoryModel Model)
         {
+            Authentication("MaECa");
+            UserId = USession.User_Id;
             try
             {
 
@@ -181,6 +175,7 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Delete(long CategoryId)
         {
+            Authentication("MaECa");
             try
             {
                 EventCategoryModel TModel = new EventCategoryModel();
@@ -201,8 +196,10 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Delete(EventCategoryModel Model)
         {
+            Authentication("MaECa");
             try
             {
+                UserId = USession.User_Id;
                 Connection.GDdeleteEventCategory("N", Model.EventCategoryId, UserId);
                 Connection.SaveChanges();
 
@@ -215,6 +212,28 @@ namespace GDWEBSolution.Controllers
                 Errorlog.ErrorManager.LogError(ex);
                 return View();
                
+            }
+        }
+
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+                
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
             }
         }
     }
