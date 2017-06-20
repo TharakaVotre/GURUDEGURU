@@ -512,9 +512,6 @@
     <Compile Include="Models\SMGT_getSchoolClassTeachersList_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SMGT_getSchoolClassTeachers_Result.cs">
-      <DependentUpon>DBEntityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\SMGT_getSchoolExactivityParent_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
