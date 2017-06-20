@@ -25,6 +25,8 @@ namespace GDWEBSolution.Models.Parent
         public string ParentStudent { get; set; }
 
         [Display(Name = "User Name")]
+
+        [Required(ErrorMessage = "User Name is required")]
     
         public string UserId { get; set; }
 
@@ -46,10 +48,11 @@ namespace GDWEBSolution.Models.Parent
 
         
         [Display(Name = "Parent Name")]
+        [Required(ErrorMessage = "Name is required")]
     
         public string ParentName { get; set; }
 
-                [Display(Name = "Parent ")]
+                [Display(Name = "Parent Id ")]
 
         public string ParentId { get; set; }
 
@@ -83,7 +86,6 @@ namespace GDWEBSolution.Models.Parent
         [Display(Name = "Email")]
         [Required(ErrorMessage = "The email address is required")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
-
         public string PersonalEmail { get; set; }
 
 
@@ -141,8 +143,8 @@ namespace GDWEBSolution.Models.Parent
             public string OfficePhone { get; set; }
 
 
-            [Display(Name = "Email")]
-            [Required(ErrorMessage = "The email address is required")]
+            [Display(Name = "Office Email")]
+          
             [EmailAddress(ErrorMessage = "Invalid Email Address")]
 
 
@@ -153,12 +155,14 @@ namespace GDWEBSolution.Models.Parent
             [Display(Name = "NIC")]
             public string NIC { get; set; }
         [Display(Name = "Password")]
+        [Required(ErrorMessage = "Password is required")]
             [DataType(DataType.Password)]
             [StringLength(255, MinimumLength = 8)]
        
             [MembershipPassword()]
             public string Password { get; set; }
         [Display(Name = " Confirm Password")]
+        [Required(ErrorMessage = " Confirm Password is required")]
             [Compare("Password")]
             [DataType(DataType.Password)]
             [StringLength(255, MinimumLength = 8)]
@@ -186,6 +190,9 @@ namespace GDWEBSolution.Models.Parent
 
         [Display(Name = "Active")]
         public string IsActive { get; set; }
+
+
+        public string JavascriptToRun { get; set; }
 
 
 

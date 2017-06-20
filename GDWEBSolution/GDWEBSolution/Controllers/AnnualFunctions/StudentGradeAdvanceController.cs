@@ -13,7 +13,7 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
         //
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
         string UserId = "Shirandie";
-        string SchoolId = "Scl11128";
+        string SchoolId = "Scl13137";
         // GET: /StudentGradeAdvance/
 
         public ActionResult Index()

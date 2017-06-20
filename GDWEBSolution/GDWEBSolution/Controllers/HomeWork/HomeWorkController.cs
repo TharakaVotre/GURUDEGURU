@@ -92,7 +92,7 @@ namespace GDWEBSolution.Controllers
             TModel.SubjectId = TCtable.SubjectId;
             TModel.GradeId = TCtable.GradeId;
             TModel.ClassId = TCtable.ClassId;
-            tblClass TClass = Connection.tblClasses.SingleOrDefault(x => x.ClassId == TCtable.ClassId && x.GradeId == TCtable.GradeId);
+            tblClass TClass = Connection.tblClasses.SingleOrDefault(x => x.ClassId == TCtable.ClassId && x.GradeId == TCtable.GradeId && x.SchoolId==SchoolId);
             TModel.Class = TClass.ClassName;
             tblGrade TGrade = Connection.tblGrades.SingleOrDefault(x => x.GradeId == TCtable.GradeId);
             TModel.Grade = TGrade.GradeName;
@@ -212,7 +212,7 @@ namespace GDWEBSolution.Controllers
             TModel.SubjectId = TCtable.SubjectId;
             TModel.GradeId = TCtable.GradeId;
             TModel.ClassId = TCtable.ClassId;
-            tblClass TClass = Connection.tblClasses.SingleOrDefault(x => x.ClassId == TCtable.ClassId && x.GradeId==TCtable.GradeId);
+            tblClass TClass = Connection.tblClasses.SingleOrDefault(x => x.ClassId == TCtable.ClassId && x.GradeId==TCtable.GradeId && x.SchoolId==SchoolId);
             TModel.Class = TClass.ClassName;
             tblGrade TGrade = Connection.tblGrades.SingleOrDefault(x => x.GradeId == TCtable.GradeId);
             TModel.Grade = TGrade.GradeName;
@@ -227,7 +227,10 @@ namespace GDWEBSolution.Controllers
 
    
            DropDownList(TCtable.GradeId);
-             
+           var Subject = Connection.GDgetGradeActiveSubject(TCtable.GradeId, "Y"); ;
+           List<GDgetGradeActiveSubject_Result> Subjectlist = Subject.ToList();
+            ViewBag.SubjectId = new SelectList(Subjectlist, "SubjectId", "SubjectName");
+            ViewBag.SubjectIdtxt = TCtable.SubjectId;
             return PartialView("EditView", TModel);
         }
 

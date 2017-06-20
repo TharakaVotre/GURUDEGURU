@@ -346,7 +346,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
 
                 SchoolId = "asdas123err";
             }
-            var SchoolGrade = Connection.SMGTgetSchoolGrade(SchoolId).ToList();//Need to Pass a Session Schoolid
+            var SchoolGrade = Connection.SMGTgetSchoolGrade(SchoolId).OrderBy(X=>X.GradeName).ToList();//Need to Pass a Session Schoolid
         
 
 
@@ -388,7 +388,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
             //int id = 0;
             //bool isValid = Int32.TryParse(SchoolId, out id);
 
-            var SchoolClass = Connection.SMGTgetclassadd(SchoolId, GradeId).ToList();//Need to Pass a Session Schoolid
+            var SchoolClass = Connection.SMGTgetclassadd(SchoolId, GradeId).OrderBy(X=>X.ClassName).ToList();//Need to Pass a Session Schoolid
 
 
 
@@ -441,7 +441,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
                            select new
                            {
                                SubjectId = s.SubjectId,
-                               SubjectName = s.ShortName
+                               SubjectName = s.SubjectName
 
 
                            }).ToList();

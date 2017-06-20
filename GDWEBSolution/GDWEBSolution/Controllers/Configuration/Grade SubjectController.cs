@@ -16,7 +16,7 @@ namespace GDWEBSolution.Controllers.Configuration
         // GET: /Grade Subject/
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
         string UserId = "Shirandie";
-        string SchoolId = "Scl11128";
+        string SchoolId = "Scl118743";
         string Accyear = null;
         string gradeid = null;
         public ActionResult Index()
@@ -175,7 +175,7 @@ namespace GDWEBSolution.Controllers.Configuration
                                         count2++;
                                         if (count2 == count1)
                                         {
-                                            Connection.GDsetGradeSubject(AcademicYear, GradeId, SubId, SubCatId, optionalval, UserId, "Y");
+                                            Connection.GDsetGradeSubject(AcademicYear,SchoolId, GradeId, SubId, SubCatId, optionalval, UserId, "Y");
                                         }
                                     }
                                 }
@@ -183,7 +183,7 @@ namespace GDWEBSolution.Controllers.Configuration
 
                         }
                     }
-                    var Group = Connection.GDgetAllGradeSubject(AcademicYear, GradeId, "Y");
+                    var Group = Connection.GDgetAllGradeSubject(AcademicYear,SchoolId, GradeId, "Y");
                     List<GDgetAllGradeSubject_Result> Grouplist = Group.ToList();
 
                     Grade_SubjectModel tcm = new Grade_SubjectModel();
@@ -224,7 +224,7 @@ namespace GDWEBSolution.Controllers.Configuration
             
              Dropdownlistdata(AcademicYear, GradeId);
 
-             var Group = Connection.GDgetAllGradeSubject(Accyear, gradeid, "Y");
+             var Group = Connection.GDgetAllGradeSubject(Accyear,SchoolId, gradeid, "Y");
              List<GDgetAllGradeSubject_Result> Grouplist = Group.ToList();
 
              Grade_SubjectModel tcm = new Grade_SubjectModel();
@@ -284,7 +284,7 @@ namespace GDWEBSolution.Controllers.Configuration
              try
              {
 
-                 Connection.GDModifyGradeSubject(Model.AcademicYear, Model.GradeId, Model.SubjectId,Model.SubjectCategoryId,Model.Optional, UserId);
+                 Connection.GDModifyGradeSubject(Model.AcademicYear,SchoolId, Model.GradeId, Model.SubjectId,Model.SubjectCategoryId,Model.Optional, UserId);
                  Connection.SaveChanges();
                  ViewBag.ShowDiv = false;
                 // Detail(Model.AcademicYear, Model.GradeId);
@@ -315,7 +315,7 @@ namespace GDWEBSolution.Controllers.Configuration
          {
              try
              {
-                 Connection.GDdeleteGradeSubject(Model.AcademicYear,Model.GradeId,Model.SubjectId,"N",UserId);
+                 Connection.GDdeleteGradeSubject(Model.AcademicYear,SchoolId,Model.GradeId,Model.SubjectId,"N",UserId);
                  Connection.SaveChanges();
 
                  //return View();

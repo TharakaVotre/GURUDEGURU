@@ -8,12 +8,17 @@ using GDWEBSolution.Models.Schools;
 using System.IO;
 using GDWEBSolution.Models.Teacher;
 using GDWEBSolution.Models.Student;
+using GDWEBSolution.Util;
 //DBEntityModel.edmx
 //SchoolMGTEntitiesConnectionString
 namespace GDWEBSolution.Controllers
 {
     public class SchoolController : Controller
     {
+
+        static string DECKey = System.Configuration.ConfigurationManager.AppSettings["DecKey"];
+        string Password = DECKey.Substring(10);
+
         String Schoold = "121127";
         string UserId = "User1";
         //
@@ -369,7 +374,7 @@ namespace GDWEBSolution.Controllers
              {
                  string result = "Error";
 
-                 var count = Connection.tblClasses.Count(u => u.SchoolId == Model.SchoolId3 && u.GradeId == Model.GradeId && u.ClassId==Model.ClassId);
+                 var count = Connection.tblClasses.Count(u => u.SchoolId == Model.SchoolId3 && u.GradeId == Model.GradeId && u.ClassId == Model.ClassId);
                  if (count == 0)
                  {
 
@@ -387,9 +392,119 @@ namespace GDWEBSolution.Controllers
                     Connection.tblClasses.Add(cls);
                      Connection.SaveChanges();
 
-                     result = Model.SchoolId3+"!"+Model.GradeId;
+                     result = Model.SchoolId3 + "!" + Model.GradeId;
 
                      ViewBag.SchoolId = Model.SchoolId3.ToString();
+
+                 }
+                 else
+                 {
+                     result = "Exits";
+                 }
+                 //ShowTeacherQualificatoin();
+
+                 return Json(result, JsonRequestBehavior.AllowGet);
+             }
+             catch (Exception Ex)
+             {
+                 Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)", Ex);
+                 return Json("Exception", JsonRequestBehavior.AllowGet);
+
+             }
+         }
+
+
+         [AllowAnonymous]
+         public JsonResult AddSchoolAdmin(SchoolAdminModel Model)
+         {
+             try
+             {
+                 string result = "Error";
+                 if (Model.SchoolId4 == null || Model.AdminUserId == null || Model.Password == null || Model.AdminPersonalEmail == null)
+                 {
+
+                     result = "notfilled";
+
+                 }
+                 else
+                 {
+
+                     var count = Connection.tblUsers.Count(u => u.SchoolId == Model.SchoolId4 && u.UserId == Model.AdminUserId);
+                     if (count == 0)
+                     {
+
+                         tblUser usr = new tblUser();
+
+                         usr.CreatedBy = UserId;
+                         usr.CreatedDate = DateTime.Now;
+                         usr.SchoolId = Model.SchoolId4;
+                         usr.UserId = Model.AdminUserId;
+                         usr.IsActive = "Y";
+                         usr.Mobile = Model.PersonalMobile;
+                         usr.UserCategory = "ADMIN";
+                         usr.PersonName = Model.AdminName;
+                         usr.UserId = Model.AdminUserId;
+                              string pass = Encrypt_Decrypt.Encrypt(Model.Password, Password);
+
+                              usr.Password = pass;
+                         usr.LoginEmail = Model.AdminPersonalEmail;
+
+
+                         Connection.tblUsers.Add(usr);
+                         Connection.SaveChanges();
+
+                         result = Model.SchoolId4 + "!" + Model.AdminUserId;
+
+
+
+                     }
+                     else
+                     {
+                         result = "Exits";
+                     }
+                     //ShowTeacherQualificatoin();
+                 }
+                 return Json(result, JsonRequestBehavior.AllowGet);
+             }
+             catch (Exception Ex)
+             {
+                 Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)", Ex);
+                 return Json("Exception", JsonRequestBehavior.AllowGet);
+
+             }
+         }
+
+
+
+
+         [AllowAnonymous]
+         public JsonResult EAddSchoolClass(SchoolModel Model)
+         {
+             try
+             {
+                 string result = "Error";
+
+                 var count = Connection.tblClasses.Count(u => u.SchoolId == Model.SchoolId && u.GradeId == Model.GradeId && u.ClassId == Model.ClassId);
+                 if (count == 0)
+                 {
+
+                     tblClass cls = new tblClass();
+
+                     cls.CreatedBy = "User1";
+                     cls.SchoolId = Model.SchoolId;
+                     cls.GradeId = Model.GradeId;
+                     cls.IsActive = "Y";
+                     cls.CreatedDate = DateTime.Now;
+                     cls.ClassId = Model.ClassId;
+                     cls.ClassName = Model.ClassName;
+
+
+                     Connection.tblClasses.Add(cls);
+                     Connection.SaveChanges();
+
+                     result = Model.SchoolId + "!" + Model.GradeId;
+
+                     ViewBag.SchoolId = Model.SchoolId.ToString();
 
                  }
                  else
@@ -462,8 +577,9 @@ namespace GDWEBSolution.Controllers
              try
              {
 
-                 tblClass Tble = Connection.tblClasses.Find(Model.ClassId, Model.GradeId, Model.SchoolId);
-                 Connection.tblClasses.Remove(Tble);
+                 //tblClass Tble = Connection.tblClasses.Find(Model.ClassId, Model.GradeId, Model.SchoolId);
+                 //Connection.tblClasses.Remove(Tble);
+                 Connection.SMGTModifyClassStatus(Model.SchoolId, Model.ClassId, Model.GradeId);
                  Connection.SaveChanges();
                  string resultt = Model.SchoolId + "!" + Model.GradeId;
 
@@ -644,6 +760,26 @@ namespace GDWEBSolution.Controllers
          }
 
 
+         public ActionResult ShowSchoolAdmins(string SchoolId)
+         {
+            // var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
+
+             List<tblUser> schoolList = Connection.tblUsers.Where(X => X.IsActive == "Y" && X.SchoolId == SchoolId && X.UserCategory == "ADMIN").ToList();
+
+             List<SchoolAdminModel> List = schoolList.Select(x => new SchoolAdminModel
+             {
+
+                 SchoolId = x.SchoolId,
+                 AdminUserId=x.UserId,
+                 AdminName=x.PersonName
+                
+
+
+             }).ToList();
+             return PartialView("AdminList", List);
+         }
+
+
          public ActionResult ShowSchoolSubjects(string AcademicYear, string SchoolId)
          {
              var STQlist = Connection.SMGTgetSchoolSubadd(SchoolId, AcademicYear).ToList();
@@ -659,6 +795,7 @@ namespace GDWEBSolution.Controllers
                  SchoolId = x.SchoolId,
                  SubjectName=x.SubjectName,
                 SubjectId= x.SubjectId.ToString(),
+                AcademicYear=AcademicYear,
 
                 
              
@@ -916,13 +1053,13 @@ namespace GDWEBSolution.Controllers
          {
              try
              {
-
-                 tblSchoolSubject Tble = Connection.tblSchoolSubjects.Find(Model.AcademicYear,Model.SchoolId, Model.SubjectId);
+                 int a = Int32.Parse(Model.SubjectId);
+                 tblSchoolSubject Tble = Connection.tblSchoolSubjects.Find(Model.AcademicYear, Model.SchoolId, a);
                  Connection.tblSchoolSubjects.Remove(Tble);
                  Connection.SaveChanges();
 
 
-                 return Json(Model.AcademicYear, JsonRequestBehavior.AllowGet);
+                 return Json(Model.AcademicYear+"!"+Model.SchoolId, JsonRequestBehavior.AllowGet);
                  //return RedirectToAction("Index");
              }
              catch
@@ -1272,17 +1409,50 @@ namespace GDWEBSolution.Controllers
 
         public ActionResult Edit(string SchoolId)
         {
+
+            SchoolHouseDrpListe(SchoolId);
+
+            academicyear();
+
+
+            var SchoolGrade = Connection.SMGTgetSchoolGrade(SchoolId).ToList();//Need to Pass a Session Schoolid
+
+
+
+
+
+            //  var StudentSextra = Connection.SMGTloadScholExtraCadd(SchoolId, "%").ToList();
+
+            List<tblGrade> result = SchoolGrade.Select(x => new tblGrade
+            {
+                GradeId = x.GradeId,
+                GradeName = x.GradeName
+                
+            }).ToList();
+
+
+           // List<tblGrade> GradeList = Connection.tblGrades.Where(x => x.IsActive == "Y" ).ToList();
+            ViewBag.grdschooldrpListl = new SelectList(result, "GradeId", "GradeName");
+
+            List<tblExtraCurricularActivity> excatlist = Connection.tblExtraCurricularActivities.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
+
+
+            ViewBag.EditSChoolID = SchoolId;
+
             SchoolGradeDrpList();
 
-           
+
 
             SchoolModel TModel = new SchoolModel();
 
             tblSchool TCtable = Connection.tblSchools.SingleOrDefault(x => x.SchoolId == SchoolId);
-          //  TModel.IsActive = TCtable.IsActive;
+            //  TModel.IsActive = TCtable.IsActive;
 
             TModel.SchoolId = TCtable.SchoolId;
             TModel.SchoolName = TCtable.SchoolName;
+
+            ViewBag.EditSchoolName = TCtable.SchoolName;
             TModel.Address1 = TCtable.Address1;
             TModel.Description = TCtable.Description;
             TModel.Address1 = TCtable.Address1;
@@ -1298,7 +1468,7 @@ namespace GDWEBSolution.Controllers
             ViewBag.SubcatscldrpList = new SelectList(sclSubcatlist, "SubjectCategoryId", "SubjectCategoryName");
             List<tblSchoolCategory> SCategorylist = Connection.tblSchoolCategories.Where(X => X.IsActive == "Y").ToList();
             ViewBag.SchoolCategoryDrpDown = new SelectList(SCategorylist, "SchoolCategoryId", "SchoolCategoryName");
-          //  ViewBag.SchoolCategoryDrpDown = TCtable.SchoolCategory;
+            //  ViewBag.SchoolCategoryDrpDown = TCtable.SchoolCategory;
             List<tblProvince> provincelist = Connection.tblProvinces.Where(X => X.IsActive == "Y").ToList();
             ViewBag.ProvinceDrpDown = new SelectList(provincelist, "ProvinceId", "ProvinceName");
             List<tblSchoolGroup> schoolgrps = Connection.tblSchoolGroups.Where(X => X.IsActive == "Y").ToList();
@@ -1311,30 +1481,34 @@ namespace GDWEBSolution.Controllers
             ViewBag.RankDrpDown = new SelectList(Ranklist, "SchoolRankId", "SchoolRankName");
             List<tblSubject> sclSublist = Connection.tblSubjects.Where(X => X.IsActive == "Y").ToList();
             ViewBag.SubjectscldrpList = new SelectList(sclSublist, "SubjectId", "SubjectName");
-            List<tblExtraCurricularActivity> excatlist = Connection.tblExtraCurricularActivities.Where(X => X.IsActive == "Y").ToList();
-            ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
+            List<tblExtraCurricularActivity> excatliste = Connection.tblExtraCurricularActivities.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.ActivitydrpList = new SelectList(excatliste, "ActivityCode", "ActivityName");
 
             TModel.SchoolCategory = TCtable.SchoolCategory;
             TModel.SchoolGroup = TCtable.SchoolGroup;
-            TModel.SchoolRank =  TCtable.SchoolRank;
+            TModel.SchoolRank = TCtable.SchoolRank;
             TModel.District = TCtable.District;
             TModel.Division = TCtable.Division;
             TModel.Province = TCtable.Province;
 
 
-            return View("Edit", TModel);
+            return View("Edit");
 
 
 
 
-          
+
         }
+
+
+
+
 
         //
         // POST: /School/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(SchoolModel  Model)
+        public ActionResult Edit(SchoolModel Model)
         {
             string _path = "";
 
@@ -1347,105 +1521,121 @@ namespace GDWEBSolution.Controllers
                 if (ModelState.IsValid)
                 {
                     // TODO: Add update logic here
-                    if (Model.File.ContentLength > 0)
+                    if (Model.File == null)
                     {
 
-                        string fnm = DateTime.Now.ToString("");
-                        string nwString22 = fnm.Replace("-", ".");
-                        string nwString = nwString22.Replace("/", ".");
-                        string nwString2 = nwString.Replace(" ", ".");
-                        string time = nwString2.Replace(":", ".");
-
-                        string _FileName = time + "_" + Path.GetFileName(Model.File.FileName);
-
-
-
-
-                        _path = Path.Combine(Server.MapPath("~/Uploads/Schools/Images"), _FileName);
-                        _path1 = "~/Uploads/Schools/Images/" + _FileName;
-                        Model.File.SaveAs(_path);
                     }
-
-                    if (Model.LogoFile.ContentLength > 0)
+                    else
                     {
-                        string fnm = DateTime.Now.ToString("");
-                        string nwString22 = fnm.Replace("-", ".");
-                        string nwString = nwString22.Replace("/", ".");
-                        string nwString2 = nwString.Replace(" ", ".");
-                        string time = nwString2.Replace(":", ".");
-
-                        string _FileName = time + "_" + Path.GetFileName(Model.LogoFile.FileName);
 
 
-                        _pathL = Path.Combine(Server.MapPath("~/Uploads/Schools/Logo"), _FileName);
-                        _pathL2 = "~/Uploads/Schools/Logo/" + _FileName;
-                        Model.LogoFile.SaveAs(_pathL);
+                        if (Model.File.ContentLength > 0)
+                        {
+
+                            string fnm = DateTime.Now.ToString("");
+                            string nwString22 = fnm.Replace("-", ".");
+                            string nwString = nwString22.Replace("/", ".");
+                            string nwString2 = nwString.Replace(" ", ".");
+                            string time = nwString2.Replace(":", ".");
+
+                            string _FileName = time + "_" + Path.GetFileName(Model.File.FileName);
+
+
+
+
+                            _path = Path.Combine(Server.MapPath("~/Uploads/Schools/Images"), _FileName);
+                            _path1 = "~/Uploads/Schools/Images/" + _FileName;
+                            Model.File.SaveAs(_path);
+                        }
+                    }
+                    if (Model.LogoFile == null) { }
+
+                    else
+                    {
+
+                        if (Model.LogoFile.ContentLength > 0)
+                        {
+                            string fnm = DateTime.Now.ToString("");
+                            string nwString22 = fnm.Replace("-", ".");
+                            string nwString = nwString22.Replace("/", ".");
+                            string nwString2 = nwString.Replace(" ", ".");
+                            string time = nwString2.Replace(":", ".");
+
+                            string _FileName = time + "_" + Path.GetFileName(Model.LogoFile.FileName);
+
+
+                            _pathL = Path.Combine(Server.MapPath("~/Uploads/Schools/Logo"), _FileName);
+                            _pathL2 = "~/Uploads/Schools/Logo/" + _FileName;
+                            Model.LogoFile.SaveAs(_pathL);
+                        }
                     }
                 }
 
 
 
-                    
 
-           SchoolModel TModel = new SchoolModel();
 
-            tblSchool TCtable = Connection.tblSchools.SingleOrDefault(x => x.SchoolId == Model.SchoolId);
-            //  TModel.IsActive = TCtable.IsActive;
+                SchoolModel TModel = new SchoolModel();
 
-            TModel.SchoolId = TCtable.SchoolId;
-            TModel.SchoolName = TCtable.SchoolName;
-            TModel.Address1 = TCtable.Address1;
-            TModel.Description = TCtable.Description;
-            TModel.Address1 = TCtable.Address1 +" "+ TCtable.Address2 + " "+TCtable.Address3;
-            TModel.Email = TCtable.Email;
-            TModel.WebAddress = TCtable.WebUrl;
-            TModel.MinuteforPeriod = TCtable.MinuteforPeriod.ToString();
-            TModel.Telephone = TCtable.Telephone;
+                tblSchool TCtable = Connection.tblSchools.SingleOrDefault(x => x.SchoolId == Model.SchoolId);
+                //  TModel.IsActive = TCtable.IsActive;
 
-            TModel.SchoolCategory = TCtable.SchoolCategory;
-            TModel.SchoolGroup = TCtable.SchoolGroup;
-            TModel.SchoolRank = TCtable.SchoolRank;
-            TModel.District = TCtable.District;
-            TModel.Division = TCtable.Division;
-            TModel.Province = TCtable.Province;
-            TModel.ImagePath = TCtable.ImagePath;
-            TModel.LogoPath = TCtable.LogoPath;
+                TModel.SchoolId = TCtable.SchoolId;
+                TModel.SchoolName = TCtable.SchoolName;
+                TModel.Address1 = TCtable.Address1;
+                TModel.Description = TCtable.Description;
+                TModel.Address1 = TCtable.Address1 + " " + TCtable.Address2 + " " + TCtable.Address3;
+                TModel.Email = TCtable.Email;
+                TModel.WebAddress = TCtable.WebUrl;
+                TModel.MinuteforPeriod = TCtable.MinuteforPeriod.ToString();
+                TModel.Telephone = TCtable.Telephone;
 
-            if (Model.SchoolName == null) {
-                Model.SchoolName = TModel.SchoolName;
-            
-            }
+                TModel.SchoolCategory = TCtable.SchoolCategory;
+                TModel.SchoolGroup = TCtable.SchoolGroup;
+                TModel.SchoolRank = TCtable.SchoolRank;
+                TModel.District = TCtable.District;
+                TModel.Division = TCtable.Division;
+                TModel.Province = TCtable.Province;
+                TModel.ImagePath = TCtable.ImagePath;
+                TModel.LogoPath = TCtable.LogoPath;
 
-          
-            if (Model.Email == null)
-            {
-                Model.Email = TModel.Email;
+                if (Model.SchoolName == null)
+                {
+                    Model.SchoolName = TModel.SchoolName;
 
-            }
-            if (Model.MinuteforPeriod == null)
-            {
-                Model.MinuteforPeriod = TModel.MinuteforPeriod;
+                }
 
-            }
 
-            if (Model.Telephone == null)
-            {
-                Model.Telephone = TModel.Telephone;
+                if (Model.Email == null)
+                {
+                    Model.Email = TModel.Email;
 
-            }
+                }
+                if (Model.MinuteforPeriod == null)
+                {
+                    Model.MinuteforPeriod = TModel.MinuteforPeriod;
 
-            if (_path1 == "") {
+                }
 
-                _path1 = TModel.ImagePath;
-            
-            }
-            if (_pathL2 == "")
-            {
+                if (Model.Telephone == null)
+                {
+                    Model.Telephone = TModel.Telephone;
 
-                _pathL2 = TModel.LogoPath;
+                }
 
-            }
-               
+                if (_path1 == "")
+                {
+
+                    _path1 = TModel.ImagePath;
+
+                }
+                if (_pathL2 == "")
+                {
+
+                    _pathL2 = TModel.LogoPath;
+
+                }
+
 
 
 
@@ -1453,7 +1643,7 @@ namespace GDWEBSolution.Controllers
 
 
                 Connection.DCISModifySchool(Model.SchoolId, Model.SchoolGroup, Model.SchoolName, Model.SchoolRank, "Y", Model.Division,
-                   Model.District, Model.Description, UserId, Model.Address1, Model.Address2, Model.Address3,Model.Email , Model.Fax, _path1, Convert.ToInt16(Model.MinuteforPeriod), Model.Telephone, Model.SchoolCategory, Model.Province, Model.WebAddress, _pathL2
+                   Model.District, Model.Description, UserId, Model.Address1, Model.Address2, Model.Address3, Model.Email, Model.Fax, _path1, Convert.ToInt16(Model.MinuteforPeriod), Model.Telephone, Model.SchoolCategory, Model.Province, Model.WebAddress, _pathL2
                    );
                 Connection.SaveChanges();
                 return RedirectToAction("Index");
@@ -1585,6 +1775,325 @@ namespace GDWEBSolution.Controllers
             //                  name = s.Name
             //              }).ToList();
             return Json(result2, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult GetProvince(string ProvinceId)
+        {
+            if (String.IsNullOrEmpty(ProvinceId))
+            {
+                throw new ArgumentNullException("countryId");
+
+
+
+            }
+            int prv = Int16.Parse(ProvinceId);
+
+
+
+            List<tblDistrict> sclSubcatlist = Connection.tblDistricts.Where(X => X.ProvinceId == prv).ToList();
+
+
+
+
+
+            var result2 = (from s in sclSubcatlist
+                           select new
+                           {
+                               DistrictId = s.DistrictId,
+                               DistrictName = s.DistrictName
+                           }).ToList();
+
+         
+
+            //   ViewBag.excdropdown = new SelectList(excList2, "ActivityCode", "ActivityName");
+
+            //var states = _repository.GetAllStatesByCountryId(id);
+            //var result = (from s in states
+            //              select new
+            //              {
+            //                  id = s.Id,
+            //                  name = s.Name
+            //              }).ToList();
+            return Json(result2, JsonRequestBehavior.AllowGet);
+        }
+
+        //edit Start
+
+
+        public ActionResult ShowEditGrade(string SchoolId)
+        {
+
+            List<tblGrade> SRlist = Connection.tblGrades.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.GradeList = new SelectList(SRlist, "GradeId", "GradeName");
+
+
+            var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
+
+            List<SchoolGradeModel> List = STQlist.Select(x => new SchoolGradeModel
+            {
+
+                SchoolId = x.SchoolId,
+                GradeId = x.GradeId,
+                SchoolName = x.SchoolName,
+                GradeName = x.GradeName,
+
+                IsActive = x.IsActive,
+
+
+            }).ToList();
+
+
+
+            SchoolGradeModel TModel = new SchoolGradeModel();
+
+
+            var TCtable = Connection.tblSchoolGrades.Where(x => x.SchoolId == SchoolId).ToList();
+
+
+            //  tblParent TCtable = Connection.tblParents.SingleOrDefault(x => x.ParentId == pid);
+            //  TModel.IsActive = TCtable.IsActive;
+            //   TModel.ParentId = TCtable.ParentId.ToString();
+
+
+
+
+            return PartialView("EditParentDetailsView", TModel);
+        }
+
+
+
+        public ActionResult ShowEditSchool(string SchoolId)
+        {
+            SchoolGradeDrpList();
+
+
+
+            SchoolModel TModel = new SchoolModel();
+
+            tblSchool TCtable = Connection.tblSchools.SingleOrDefault(x => x.SchoolId == SchoolId);
+            //  TModel.IsActive = TCtable.IsActive;
+
+            TModel.SchoolId = TCtable.SchoolId;
+            TModel.SchoolName = TCtable.SchoolName;
+            TModel.Address1 = TCtable.Address1;
+            TModel.Description = TCtable.Description;
+            TModel.Address1 = TCtable.Address1;
+            TModel.Address2 = TCtable.Address2;
+            TModel.Address3 = TCtable.Address3;
+            TModel.Email = TCtable.Email;
+            TModel.WebAddress = TCtable.WebUrl;
+            TModel.MinuteforPeriod = TCtable.MinuteforPeriod.ToString();
+            TModel.Telephone = TCtable.Telephone;
+
+            academicyear();
+            List<tblSubjectCategory> sclSubcatlist = Connection.tblSubjectCategories.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.SubcatscldrpList = new SelectList(sclSubcatlist, "SubjectCategoryId", "SubjectCategoryName");
+            List<tblSchoolCategory> SCategorylist = Connection.tblSchoolCategories.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.SchoolCategoryDrpDown = new SelectList(SCategorylist, "SchoolCategoryId", "SchoolCategoryName");
+            //  ViewBag.SchoolCategoryDrpDown = TCtable.SchoolCategory;
+            List<tblProvince> provincelist = Connection.tblProvinces.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.ProvinceDrpDown = new SelectList(provincelist, "ProvinceId", "ProvinceName");
+            List<tblSchoolGroup> schoolgrps = Connection.tblSchoolGroups.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.SGroupDrpDown = new SelectList(schoolgrps, "GroupId", "GroupName");
+            List<tblDistrict> districtlist = Connection.tblDistricts.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.DistrictDrpDown = new SelectList(districtlist, "DistrictId", "DistrictName");
+            List<tblDivision> divisionlist = Connection.tblDivisions.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.DivisionDrpDown = new SelectList(divisionlist, "DivisionId", "DivisionName");
+            List<tblSchoolRank> Ranklist = Connection.tblSchoolRanks.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.RankDrpDown = new SelectList(Ranklist, "SchoolRankId", "SchoolRankName");
+            List<tblSubject> sclSublist = Connection.tblSubjects.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.SubjectscldrpList = new SelectList(sclSublist, "SubjectId", "SubjectName");
+            List<tblExtraCurricularActivity> excatlist = Connection.tblExtraCurricularActivities.Where(X => X.IsActive == "Y").ToList();
+            ViewBag.ActivitydrpList = new SelectList(excatlist, "ActivityCode", "ActivityName");
+
+            TModel.SchoolCategory = TCtable.SchoolCategory;
+            TModel.SchoolGroup = TCtable.SchoolGroup;
+            TModel.SchoolRank = TCtable.SchoolRank;
+            TModel.District = TCtable.District;
+            TModel.Division = TCtable.Division;
+            TModel.Province = TCtable.Province;
+
+
+
+
+
+            return PartialView("EditSchoolView", TModel);
+        }
+
+
+        [AllowAnonymous]
+        public JsonResult EAddSchoolHouse(SchoolHouseModel Model)
+        {
+            try
+            {
+                string result = "Error";
+                var count2 = Connection.tblHouses.Count();
+                int a = count2 + 10;
+                Model.HouseId = a.ToString();
+                var count = Connection.tblHouses.Count(u => u.SchoolId == Model.SchoolId && u.HouseName == Model.HouseName);
+                if (count == 0)
+                {
+                    //    Model.SchoolId = Schoold;
+                    tblHouse newscg = new tblHouse();
+
+                    newscg.CreatedBy = "User1";
+                    newscg.CreatedDate = DateTime.Now;
+                    newscg.SchoolId = Model.SchoolId;
+                    newscg.HouseId = Model.HouseId;
+                    newscg.HouseName = Model.HouseName;
+                    newscg.IsActive = "Y";
+                    newscg.HouseInchargeId = Model.HouseInchargeId.ToString();
+
+                    Connection.tblHouses.Add(newscg);
+
+                    Connection.SaveChanges();
+
+                    result = Model.SchoolId;
+
+                    ViewBag.SchoolId = Model.SchoolId;
+
+                }
+                else
+                {
+                    result = "Exits";
+                }
+                //ShowTeacherQualificatoin();
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+
+        public ActionResult ShowEditSchoolSubjects( string SchoolId)
+        {
+            String AcademicYear;
+           var Academicyr = Connection.tblAccadamicYears.SingleOrDefault(x => x.SchoolId == SchoolId);
+
+           if (Academicyr == null)
+           {
+               AcademicYear = DateTime.Now.Year.ToString();
+           }
+           else {
+
+               AcademicYear = Academicyr.AccadamicYear;
+           }
+            var STQlist = Connection.SMGTgetSchoolSubadd(SchoolId, AcademicYear).ToList();
+            if (SchoolId == null || SchoolId == "")
+            {
+                SchoolId = Schoold;
+
+            }
+            List<SchoolSubjectModel> List = STQlist.Select(x => new SchoolSubjectModel
+            {
+
+
+                SchoolId = x.SchoolId,
+                SubjectName = x.SubjectName,
+                SubjectId = x.SubjectId.ToString(),
+                AcademicYear=AcademicYear,
+
+
+                IsActive = x.IsActive,
+
+
+            }).ToList();
+            return PartialView("SclSubList", List);
+        }
+
+
+
+        [AllowAnonymous]
+        public JsonResult EAddSchoolSubjects(SchoolSubjectModel Model)
+        {
+            try
+
+            {
+
+                string Academicyear;
+                var academ = Connection.tblAccadamicYears.SingleOrDefault(X => X.SchoolId == Model.SchoolId);
+                if (academ == null)
+                {
+
+                    Academicyear = DateTime.Now.Year.ToString();
+                }
+                else {
+
+                    Academicyear = academ.AccadamicYear;
+                }
+             
+                string result = "Error";
+                int subid = Int32.Parse(Model.SubjectId);
+
+
+
+                var count = Connection.tblSchoolSubjects.Count(u => u.SchoolId == Model.SchoolId && u.AcademicYear == Academicyear && u.SubjectId == subid);
+                if (count == 0)
+                {
+                    //  Model.SchoolId = Schoold;
+                    tblSchoolSubject newscg = new tblSchoolSubject();
+
+                    newscg.CreatedBy = "User1";
+                    newscg.CreatedDate = DateTime.Now;
+                    newscg.SchoolId = Model.SchoolId;
+                    newscg.Optional = "Y";
+
+                    newscg.SubjectId = Int32.Parse(Model.SubjectId);
+                    newscg.SubjectCategoryId = Int32.Parse(Model.SubjectCategoryId);
+                    newscg.AcademicYear = Academicyear;
+                    newscg.IsActive = "Y";
+
+
+                    Connection.tblSchoolSubjects.Add(newscg);
+
+                    Connection.SaveChanges();
+
+                    result =  Model.SchoolId;
+
+                    ViewBag.SchoolId = Model.SchoolIds;
+
+                }
+                else
+                {
+                    result = "Exits";
+                }
+                //ShowTeacherQualificatoin();
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+
+        public ActionResult EShowSchooClasses(string SchoolIdGradeId)
+        {
+            if (SchoolIdGradeId == null)
+            {
+
+                SchoolIdGradeId = "awq!Bss";
+            }
+
+            string scid = SchoolIdGradeId.Split('!')[0];
+            string gdid = SchoolIdGradeId.Split('!')[1];
+
+          ;
+            // string GradeId = ""; ;
+            List<SchoolModel> List = LoadClasses(scid, gdid);
+            //    string username = result.Consignor.Split('<')[0];
+            return PartialView("ClassesList", List);
         }
 
 

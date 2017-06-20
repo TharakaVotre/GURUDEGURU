@@ -14,8 +14,29 @@ namespace GDWEBSolution.Models.Evaluation
         [Display(Name = "Evaluation Detail SeqNo")]
         public long EvaluationDetailSeqNo { get; set; }
 
+
+        [Display(Name = "Grade")]
+        public string GradeName { get; set; }
+
+        [Display(Name = "Class")]
+        public string ClassName { get; set; }
+        
+             [Display(Name = "Scheduled Date")]
+        public string ScheduledDates { get; set; }
+        
+         [Display(Name = "Time Start")]
+        public string ScheduledTimeStartst { get; set; }
+        
+         [Display(Name = "Time End")]
+        public string ScheduledTimeEndst { get; set; }
+
+
         [Display(Name = "Evaluation Type")]
         public long EvaluationType { get; set; }
+
+
+        [Display(Name = "Evaluation Type")]
+        public string EvaluationTypeDesc { get; set; }
 
         [Display(Name = "Grade")]
         public String Grade { get; set; }
@@ -23,17 +44,19 @@ namespace GDWEBSolution.Models.Evaluation
         public String Class { get; set; }
 
 
-        [Display(Name = "ScheduledDate")]
+
+         [Required(ErrorMessage = "You must provide a date")]
+        [Display(Name = "Scheduled Date")]
         public DateTime ScheduledDate { get; set; }
 
-        [Display(Name = "Scheduled Time Start")]
+        [Display(Name = "Time Start")]
         public TimeSpan ScheduledTimeStart { get; set; }
-
+         [Required(ErrorMessage = "You must provide a start time")]
         public string ScheduledTimeStarts { get; set; }
-
-        [Display(Name = "Scheduled Time End")]
+        
+        [Display(Name = "Time End")]
         public TimeSpan ScheduledTimeEnd { get; set; }
-
+         [Required(ErrorMessage = "You must provide an end time")]
         public string ScheduledTimeEnds { get; set; }
 
          [Display(Name = "School Id")]
@@ -43,13 +66,13 @@ namespace GDWEBSolution.Models.Evaluation
          [Display(Name = "School Id")]
          public String SchoolId1 { get; set; }
 
-        [Display(Name = "TestPaper Fee")]
+        [Display(Name = "Test Paper Fee")]
         public decimal TestPaperFee { get; set; }
-
+         [Required(ErrorMessage = "You must provide an evaluation")]
         [Display(Name = "Evaluation Description")]
         public long  EvaluationNo { get; set; }
 
-        [Display(Name = "Evaluation Description")]
+        [Display(Name = "Evaluation")]
         public string  EvaluationDescription { get; set; }
 
         [Display(Name = "Accedamic Year")]

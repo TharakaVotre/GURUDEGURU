@@ -1,0 +1,197 @@
+﻿@model GDWEBSolution.Models.Student.StudentModel
+<div >
+                        @using (Html.BeginForm("Edit", "Student",
+    FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @*<form id="FrmANT" class="form-horizontal">*@
+                            <div class="form-horizontal">
+
+
+                                @*<form id="FrmANT" action="/School/Create"
+                                    enctype="multipart/form-data"
+                                    method="post"
+                                    >*@
+                                <br />
+                                @Html.HiddenFor(model => model.SchoolId)
+                                @*<div class="form-group">
+
+                                        @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-2 control-label" })
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(model => model.SchoolId, new { @class = "form-control", @placeholder = "School Id" })
+                                            <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                            @Html.ValidationMessageFor(model => model.SchoolId, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>*@
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-8">
+                                      @*  @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student" , @readonly = "readonly" })*@
+ @Html.HiddenFor(model => model.SchoolIdw, new { @class = "form-control", @placeholder = "School Name" , @readonly = "readonly" })
+                                         @Html.TextBoxFor(model => model.SchoolName, new { @class = "form-control", @placeholder = "School Name" , @readonly = "readonly" })
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.SchoolId, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.StudentId, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.StudentId, new { @class = "form-control", @placeholder = "Student" , @readonly = "readonly" })
+                                       
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.StudentId, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    @Html.LabelFor(m => m.UserId, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @placeholder = "Student" , @readonly = "readonly" })
+                                       
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.UserId, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.StudentName, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.StudentName, new { @class = "form-control", @placeholder = "School Name" })
+                                      
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.StudentName, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", @placeholder = "Date of Birth" })
+                                     
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.HouseId, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(model => model.HouseId, ViewBag.HouseDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Province" })
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.HouseId, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(model => model.GradeId, ViewBag.SGradeDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group",@onchange = "loadClass(this.value)"  })
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.GradeId, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(model => model.ClassId, ViewBag.classDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.ClassId, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.StudentImageFile, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(m => m.StudentImageFile, new { type = "file", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.StudentImageFile, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div class="form-group">
+
+
+                                    @* @Html.HiddenFor(m=>m.Name)*@
+                                    @*        @Html.DropDownListFor(model => model.DepartmentId, ViewBag.DepartmentList as SelectList, "--select--", new { @class = "form-control" })*@
+
+                                    @*        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder ="Address" })*@
+                                    @*<a href="#" id="btnSubmit" class="btn btn-success btn-block">@if(Model.EmployeeId>0){<span>Update</span> }else{<span>Save</span>} </a>*@
+                                </div>
+
+
+
+
+
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        @*<button class="btn btn-default" type="submit">Cancel</button>*@
+                                        @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
+                                        <button type="submit" value="Save" id="btnSubmit" onclick="" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                                        <a href="~/Student/Index" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span>Go Back</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @*</form>*@
+                    </div>
+
+<script>
+    var loadClass = function (value) {
+        $("#showStateLga").show();
+        var selectedItem = value;
+        var SchoolId = $("#SchoolIdw").val();
+
+        var ddlStates = $("#ClassId");
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("Studentclass"))",
+            data: { "GradeId": selectedItem, "SchoolId": SchoolId },
+            success: function (data) {
+                ddlStates.html('');
+                ddlStates.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+
+                    ddlStates.append($('<option></option>').val(option.ClassId).html(option.ClassName));
+                });
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+
+            }
+        });
+    }
+
+
+
+</script>

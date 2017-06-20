@@ -50,7 +50,9 @@
   <Child title="Student Report" action="StudentSubjectIndex" controller="StudentReport" url="#"/>
 </Navigation>
 <Navigation title="Evaluation" action="#" controller="#" url="#">
-<Child title="Evaluation By School" action="Create" controller="EvaluationbySchool" url="#"/>
+<Child title="School Evaluation" action="Create" controller="EvaluationbySchool" url="#"/>
+  <Child title="Evaluation Add/View" action="Index" controller="EveluationAddMark" url="#"/>
+  <Child title="Evaluation Edit" action="EditStudentResult" controller="EveluationAddMark" url="#"/>
 </Navigation>
 
 <Navigation title="User" action="#" controller="#" url="#">

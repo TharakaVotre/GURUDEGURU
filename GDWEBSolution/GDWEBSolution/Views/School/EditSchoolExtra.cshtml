@@ -1,0 +1,96 @@
+﻿@model GDWEBSolution.Models.Schools.SchoolExtraModel
+@{
+    ViewBag.Title = "SchoolExtra";
+}
+<form id="FrmSE" class="form-horizontal">
+    <div class="form-group">
+        @*@Html.HiddenFor(model => model.SchoolId)*@
+        @Html.HiddenFor(model => model.ActivityName)
+
+      
+
+        @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            <label class="form-control">@ViewBag.EditSchoolName</label>
+            @Html.TextBoxFor(model => model.SchoolId, new { style = "display: none;" })
+        </div>
+  
+        @Html.LabelFor(m => m.ActivityName, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.DropDownListFor(model => model.ActivityCode, ViewBag.ActivitydrpList as SelectList, "", new { @class = "form-control", @placeholder = "Activity" })
+
+            @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
+
+        </div>
+
+     
+
+        <div class="col-sm-2">
+            <button type="button" id="btnAddQualification" onclick="AddActivity()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+        </div>
+    </div>
+    <div class="hr-dashed"></div>
+    @*     <h4 style="padding-left:120px;">Qualifications</h4>
+        <div class="hr-dashed"></div>*@
+
+</form>
+
+<script>
+
+    var AddActivity = function () {
+        //debugger
+        var myformdata = $("#FrmSE").serialize();
+
+        //if (!$("#FrmANT").valid()) {
+        //    return false;
+        //}
+
+        $.ajax({
+
+            type: "POST",
+            url: "/School/AddSchoolExcActivity",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                // $("#myModal").modal("hide");
+                if (result != "Exception" && result != "Exits") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+                    $("#SchoolId").val(result);
+
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + result);
+                    $("#SuccesLable").text("Activity Added");
+                    // $("#btnAddQualification").prop('value', 'Save');
+                    $("#SuccesModel").modal("show");
+                }
+                else if (result == "Exception") {
+                    debugger
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Exception Error Occurd");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+                }
+                else if (result == "Exits") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("This Activity is Already Assigned to this School");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+                else {
+
+                }
+
+            }
+
+        })
+    }
+
+    var loadexcd = function (value) {
+        debugger
+      //  $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + value);
+        $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + value);
+    }
+    </script>

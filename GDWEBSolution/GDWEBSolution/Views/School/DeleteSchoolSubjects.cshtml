@@ -3,9 +3,10 @@
     <form id="FormsclSubelete" class="form-horizontal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h5 class="modal-title">Are you sure you want to Delete this Subject ? @Html.DisplayFor(m => m.SubjectId)</h5>
+            <h5 class="modal-title">Are you sure you want to Delete this Subject ?</h5>
             @Html.HiddenFor(m => m.SchoolId)
             @Html.HiddenFor(m => m.AcademicYear)
+            @Html.HiddenFor(m => m.SubjectId)
 
         </div>
         <div class="modal-footer">
@@ -37,7 +38,7 @@
                         //window.location.href = "/Teacher/Create";
                         // $("#TeacherID").val(result);
                         //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                        $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + result);
+                        $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + result.split('!')[0] + '&SchoolId=' + result.split('!')[1]);
                     }
                     $("#deleteModel").modal("hide");
 

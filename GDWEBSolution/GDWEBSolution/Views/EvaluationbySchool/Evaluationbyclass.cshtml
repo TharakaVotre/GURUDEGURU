@@ -4,88 +4,91 @@
 <form id="FrmEVClass" class="form-horizontal">
     <div class="form-group">
         @Html.Hidden("SchoolId1")
-        <div class="div123">
-            @Html.LabelFor(m => m.EvaluationNo, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-3">
-                @Html.DropDownListFor(model => model.EvaluationNo, ViewBag.EvaluationDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School " })
-            </div>
-        </div>
 
-
-      
-     
-      
-
-        
-
-
-        
-            @Html.LabelFor(m => m.ScheduledDate, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-4">
-                @Html.TextBoxFor(model => model.ScheduledDate, "", new { @class = "form-control", @placeholder = "Schedule Date" })
-            </div>
-       <br/><br/>
-            
-       
-        
-            @Html.LabelFor(m => m.ScheduledTimeStart, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-3">
-                @Html.TextBoxFor(model => model.ScheduledTimeStarts, "", new { @class = "form-control", @placeholder = "School Group" })
-            </div>
-
-        @Html.LabelFor(m => m.ScheduledTimeEnd, new { @class = "col-sm-2 control-label" })
+        @Html.LabelFor(m => m.EvaluationNo, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
-            @Html.TextBoxFor(model => model.ScheduledTimeEnds, "", new { @class = "form-control", @placeholder = "School Group" })
+            @Html.DropDownListFor(model => model.EvaluationNo, ViewBag.EvaluationDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onchange = "loadevaldetail(this.value)" })
         </div>
-        <br/><br/>
-           
-        
-        @*<div class="div123">
+
+
+
+
+
+
+
+
+
+
+
+        @Html.LabelFor(m => m.ScheduledDate, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(model => model.ScheduledDate, "", new { @class = "form-control", @placeholder = "Schedule Date" })
+        </div>
+
+
+    </div><div class="form-group">
+
+    @Html.LabelFor(m => m.ScheduledTimeStart, new { @class = "col-sm-2 control-label" })
+    <div class="col-sm-3">
+        @Html.TextBoxFor(model => model.ScheduledTimeStarts, "", new { @class = "form-control", @placeholder = "School Group" })
+    </div>
+
+    @Html.LabelFor(m => m.ScheduledTimeEnd, new { @class = "col-sm-2 control-label" })
+    <div class="col-sm-3">
+        @Html.TextBoxFor(model => model.ScheduledTimeEnds, "", new { @class = "form-control", @placeholder = "School Group" })
+    </div>
+
+    </div>
+    <br /><br />
+
+
+    @*<div class="div123">
             @Html.LabelFor(m => m.Grade, new { @class = "col-sm-2 control-label" })
             <div class="col-sm-3">
 
-               
+
                 @Html.DropDownListFor(model => model.Grade, ViewBag.SchoolGradeList as SelectList, "", new { @class = "form-control", @placeholder = "School ", @onchange = "GetClasslist(this.value)" })
             </div>
         </div>*@
 
-        @*<div class="div123">
+    @*<div class="div123">
             @Html.LabelFor(m => m.Class, new { @class = "col-sm-2 control-label" })
             <div class="col-sm-3">
                 @Html.DropDownListFor(model => model.Class, ViewBag.classDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School " })
             </div>
         </div>*@
-        
-       
-
-       
-
-        <br/><br />
-       
-            <div style="text-align:center;">
-                <table id="myTable" class="table table-striped table-hover table-bordered" style="width:66%; margin: 0 auto; text-align:left;">
-                    <thead>
-                        <tr>
-
-                            <th style=" width:10%"><input type="checkbox" onclick='checkAll()' name="chooseAllRecipient" id="chooseAllRecipient" /><label>SelectAll</label></th>
-                            <th style=" width:30%">Grade</th> <th style=" width:30%" >Classes</th>
-
-                        </tr>
-                    </thead>
-
-                    <tbody id="contacts"></tbody>
-                </table>
-
-            </div>
-       
-
-     
 
 
-        <div class="col-sm-2" style="float:right">
-            <button type="reset" id="btnAddQualification" onclick="AddEvolutionclz()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
-        </div>
+
+
+
+   
+
+    <div style="text-align:center;">
+        <table id="myTable" class="table table-striped table-hover table-bordered" style="width:66%; margin: 0 auto; text-align:left;">
+            <thead>
+                <tr>
+
+                    <th style=" width:10%"><input type="checkbox" onclick='checkAll()' name="chooseAllRecipient" id="chooseAllRecipient" /><label>SelectAll</label></th>
+                    <th style=" width:30%">Grade</th>
+                    <th style=" width:30%">Class</th>
+
+                </tr>
+            </thead>
+
+            <tbody id="contacts"></tbody>
+        </table>
+
     </div>
+
+
+
+
+
+    <div class="col-sm-2" style="float:right">
+        <button type="button" id="btnAddQualification" onclick="AddEvolutionclz()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+    </div>
+
     <div class="hr-dashed"></div>
     @*     <h4 style="padding-left:120px;">Qualifications</h4>
         <div class="hr-dashed"></div>*@
@@ -93,6 +96,15 @@
 </form>
 
 <script>
+    
+
+    var loadevaldetail = function (value) {
+        debugger
+        $('#showbyclassd').load('/EvaluationbySchool/ShowEvaluationDetail?EvluationNo=' + value);
+    }
+
+
+
     $('#chooseAllRecipient').click(function () {
         var chk = $(this).is(':checked');
         var cnt = $('input[type=checkbox]', "#myTable").length;
@@ -121,27 +133,22 @@
 
         $.ajax({
 
-            type: "POST",
-            url: "/EvaluationbySchool/Addevaluationdataforclass",
+            type: "GET",
+            url: "/EvaluationbySchool/Addevaluationdataforclassef",
             data: myformdata,
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
                 if (result != "Exception" && result != "Exits") {
                     debugger
-                    //window.location.href = "/Teacher/Create";
-                    $("#SchoolId").val(result);
 
-                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + result);
-                    $("#SuccesLable").text("Grade Added");
-                    // $("#btnAddQualification").prop('value', 'Save');
-                    $("#SuccesModel").modal("show");
+                    $('#showbyclassd').load('/EvaluationbySchool/ShowEvaluationDetail?EvluationNo=' + result);
+                 
                 }
                 else if (result == "Exception") {
                     debugger
                     //$("#ErrorUName").prop('value', 'User Name Already Exits');
-                    $("#ErrorLable").text("Exception Error Occurd");
+                    $("#ErrorLable").text("Fill all the fields");
                     //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
                 }
@@ -290,7 +297,8 @@
         // This will make every element with the class "date-picker" into a DatePicker element
       //  $("#ScheduledDate").datepicker(); 
         $("#ScheduledTimeStarts").timepicker();
-        $("#ScheduledTimeEnds").timepicker();
+        $("#ScheduledTimeEnds").timepicker(); 
+       
     });
 </script>
 <script >

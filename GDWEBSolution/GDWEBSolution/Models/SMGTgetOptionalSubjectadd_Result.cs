@@ -15,5 +15,6 @@ namespace GDWEBSolution.Models
     {
         public int SubjectId { get; set; }
         public string ShortName { get; set; }
+        public string SubjectName { get; set; }
     }
 }

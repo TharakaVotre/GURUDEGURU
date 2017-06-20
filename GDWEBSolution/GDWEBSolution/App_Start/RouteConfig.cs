@@ -39,13 +39,25 @@ namespace GDWEBSolution
 
 
 
+
+            routes.MapRoute("SchoolDistrict",
+                     "school/GetProvince/",
+                     new { controller = "School", action = "GetProvince" },
+                     new[] { "GDWEBSolution.Controllers.School" });
+
             routes.MapRoute("evaluationdropd",
                      "evaluationbyschool/getevaluationdropdown/",
                      new { controller = "EvaluationbySchool", action = "GetEvaluationDropdown" },
                      new[] { "GDWEBSolution.Controllers.EvaluationbySchool" });
 
-           
 
+
+
+
+            routes.MapRoute("evaluationdetail",
+                     "evaluationbyschool/getevaluation/",
+                     new { controller = "EvaluationbySchool", action = "GetEvaluation" },
+                     new[] { "GDWEBSolution.Controllers.GetEvaluation" });
 
             routes.MapRoute("Studentgrade",
                         "StudentOptionalSubject/GetSchoolGrade/",

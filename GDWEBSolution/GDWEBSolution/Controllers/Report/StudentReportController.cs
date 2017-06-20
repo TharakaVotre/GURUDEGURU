@@ -13,7 +13,7 @@ namespace GDWEBSolution.Controllers.Report
     public class StudentReportController : Controller
     {
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string SchoolId = "Scl11128";
+        string SchoolId = "Scl13140";
         string UserId = "PARENT1";
        
 
@@ -23,20 +23,20 @@ namespace GDWEBSolution.Controllers.Report
 
       
          
-        public ActionResult Index(string AccYear, string EvealuationTypes)
+        public ActionResult Index(string AccYear, string Evealuation)
         {
             try
             {
                 if (AccYear!=null)
                 {
                     Session["AccYear"] = AccYear;
-                    if (EvealuationTypes != null && EvealuationTypes != "")
+                    if (Evealuation != null && Evealuation != "")
                     {
-                        Session["EvealuationTypes"] = EvealuationTypes;
+                        Session["Evealuation"] = Evealuation;
                     }
                     else
                     {
-                        Session["EvealuationTypes"] = "0";
+                        Session["Evealuation"] = "0";
                     }
 
                 }
@@ -45,7 +45,7 @@ namespace GDWEBSolution.Controllers.Report
                 if (Session["AccYear"] != null)
                 {
 
-                    long EvealuationType = Convert.ToInt64(Session["EvealuationTypes"]);
+                    long EvealuationType = Convert.ToInt64(Session["Evealuation"]);
 
                     var Group = Connection.GDgetAttentionRequiredSubjectsSchool(SchoolId, Session["AccYear"].ToString(), EvealuationType, "");
                      
@@ -96,10 +96,10 @@ namespace GDWEBSolution.Controllers.Report
             ViewBag.GradeId = new SelectList(Gradelist, "GradeId", "GradeName");
             ViewBag.stGradeId = new SelectList(Gradelist, "GradeId", "GradeName");
 
-            var EveluationType = Connection.GDgetAllEvaluationType("Y");
-            List<GDgetAllEvaluationType_Result> EveluationTypelist = EveluationType.ToList();
+            var Eveluation = Connection.GDgetClassEveluation(SchoolId, "%", "%", "Y");
+            List<GDgetClassEveluation_Result> Eveluationlist = Eveluation.ToList();
 
-            ViewBag.EveluationType = new SelectList(EveluationTypelist, "EvaluationTypeCode", "EvaluationTypeDesc");
+            ViewBag.Eveluation = new SelectList(Eveluationlist, "EvaluationDetailSeqNo", "EvaluationDescription");
         }
 
         public JsonResult getClass(string id)
@@ -317,7 +317,7 @@ namespace GDWEBSolution.Controllers.Report
         public ActionResult StudentInSubject(string GradeId, string ClassId, string SubjectId)
         {
             int subId = Convert.ToInt32(SubjectId);
-            var Student = Connection.GDgetSubjectStudent(SchoolId, GradeId, ClassId, subId);
+            var Student = Connection.GDgetSubjectStudent(SchoolId, GradeId, ClassId, subId,0);
             List<GDgetSubjectStudent_Result> Studentlist = Student.ToList();
 
             StudentModel tcm = new StudentModel();

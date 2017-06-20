@@ -12,7 +12,7 @@
 
         @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
-            @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadGrades(this.value)" })
+            @Html.TextBoxFor(model => model.SchoolId, new { @class = "form-control", @placeholder = "School Id", @readonly = "readonly" })
              
         @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
 

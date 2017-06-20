@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,6 +15,7 @@ namespace GDWEBSolution.Controllers.Parent
     public class ParentController : Controller
     {
         string Sessparent="2";
+        string SessionSchool = "Scl11128";
 
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
         //
@@ -114,7 +116,7 @@ namespace GDWEBSolution.Controllers.Parent
 
 
 
-            var STQlist = Connection.SMGTgetParentStudentadd(parent).ToList();
+            var STQlist = Connection.SMGTgetParentStudentadd(parent,"%").ToList();
 
             List<ParentModel> List2 = STQlist.Select(x => new ParentModel
             {
@@ -181,7 +183,7 @@ namespace GDWEBSolution.Controllers.Parent
             List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
             ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
             String parentid = "2";
-            var STQlist = Connection.SMGTgetParentStudentadd(parentid).ToList();
+            var STQlist = Connection.SMGTgetParentStudentadd(parentid,"%").ToList();
             List<ParentModel> List = STQlist.Select(x => new ParentModel
             {
                 StudentId = x.StudentId,
@@ -196,91 +198,184 @@ namespace GDWEBSolution.Controllers.Parent
         [HttpPost]
         public ActionResult Create(ParentModel Model)
         {
-            try
+            using (var scope = new TransactionScope())
             {
 
-
-                string _path = "";
-                string _pathL = "";
-                Model.IsActive = "Y";
-                Model.CreatedBy = "User1";
-                Model.UserId = "Parent1";
-                if (ModelState.IsValid)
+                try
                 {
 
-                    if (Model.File == null)
+                    String result = "error";
+
+
+                    string _path = "";
+                    string _pathL = "";
+                    Model.IsActive = "Y";
+                    Model.CreatedBy = "User1";
+                 //   Model.UserId = "User1";
+                    if (ModelState.IsValid)
                     {
 
-                    }
-                    else
-                    {
-                        if (Model.File.ContentLength > 0)
+                        if (Model.File == null)
                         {
 
+                        }
+                        else
+                        {
+                            if (Model.File.ContentLength > 0)
+                            {
 
 
 
 
 
-                            string fnm = DateTime.Now.ToString("");
-                            string nwString22 = fnm.Replace("-", ".");
-                            string nwString = nwString22.Replace("/", ".");
-                            string nwString2 = nwString.Replace(" ", ".");
-                            string time = nwString2.Replace(":", ".");
 
-                            string _FileName = time + "_" + Path.GetFileName(Model.File.FileName);
-                            _pathL = Path.Combine(Server.MapPath("~/Uploads/Parent/Photo"), _FileName);
-                            _path = "~/Uploads/Parent/Photo/" + _FileName;
-                            Model.File.SaveAs(_pathL);
+                                string fnm = DateTime.Now.ToString("");
+                                string nwString22 = fnm.Replace("-", ".");
+                                string nwString = nwString22.Replace("/", ".");
+                                string nwString2 = nwString.Replace(" ", ".");
+                                string time = nwString2.Replace(":", ".");
+
+                                string _FileName = time + "_" + Path.GetFileName(Model.File.FileName);
+                                _pathL = Path.Combine(Server.MapPath("~/Uploads/Parent/Photo"), _FileName);
+                                _path = "~/Uploads/Parent/Photo/" + _FileName;
+                                Model.File.SaveAs(_pathL);
 
 
 
+                            }
+                        }
+
+
+
+
+                        Connection.SMGTsetParent(Model.ParentName, Model.RelationshipId, Model.Address1, Model.Address2, Model.Address3, Model.HomeTelephone, Model.PersonalEmail, Model.PersonalMobile, Model.Occupation, Model.OfficeAddress1, Model.OfficeAddress2, Model.OfficeAddress3, Model.OfficePhone, Model.officeEmail, Model.NIC, Model.UserId, _path, Model.DateofBirth, Model.CreatedBy, Model.IsActive);
+                        Connection.SaveChanges();
+                        var Count = Connection.tblUsers.Count(X => X.UserId == Model.UserId);
+                        if (Count == 0)
+                        {
+                            tblUser usr = new tblUser();
+                            usr.CreatedBy = "Admin";
+                            usr.CreatedDate = DateTime.Now;
+                            usr.LoginEmail = Model.PersonalEmail;
+                            usr.Mobile = Model.PersonalMobile;
+                            usr.UserCategory = "PARNT";
+                            usr.JobDescription = Model.Occupation;
+                            usr.SchoolId = SessionSchool;
+                            usr.Password = Model.Password;
+                            usr.UserId = Model.UserId;
+                            usr.PersonName = Model.ParentName;
+                            usr.IsActive = "Y";
+
+                            Connection.tblUsers.Add(usr);
+                            Connection.SaveChanges();
+
+
+                            List<tblParent> prntRlist = Connection.tblParents.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.ParentlList = new SelectList(prntRlist, "ParentId", "ParentName");
+
+                            List<tblRelashionship> SRlist = Connection.tblRelashionships.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.RelationshipList = new SelectList(SRlist, "RelashionshipId", "RelashionshipName");
+                            List<tblSchool> Schoollist = Connection.tblSchools.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.SchoolDrpDown = new SelectList(Schoollist, "SchoolId", "SchoolName");
+                            List<tblGrade> gradelist = Connection.tblGrades.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.SchoolGradeList = new SelectList(gradelist, "GradeId", "GradeName");
+                            List<tblClass> Classlist = Connection.tblClasses.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.classDrpDown = new SelectList(Classlist, "ClassId", "ClassName");
+                            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
+                            String parentid = "2";
+                            var STQlist = Connection.SMGTgetParentStudentadd(parentid,"%").ToList();
+                            List<ParentModel> List = STQlist.Select(x => new ParentModel
+                            {
+                                StudentId = x.StudentId,
+                                ParentName = x.ParentName,
+                                ParentId = x.ParentId.ToString(),
+                                StudentName = x.studentName
+                            }).ToList();
+
+                            Model.UserId = "Parent1";
+
+
+
+                          
+                          //  scope.Complete();
+
+
+                            scope.Complete();
+                            result = "Success";
+                            ModelState.Clear();
+                            return View();
+                        }
+                        else
+                        {
+
+                            List<tblParent> prntRlist = Connection.tblParents.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.ParentlList = new SelectList(prntRlist, "ParentId", "ParentName");
+
+                            List<tblRelashionship> SRlist = Connection.tblRelashionships.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.RelationshipList = new SelectList(SRlist, "RelashionshipId", "RelashionshipName");
+                            List<tblSchool> Schoollist = Connection.tblSchools.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.SchoolDrpDown = new SelectList(Schoollist, "SchoolId", "SchoolName");
+                            List<tblGrade> gradelist = Connection.tblGrades.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.SchoolGradeList = new SelectList(gradelist, "GradeId", "GradeName");
+                            List<tblClass> Classlist = Connection.tblClasses.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.classDrpDown = new SelectList(Classlist, "ClassId", "ClassName");
+                            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
+                            ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
+                            String parentid = "2";
+                            var STQlist = Connection.SMGTgetParentStudentadd(parentid,"%").ToList();
+                            List<ParentModel> List = STQlist.Select(x => new ParentModel
+                            {
+                                StudentId = x.StudentId,
+                                ParentName = x.ParentName,
+                                ParentId = x.ParentId.ToString(),
+                                StudentName = x.studentName
+                            }).ToList();
+
+                            Model.UserId = "Parent1";
+
+                           
+
+
+                            scope.Dispose();
+
+                            return View(Model);
                         }
                     }
 
-
-
-
-                    Connection.SMGTsetParent(Model.ParentName, Model.RelationshipId, Model.Address1, Model.Address2, Model.Address3, Model.HomeTelephone, Model.PersonalEmail, Model.PersonalMobile, Model.Occupation, Model.OfficeAddress1, Model.OfficeAddress2, Model.OfficeAddress3, Model.OfficePhone, Model.officeEmail, Model.NIC, Model.UserId, _path, Model.DateofBirth, Model.CreatedBy, Model.IsActive);
-                    Connection.SaveChanges();
-
-                    
-                    ModelState.Clear();
-                
-                
+                   
+                    return View();
                 }
-                List<tblParent> prntRlist = Connection.tblParents.Where(X => X.IsActive == "Y").ToList();
-                ViewBag.ParentlList = new SelectList(prntRlist, "ParentId", "ParentName");
-
-                List<tblRelashionship> SRlist = Connection.tblRelashionships.Where(X => X.IsActive == "Y").ToList();
-                ViewBag.RelationshipList = new SelectList(SRlist, "RelashionshipId", "RelashionshipName");
-                List<tblSchool> Schoollist = Connection.tblSchools.Where(X => X.IsActive == "Y").ToList();
-                ViewBag.SchoolDrpDown = new SelectList(Schoollist, "SchoolId", "SchoolName");
-                List<tblGrade> gradelist = Connection.tblGrades.Where(X => X.IsActive == "Y").ToList();
-                ViewBag.SchoolGradeList = new SelectList(gradelist, "GradeId", "GradeName");
-                List<tblClass> Classlist = Connection.tblClasses.Where(X => X.IsActive == "Y").ToList();
-                ViewBag.classDrpDown = new SelectList(Classlist, "ClassId", "ClassName");
-                List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
-                ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
-                String parentid = "2";
-                var STQlist = Connection.SMGTgetParentStudentadd(parentid).ToList();
-                List<ParentModel> List = STQlist.Select(x => new ParentModel
+                catch
                 {
-                    StudentId = x.StudentId,
-                    ParentName = x.ParentName,
-                    ParentId = x.ParentId.ToString(),
-                    StudentName = x.studentName
-                }).ToList();
+                    List<tblParent> prntRlist = Connection.tblParents.Where(X => X.IsActive == "Y").ToList();
+                    ViewBag.ParentlList = new SelectList(prntRlist, "ParentId", "ParentName");
 
-                Model.UserId = "Parent1";
-                // TODO: Add insert logic here
+                    List<tblRelashionship> SRlist = Connection.tblRelashionships.Where(X => X.IsActive == "Y").ToList();
+                    ViewBag.RelationshipList = new SelectList(SRlist, "RelashionshipId", "RelashionshipName");
+                    List<tblSchool> Schoollist = Connection.tblSchools.Where(X => X.IsActive == "Y").ToList();
+                    ViewBag.SchoolDrpDown = new SelectList(Schoollist, "SchoolId", "SchoolName");
+                    List<tblGrade> gradelist = Connection.tblGrades.Where(X => X.IsActive == "Y").ToList();
+                    ViewBag.SchoolGradeList = new SelectList(gradelist, "GradeId", "GradeName");
+                    List<tblClass> Classlist = Connection.tblClasses.Where(X => X.IsActive == "Y").ToList();
+                    ViewBag.classDrpDown = new SelectList(Classlist, "ClassId", "ClassName");
+                    List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
+                    ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
+                    String parentid = "2";
+                    var STQlist = Connection.SMGTgetParentStudentadd(parentid,"%").ToList();
+                    List<ParentModel> List = STQlist.Select(x => new ParentModel
+                    {
+                        StudentId = x.StudentId,
+                        ParentName = x.ParentName,
+                        ParentId = x.ParentId.ToString(),
+                        StudentName = x.studentName
+                    }).ToList();
 
-             //   return View("AddChild",Model);
-                return View();
-            }
-            catch
-            {
-                return View();
+                    Model.UserId = "Parent1";
+
+
+                    return View();
+                }
             }
         }
         public ActionResult AddChildAc(ParentModel Model)
@@ -299,7 +394,7 @@ namespace GDWEBSolution.Controllers.Parent
             ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
 
 
-            var STQlist = Connection.SMGTgetParentStudentadd(Model.ParentId).ToList();
+            var STQlist = Connection.SMGTgetParentStudentadd(Model.ParentId,"%").ToList();
 
             List<ParentModel> List = STQlist.Select(x => new ParentModel
             {
@@ -340,7 +435,7 @@ namespace GDWEBSolution.Controllers.Parent
             long parentId = 2;
        //     Model.ParentId = parentId.ToString();
             long longP = long.Parse(Model.ParentId);
-            var count = Connection.tblParentStudents.Count(u => u.ParentId == longP && u.StudentId == Model.StudentId);
+            var count = Connection.tblParentStudents.Count(u => u.ParentId == longP && u.StudentId == Model.StudentId1);
            
             if (count == 0)
             {
@@ -356,7 +451,7 @@ namespace GDWEBSolution.Controllers.Parent
                 Connection.SaveChanges();
 
 
-                result =tps.ParentId.ToString() ;
+                result = Model.ParentId + "!" + Model.SchoolId;
             }
             else
             {
@@ -379,7 +474,7 @@ namespace GDWEBSolution.Controllers.Parent
            // ParentId = "2";
             
            // var STQlist = Connection.SMGTgetParentStudentadd("2").ToList();
-            var STQlist = Connection.SMGTgetParentStudentadd(ParentId).ToList();
+            var STQlist = Connection.SMGTgetParentStudentadd(ParentId,SessionSchool).ToList();
 
             List<ParentModel> List = STQlist.Select(x => new ParentModel
             {
@@ -394,12 +489,42 @@ namespace GDWEBSolution.Controllers.Parent
             }).ToList();
             return PartialView("ChildrenList", List);
         }
+
+
+        public ActionResult ShowchildAddn(string ParentId,string SchoolId)
+        {
+            if (ParentId == null)
+            {
+
+
+            }
+            // ParentId = "2";
+
+            // var STQlist = Connection.SMGTgetParentStudentadd("2").ToList();
+            var STQlist = Connection.SMGTgetParentStudentadd(ParentId, SchoolId).ToList();
+
+            List<ParentModel> List = STQlist.Select(x => new ParentModel
+            {
+                StudentId = x.StudentId,
+                ParentName = x.ParentName,
+                ParentId = x.ParentId.ToString(),
+                StudentName = x.studentName
+
+
+
+
+            }).ToList();
+            return PartialView("ChildrenList", List);
+        }
+
+
+
         public ActionResult ShowchildAddt(string ParentId)
         {
             ParentId = "2";
 
             // var STQlist = Connection.SMGTgetParentStudentadd("2").ToList();
-            var STQlist = Connection.SMGTgetParentStudentadd(ParentId).ToList();
+            var STQlist = Connection.SMGTgetParentStudentadd(ParentId,"%").ToList();
 
             List<ParentModel> List = STQlist.Select(x => new ParentModel
             {

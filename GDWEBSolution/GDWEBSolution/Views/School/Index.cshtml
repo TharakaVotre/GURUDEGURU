@@ -32,13 +32,13 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.Telephone)
                             </th>
-                            <th>
+                           @* <th>
                                 @Html.DisplayNameFor(model => model.WebAddress)
-                            </th>
+                            </th>*@
                           
                            
                            
-                            <th style="max-width:180px"></th>
+                            <th style="max-width:800px"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,22 +65,22 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Telephone)
                                     </td>
-                                    <td>
+                                    @*<td>
                                         @Html.DisplayFor(modelItem => item.WebAddress)
-                                    </td>
+                                    </td>*@
                                    
                                  
 
                                    
                                   
-                                    <td>
+                                    <td @*style="width:40%"*@>
                                         <center>
-                                         <a class="btn btn-primary" onclick="DetailView('@item.SchoolId')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
+                                       
+                                         <a class="btn btn-primary"  onclick="DetailView('@item.SchoolId')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
                                          <a class="btn btn-info" onclick='EditView("@item.SchoolId")'><span class="fa fa-pencil"></span> Edit </a>
                                         <a class="btn btn-danger" onclick='DeleteView("@item.SchoolId")'><span class="fa fa-trash"></span> Delete</a>
 
-                                        </center>
-                                
+                                       </center>
                                     </td>
                                 </tr>
                             }

@@ -14,9 +14,11 @@ namespace GDWEBSolution.Models.Schools
         //[Required(ErrorMessage = "Please enter your full SchoolId")]
         public string SchoolId { get; set; }
 
-        [Display(Name = "School Id")]
+        [Display(Name = "School")]
         //[Required(ErrorMessage = "Please enter your full SchoolId")]
         public string SchoolId3 { get; set; }
+
+
 
         [Display(Name = "Province")]
         public Nullable<int> Province { get; set; }
@@ -112,10 +114,18 @@ namespace GDWEBSolution.Models.Schools
         [Required(ErrorMessage = "School Name is required")]
         public string SchoolName { get; set; }
 
-        [Display(Name = "Grade Id")]
+        [Display(Name = "School")]
+ 
+        public string SchoolNamel { get; set; }
+
+        [Display(Name = "Grade")]
         public string GradeId { get; set; }
-        [Display(Name = "Class Id")]
+        [Display(Name = "Class")]
         public string ClassId { get; set; }
+
+
+        [Display(Name = "Class Id")]
+        public string ClassIdName { get; set; }
 
 
         [Display(Name = "Class Name")]

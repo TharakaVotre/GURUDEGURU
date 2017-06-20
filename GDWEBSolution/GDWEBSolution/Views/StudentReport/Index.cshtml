@@ -10,17 +10,16 @@
     <div class="col-md-12">
         <h3>School Marks Report</h3>
         <div class="panel panel-default">
-            <div class="panel-heading"><form id="myForm" method="post" action="Index" class="form-horizontal">
+            <div class="panel-heading"><form id="myForm" method="post" action="~/StudentReport/Index" class="form-horizontal">
     <div class="form-group">
         <lable class="col-sm-2 control-label"> Accedamic Year</lable>
         <div class="col-sm-2">
-            @Html.TextBox("AccYear", "", new { @class = "form-control" })
+            @Html.TextBox("AccYear", "", new { @class = "form-control",@type="number" })
           
         </div>
-        <lable class="col-sm-2 control-label">Evealuation Type</lable>
+        <lable class="col-sm-2 control-label">Evealuation</lable>
         <div class="col-sm-2">
-            @Html.DropDownList("EveluationType", ViewBag.EveluationType as List<SelectListItem>, "All", new { @class = "form-control" })
-           
+            @Html.DropDownList("Eveluation", ViewBag.Eveluation as List<SelectListItem>,"", new { @class = "form-control",@Required="required" })
         </div>
         <div class="col-sm-2">
             <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>

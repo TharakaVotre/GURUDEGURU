@@ -9,5 +9,9 @@ namespace GDWEBSolution.Models.Report
     {
         public decimal Mark { get; set; }
         public string SubjectName{get;set;}
+        public int SubjectId { get; set; }
+        public string StudentId { get; set; }
+        public long Seq { get; set; }
+        public string StudentName { get; set; }
     }
 }

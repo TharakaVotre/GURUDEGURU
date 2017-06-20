@@ -1,0 +1,64 @@
+﻿
+@{
+    IEnumerable<GDWEBSolution.Models.Student.OptionalSubjectModel> Subject = ViewBag.Subject as IEnumerable<GDWEBSolution.Models.Student.OptionalSubjectModel>;
+    IEnumerable<GDWEBSolution.Models.Student.StudentModel> Student = ViewBag.StudentList as IEnumerable<GDWEBSolution.Models.Student.StudentModel>;
+    IEnumerable<GDWEBSolution.Models.Report.StudentReportModel> Result = ViewBag.ResultList as IEnumerable<GDWEBSolution.Models.Report.StudentReportModel>;
+}
+@{
+    ViewBag.Title = "AttentionRequiredSubjectsSchool";
+}
+<div>
+    <table class="display table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                @{
+                    if (Subject != null)
+                    {
+                        foreach (var item in Subject)
+                        {
+                            <th>
+                                @item.SubjectName
+                            </th>
+                        }
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+
+                foreach (var item in Student)
+                {
+                    <tr>
+                        <td>
+                            @item.StudentName
+                        </td>
+                        @foreach (var items in Subject)
+                        {
+                            string mark = "-";
+                            foreach (var Mark in Result)
+                            {
+                                if (items.SubjectId == Mark.SubjectId.ToString() && item.StudentId == Mark.StudentId)
+                                {
+                                    mark = Mark.Mark.ToString();
+                                    //mark = items.SubjectName + "," + item.StudentName + "," + Mark.Mark.ToString();
+                                }
+                            }
+                            <td>
+                                @mark
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+
+        </tbody>
+
+
+
+    </table>
+
+</div>

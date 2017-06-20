@@ -8,7 +8,7 @@
             <div class="panel-heading">New Student | Optional Subject |EXtra Curicular  </div>
             <div class="panel-body">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New Student</a></li>
+                    <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New Student Creation</a></li>
                     @*<li class=""><a href="#OptionalSubject" data-toggle="tab" aria-expanded="false">Optional Subject</a></li>*@
                     <li class=""><a href="#excactivity" data-toggle="tab" aria-expanded="false">EXtra Curicular</a></li>
                     @*<li class="disabled"><a>Disabled</a></li>
@@ -53,7 +53,7 @@
                                  <div class="form-group">
                                     @Html.LabelFor(m => m.StudentId, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
-                                        @Html.TextBoxFor(model => model.StudentId, new { @class = "form-control", @placeholder = "Student Id" })
+                                        @Html.TextBoxFor(model => model.StudentId, new { @class = "form-control", @placeholder = "Student Id"  })
                                       
                                     </div>
                                     <div class="col-sm-2">
@@ -80,7 +80,7 @@
                                     <div class="col-sm-8">
                                         
 
-                                        @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @placeholder = "Student Name" })
+                                        @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @placeholder = "User Id" })
 
                                     </div>
 
@@ -96,14 +96,14 @@
 
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-8">
-                                       @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control" })
+                                    <div class="col-sm-4">
+                                       @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control datepicker" })
                                         <span class="help-block m-b-none" id="CategoryNameError"></span>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+                                    @Html.LabelFor(m => m.SchoolIdw, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
                                         @Html.DropDownListFor(model => model.SchoolIdw, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadEXactivsess(this.value)" })
 
@@ -149,7 +149,7 @@
                                         @Html.RadioButtonFor(m => m.Gender, "M")
                                         </div>
                                     <div class="col-sm-3">
-                                        @Html.Label("FeMale")
+                                        @Html.Label("Female")
                                         @Html.RadioButtonFor(m => m.Gender, "F")
                                         </div >
                                         </div>
@@ -196,6 +196,7 @@
                                                 @*<button class="btn btn-default" type="submit">Cancel</button>*@
                                                 @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
                                                 <button type="submit" value="Save" id="btnSubmit" onclick="" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                                                 <a href="~/Student/Index" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span>Go Back</a>
                                             </div>
                                         </div>
                                     </div>
@@ -390,22 +391,27 @@
     </script>
 
 <script >
-    //$(function () {
-    //    // This will make every element with the class "date-picker" into a DatePicker element
-    //    $("#DateOfBirth").datepicker();
-    //});
+    $(function () {
+        // This will make every element with the class "date-picker" into a DatePicker element
+        $("#DateOfBirth").datepicker();
+    });
 
 
 
 
  
-     $(document).ready(function () {
-         var date_input = $('input[name="DateOfBirth"]'); //our date input has the name "date"
-         date_input.datepicker({
-             format: 'mm/dd/yyyy',
-             todayHighlight: true,
-             autoclose: true,
-         })
-     });
+     //$(document).ready(function () {
+     //    var date_input = $('input[name="DateOfBirth"]'); //our date input has the name "date"
+     //    date_input.datepicker({
+     //        format: 'mm/dd/yyyy',
+     //        todayHighlight: true,
+     //        autoclose: true,
+             
+     //    })
+     //});
+
+     
+
  
 </script>
+
