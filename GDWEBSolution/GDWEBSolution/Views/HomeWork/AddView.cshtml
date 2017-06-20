@@ -1,13 +1,11 @@
 ﻿@model GDWEBSolution.Models.HomeWork.HomeWorkModel
 <script>
-    $(document).ready(function () {
-        var date_input = $('input[name="DueDate"]'); //our date input has the name "date"
-        date_input.datepicker({
-            format: 'mm/dd/yyyy',
-            todayHighlight: true,
-            autoclose: true,
+    $(function () {
+        $("#DueDate").datepicker({
+            minDate: new Date()
         })
     });
+    
 
 </script>
 
@@ -103,7 +101,9 @@
  
     }
 
- </style >
+
+   
+    </style >
 <script type="text/javascript">
 
 
@@ -165,5 +165,38 @@
     });
 
 </script>
+@section scripts{
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script>
+        (function () {
+            var bar = $('.progress-bar');
+            var percent = $('.progress-bar');
+            var status = $('#status');
+
+            $('form').ajaxForm({
+                beforeSend: function () {
+                    status.empty();
+                    var percentValue = '0%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    var percentValue = percentComplete + '%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                success: function (d) {
+                    var percentValue = '100%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                    $('#fu1').val('');
+                    alert(d);
+                },
+                complete: function (xhr) {
+                    status.html(xhr.responseText);
+                }
+            });
+        })();
+    </script>
 
 }

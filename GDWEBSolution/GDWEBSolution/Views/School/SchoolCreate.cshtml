@@ -18,6 +18,8 @@
                     <li class=""><a href="#subjects" data-toggle="tab" aria-expanded="false">Subjects</a></li>
 
                     <li class=""><a href="#Classes" data-toggle="tab" aria-expanded="false">Class</a></li>
+                    <li class=""><a href="#Admin" data-toggle="tab" aria-expanded="false">School Admin</a></li>
+
                     @*<li class="disabled"><a>Disabled</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -262,6 +264,15 @@
                         @{Html.RenderPartial("Class");}
                         <div id="showclasses">
                             @{Html.RenderAction("ShowSchooClasses", new { ClasslId = "0" });}
+
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="Admin">
+                        @{Html.RenderPartial("SchoolAdminC");}
+                        <div id="showadmins">
+                           @{Html.RenderAction("ShowSchoolAdmins", new { SchoolId = "0" });}
 
                         </div>
 

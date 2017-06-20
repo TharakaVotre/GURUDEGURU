@@ -8,12 +8,17 @@ using GDWEBSolution.Models.Schools;
 using System.IO;
 using GDWEBSolution.Models.Teacher;
 using GDWEBSolution.Models.Student;
+using GDWEBSolution.Util;
 //DBEntityModel.edmx
 //SchoolMGTEntitiesConnectionString
 namespace GDWEBSolution.Controllers
 {
     public class SchoolController : Controller
     {
+
+        static string DECKey = System.Configuration.ConfigurationManager.AppSettings["DecKey"];
+        string Password = DECKey.Substring(10);
+
         String Schoold = "121127";
         string UserId = "User1";
         //
@@ -409,6 +414,68 @@ namespace GDWEBSolution.Controllers
          }
 
 
+         [AllowAnonymous]
+         public JsonResult AddSchoolAdmin(SchoolAdminModel Model)
+         {
+             try
+             {
+                 string result = "Error";
+                 if (Model.SchoolId4 == null || Model.AdminUserId == null || Model.Password == null || Model.AdminPersonalEmail == null)
+                 {
+
+                     result = "notfilled";
+
+                 }
+                 else
+                 {
+
+                     var count = Connection.tblUsers.Count(u => u.SchoolId == Model.SchoolId4 && u.UserId == Model.AdminUserId);
+                     if (count == 0)
+                     {
+
+                         tblUser usr = new tblUser();
+
+                         usr.CreatedBy = UserId;
+                         usr.CreatedDate = DateTime.Now;
+                         usr.SchoolId = Model.SchoolId4;
+                         usr.UserId = Model.AdminUserId;
+                         usr.IsActive = "Y";
+                         usr.Mobile = Model.PersonalMobile;
+                         usr.UserCategory = "ADMIN";
+                         usr.PersonName = Model.AdminName;
+                         usr.UserId = Model.AdminUserId;
+                              string pass = Encrypt_Decrypt.Encrypt(Model.Password, Password);
+
+                              usr.Password = pass;
+                         usr.LoginEmail = Model.AdminPersonalEmail;
+
+
+                         Connection.tblUsers.Add(usr);
+                         Connection.SaveChanges();
+
+                         result = Model.SchoolId4 + "!" + Model.AdminUserId;
+
+
+
+                     }
+                     else
+                     {
+                         result = "Exits";
+                     }
+                     //ShowTeacherQualificatoin();
+                 }
+                 return Json(result, JsonRequestBehavior.AllowGet);
+             }
+             catch (Exception Ex)
+             {
+                 Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)", Ex);
+                 return Json("Exception", JsonRequestBehavior.AllowGet);
+
+             }
+         }
+
+
+
 
          [AllowAnonymous]
          public JsonResult EAddSchoolClass(SchoolModel Model)
@@ -510,8 +577,9 @@ namespace GDWEBSolution.Controllers
              try
              {
 
-                 tblClass Tble = Connection.tblClasses.Find(Model.ClassId, Model.GradeId, Model.SchoolId);
-                 Connection.tblClasses.Remove(Tble);
+                 //tblClass Tble = Connection.tblClasses.Find(Model.ClassId, Model.GradeId, Model.SchoolId);
+                 //Connection.tblClasses.Remove(Tble);
+                 Connection.SMGTModifyClassStatus(Model.SchoolId, Model.ClassId, Model.GradeId);
                  Connection.SaveChanges();
                  string resultt = Model.SchoolId + "!" + Model.GradeId;
 
@@ -692,6 +760,26 @@ namespace GDWEBSolution.Controllers
          }
 
 
+         public ActionResult ShowSchoolAdmins(string SchoolId)
+         {
+            // var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
+
+             List<tblUser> schoolList = Connection.tblUsers.Where(X => X.IsActive == "Y" && X.SchoolId == SchoolId && X.UserCategory == "ADMIN").ToList();
+
+             List<SchoolAdminModel> List = schoolList.Select(x => new SchoolAdminModel
+             {
+
+                 SchoolId = x.SchoolId,
+                 AdminUserId=x.UserId,
+                 AdminName=x.PersonName
+                
+
+
+             }).ToList();
+             return PartialView("AdminList", List);
+         }
+
+
          public ActionResult ShowSchoolSubjects(string AcademicYear, string SchoolId)
          {
              var STQlist = Connection.SMGTgetSchoolSubadd(SchoolId, AcademicYear).ToList();
@@ -707,6 +795,7 @@ namespace GDWEBSolution.Controllers
                  SchoolId = x.SchoolId,
                  SubjectName=x.SubjectName,
                 SubjectId= x.SubjectId.ToString(),
+                AcademicYear=AcademicYear,
 
                 
              
@@ -964,13 +1053,13 @@ namespace GDWEBSolution.Controllers
          {
              try
              {
-
-                 tblSchoolSubject Tble = Connection.tblSchoolSubjects.Find(Model.AcademicYear,Model.SchoolId, Model.SubjectId);
+                 int a = Int32.Parse(Model.SubjectId);
+                 tblSchoolSubject Tble = Connection.tblSchoolSubjects.Find(Model.AcademicYear, Model.SchoolId, a);
                  Connection.tblSchoolSubjects.Remove(Tble);
                  Connection.SaveChanges();
 
 
-                 return Json(Model.AcademicYear, JsonRequestBehavior.AllowGet);
+                 return Json(Model.AcademicYear+"!"+Model.SchoolId, JsonRequestBehavior.AllowGet);
                  //return RedirectToAction("Index");
              }
              catch
@@ -1910,7 +1999,7 @@ namespace GDWEBSolution.Controllers
                 SchoolId = x.SchoolId,
                 SubjectName = x.SubjectName,
                 SubjectId = x.SubjectId.ToString(),
-
+                AcademicYear=AcademicYear,
 
 
                 IsActive = x.IsActive,

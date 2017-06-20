@@ -16,7 +16,7 @@ namespace GDWEBSolution.Controllers.Configuration
         // GET: /Grade Subject/
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
         string UserId = "Shirandie";
-        string SchoolId = "Scl11128";
+        string SchoolId = "Scl118743";
         string Accyear = null;
         string gradeid = null;
         public ActionResult Index()

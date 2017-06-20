@@ -2335,6 +2335,19 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_GETPasswordChangeEMailConfig_Result>("SMGT_GETPasswordChangeEMailConfig");
         }
     
+        public virtual ObjectResult<SMGT_getSchoolClassTeachersList_Result> SMGT_getSchoolClassTeachersList(string schoolid, string accademicYear)
+        {
+            var schoolidParameter = schoolid != null ?
+                new ObjectParameter("Schoolid", schoolid) :
+                new ObjectParameter("Schoolid", typeof(string));
+    
+            var accademicYearParameter = accademicYear != null ?
+                new ObjectParameter("AccademicYear", accademicYear) :
+                new ObjectParameter("AccademicYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchoolClassTeachersList_Result>("SMGT_getSchoolClassTeachersList", schoolidParameter, accademicYearParameter);
+        }
+    
         public virtual ObjectResult<SMGT_getSchoolExactivity_Result> SMGT_getSchoolExactivity(string schoolId)
         {
             var schoolIdParameter = schoolId != null ?
@@ -2495,6 +2508,28 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTDeleteTeacherExtraCurricularActivity", teacheridParameter, schoolidParameter, activityCodeParameter);
         }
     
+        public virtual ObjectResult<SMGTgetAllEvaluationdetailList_Result> SMGTgetAllEvaluationdetailList(string schoolid, string evaluationNo)
+        {
+            var schoolidParameter = schoolid != null ?
+                new ObjectParameter("Schoolid", schoolid) :
+                new ObjectParameter("Schoolid", typeof(string));
+    
+            var evaluationNoParameter = evaluationNo != null ?
+                new ObjectParameter("EvaluationNo", evaluationNo) :
+                new ObjectParameter("EvaluationNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetAllEvaluationdetailList_Result>("SMGTgetAllEvaluationdetailList", schoolidParameter, evaluationNoParameter);
+        }
+    
+        public virtual ObjectResult<SMGTgetAllEvaluationHdetail_Result> SMGTgetAllEvaluationHdetail(string schoolid)
+        {
+            var schoolidParameter = schoolid != null ?
+                new ObjectParameter("Schoolid", schoolid) :
+                new ObjectParameter("Schoolid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetAllEvaluationHdetail_Result>("SMGTgetAllEvaluationHdetail", schoolidParameter);
+        }
+    
         public virtual ObjectResult<SMGTgetAllSchoolExtraCurricularActivity_Result> SMGTgetAllSchoolExtraCurricularActivity(string isActive)
         {
             var isActiveParameter = isActive != null ?
@@ -2634,13 +2669,17 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTGetParentschildern_Result>("SMGTGetParentschildern", parentIdParameter);
         }
     
-        public virtual ObjectResult<SMGTgetParentStudentadd_Result> SMGTgetParentStudentadd(string parentId)
+        public virtual ObjectResult<SMGTgetParentStudentadd_Result> SMGTgetParentStudentadd(string parentId, string schoolId)
         {
             var parentIdParameter = parentId != null ?
                 new ObjectParameter("ParentId", parentId) :
                 new ObjectParameter("ParentId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetParentStudentadd_Result>("SMGTgetParentStudentadd", parentIdParameter);
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetParentStudentadd_Result>("SMGTgetParentStudentadd", parentIdParameter, schoolIdParameter);
         }
     
         public virtual ObjectResult<SMGTgetParentToSchoolSentMail_Result> SMGTgetParentToSchoolSentMail(Nullable<long> parentId)
@@ -2901,6 +2940,49 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("StudentId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTloadScholExtraCadd_Result>("SMGTloadScholExtraCadd", schoolIdParameter, studentIdParameter);
+        }
+    
+        public virtual int SMGTModifyClassStatus(string schoolId, string classId, string gradeId)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var classIdParameter = classId != null ?
+                new ObjectParameter("ClassId", classId) :
+                new ObjectParameter("ClassId", typeof(string));
+    
+            var gradeIdParameter = gradeId != null ?
+                new ObjectParameter("GradeId", gradeId) :
+                new ObjectParameter("GradeId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTModifyClassStatus", schoolIdParameter, classIdParameter, gradeIdParameter);
+        }
+    
+        public virtual int SMGTModifyEvaluationDetailStatus(string schoolId, string evaluatDtailSeq)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var evaluatDtailSeqParameter = evaluatDtailSeq != null ?
+                new ObjectParameter("EvaluatDtailSeq", evaluatDtailSeq) :
+                new ObjectParameter("EvaluatDtailSeq", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTModifyEvaluationDetailStatus", schoolIdParameter, evaluatDtailSeqParameter);
+        }
+    
+        public virtual int SMGTModifyEvaluationHeaderStatus(string schoolId, string evaluationNo)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            var evaluationNoParameter = evaluationNo != null ?
+                new ObjectParameter("EvaluationNo", evaluationNo) :
+                new ObjectParameter("EvaluationNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTModifyEvaluationHeaderStatus", schoolIdParameter, evaluationNoParameter);
         }
     
         public virtual int SMGTModifySchoolHouseStatus(string schoolId, string houseId)

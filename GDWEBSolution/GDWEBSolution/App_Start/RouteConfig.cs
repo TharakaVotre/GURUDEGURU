@@ -50,8 +50,14 @@ namespace GDWEBSolution
                      new { controller = "EvaluationbySchool", action = "GetEvaluationDropdown" },
                      new[] { "GDWEBSolution.Controllers.EvaluationbySchool" });
 
-           
 
+
+
+
+            routes.MapRoute("evaluationdetail",
+                     "evaluationbyschool/getevaluation/",
+                     new { controller = "EvaluationbySchool", action = "GetEvaluation" },
+                     new[] { "GDWEBSolution.Controllers.GetEvaluation" });
 
             routes.MapRoute("Studentgrade",
                         "StudentOptionalSubject/GetSchoolGrade/",

@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<GDWEBSolution.Models.Evaluation.EvaluationModel>
 <div class="row">
 
-    <h3>School Evaluation</h3>
+    
     <div class="col-md-12">
        
         <!-- Zero Configuration Table -->
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button>
-            </div>
+            
           
             @*<div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView2(1)"><span class="fa fa-plus"></span> Add file</button></div>*@
             <div class="panel-body">
@@ -16,7 +14,7 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.EvaluationType)
+                                @Html.DisplayNameFor(model => model.EvaluationTypeDesc)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.EvaluationDescription)
@@ -39,7 +37,7 @@
                                 <tr>
                                     <td>
                                         @Html.HiddenFor(modelItem => item.EvaluationNo)
-                                        @Html.DisplayFor(modelItem => item.EvaluationType)
+                                        @Html.DisplayFor(modelItem => item.EvaluationTypeDesc)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.EvaluationDescription)
@@ -56,9 +54,9 @@
 
                                     <td>
 
-                                        <a class="btn btn-primary" onclick="DetailView('@item.SchoolId')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
-                                        <a class="btn btn-info" onclick='EditView("@item.SchoolId")'><span class="fa fa-pencil"></span> Edit </a>
-                                        <a class="btn btn-danger" onclick='DeleteView("@item.SchoolId")'><span class="fa fa-trash"></span> Delete</a>
+                                        @*<a class="btn btn-primary" onclick="DetailView('@item.EvaluationNo')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
+                                        <a class="btn btn-info" onclick='EditView("@item.EvaluationNo")'><span class="fa fa-pencil"></span> Edit </a>*@
+                                        <a class="btn btn-danger" onclick='DeleteView("@item.EvaluationNo")'><span class="fa fa-trash"></span> Delete</a>
 
 
 
@@ -74,11 +72,13 @@
 </div>
 <script>
 
-    function DeleteSchoolGrade( SchoolId, GradeId) {
-        debugger
-        var Url = "/School/DeleteGrade?SchoolId=" + SchoolId + "&GradeId=" + GradeId;
-        $("#DeleteModelBody").load(Url, function () {
-            $("#deleteModel").modal("show");
+  
+
+
+    var DeleteView = function (CategoryId) {
+        var Url = "/EvaluationbySchool/DeleteEvaluationHeader?EvaluationNo=" + CategoryId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
         })
     }
 </script>

@@ -12,7 +12,7 @@
             </div>*@
 
 
-        @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+        @Html.LabelFor(m => m.SchoolNamel, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
             @Html.DropDownListFor(model => model.SchoolId1, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadschoolHouses(this.value)" })
 

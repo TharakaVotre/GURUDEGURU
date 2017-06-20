@@ -9,7 +9,7 @@
 
 
 
-        @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+        @Html.LabelFor(m => m.SchoolNamel, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-4">
             @Html.DropDownListFor(model => model.SchoolId3, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadEXactivsess(this.value)" })
 
@@ -22,9 +22,9 @@
             @Html.DropDownListFor(model => model.GradeId, ViewBag.grdschooldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School " , @onchange = "loadsclgradeclassess(this.value)" }) 
         </div>
         <br/><br />
-        @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-2 control-label" })
+        @Html.LabelFor(m => m.ClassIdName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-4">
-           @Html.TextBoxFor(model => model.ClassId, new { @class = "form-control", @placeholder = "Class Id" })
+           @Html.TextBoxFor(model => model.ClassId, new { @class = "form-control", @placeholder = "Class Id",onkeypress="return RestrictSpace()" })
         </div>
 
         @Html.LabelFor(m => m.ClassName, new { @class = "col-sm-2 control-label" })
@@ -49,7 +49,12 @@
 </form>
 
 <script>
-
+    function RestrictSpace() {
+        if (event.keyCode == 32) {
+            event.returnValue = false;
+            return false;
+        }
+    }
     
     var loadsclgradeclassess = function (value) {
         var Schoolid = $('#SchoolId3').val();

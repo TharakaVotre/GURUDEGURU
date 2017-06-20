@@ -6,21 +6,11 @@
 }
 
 <script>
-    $(document).ready(function () {
-        var date_input = $('input[name="ToDate"]'); //our date input has the name "date"
-        date_input.datepicker({
-            format: 'mm/dd/yyyy',
-            todayHighlight: true,
-            autoclose: true,
-        })
+    $(function () {
+        $("#ToDate").datepicker();
     });
-    $(document).ready(function () {
-        var date_input = $('input[name="FromDate"]'); //our date input has the name "date"
-        date_input.datepicker({
-            format: 'mm/dd/yyyy',
-            todayHighlight: true,
-            autoclose: true,
-        })
+    $(function () {
+        $("#FromDate").datepicker();
     });
 </script>
 
@@ -97,7 +87,7 @@
                                     @Html.HiddenFor(modelItem => item.ClassId)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.DueDate)
+                                    <div>@item.DueDate.ToShortDateString()</div>
                                 </td>
                                 
                                     @Html.HiddenFor(modelItem => item.AssignmentNo)

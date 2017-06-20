@@ -5,7 +5,7 @@
         {
             <div class="col-md-12">
                 <div class="well">
-                    No Subject is set to display
+                    No Subject is set to displays
                 </div>
             </div>
         }
@@ -35,7 +35,7 @@
 
     function DeleteSchoolSubjet(SchoolId, SubjectId, AcademicYear) {
         debugger
-        var Url = "/School/DeleteSchoolSubjects?SchoolId=" + SchoolId + "&SubjectId=" + GradeId + "&AcademicYear=" + AcademicYear;
+        var Url = "/School/DeleteSchoolSubjects?SchoolId=" + SchoolId + "&SubjectId=" + SubjectId + "&AcademicYear=" + AcademicYear;
         $("#DeleteModelBody").load(Url, function () {
             $("#deleteModel").modal("show");
         })

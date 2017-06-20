@@ -27,8 +27,9 @@
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
-                                        @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadSgrade(this.value)" })
-                                       
+                                      @*  @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student" , @readonly = "readonly" })*@
+ @Html.HiddenFor(model => model.SchoolIdw, new { @class = "form-control", @placeholder = "School Name" , @readonly = "readonly" })
+                                         @Html.TextBoxFor(model => model.SchoolName, new { @class = "form-control", @placeholder = "School Name" , @readonly = "readonly" })
                                     </div>
 
                                     <div class="col-sm-2">
@@ -39,14 +40,23 @@
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.StudentId, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
-                                        @Html.TextBoxFor(model => model.StudentId, new { @class = "form-control", @placeholder = "School Name" })
+                                        @Html.TextBoxFor(model => model.StudentId, new { @class = "form-control", @placeholder = "Student" , @readonly = "readonly" })
                                        
                                     </div>
                                     <div class="col-sm-2">
                                         @Html.ValidationMessageFor(model => model.StudentId, null, new { @class = "text-danger" })
                                     </div>
                                 </div>
-
+                                 <div class="form-group">
+                                    @Html.LabelFor(m => m.UserId, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", @placeholder = "Student" , @readonly = "readonly" })
+                                       
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.UserId, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.StudentName, new { @class = "col-sm-2 control-label" })
@@ -81,7 +91,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-4">
-                                        @Html.DropDownListFor(model => model.GradeId, ViewBag.SGradeDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+                                        @Html.DropDownListFor(model => model.GradeId, ViewBag.SGradeDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group",@onchange = "loadClass(this.value)"  })
                                     </div>
                                     <div class="col-sm-2">
                                         @Html.ValidationMessageFor(model => model.GradeId, null, new { @class = "text-danger" })
@@ -144,9 +154,44 @@
                                         @*<button class="btn btn-default" type="submit">Cancel</button>*@
                                         @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
                                         <button type="submit" value="Save" id="btnSubmit" onclick="" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                                        <a href="~/Student/Index" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span>Go Back</a>
                                     </div>
                                 </div>
                             </div>
                         }
                         @*</form>*@
                     </div>
+
+<script>
+    var loadClass = function (value) {
+        $("#showStateLga").show();
+        var selectedItem = value;
+        var SchoolId = $("#SchoolIdw").val();
+
+        var ddlStates = $("#ClassId");
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("Studentclass"))",
+            data: { "GradeId": selectedItem, "SchoolId": SchoolId },
+            success: function (data) {
+                ddlStates.html('');
+                ddlStates.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+
+                    ddlStates.append($('<option></option>').val(option.ClassId).html(option.ClassName));
+                });
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+
+            }
+        });
+    }
+
+
+
+</script>

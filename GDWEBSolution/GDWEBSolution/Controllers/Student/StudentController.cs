@@ -293,7 +293,7 @@ namespace GDWEBSolution.Controllers.Student
                     //  ViewBag.Message = "File Uploaded Successfully!!";  
 
                     var counts = Connection.tblUsers.Count(u => u.UserId==Model.UserId);
-                     var count = Connection.tblStudents.Count(u => u.SchoolId == Model.SchoolId && u.StudentId==Model.StudentId);
+                     var count = Connection.tblStudents.Count(u => u.SchoolId == Model.SchoolIdw && u.StudentId==Model.StudentId);
                      if (count == 0 && counts==0)
                      {
                          Connection.SMGTsetStudent(Model.SchoolIdw, Model.StudentId, Model.StudentName, Model.DateOfBirth, Model.GradeId, Model.ClassId, Model.Gender, Model.UserId, Model.HouseId, _path, "User1", "Y");
@@ -844,15 +844,17 @@ namespace GDWEBSolution.Controllers.Student
 
             tblStudent TCtable = Connection.tblStudents.SingleOrDefault(x => x.StudentId == StudentId && x.SchoolId == SchoolId);
 
-
+           tblSchool schl  = Connection.tblSchools.SingleOrDefault(x => x.SchoolId == SchoolId);
             //  TModel.IsActive = TCtable.IsActive;
 
-
+           string SchoolName = schl.SchoolName;
             TModel.StudentId = TCtable.StudentId;
             TModel.StudentName = TCtable.studentName;
+            TModel.SchoolName = SchoolName;
             TModel.DateOfBirth = TCtable.DateofBirth;
             TModel.ClassId = TCtable.ClassId;
             TModel.Gender = TCtable.Gender;
+            TModel.UserId = TCtable.UserId;
 
             List<tblSchool> Scllist = Connection.tblSchools.Where(X => X.IsActive == "Y").ToList();
 

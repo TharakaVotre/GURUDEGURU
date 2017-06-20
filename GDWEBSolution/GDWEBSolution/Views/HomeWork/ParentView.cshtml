@@ -84,7 +84,7 @@
                                     @Html.DisplayFor(modelItem => item.Subject)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.DueDate)
+                                    <div>@item.DueDate.ToShortDateString()</div>
                                 </td>
                                
                                 <td>

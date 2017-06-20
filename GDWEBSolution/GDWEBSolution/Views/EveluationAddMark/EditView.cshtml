@@ -10,10 +10,10 @@
         <div class="modal-body">
            <div class="form-horizontal">
                <div class="form-group">
-                   @Html.HiddenFor(model=>model.Seq);
+                   @Html.HiddenFor(model=>model.Seq)
                    @Html.LabelFor(m => m.StudentId, new { @class = "col-sm-3 control-label" })
                    <div class="col-sm-8">
-                       @Html.TextBoxFor(model => model.StudentId, new { @class = "form-control", @placeholder = "Application Status" })
+                       @Html.TextBoxFor(model => model.StudentId, new { @class = "form-control",disabled = "disabled" })
                        
                    </div>
                </div>
@@ -21,7 +21,7 @@
 
                 @Html.LabelFor(m => m.StudentName, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.StudentName, new { @class = "form-control", @placeholder = "Application Status" })
+                    @Html.TextBoxFor(model => model.StudentName, new { @class = "form-control",disabled = "disabled" })
                     
                 </div>
             </div>
@@ -29,7 +29,7 @@
 
                    @Html.LabelFor(m => m.Mark, new { @class = "col-sm-3 control-label" })
                    <div class="col-sm-8">
-                       @Html.TextBoxFor(model => model.Mark, new { @class = "form-control", @placeholder = "Application Status",@type="number",@max="100",@min="0" })
+                       @Html.TextBoxFor(model => model.Mark, new { @class = "form-control",@type="number",@max="100",@min="0" })
                        <span class="help-block m-b-none" id="MarkError"></span>
                    </div>
                </div>

@@ -21,6 +21,9 @@ namespace GDWEBSolution.Models.Schools
 
         [Display(Name = "House Id")]
         public string HouseId { get; set; }
+        [Display(Name = "School")]
+
+        public string SchoolNamel { get; set; }
 
         [Display(Name = "House Incharge Name")]
         public long HouseInchargeId { get; set; }

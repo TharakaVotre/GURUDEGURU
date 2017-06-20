@@ -19,35 +19,35 @@
                         <tr>
                             
                           
-                            <th>
+                            @*<th>
                                 @Html.DisplayNameFor(model => model.SchoolId)
-                            </th>
+                            </th>*@
                             <th>
                                 @Html.DisplayNameFor(model => model.SchoolName)
                             </th>
-                            <th>
+                           @* <th>
                                 @Html.DisplayNameFor(model => model.StudentId)
-                            </th>
+                            </th>*@
                             <th>
                                 @Html.DisplayNameFor(model => model.StudentName)
                             </th>
 
-                             <th>
+                             @*<th>
                                 @Html.DisplayNameFor(model => model.GradeId)
-                            </th>
+                            </th>*@
                              <th>
                                 @Html.DisplayNameFor(model => model.GradeName)
                             </th>
 
-                            <th>
+                           @* <th>
                                 @Html.DisplayNameFor(model => model.ClassId)
-                            </th>
+                            </th>*@
                             <th>
                                 @Html.DisplayNameFor(model => model.ClassName)
                             </th>
-                             <th>
+                             @*<th>
                                 @Html.DisplayNameFor(model => model.SubjectId)
-                            </th>
+                            </th>*@
                            
                             <th>
                                 @Html.DisplayNameFor(model => model.SubjectName)
@@ -61,37 +61,32 @@
                             foreach (var item in Model)
                             {
                                 <tr>
+                                   
                                     <td>
-                                        @Html.HiddenFor(modelItem => item.SequanceNo)
-                                        @Html.DisplayFor(modelItem => item.SchoolId)
-                                    </td>
-                                    <td>
+                                          @Html.HiddenFor(modelItem => item.SequanceNo)
+                                        @Html.HiddenFor(modelItem => item.SchoolId)
                                         @Html.DisplayFor(modelItem => item.SchoolName)
                                     </td>
+                                    
                                     <th>
-                                        @Html.DisplayFor(modelItem => item.StudentId)
-                                    </th>
-                                    <th>
+                                         @Html.HiddenFor(modelItem => item.StudentId)
                                         @Html.DisplayFor(modelItem => item.StudentName)
                                     </th>
 
+                                    
                                     <th>
-                                        @Html.DisplayFor(modelItem => item.GradeId)
-                                    </th>
-                                    <th>
+                                         @Html.HiddenFor(modelItem => item.GradeId)
                                         @Html.DisplayFor(modelItem => item.GradeName)
                                     </th>
 
+                                   
                                     <th>
-                                        @Html.DisplayFor(modelItem => item.ClassId)
-                                    </th>
-                                    <th>
+                                        @Html.HiddenFor(modelItem => item.ClassId)
                                         @Html.DisplayFor(modelItem => item.ClassName)
                                     </th>
+                                   
                                     <th>
-                                        @Html.DisplayFor(modelItem => item.SubjectId)
-                                    </th>
-                                    <th>
+                                         @Html.HiddenFor(modelItem => item.SubjectId)
                                         @Html.DisplayFor(modelItem => item.SubjectName)
                                     </th>
 

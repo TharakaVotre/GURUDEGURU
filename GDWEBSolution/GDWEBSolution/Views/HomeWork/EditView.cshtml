@@ -1,11 +1,8 @@
 ﻿@model GDWEBSolution.Models.HomeWork.HomeWorkModel
 <script>
-    $(document).ready(function () {
-        var date_input = $('input[name="stringDueDate"]'); //our date input has the name "date"
-        date_input.datepicker({
-            format: 'mm/dd/yyyy',
-            todayHighlight: true,
-            autoclose: true,
+    $(function () {
+        $("#stringDueDate").datepicker({
+            minDate: new Date()
         })
     });
 
@@ -64,12 +61,19 @@
                         @Html.TextBoxFor(model => model.stringDueDate, new { @class = "form-control", @placeholder = "Due Date" })
                     </div>
                 </div>
-
+                <script type='text/javascript'>
+                    //When your page has loaded
+                    $(function () {
+                        //Set the value of your TypeId <select> list to the element with value '33'
+                        $('#SubjectId').val('@ViewBag.SubjectIdtxt');
+                    });
+                </script>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SubjectId, new { @class = "col-sm-3 control-label" })
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.Subject, new { @class = "form-control", disabled = "disabled" })
-                        @Html.HiddenFor(m => m.SubjectId)
+                       
+                        @Html.DropDownList("SubjectId", ViewBag.SubjectId as List<SelectListItem>,new{@class="form-control",@SelectListItem=ViewBag.SubjectIdtxt})
+                        
                     </div>
 
                 </div>

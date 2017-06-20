@@ -9,28 +9,28 @@ namespace GDWEBSolution.Models.Student
     public class StudentExtraCModel
     {
         
-            [Display(Name = "School Name")]
+            [Display(Name = "School ")]
             public string SchoolId { get; set; }
 
-            [Display(Name = "School Name")]
+            [Display(Name = "School")]
             public string SchoolIdE { get; set; }
 
-            [Display(Name = "Student Name")]
+            [Display(Name = "Student ")]
             public string StudentId { get; set; }
         
-             [Display(Name = "Student Name")]
+             [Display(Name = "Student ")]
             public string StudentIdE { get; set; }
 
 
-            [Display(Name = "Grade Name")]
+            [Display(Name = "Grade")]
             public string GradeIdE { get; set; }
-            [Display(Name = "Class Name")]
+            [Display(Name = "Class")]
             public string ClassIdE { get; set; }
 
             [Display(Name = "Activity Code")]
             public string ActivityCode { get; set; }
 
-            [Display(Name = "Activity Name")]
+            [Display(Name = "Activity")]
             public string ActivityName { get; set; }
 
 

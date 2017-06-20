@@ -14,7 +14,7 @@ namespace GDWEBSolution.Models.Student
        // 
         public string SchoolId { get; set; }
 
-        [Display(Name = "School Id")]
+        [Display(Name = "School")]
         [Required(ErrorMessage = "Please Select School Name")]
         public string SchoolIdw { get; set; }
 
@@ -44,11 +44,11 @@ namespace GDWEBSolution.Models.Student
 
       
 
-        [Display(Name = "Grade Name")]
+        [Display(Name = "Grade")]
 
         [Required(ErrorMessage = "Grade Name is required")]
         public string GradeId { get; set; }
-        [Display(Name = "Class Name")]
+        [Display(Name = "Class")]
 
         [Required(ErrorMessage = "Class Name is required")]
         public string ClassId { get; set; }
@@ -62,7 +62,7 @@ namespace GDWEBSolution.Models.Student
 
         public string UserId { get; set; }
 
-        [Display(Name = "House Id")]
+        [Display(Name = "House")]
         public string HouseId { get; set; }
 
         public string CreatedBy { get; set; }

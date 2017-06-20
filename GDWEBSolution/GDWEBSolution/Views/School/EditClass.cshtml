@@ -9,8 +9,8 @@
 
 
 
-     @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-2 control-label" })
-    <div class="col-sm-3">
+     @Html.LabelFor(m => m.SchoolId3, new { @class = "col-sm-2 control-label" })
+    <div class="col-sm-4">
         <label class="form-control">@ViewBag.EditSchoolName</label>
         @Html.TextBoxFor(model => model.SchoolId, new { style = "display: none;" })
     </div>
@@ -22,7 +22,7 @@
         <br/><br />
         @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-4">
-           @Html.TextBoxFor(model => model.ClassId, new { @class = "form-control", @placeholder = "Class Id" })
+           @Html.TextBoxFor(model => model.ClassId, new { @class = "form-control", @placeholder = "Class Id",onkeypress="return RestrictSpace()" })
         </div>
 
         @Html.LabelFor(m => m.ClassName, new { @class = "col-sm-2 control-label" })
@@ -47,7 +47,12 @@
 </form>
 
 <script>
-
+    function RestrictSpace() {
+        if (event.keyCode == 32) {
+            event.returnValue = false;
+            return false;
+        }
+    }
     
     var loadsclgradeclassess = function (value) {
         var Schoolid = $('#SchoolId').val();

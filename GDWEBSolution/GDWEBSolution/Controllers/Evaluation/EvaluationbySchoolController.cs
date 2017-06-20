@@ -13,7 +13,7 @@ namespace GDWEBSolution.Controllers.Evaluation
     public class EvaluationbySchoolController : Controller
     {
 
-        String SessionSchool = "Scl11124";
+        String SessionSchool = "Scl15241";
         //
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
         // GET: /EvaluationbySchool/
@@ -205,7 +205,7 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         }
         [AllowAnonymous]
-        public JsonResult AddSchoolGrade(EvaluationModel Model)
+        public JsonResult AddSchoolEvaluations(EvaluationModel Model)
         {
             try
             {
@@ -223,6 +223,7 @@ namespace GDWEBSolution.Controllers.Evaluation
                     newscg.isActive = "Y";
                     newscg.CreatedDate = DateTime.Now;
                     newscg.EvaluationType = Model.EvaluationType;
+                    newscg.TestPaperFee = Model.TestPaperFee;
 
 
                     Connection.tblEvaluationHeaders.Add(newscg);
@@ -251,33 +252,30 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         public ActionResult ShowEvaluation(string SchoolId)
         {
-            var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
+          
 
-            var tableevaluation = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" && X.SchoolId == SessionSchool);
+            var evallist = Connection.SMGTgetAllEvaluationHdetail(SchoolId).ToList();
 
-            List<SchoolGradeModel> List = STQlist.Select(x => new SchoolGradeModel
+           
+
+       
+
+            List<EvaluationModel> Liste = evallist.Select(x => new EvaluationModel
             {
-
-                SchoolId = x.SchoolId,
-                GradeId = x.GradeId,
-                SchoolName = x.SchoolName,
-                GradeName = x.GradeName,
-
-                IsActive = x.IsActive,
+                EvaluationNo = x.EvaluationNo,
 
 
-            }).ToList();
+                EvaluationType = x.EvaluationType,
+                EvaluationDescription = x.EvaluationDescription,
+                TestPaperFee = x.TestPaperFee.GetValueOrDefault(),
+                EvaluationTypeDesc = x.EvaluationTypeDesc
 
-            List<EvaluationModel> Liste = tableevaluation.Select(x => new EvaluationModel
-            {
 
-                SchoolId = x.SchoolId,
-                EvaluationType=x.EvaluationType,
-                EvaluationDescription=x.EvaluationDescription
-            
-               
 
-            
+
+
+
+
 
 
             }).ToList();
@@ -292,29 +290,24 @@ namespace GDWEBSolution.Controllers.Evaluation
             string SchoolId = SessionSchool;
 
             var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
+            var evallist = Connection.SMGTgetAllEvaluationHdetail(SchoolId).ToList();
 
             var tableevaluation = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" && X.SchoolId == SessionSchool);
 
-            List<SchoolGradeModel> List = STQlist.Select(x => new SchoolGradeModel
-            {
-
-                SchoolId = x.SchoolId,
-                GradeId = x.GradeId,
-                SchoolName = x.SchoolName,
-                GradeName = x.GradeName,
-
-                IsActive = x.IsActive,
 
 
-            }).ToList();
-
-            List<EvaluationModel> Liste = tableevaluation.Select(x => new EvaluationModel
+            List<EvaluationModel> Liste = evallist.Select(x => new EvaluationModel
             {
                 EvaluationNo=x.EvaluationNo,
 
-                SchoolId = x.SchoolId,
+               
                 EvaluationType = x.EvaluationType,
-                EvaluationDescription = x.EvaluationDescription
+                EvaluationDescription = x.EvaluationDescription,
+                TestPaperFee=x.TestPaperFee.GetValueOrDefault(),
+                EvaluationTypeDesc=x.EvaluationTypeDesc
+                
+
+
 
 
 
@@ -370,74 +363,90 @@ namespace GDWEBSolution.Controllers.Evaluation
             
             try
             {
-                var check1=Model.ScheduledTimeStarts.Split('A');
-             //   string checkS = check1[1];
-                if (check1.Length<2)
-                {
 
-                    var a = Model.ScheduledTimeStarts.Split('P');
-                   b = a[0];
-                }
-                else {
-
-                    b = check1[0];
-                
-                }
-
-                var check2 = Model.ScheduledTimeEnds.Split('A');
-                //   string checkS = check1[1];
-                if (check1.Length < 2)
-                {
-
-                    var a = Model.ScheduledTimeEnds.Split('P');
-                    c = a[0];
-                }
-                else
-                {
-
-                    c = check1[0];
-
-                }
-
-                for (int i = 0; i < chooseRecipient.Length; i++)
-                {
-
-                    var a = chooseRecipient[i].Split('!');
-
-                    string classname = a[0];
-                    Model.Grade = a[1];
-
-
-
-                    var count = Connection.tblEvaluationDetails.Count(u => u.Class == classname && u.EvaluationNo == Model.EvaluationNo);
-
-                    if (count == 0)
+              
+                    var check1 = Model.ScheduledTimeStarts.Split('A');
+                    //   string checkS = check1[1];
+                    if (check1.Length < 2)
                     {
 
+                        var a = Model.ScheduledTimeStarts.Split('P');
+                        var pmbreak = a[0].Split(':');
 
-                        tblEvaluationDetail te = new tblEvaluationDetail();
-                        te.ScheduledTimeStart = TimeSpan.Parse(b);
-                        te.ScheduledTimeEnd = TimeSpan.Parse(c); ;
-                        te.Class = classname;
-                        te.CreatedBy = "User1";
-                        te.CreatedDate = DateTime.Now;
-                        te.Grade = Model.Grade;
-                        te.EvaluationNo = Model.EvaluationNo;
-                        //  te.ScheduledTimeStart=
-                        te.ScheduledDate = Model.ScheduledDate;
-                      //  te.ScheduledTimeStart = Model.ScheduledTimeStart;
 
-                        te.SchoolId = SessionSchool;
-                        te.IsActive = "Y";
-                        Connection.tblEvaluationDetails.Add(te);
-                        Connection.SaveChanges();
+                        int temp = Int32.Parse(pmbreak[0]) + 12;
+                        b = temp + ":" + pmbreak[1];
 
-                        ModelState.Clear();
+
+
+                    }
+                    else
+                    {
+
+                        b = check1[0];
 
                     }
 
-                }
+                    var check2 = Model.ScheduledTimeEnds.Split('A');
+                    //   string checkS = check1[1];
+                    if (check1.Length < 2)
+                    {
 
+                        var a = Model.ScheduledTimeEnds.Split('P');
+                        var pmbreak = a[0].Split(':');
+                        int temp = Int32.Parse(pmbreak[0]) + 12;
+                        c = temp + ":" + pmbreak[1];
+
+
+
+
+                    }
+                    else
+                    {
+
+                        c = check1[0];
+
+                    }
+
+                    for (int i = 0; i < chooseRecipient.Length; i++)
+                    {
+
+                        var a = chooseRecipient[i].Split('!');
+
+                        string classname = a[0];
+                        Model.Grade = a[1];
+
+
+
+                        var count = Connection.tblEvaluationDetails.Count(u => u.Class == classname && u.EvaluationNo == Model.EvaluationNo && u.Grade == Model.Grade);
+
+                        if (count == 0)
+                        {
+
+
+                            tblEvaluationDetail te = new tblEvaluationDetail();
+                            te.ScheduledTimeStart = TimeSpan.Parse(b);
+                            te.ScheduledTimeEnd = TimeSpan.Parse(c); ;
+                            te.Class = classname;
+                            te.CreatedBy = "User1";
+                            te.CreatedDate = DateTime.Now;
+                            te.Grade = Model.Grade;
+                            te.EvaluationNo = Model.EvaluationNo;
+                            //  te.ScheduledTimeStart=
+                            te.ScheduledDate = Model.ScheduledDate;
+                            //  te.ScheduledTimeStart = Model.ScheduledTimeStart;
+
+                            te.SchoolId = SessionSchool;
+                            te.IsActive = "Y";
+                            Connection.tblEvaluationDetails.Add(te);
+                            Connection.SaveChanges();
+
+                            ModelState.Clear();
+
+                        }
+
+                    }
+                
 
 
             }
@@ -453,28 +462,129 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         }
 
-        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult Addevaluationdataforclassef(EvaluationModel Model, string[] chooseRecipient)
+        {
+            string b = "";
+            string c = "";
+            var result = "Exception";
 
-        public ActionResult Addevaluationdataforclasse(EvaluationModel Model)
-        { 
-
-             try
+            try
             {
-                tblEvaluationDetail tbl = new tblEvaluationDetail();
+
+                if (ModelState.IsValid == true)
+                {
+                     result = "error";
+
+                    var check1 = Model.ScheduledTimeStarts.Split('A');
+                    //   string checkS = check1[1];
+                    if (check1.Length < 2)
+                    {
+
+                        var a = Model.ScheduledTimeStarts.Split('P');
+                        var pmbreak = a[0].Split(':');
+                        if (pmbreak[0] == "12")
+                        {
+
+                            pmbreak[0] = "0";
+                        }
+                        int temp = Int32.Parse(pmbreak[0]) + 12;
+                        b = temp + ":" + pmbreak[1];
 
 
+
+                    }
+                    else
+                    {
+
+                        b = check1[0];
+
+                    }
+
+                    var check2 = Model.ScheduledTimeEnds.Split('A');
+                    //   string checkS = check1[1];
+                    if (check2.Length < 2)
+                    {
+
+
+                        var a = Model.ScheduledTimeEnds.Split('P');
+                        var pmbreak = a[0].Split(':');
+                        if (pmbreak[0] == "12")
+                        {
+
+                            pmbreak[0] = "0";
+                        }
+                        int temp = Int32.Parse(pmbreak[0]) + 12;
+                        c = temp + ":" + pmbreak[1];
+
+
+
+                    }
+                    else
+                    {
+
+                        c = check2[0];
+
+                    }
+
+                    for (int i = 0; i < chooseRecipient.Length; i++)
+                    {
+
+                        var a = chooseRecipient[i].Split('!');
+
+                        string classname = a[0];
+                        Model.Grade = a[1];
+
+
+
+                        var count = Connection.tblEvaluationDetails.Count(u => u.Class == classname && u.EvaluationNo == Model.EvaluationNo && u.Grade == Model.Grade);
+
+                        if (count == 0)
+                        {
+
+
+                            tblEvaluationDetail te = new tblEvaluationDetail();
+                            te.ScheduledTimeStart = TimeSpan.Parse(b);
+                            te.ScheduledTimeEnd = TimeSpan.Parse(c); ;
+                            te.Class = classname;
+                            te.CreatedBy = "User1";
+                            te.CreatedDate = DateTime.Now;
+                            te.Grade = Model.Grade;
+                            te.EvaluationNo = Model.EvaluationNo;
+                            //  te.ScheduledTimeStart=
+                            te.ScheduledDate = Model.ScheduledDate;
+                            //  te.ScheduledTimeStart = Model.ScheduledTimeStart;
+
+                            te.SchoolId = SessionSchool;
+                            te.IsActive = "Y";
+                            Connection.tblEvaluationDetails.Add(te);
+                            Connection.SaveChanges();
+
+                            result = Model.EvaluationNo.ToString();
+
+                            ModelState.Clear();
+
+                        }
+
+                    }
+
+                }     
+
+            }
+            catch
+            {
+
+
+
+            }
+
+
+            return Json(result, JsonRequestBehavior.AllowGet);
 
         }
-            catch{
-        
-        
-        
-        }
 
 
-             return View("Index");
-        
-        }
+ 
 
         //
         // GET: /EvaluationbySchool/Edit/5
@@ -570,6 +680,174 @@ namespace GDWEBSolution.Controllers.Evaluation
             //              }).ToList();
             return Json(result2, JsonRequestBehavior.AllowGet);
         }
+
+
+
+
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult GetEvaluation()
+        {
+
+
+
+
+
+          
+
+
+            List<tblEvaluationHeader> Scwwwllist = Connection.tblEvaluationHeaders.Where(X => X.isActive== "Y" && X.SchoolId==SessionSchool).ToList();
+            //int id = 0;
+            //bool isValid = Int32.TryParse(SchoolId, out id);
+
+            //Need to Pass a Session Schoolid
+
+
+
+
+
+            //  var StudentSextra = Connection.SMGTloadScholExtraCadd(SchoolId, "%").ToList();
+
+            var result2 = (from s in Scwwwllist
+                           select new
+                           {
+                               EvaluationNo=s.EvaluationNo,
+                               EvaluationDescription=s.EvaluationDescription,
+
+
+                           }).ToList();
+
+
+
+            //   ViewBag.excdropdown = new SelectList(excList2, "ActivityCode", "ActivityName");
+
+            //var states = _repository.GetAllStatesByCountryId(id);
+            //var result = (from s in states
+            //              select new
+            //              {
+            //                  id = s.Id,
+            //                  name = s.Name
+            //              }).ToList();
+            return Json(result2, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        public ActionResult DeleteEvaluationHeader(string EvaluationNo)
+        {
+            EvaluationModel Model = new EvaluationModel();
+            Model.EvaluationNo = long.Parse(EvaluationNo);
+            Model.SchoolId = SessionSchool;
+            
+
+            return PartialView("DeleteEvaluationHeader", Model);
+        }
+
+
+        public ActionResult DeleteEvaluationDetail(string EvaluationDetailSeqNo, string EvaluationNo)
+        {
+            EvaluationModel Model = new EvaluationModel();
+            Model.EvaluationDetailSeqNo = long.Parse(EvaluationDetailSeqNo);
+            Model.EvaluationNo = long.Parse(EvaluationNo);
+            Model.SchoolId = SessionSchool;
+
+            return PartialView("DeleteEvaluationDetail", Model);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteEvaluationHeader(EvaluationModel Model)
+        {
+            try
+            {
+                // Model.SchoolId="121127";
+                string evalNo=Model.EvaluationNo.ToString();
+
+                Connection.SMGTModifyEvaluationHeaderStatus(Model.SchoolId, evalNo);
+
+                //  Connection.tblHouses.
+                Connection.SaveChanges();
+
+                return Json(Model.SchoolId, JsonRequestBehavior.AllowGet);
+
+
+
+            }
+            catch
+            {
+                return Json("Error", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
+        [HttpPost]
+        public ActionResult DeleteEvaluationDetail(EvaluationModel Model)
+        {
+            try
+            {
+                // Model.SchoolId="121127";
+                string evalNo = Model.EvaluationNo.ToString();
+                string evaldseq = Model.EvaluationDetailSeqNo.ToString();
+
+                Connection.SMGTModifyEvaluationDetailStatus(SessionSchool, evaldseq);
+
+                //  Connection.tblHouses.
+                Connection.SaveChanges();
+
+                return Json(evalNo, JsonRequestBehavior.AllowGet);
+
+
+
+            }
+            catch
+            {
+                return Json("Error", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        public ActionResult ShowEvaluationDetail(string EvluationNo)
+        {
+            string SchoolId = SessionSchool;
+
+
+         //   var evallist = Connection.SMGTgetAllEvaluationHdetail(SchoolId).ToList();
+
+            var evaldetailList = Connection.SMGTgetAllEvaluationdetailList(SchoolId, EvluationNo);
+
+
+
+            List<EvaluationModel> Liste = evaldetailList.Select(x => new EvaluationModel
+            {
+                EvaluationNo = x.EvaluationNo,
+
+
+                EvaluationType = x.EvaluationType,
+                EvaluationDescription = x.EvaluationDescription,
+                TestPaperFee = x.TestPaperFee.GetValueOrDefault(),
+               GradeName=x.GradeName,
+               ClassName=x.ClassName,
+              ScheduledDates=x.ScheduledDate.ToShortDateString(),
+              ScheduledTimeEndst=x.ScheduledTimeEnd.ToString(),
+              ScheduledTimeStartst=x.ScheduledTimeStart.ToString(),
+              EvaluationDetailSeqNo=x.EvaluationDetailSeqNo
+
+
+
+
+
+
+
+
+
+
+
+            }).ToList();
+            //return PartialView("GradeList", List);
+            return PartialView("EvaluationDetaillist", Liste);
+        }
+
 
 
 

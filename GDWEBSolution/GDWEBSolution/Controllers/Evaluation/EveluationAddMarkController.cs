@@ -13,7 +13,7 @@ namespace GDWEBSolution.Controllers.Evaluation
     {
         //
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string SchoolId = "Scl11128";
+        string SchoolId = "Scl15241";
         string UserId = "ADMIN";
         // GET: /EveluationAddMark/
         

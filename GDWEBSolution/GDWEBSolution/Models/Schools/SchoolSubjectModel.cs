@@ -12,7 +12,7 @@ namespace GDWEBSolution.Models.Schools
         [Display(Name = "Academic Year")]
         public string AcademicYear { get; set; }
 
-        [Display(Name = "School Id")]
+        [Display(Name = "School ")]
         public string SchoolId { get; set; }
         
              [Display(Name = "School Id")]
@@ -27,6 +27,9 @@ namespace GDWEBSolution.Models.Schools
 
         [Display(Name = "Subject Name")]
         public string SubjectName { get; set; }
+
+        [Display(Name = "Subject")]
+        public string SubjectNamel { get; set; }
 
         [Display(Name = "Optional")]
         public string Optional { get; set; }
