@@ -422,9 +422,6 @@
     <Compile Include="Models\SMGTgetOptionalSubjectadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SMGTGetParentschildern_Result.cs">
-      <DependentUpon>DBEntityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\SMGTgetParentStudentadd_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -1120,16 +1117,6 @@
     <Content Include="img\login-bg.jpg" />
     <Content Include="img\logo.jpg" />
     <Content Include="img\wheel.gif" />
-    <Content Include="Models\DBEntityModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\DBEntityModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-popover.js" />
     <Content Include="Scripts\bootstrap-select.js" />
@@ -1149,8 +1136,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBEntityModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Models\DBEntityModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\DBEntityModel.edmx.diagram">
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\DBEntityModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
@@ -1473,6 +1470,7 @@
     <Content Include="Views\Teacher\TeacherSubjectDetails.cshtml" />
     <Content Include="Views\Teacher\QualificationListDView.cshtml" />
     <Content Include="Views\Teacher\ClassTeacherView.cshtml" />
+    <Content Include="Views\Teacher\DeleteClassTeacher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attachments\" />

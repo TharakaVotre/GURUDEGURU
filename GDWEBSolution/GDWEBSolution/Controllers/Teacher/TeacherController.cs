@@ -641,6 +641,7 @@ namespace GDWEBSolution.Controllers.Teacher
                 return Json("Error", JsonRequestBehavior.AllowGet);
             }
         }
+
         public ActionResult ShowTeacherDetails(long TeacherId)
         {
             TeacherModel TModel = new TeacherModel();
@@ -786,5 +787,40 @@ namespace GDWEBSolution.Controllers.Teacher
                 return View();
             }
         }
+
+        public ActionResult DeleteClassTeacher(string tid, string gid, string classid, string Accyear, string sid)
+        {
+            ClassTeacherModel TModel = new ClassTeacherModel();
+            TModel.TeacherId = tid;
+            TModel.GradeId = gid;
+            TModel.ClassId = classid;
+            TModel.AccedamicYear = Accyear;
+            TModel.SchoolId = sid;
+            return PartialView("DeleteClassTeacher", TModel);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteClassTeacher(ClassTeacherModel Model)
+        {
+            try
+            {
+                tblClassTeacher TCtable = Connection.tblClassTeachers.SingleOrDefault(x => x.TeacherId == Model.TeacherId && 
+                    x.GradeId == Model.GradeId && 
+                    x.ClassId == Model.ClassId && 
+                    x.AccedamicYear == Model.AccedamicYear && 
+                    x.SchoolId == Model.SchoolId);
+
+                TCtable.IsActive = "D";
+                Connection.SaveChanges();
+
+                return RedirectToAction("Class");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
     }
 }

@@ -74,7 +74,6 @@ namespace GDWEBSolution.Models
         public string ModifiedBy { get; set; }
         public int SchoolCategory { get; set; }
         public string IsActive { get; set; }
-        public string AccadamicYear { get; set; }
     
         public virtual ICollection<tblAccadamicYear> tblAccadamicYears { get; set; }
         public virtual ICollection<tblAssignmentDueDate> tblAssignmentDueDates { get; set; }

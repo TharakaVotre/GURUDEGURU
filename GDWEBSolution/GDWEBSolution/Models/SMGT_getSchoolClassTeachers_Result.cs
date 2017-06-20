@@ -15,6 +15,7 @@ namespace GDWEBSolution.Models
     {
         public string SchoolId { get; set; }
         public string TeacherId { get; set; }
+        public string Name { get; set; }
         public string GradeId { get; set; }
         public string GradeName { get; set; }
         public string ClassId { get; set; }

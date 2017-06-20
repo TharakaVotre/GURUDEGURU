@@ -125,7 +125,7 @@
                                     </div>*@
 @*                                    <a href="#" class="hvr-buzz-out" onclick="DetailsView(@item.TeacherId)">Detail </a> |
                                     <a href="#" class="hvr-buzz-out" onclick='EditView(@item.TeacherId,"@item.Name")'>Edit </a> |*@
-                                    <a href="#" class="hvr-buzz-out" onclick="DeleteView(@item.TeacherId)">Delete</a>
+                                    <a href="#" class="hvr-buzz-out" onclick='DeleteView("@item.TeacherId","@item.GradeId","@item.ClassId","@item.AccedamicYear","@item.SchoolId")'>Delete</a>
                                 </td>
                             </tr>
     
@@ -231,5 +231,13 @@
           });
 
          // $('#classteacherview').load('/Teacher/ShowClassTeachers');
-      });
+    });
+
+    var DeleteView = function (TeacherId, Gread, Classid, Ay, School) {
+        debugger
+        var Url = "/Teacher/DeleteClassTeacher?tid=" + TeacherId +"&gid="+ Gread +"&classid="+Classid +"&Accyear="+Ay+"&sid="+School;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
   </script>
