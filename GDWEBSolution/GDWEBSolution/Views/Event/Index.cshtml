@@ -1,0 +1,284 @@
+﻿@model GDWEBSolution.Models.Event.EventModel
+
+@{
+    ViewBag.Title = "Add/Edit Event Calender";
+}
+
+<h4>Add/Edit Event Calender</h4>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Event Calender</div>
+    <div class="panel-body">
+        <div class="calendar" id="calendar">
+
+        </div>
+        <br />
+    </div>
+</div>
+<div id="event-modal" class="modal fade" role="dialog">
+ <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add/Edit Event</h4>
+            </div>
+            <div class="modal-body">
+                <input name="event-index" value="" type="hidden">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">Name</label>
+                        <div class="col-sm-7">
+                            <input name="event-name" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">Organizer</label>
+                        <div class="col-sm-7">
+                            <input name="event-organiser" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">Category</label>
+                        <div class="col-sm-7">
+                            @*<input name="event-category" class="form-control" type="text">*@
+                            @Html.DropDownListFor(model => model.EventCategoryId, ViewBag.EventList as SelectList, "", new { @class = "select2_Class form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.EventCategoryId)    
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">Description</label>
+                        <div class="col-sm-7">
+                            <input name="event-desc" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">Dates</label>
+                        <div class="col-sm-7">
+                            <div class="input-group input-daterange" data-provide="datepicker">
+                                <input name="event-start-date" class="form-control" value="2012-04-05" type="text">
+                                <span class="input-group-addon">to</span>
+                                <input name="event-end-date" class="form-control" value="2012-04-19" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">Time</label>
+                        <div class="col-sm-7">
+                            <div class="input-group input-daterange">
+                                <input name="event-from-time" class="form-control" type="text">
+                                <span class="input-group-addon">to</span>
+                                <input name="event-to-time" class="form-control" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="save-event" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script src="~/Scripts/formatDate.js"></script>
+<script>
+/**
+ * Author:    G.M.Tharaka Madusanka
+ * Created:   26.04.2017
+ * (c) Copyright by VotreIT.
+ **/
+    $(document).ready(function () {
+        $('#calendar').calendar();
+
+        $('#event-modal input[name="event-from-time"]').timepicker({
+            template: false,
+            showInputs: false,
+            minuteStep: 5
+        });
+
+        $('#event-modal input[name="event-to-time"]').timepicker({
+            template: false,
+            showInputs: false,
+            minuteStep: 5
+        });
+        $('#event-modal input[name="event-start-date"]').datepicker({
+            format: 'yyyy/mm/dd',
+            todayHighlight: true,
+            autoclose: true,
+        });
+        $('#event-modal input[name="event-end-date"]').datepicker({
+            format: 'yyyy/mm/dd',
+            todayHighlight: true,
+            autoclose: true,
+        });
+    });
+    function load() {  
+        var dataSource = [];
+        $.ajax({
+                url: '/Event/getEvents',
+                contentType: 'application/json; charset=utf-8',
+                datatype: 'json',
+                type: "GET",
+                success: function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        dataSource.push({
+                            id: result[i].id,
+                            name: result[i].name,
+                            startDate: new Date(result[i].syear,result[i].smonth - 1,result[i].sday),
+                            endDate: new Date(result[i].eyear, result[i].emonth - 1, result[i].eday),
+                            fromday: result[i].startDate,
+                            today: result[i].endDate,
+                            fromtime: result[i].fromtime,
+                            totime: result[i].totime,
+                            organizer: result[i].organizer,
+                            category: result[i].category,
+                            desc: result[i].desc
+                        });
+                    }
+                    $('#calendar').data('calendar').setDataSource(dataSource);
+                }
+            });
+    }
+    function editEvent(event) {
+        $('#event-modal input[name="event-index"]').val(event ? event.id : '');
+        $('#event-modal input[name="event-name"]').val(event ? event.name : '');
+        $('#event-modal input[name="event-desc"]').val(event ? event.desc : '');
+        $('#event-modal input[name="event-from-time"]').val(event ? event.fromtime : '');
+        $('#event-modal input[name="event-to-time"]').val(event ? event.totime : '');
+        $('#event-modal input[name="event-organiser"]').val(event ? event.organizer : '');
+        $('#event-modal input[name="event-category"]').val(event ? event.category : '');
+        $('#EventCategoryId').val(event ? event.category : '');
+        $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
+        $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
+        $('#event-modal').modal();
+    }
+
+    function deleteEvent(event) {
+        var dataSource = $('#calendar').data('calendar').getDataSource();
+
+        for (var i in dataSource) {
+            if (dataSource[i].id == event.id) {
+                var data = new FormData;
+                data.append("EventNo", parseInt(event.id));
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Event/Delete",
+                    data: data,
+                    contentType: false,
+                    processData: false,
+                    success: function () {
+                        load();
+                    }
+                })
+            }
+        }
+
+        $('#calendar').data('calendar').setDataSource(dataSource);
+    }
+    function saveEvent() {
+        var event = {
+            id: $('#event-modal input[name="event-index"]').val(),
+            name: $('#event-modal input[name="event-name"]').val(),
+            startDate: $('#event-modal input[name="event-start-date"]').val(),
+            endDate: $('#event-modal input[name="event-end-date"]').val(),
+            fromtime: $('#event-modal input[name="event-from-time"]').val(),
+            totime: $('#event-modal input[name="event-to-time"]').val(),
+            organizer: $('#event-modal input[name="event-organiser"]').val(),
+            category: $('#EventCategoryId').val(),
+            desc: $('#event-modal input[name="event-desc"]').val(),
+        }
+
+        var data = new FormData;
+        data.append("EventNo", parseInt(event.id));
+        data.append("EventName", event.name);
+        data.append("EventDescription", event.desc);
+        data.append("FromDate", event.startDate);
+        data.append("ToDate", event.endDate);
+        data.append("SFromDate", event.startDate);
+        data.append("SToDate", event.endDate);
+        data.append("SFromTime", event.fromtime);
+        data.append("SToTime", event.totime);
+        data.append("EventOrganizer",event.organizer);
+        data.append("EventCategoryId", event.category);
+
+        $.ajax({
+
+            type: "POST",
+            url: "/Event/Create",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function () {
+                $('#event-modal').modal('hide');
+                load();
+            }
+        })
+    }
+
+    $(function () {
+        var currentYear = new Date().getFullYear();
+
+        $('#calendar').calendar({
+            enableContextMenu: true,
+            enableRangeSelection: true,
+            contextMenuItems: [
+                {
+                    text: 'Edit',
+                    click: editEvent
+                },
+                {
+                    text: 'Remove',
+                    click: deleteEvent
+                }
+            ],
+            selectRange: function (e) {
+                editEvent({ startDate: e.startDate, endDate: e.endDate });
+            },
+            mouseOnDay: function (e) {
+
+                if (e.events.length > 0) {
+                    var content = '';
+
+                    for (var i in e.events) {
+                        content += '<div class="event-tooltip-content">'
+                                        + '<div class="event-name" style="color:' + e.events[i].color + ';">--------------------------------------------------</div>'
+                                        + '<div class="event-name" style="color:' + e.events[i].color + ';">' + e.events[i].name + '</div>'
+                                        + '<div class="event-location" style="font-size:small; color:#395f64 ;"> From : ' + e.events[i].fromtime + " To : " + e.events[i].totime + '</div>'
+                                        + '<div class="event-location" style="font-size:small;"> Organized By : ' + e.events[i].organizer + '</div>'
+                                        + '<div class="event-name" style="color:' + e.events[i].color + '">--------------------------------------------------</div>'
+                                    + '</div>';
+                    }
+
+                    $(e.element).popover({
+                        trigger: 'manual',
+                        container: 'body',
+                        html: true,
+                        content: content,
+                        placement: 'auto'
+                    });
+
+                    $(e.element).popover('show');
+                }
+            },
+            mouseOutDay: function (e) {
+                if (e.events.length > 0) {
+                    $(e.element).popover('hide');
+                }
+            },
+            dayContextMenu: function (e) {
+                $(e.element).popover('hide');
+            },
+
+            dataSource: []
+
+        });
+        load();
+        $('#save-event').click(function () {
+            saveEvent();
+        });
+    });
+
+</script>

@@ -114,7 +114,7 @@ h1, .h1, h2, .h2, h3, .h3 {
     border-radius: 0px;
 }
 
-.form-control, .frm-btn, .datepicker {
+.form-control, .frm-btn {
     border: 1px solid #e0e0e0;
     padding: 5px 8px;
     color: #616161;
@@ -210,15 +210,15 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-    color: #8e8c84;
-    background-color: #e3e2e1;
-    border-color: #dfd7ca;
+    color: #fffffd;
+    background-color: rgba(28, 92, 155, 0.5);
+    border-color: #e7e7e7;
 }
 
 .pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {
     color: #8e8c84;
-    background-color: #e3e2e1;
-    border-color: #dfd7ca;
+    background-color: #fbfbfb;
+    border-color: #e7e7e7;
 }
 
 /****************************
@@ -1405,3 +1405,75 @@ hr { margin-top: 5px;margin-bottom: 10px; }
     opacity: 0;
     filter: alpha(opacity=0);
 }
+
+
+/*=============================================================
+    Authour URL: www.designbootstrap.com
+    
+    http://www.designbootstrap.com/
+
+    License: MIT     
+========================================================  */
+
+.db-pricing-seven {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    text-align: center;
+    border: 1px solid #C5C2C2;
+    background-color: #EDEDED;
+}
+
+    /*.db-pricing-seven:hover {
+        margin-top: 5px;
+        -moz-transition: margin-top 0.25s ease 0s;
+        -ms-transition: margin-top 0.25s ease 0s;
+        transition: margin-top 0.25s ease 0s;
+    }*/
+
+    .db-pricing-seven ul {
+        list-style: none;
+        margin: 0;
+        text-align: center;
+        padding-left: 0px;
+    }
+
+        .db-pricing-seven ul li {
+            border-bottom: solid 1px #ECECEC;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            cursor: pointer;
+            /*text-transform: uppercase;*/
+            background: #f4f6f5;
+        }
+
+            .db-pricing-seven ul li.price {
+                background-color: #fff;
+                /*padding: 40px 20px 20px 20px;*/
+                font-size: 20px;
+                /*font-weight: 900;*/
+                color: #353c3e;
+                font-weight: 900;
+            }
+
+                .db-pricing-seven ul li.price i {
+                    padding: 30px;
+                    font-size: 50px;
+                    display: block;
+                }
+
+
+    .db-pricing-seven .pricing-footer {
+        padding: 20px;
+    }
+
+        .db-pricing-seven .pricing-footer a i {
+            margin: 5px;
+            top: 3px;
+        }
+
+
+.nospacing {
+    padding-left: 5px; 
+    padding-right: 5px;
+}
+

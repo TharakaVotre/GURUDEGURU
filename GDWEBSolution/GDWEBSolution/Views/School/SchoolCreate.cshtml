@@ -5,9 +5,9 @@
 }
 <div class="row">
     <div class="col-md-12">
-        <h3>Schools</h3>
+        <h3>School</h3>
         <div class="panel panel-default">
-            <div class="panel-heading">New School | Grade |House|EXtra Curicular|Subject  </div>
+            @*<div class="panel-heading">New School | Grade |House|EXtra Curicular|Subject|Class  </div>*@
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New School</a></li>
@@ -16,6 +16,10 @@
                     <li class=""><a href="#excactivity" data-toggle="tab" aria-expanded="false">Ex-Curicular Activities</a></li>
 
                     <li class=""><a href="#subjects" data-toggle="tab" aria-expanded="false">Subjects</a></li>
+
+                    <li class=""><a href="#Classes" data-toggle="tab" aria-expanded="false">Class</a></li>
+                    <li class=""><a href="#Admin" data-toggle="tab" aria-expanded="false">School Admin</a></li>
+
                     @*<li class="disabled"><a>Disabled</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -35,7 +39,7 @@
     FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-                        @*<form id="FrmANT" class="form-horizontal">*@
+                        @*<form id="FormNewdata" class="form-horizontal">*@
                             <div class="form-horizontal">
 
 
@@ -59,68 +63,71 @@
                                     @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-8">
                                         @Html.TextBoxFor(model => model.SchoolName, new { @class = "form-control", @placeholder = "School Name" })
-                                        <span class="help-block m-b-none" id="CategoryNameError"></span>
+                                       
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @Html.ValidationMessageFor(model => model.SchoolName, null, new { @class = "text-danger" })
                                     </div>
                                 </div>
                                
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.SchoolCategory, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-4">
-                                        @Html.DropDownListFor(model => model.SchoolCategory, ViewBag.SchoolCategoryDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Name of School type" })
-                                    </div>
-                                    <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.SchoolCategory, null, new { @class = "text-danger" })
-                                    </div>
-                                </div>
+                             
 
 
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.Province, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-4">
-                                        @Html.DropDownListFor(model => model.Province, ViewBag.ProvinceDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Province" })
+                                    <div class="col-sm-3">
+                                        @Html.DropDownListFor(model => model.Province, ViewBag.ProvinceDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Province",@onchange = "loadschoolDisctrict(this.value)" })
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
                                         @Html.ValidationMessageFor(model => model.Province, null, new { @class = "text-danger" })
+                                    </div>
+
+                                    @Html.LabelFor(m => m.District, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-3">
+                                        @Html.DropDownListFor(model => model.District, ViewBag.DistrictDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+                                    </div>
+                                    <div class="col-sm-1">
+                                        @Html.ValidationMessageFor(model => model.SchoolGroup, null, new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.SchoolGroup, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         @Html.DropDownListFor(model => model.SchoolGroup, ViewBag.SGroupDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
+                                        @Html.ValidationMessageFor(model => model.SchoolGroup, null, new { @class = "text-danger" })
+                                    </div>
+
+                                    @Html.LabelFor(m => m.SchoolRank, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-3">
+                                        @Html.DropDownListFor(model => model.SchoolRank, ViewBag.RankDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+                                    </div>
+                                    <div class="col-sm-1">
                                         @Html.ValidationMessageFor(model => model.SchoolGroup, null, new { @class = "text-danger" })
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.District, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-4">
-                                        @Html.DropDownListFor(model => model.District, ViewBag.DistrictDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
-                                    </div>
-                                    <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.SchoolGroup, null, new { @class = "text-danger" })
-                                    </div>
-                                </div>
+                              
 
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.Division, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         @Html.DropDownListFor(model => model.Division, ViewBag.DivisionDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
                                         @Html.ValidationMessageFor(model => model.SchoolGroup, null, new { @class = "text-danger" })
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.SchoolRank, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-4">
-                                        @Html.DropDownListFor(model => model.SchoolRank, ViewBag.RankDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+
+                                    @Html.LabelFor(m => m.SchoolCategory, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-3">
+                                        @Html.DropDownListFor(model => model.SchoolCategory, ViewBag.SchoolCategoryDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Name of School type" })
                                     </div>
-                                    <div class="col-sm-2">
-                                        @Html.ValidationMessageFor(model => model.SchoolGroup, null, new { @class = "text-danger" })
+                                    <div class="col-sm-1">
+                                        @Html.ValidationMessageFor(model => model.SchoolCategory, null, new { @class = "text-danger" })
                                     </div>
                                 </div>
+                               
 
 
                                 <div class="form-group">
@@ -136,24 +143,24 @@
 
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.Telephone, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control", @placeholder = "Telephone No" })
                              
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
                                         @Html.ValidationMessageFor(model => model.Telephone, null, new { @class = "text-danger" })
                                     </div>
-                                </div>
-                                <div class="form-group">
+
                                     @Html.LabelFor(m => m.MinuteforPeriod, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         @Html.TextBoxFor(model => model.MinuteforPeriod, new { @class = "form-control", @placeholder = "Minutes for a Period" })
-                                        
+
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-1">
                                         @Html.ValidationMessageFor(model => model.MinuteforPeriod, null, new { @class = "text-danger" })
                                     </div>
                                 </div>
+                             
 
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.File, new { @class = "control-label col-md-2" })
@@ -187,7 +194,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.Email, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-6">
-                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email Address", @data_val = "true", @data_val_required = "Email is required" })
+                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email Address" })
                                         
                                     </div>
                                       <div class="col-sm-2">
@@ -200,15 +207,6 @@
 
 
 
-                                <div class="form-group">
-
-
-                                    @* @Html.HiddenFor(m=>m.Name)*@
-                                    @*        @Html.DropDownListFor(model => model.DepartmentId, ViewBag.DepartmentList as SelectList, "--select--", new { @class = "form-control" })*@
-
-                                    @*        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder ="Address" })*@
-                                    @*<a href="#" id="btnSubmit" class="btn btn-success btn-block">@if(Model.EmployeeId>0){<span>Update</span> }else{<span>Save</span>} </a>*@
-                                </div>
 
 
 
@@ -218,7 +216,9 @@
                                     <div class="col-sm-8 col-sm-offset-2">
                                         @*<button class="btn btn-default" type="submit">Cancel</button>*@
                                         @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
-                                        <button type="submit" value="Save" id="btnSubmit" onclick="" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                                        <button type="submit" value="Save" id="btnSubmit" onsubmit="abc()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                                         <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="glyphicon glyphicon-step-backward"></span> Back</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -259,6 +259,27 @@
     </div>
                      
                     </div>
+
+                    <div class="tab-pane fade" id="Classes">
+                        @{Html.RenderPartial("Class");}
+                        <div id="showclasses">
+                            @{Html.RenderAction("ShowSchooClasses", new { ClasslId = "0" });}
+
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="Admin">
+                        @{Html.RenderPartial("SchoolAdminC");}
+                        <div id="showadmins">
+                           @{Html.RenderAction("ShowSchoolAdmins", new { SchoolId = "0" });}
+
+                        </div>
+
+                    </div>
+
+
+
                 </div>
             </div>
         </div>
@@ -302,6 +323,90 @@
         </div>
     </div>
 </div>
+
+
+    <script >
+
+        var abc = function () {
+            $("#SuccesLable").text("School Added");
+            // $("#btnAddQualification").prop('value', 'Save');
+            $("#SuccesModel").modal("show");
+
+        }
+
+
+        var loadschoolDisctrict = function (value) {
+
+
+            var selectedItem = value;
+
+            var ddlStates = $("#District");
+            //var statesProgress = $("#states-loading-progress");
+            //statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.RouteUrl("SchoolDistrict"))",
+            data: { "ProvinceId": selectedItem },
+            success: function (data) {
+                ddlStates.html('');
+                ddlStates.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStates.append($('<option></option>').val(option.DistrictId).html(option.DistrictName));
+                });
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+
+            }
+        });
+
+
+
+
+        }
+
+
+     //$(function(){
+     //    $("input#btnSubmit").on('click', function () {
+     //        $("#SuccesLable").text("Grade Added");
+     //        // $("#btnAddQualification").prop('value', 'Save');
+     //        $("#SuccesModel").modal("show");
+     //    });
+     //});
+    </script>
+
+
+   
+
+
+<script>
+
+   
+ 
+
+
+    var ShowView = function (bookid) {
+        var Url = "/School/Index" ;
+        window.location.href = Url;
+    }
+
+
+    $(function () {
+        // This will make every element with the class "date-picker" into a DatePicker element
+        // $("#DateOfBirth").datepicker();
+         //  $("#Address1").datetimepicker();
+        // $("#CreatedDate").datetimepicker();
+      //  $("#Address1").timepicker();
+
+
+
+
+    });
+
+
+    </script>
 
 @*<script>
     $(function validateForm() {
@@ -425,60 +530,61 @@
 
 
 @*<script type="text/jscript">
-    $('#UserId').blur(function () {
-        var url = "/Teacher/IsUserNameExits";
-        var name = $('#UserId').val();
-        debugger
-        $.get(url, { input: name }, function (data) {
-            if (data == "Have") {
-                //$("#ErrorUName").prop('value', 'User Name Already Exits');
-                $("#ErrorLable").text("User Name Already Exits");
-                $("#btnCreateTeacher").prop('value', 'Save');
-                $("#myModal").modal("show");
-            }
-        });
-    })
-</script>
-<script>
-
-    var CreateTeacher = function () {
-        //debugger
-        var myformdata = $("#FrmANT").serialize();
-
-        if (!$("#FrmANT").valid()) {
-            return;
-        }
-
-        $("#btnCreateTeacher").prop('value', 'Saving Details ...');
-        $.ajax({
-
-            type: "POST",
-            url: "/Teacher/CreateTeacher",
-            data: myformdata,
-            success: function (result) {
-                //$("#loaderDiv").hide();
-                // $("#myModal").modal("hide");
-                if (result == "Success") {
-                    debugger
-                    //window.location.href = "/Teacher/Create";
-                    $('.nav-tabs a[href="#qualification"]').tab('show');
-                    $("#btnCreateTeacher").prop('value', 'Save');
-                }
-                else if (result == "UserExits") {
-                    debugger
+        submit
+        $('#UserId').blur(function () {
+            var url = "/Teacher/IsUserNameExits";
+            var name = $('#UserId').val();
+            debugger
+            $.get(url, { input: name }, function (data) {
+                if (data == "Have") {
                     //$("#ErrorUName").prop('value', 'User Name Already Exits');
                     $("#ErrorLable").text("User Name Already Exits");
                     $("#btnCreateTeacher").prop('value', 'Save');
                     $("#myModal").modal("show");
                 }
-                else {
+            });
+        })
+    </script>
+    <script>
+
+        var abc = function () {
+            //debugger
+            var myformdata = $("#FrmANT").serialize();
+
+            if (!$("#FrmANT").valid()) {
+                return;
+            }
+
+            $("#btnCreateTeacher").prop('value', 'Saving Details ...');
+            $.ajax({
+
+                type: "POST",
+                url: "/Teacher/CreateTeacher",
+                data: myformdata,
+                success: function (result) {
+                    //$("#loaderDiv").hide();
+                    // $("#myModal").modal("hide");
+                    if (result == "Success") {
+                        debugger
+                        //window.location.href = "/Teacher/Create";
+                        $('.nav-tabs a[href="#qualification"]').tab('show');
+                        $("#btnCreateTeacher").prop('value', 'Save');
+                    }
+                    else if (result == "UserExits") {
+                        debugger
+                        //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                        $("#ErrorLable").text("User Name Already Exits");
+                        $("#btnCreateTeacher").prop('value', 'Save');
+                        $("#myModal").modal("show");
+                    }
+                    else {
+
+                    }
 
                 }
 
-            }
-
-        })
-    }
+            })
+        }
 
 
-</script>*@
+    </script>*@

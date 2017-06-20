@@ -1,13 +1,28 @@
 ﻿@model GDWEBSolution.Models.SchoolCalender.SchoolCalenderModel
 <script>
-    $(function () {
-        $("#ToDate").datepicker();
+    $(document).ready(function () {
+        var date_input = $('input[name="ToDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
-    $(function () {
-        $("#FromDate").datepicker();
+    $(document).ready(function () {
+        var date_input = $('input[name="FromDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
-    $(function () {
-        $("#AcadamicDate").datepicker();
+    $(document).ready(function () {
+        var date_input = $('input[name="AcadamicDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
 </script>
 
@@ -35,6 +50,14 @@
             </div>
 
             <div class="form-group">
+                @Html.LabelFor(m => m.DateComment, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.DateComment, new { @class = "form-control", @placeholder = "Date Comment" })
+                    <span class="help-block m-b-none" id="ToError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
                 @Html.LabelFor(m => m.SpecialComment, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-8">
                     @Html.TextBoxFor(model => model.SpecialComment, new { @class = "form-control", @placeholder = "Special Comment" })
@@ -43,19 +66,11 @@
             </div>
 
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.AcadamicDate, new { @class = "col-sm-3 control-label" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.AcadamicDate, new { @class = "form-control", @placeholder = "Acadamic Date" })
-                    <span class="help-block m-b-none" id="AcadamicError"></span>
-                </div>
-            </div>
-
             
             <div class="form-group">
                 @Html.LabelFor(m => m.IsHoliday, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-8">
-                    <input type="checkbox" name="IsHoliday"  class="form-control"/>
+                    <input type="checkbox" name="IsHoliday"  />
                     <span class="help-block m-b-none" id="CommentError"></span>
                 </div>
             </div>
@@ -81,8 +96,8 @@
             var ToError = $('#ToError');
             var SpecialComment = $('#SpecialComment');
             var CommentError = $('#CommentError');
-            var AcadamicDate = $('#AcadamicDate');
-            var AcadamicError = $('#AcadamicError');
+            var DateComment = $('#DateComment');
+            var DateCommentError = $('#DateCommentError');
 
 
 
@@ -109,29 +124,19 @@
                 ToDate.closest('.form-group').removeClass('has-error').addClass('has-success');
                 $("#ToError").text("");
             }
-
-            if (!SpecialComment.val()) {
+            if (!DateComment.val()) {
                 // Add errors highlight
-                SpecialComment.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#CommentError").text("Required");
+                DateComment.closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#DateCommentError").text("Required");
                 // Stop submission of the form
                 // e.preventDefault();
                 return;
             } else {
-                SpecialComment.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#CommentError").text("");
+                DateComment.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#DateCommentError").text("");
             }
-            if (!AcadamicDate.val()) {
-                // Add errors highlight
-                AcadamicDate.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#AcadamicError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            } else {
-                AcadamicDate.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#AcadamicError").text("");
-            }
+            
+          
            
             var myformdata = $("#myForm").serialize();
            

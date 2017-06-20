@@ -4,114 +4,153 @@
     ViewBag.Title = "ParentView";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@helper TblDataDisplay(int Year, string Month, string Nextmonth, string monthFirstDay)
+@helper TblDataDisplay(int Year, string Month, string Nextmonth, string monthFirstDay, string type)
 {
-    <table class="display table table-bordered table-hover" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FromDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ToDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SpecialComment)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsHoliday)
-                </th>
-               
+    if (type == "B")
+    {
+        <table class="display table table-bordered table-hover" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FromDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ToDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateComment)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SpecialComment)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsHoliday)
+                    </th>
+                   
 
-            </tr>
-        </thead>
-        <tbody>
-            @{    if (Model != null)
-                {
-
-                    foreach (var item in Model)
+                </tr>
+            </thead>
+            <tbody>
+                @{    if (Model != null)
                     {
-                        int st = Convert.ToInt16(item.StartMonth);
-                        int end = Convert.ToInt16(item.EndMonth);
-                        int mon = Convert.ToInt16(Month);
-                        bool check = false;
-                        if (st < mon && mon < end)
+
+                        foreach (var item in Model)
                         {
-                            check = true;
-                        }
-                        if (item.StartMonth == Month || item.EndMonth == Month || check)
-                        {
-                            string backgroundColour = "white";
-                            if (item.IsHoliday == "Y")
+                            int st = Convert.ToInt16(item.StartMonth);
+                            int end = Convert.ToInt16(item.EndMonth);
+                            int mon = Convert.ToInt16(Month);
+                            bool check = false;
+                            if (st < mon && mon < end)
                             {
-                                backgroundColour = "rgba(193, 193, 193, 0.35)";
+                                check = true;
                             }
-
-                            <tr style="background-color:@backgroundColour">
-                                <td>
-                                    @{
-                            string Startdate = monthFirstDay + Year;
-                            DateTime statdate = DateTime.ParseExact(Startdate, "MM/dd/yyyy", null);
-                            DateTime Dbtodate = Convert.ToDateTime(item.FromDate);
-
-                            if (Dbtodate < statdate)
+                            if (item.StartMonth == Month || item.EndMonth == Month || check)
                             {
-                                <p>@Startdate ()</p>
-                            }
-                            else
-                            {
-                                <p>@item.FromDate</p>
-                            }
-                                    }
-                                </td>
-                                <td>
-                                    @{
-                            int lastDay = DateTime.DaysInMonth(2017, 01);
-                            string lastdate = (lastDay + "/" + Month + "/" + Year).ToString();
-                            string StFirstdate = (Nextmonth + Year).ToString();
+                                string backgroundColour = "white";
+                                if (item.IsHoliday == "Y")
+                                {
+                                    backgroundColour = "rgba(193, 193, 193, 0.35)";
+                                }
 
-                            DateTime Dbdate = Convert.ToDateTime(item.ToDate);
-                            DateTime Firstdate = DateTime.ParseExact(StFirstdate, "MM/dd/yyyy", null);
+                                <tr style="background-color:@backgroundColour">
+                                    <td>
+                                        @{
+                                string Startdate = monthFirstDay + Year;
+                                DateTime statdate = DateTime.ParseExact(Startdate, "MM/dd/yyyy", null);
+                                DateTime Dbtodate = Convert.ToDateTime(item.FromDate);
 
-                            if (Dbdate > Firstdate)
-                            {
-                                string message = lastdate + "(Countinue TO " + item.ToDate + ")";
-                                <p>@message</p>
-                            }
-                            else
-                            {
-                                <p>@item.ToDate</p>
-                            }
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SpecialComment)
+                                if (Dbtodate < statdate)
+                                {
+                                    <p>@Startdate ()</p>
+                                }
+                                else
+                                {
+                                    <p>@item.FromDate</p>
+                                }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                int lastDay = DateTime.DaysInMonth(2017, 01);
+                                string lastdate = (lastDay + "/" + Month + "/" + Year).ToString();
+                                string StFirstdate = (Nextmonth + Year).ToString();
+
+                                DateTime Dbdate = Convert.ToDateTime(item.ToDate);
+                                DateTime Firstdate = DateTime.ParseExact(StFirstdate, "MM/dd/yyyy", null);
+
+                                if (Dbdate > Firstdate)
+                                {
+                                    string message = lastdate + "(Countinue TO " + item.ToDate + ")";
+                                    <p>@message</p>
+                                }
+                                else
+                                {
+                                    <p>@item.ToDate</p>
+                                }
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateComment)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SpecialComment)
 
 
-                                </td>
-                                <td>
-                                    @{
-                            string holyday = item.IsHoliday;
-                            if (holyday == "Y")
-                            {
-                                <p>Holiday</p>
-                            }
-                            else
-                            {
-                                <p>Working Day</p>
-                            }
-                                    }
-                                </td>
-                               
+                                    </td>
+                                    <td>
+                                        @{
+                                string holyday = item.IsHoliday;
+                                if (holyday == "Y")
+                                {
+                                    <p>Holiday</p>
+                                }
+                                else
+                                {
+                                    <p>Working Day</p>
+                                }
+                                        }
+                                    </td>
+                                   
 
-                            </tr>
+                                </tr>
+                            }
                         }
                     }
                 }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        if (Model != null)
+        {
+
+            foreach (var item in Model)
+            {
+                int st = Convert.ToInt16(item.StartMonth);
+                int end = Convert.ToInt16(item.EndMonth);
+                int mon = Convert.ToInt16(Month);
+                bool check = false;
+                if (st < mon && mon < end)
+                {
+                    check = true;
+                }
+
+
+                if (item.StartMonth == Month || item.EndMonth == Month || check)
+                {
+                    <li><span id="janshow" class="glyphicon glyphicon-hand-right"> <b>@item.DateComment (From:-@item.FromDate.ToShortDateString() ,To:-@item.ToDate.ToShortDateString() )</b></span></li>
+
+
+                }
+
+
             }
-        </tbody>
-    </table>
+        }
+
+    }
 }
+
 
 
 <div class="row">
@@ -122,7 +161,7 @@
         <!-- Zero Configuration Table -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                @using (Html.BeginForm("ParentView", "SchoolCalender", FormMethod.Post))
+                @using (Html.BeginForm("Index", "SchoolCalender", FormMethod.Post))
                 {
                     <div class="form-horizontal">
                         <div class="form-group">
@@ -143,16 +182,11 @@
                         </div>
                     </div>
                 }
-                
+               
             </div>
             <div class="panel-body">
 
                 <div>
-
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(1,"janshow")>January <span id="janshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                </div>
-                <div id="1" style="display:none;border:1px solid gray;padding:3px;border-radius:4px">
-
                     @{
                         int years = Convert.ToInt16(ViewBag.AcademicYear);
                         string Janu = "1";
@@ -160,18 +194,26 @@
                         string monthFirstDay = "01/01/";
 
                     }
-                    @TblDataDisplay(years, Janu, Jannextmonth, monthFirstDay)
+                    <h3>
+                        <a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(1,"janshow","djanshow")><b>January</b> <span id="janshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a>
 
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(1,"janshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    </h3>
+                    <div id="djanshow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(years, Janu, Jannextmonth, monthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="1" style="display:none;border:1px solid gray;padding:3px;border-radius:4px">
+
+
+                    @TblDataDisplay(years, Janu, Jannextmonth, monthFirstDay, "B")
+
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(1,"janshow","djanshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
                 </div>
 
                 <div>
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(2,"febshow")>February<span id="febshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                </div>
-                <div id="2" style="display: none;border:1px solid gray; padding: 3px; border-radius: 4px">
-
-
                     @{
 
                         string Feb = "2";
@@ -179,16 +221,22 @@
                         string FEbmonthFirstDay = "02/01/";
 
                     }
-                    @TblDataDisplay(years, Feb, Febnextmonth, FEbmonthFirstDay)
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(2,"febshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(2,"febshow","dfebshow")><b>February</b><span id="febshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <div id="dfebshow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(years, Feb, Febnextmonth, FEbmonthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="2" style="display: none;border:1px solid gray; padding: 3px; border-radius: 4px">
+
+
+
+                    @TblDataDisplay(years, Feb, Febnextmonth, FEbmonthFirstDay, "B")
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(2,"febshow","dfebshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
                 </div>
                 <div>
-
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(3,"marshow")>March<span id="marshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-
-                </div>
-                <div id="3" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
                     @{
 
                         string Mar = "3";
@@ -196,128 +244,181 @@
                         string MarbmonthFirstDay = "03/01/";
 
                     }
-                    @TblDataDisplay(years, Mar, Marnextmonth, MarbmonthFirstDay)
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(3,"marshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(3,"marshow","dmarshow")><b>March</b><span id="marshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <div id="dmarshow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(years, Mar, Marnextmonth, MarbmonthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="3" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
+
+                    @TblDataDisplay(years, Mar, Marnextmonth, MarbmonthFirstDay, "B")
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(3,"marshow","dmarshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
                 </div>
                 <div>
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(4,"apishow")>April<span id="apishow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                </div>
-                <div id="4" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
                     @{
 
                         string Apr = "4";
                         string Aprnextmonth = "05/01/";
                         string ApimonthFirstDay = "04/01/";
                     }
-                    @TblDataDisplay(years, Apr, Aprnextmonth, ApimonthFirstDay)
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(4,"apishow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(4,"apishow","dapishow")><b>April</b><span id="apishow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <div id="dapishow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(years, Apr, Aprnextmonth, ApimonthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="4" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
+
+                    @TblDataDisplay(years, Apr, Aprnextmonth, ApimonthFirstDay, "B")
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(4,"apishow","dapishow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
                 </div>
                 <div>
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(5,"mayshow")>May<span id="mayshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                </div>
-                <div id="5" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
                     @{
 
                         string May = "5";
                         string Maynextmonth = "06/01/";
                         string MaymonthFirstDay = "05/01/";
                     }
-                    @TblDataDisplay(years, May, Maynextmonth, MaymonthFirstDay)
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(5,"mayshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(5,"mayshow","dmayshow")><b>May</b><span id="mayshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <div id="dmayshow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(years, May, Maynextmonth, MaymonthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="5" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
+
+                    @TblDataDisplay(years, May, Maynextmonth, MaymonthFirstDay, "B")
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(5,"mayshow","dmayshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
                 </div>
                 <div>
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(6,"junshow")>June<span id="junshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                </div>
-                <div id="6" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
                     @{
 
                         string jun = "6";
                         string junnextmonth = "07/01/";
                         string junmonthFirstDay = "06/01/";
                     }
-                    @TblDataDisplay(years, jun, junnextmonth, junmonthFirstDay)
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(6,"junshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(6,"junshow","djunshow")><b>June</b><span id="junshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <div id="djunshow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(years, jun, junnextmonth, junmonthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="6" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
+
+                    @TblDataDisplay(years, jun, junnextmonth, junmonthFirstDay, "B")
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(6,"junshow","djunshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
                 </div>
                 <div>
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(7,"juyshow")>July<span id="juyshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                </div>
-                <div id="7" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
                     @{
 
                         string juy = "7";
                         string juynextmonth = "08/01/";
                         string juymonthFirstDay = "07/01/";
                     }
-                    @TblDataDisplay(years, juy, juynextmonth, juymonthFirstDay)
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(7,"juyshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(7,"juyshow","djuyshow")><b>July</b><span id="juyshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <div id="djuyshow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(years, juy, juynextmonth, juymonthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="7" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
+
+                    @TblDataDisplay(years, juy, juynextmonth, juymonthFirstDay, "B")
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(7,"juyshow","djuyshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
 
                 </div>
                 <div>
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(8,"augshow")>August<span id="augshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                </div>
-                <div id="8" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
                     @{
 
                         string Aug = "8";
                         string Augnextmonth = "09/01/";
                         string AugmonthFirstDay = "08/01/";
                     }
-                    @TblDataDisplay(years, Aug, Augnextmonth, AugmonthFirstDay)
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(8,"augshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(8,"augshow","daugshow")><b>August</b><span id="augshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <div id="daugshow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(years, Aug, Augnextmonth, AugmonthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="8" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
+
+                    @TblDataDisplay(years, Aug, Augnextmonth, AugmonthFirstDay, "B")
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(8,"augshow","daugshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
                 </div>
                 <div>
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(9,"sepshow")>September<span id="sepshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                </div>
-                <div id="9" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
                     @{
 
                         string Sep = "9";
                         string Sepnextmonth = "10/01/";
                         string SepmonthFirstDay = "09/01/";
                     }
-                    @TblDataDisplay(years, Sep, Sepnextmonth, SepmonthFirstDay)
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(9,"sepshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(9,"sepshow","dsepshow")><b>September</b><span id="sepshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <div id="dsepshow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(years, Sep, Sepnextmonth, SepmonthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="9" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
+
+                    @TblDataDisplay(years, Sep, Sepnextmonth, SepmonthFirstDay, "B")
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(9,"sepshow","dsepshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
                 </div>
                 <div>
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(10,"ocshow")>October <span id="ocshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                </div>
-                <div id="10" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
                     @{
 
                         string OC = "10";
                         string OCnextmonth = "11/01/";
                         string OCmonthFirstDay = "10/01/";
                     }
-                    @TblDataDisplay(years, OC, OCnextmonth, OCmonthFirstDay)
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(10,"ocshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(10,"ocshow","docshow")><b>October</b> <span id="ocshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <div id="docshow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(years, OC, OCnextmonth, OCmonthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="10" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
+
+                    @TblDataDisplay(years, OC, OCnextmonth, OCmonthFirstDay, "B")
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(10,"ocshow","docshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
                 </div>
                 <div>
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(11,"noshow")>November <span id="noshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-                </div>
-                <div id="11" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
                     @{
 
                         string No = "11";
                         string Nonextmonth = "12/01/";
                         string NomonthFirstDay = "10/01/";
                     }
-                    @TblDataDisplay(years, No, Nonextmonth, NomonthFirstDay)
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(11,"noshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(11,"noshow","dnoshow")><b>November</b> <span id="noshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <div id="dnoshow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(years, No, Nonextmonth, NomonthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="11" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
+
+                    @TblDataDisplay(years, No, Nonextmonth, NomonthFirstDay, "B")
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(11,"noshow","dnoshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
                 </div>
                 <div>
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" onclick=Show(12,"deshow")>December<span id="deshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
-
-                </div>
-                <div id="12" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
                     @{
 
                         string De = "12";
@@ -325,8 +426,17 @@
                         int nextyear = years + 1;
                         string DemonthFirstDay = "12/01/";
                     }
-                    @TblDataDisplay(nextyear, De, Denextmonth, DemonthFirstDay)
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(12,"deshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" id="de" onclick=Show(12,"deshow","ddeshow")><b>December</b><span id="deshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <div id="ddeshow" style="padding-left:50px">
+                        <ul>@TblDataDisplay(nextyear, De, Denextmonth, DemonthFirstDay, "H")</ul>
+
+                        <div class="col-md-12" style="height:5px;border-radius:2px;background-color:rgba(0, 0, 0, 0.3);margin-left:-25px"></div>
+                    </div>
+                </div>
+                <div id="12" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
+
+                    @TblDataDisplay(nextyear, De, Denextmonth, DemonthFirstDay, "B")
+                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(12,"deshow","ddeshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
 
                 </div>
@@ -368,22 +478,45 @@
 
 @*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
 <script>
-   
+    var ShowView = function (years) {
+        var Url = "/SchoolCalender/ShowAddView?id=" + years;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
 
-    function Show(Id, sid) {
+    var EditView = function (SeqNo) {
+        var Url = "/SchoolCalender/Edit?SeqNo=" + SeqNo;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var DeleteView = function (SeqNo) {
+        var Url = "/SchoolCalender/Delete?SeqNo=" + SeqNo;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    function Show(Id, sid, did) {
         var id = Id;
-        document.getElementById(id).focus();
+
+
         document.getElementById(id).style.display = "block";
         document.getElementById(sid).style.display = "none";
-
+        document.getElementById(did).style.display = "none";
 
     }
-    function Hide(Id, sid) {
+
+    function Hide(Id, sid, did) {
         var id = Id;
         document.getElementById(id).style.display = "none";
         document.getElementById(sid).style.display = "block";
+        document.getElementById(did).style.display = "block";
 
 
     }
 </script>
+
 

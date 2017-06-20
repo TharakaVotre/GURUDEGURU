@@ -1,0 +1,61 @@
+﻿@model IEnumerable<GDWEBSolution.Models.TimeTable.TimeTableModel>
+<br />
+                <table id="zctb" class="display table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Subject</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Day)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FromTime_String)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ToTime_String)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SubjectName)
+                                </td>
+                        
+                                <td>
+                                    <a href="#" class="hvr-buzz-out" onclick="EditView(@item.SeqNo)">Edit </a> |
+                                    <a href="#" class="hvr-buzz-out" onclick="DeleteView(@item.SeqNo)">Delete </a> 
+                                    @*<a class="btn btn-info" onclick="EditView(@item.TeacherCategoryId)"><span class="fa fa-pencil"></span>Edit </a>
+                                    <a class="btn btn-danger" onclick="DeleteView(@item.TeacherCategoryId)"><span class="fa fa-trash"></span>Delete</a>*@
+                                </td>
+                            </tr>
+    
+                            }
+                        }
+                    </tbody>
+                </table>
+
+
+
+<script>
+    var EditView = function (SeqNo) {
+        var Url = "/TimeTable/ShowEditTimeTbl?SeqNo=" + SeqNo;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+
+    var DeleteView = function (SeqNo) {
+        var Url = "/TimeTable/Delete?SeqNo=" + SeqNo;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+</script>

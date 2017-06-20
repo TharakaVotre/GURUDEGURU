@@ -1,0 +1,139 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Student.StudentModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Student</h3>
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default">
+            <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
+            @*<div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView2(1)"><span class="fa fa-plus"></span> Add file</button></div>*@
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover" >
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SchoolId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SchoolName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StudentId)
+                            </th>
+                           
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.StudentName)
+                            </th>
+                               
+                               <th>
+                                @Html.DisplayNameFor(model => model.GradeId)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.ClassId)
+                            </th>
+
+                           
+                            <th style="max-width:180px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SchoolId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SchoolName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StudentId)
+                                    </td>
+                                  
+
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StudentName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GradeId)
+                                    </td>
+                                     <td>
+                                        @Html.DisplayFor(modelItem => item.ClassId)
+                                    </td>
+                                     
+                                  
+                                    <td>
+                                        
+                                        <center>
+                                          <a class="btn btn-primary" onclick="DetailView('@item.SchoolId','@item.StudentId')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
+                                         <a class="btn btn-info" onclick="EditView('@item.SchoolId','@item.StudentId')"><span class="fa fa-pencil"></span> Edit </a>
+                                        <a class="btn btn-danger" onclick="DeleteView('@item.StudentId')"><span class="fa fa-trash"></span> Delete</a>
+</center>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" id="MyModelBody">
+        </div>
+    </div>
+</div>
+@*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
+<script>
+    var ShowView = function (bookid) {
+        var Url = "/Student/Create?id=" + bookid;
+        window.location.href = Url;
+    }
+
+    var ShowView2 = function (bookid) {
+        var Url = "/School/Create2?id=" + bookid;
+        window.location.href = Url;
+    }
+
+    var EditView = function (SchoolId, StudentId) {
+        var Url = "/Student/Edit?SchoolId=" + SchoolId+"&StudentId="+StudentId;
+        //$("#MyModelBody").load(Url, function () {
+        //    $("#myModal").modal("show");
+        //})
+        window.location.href = Url;
+    }
+    var DetailView = function (SchoolId, StudentId) {
+        var Url = "/Student/Details?SchoolId=" + SchoolId+"&StudentId="+ StudentId;
+        //$("#MyModelBody").load(Url, function () {
+        //    $("#myModal").modal("show");
+        //})
+        window.location.href = Url;
+    }
+
+    var DeleteView = function (CategoryId) {
+        var Url = "/Student/Delete?StudentId=" + CategoryId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+</script>

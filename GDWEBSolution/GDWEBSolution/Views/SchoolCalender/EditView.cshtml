@@ -1,15 +1,25 @@
 ﻿@model GDWEBSolution.Models.SchoolCalender.SchoolCalenderModel
 
 <script>
-    $(function () {
-        $("#ToDate").datepicker();
+    
+    $(document).ready(function () {
+        var date_input = $('input[name="ToDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
-    $(function () {
-        $("#FromDate").datepicker();
-    }); 
-    $(function () {
-        $("#AcadamicDate").datepicker();
+  
+    $(document).ready(function () {
+        var date_input = $('input[name="FromDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
+   
 </script>
 
 
@@ -19,7 +29,7 @@
     <form id="myForm" class="form-horizontal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Edit Activity</h4>
+            <h4 class="modal-title">Edit Calender</h4>
         </div>
         <div class="modal-body">
             <div class="form-group">
@@ -55,10 +65,10 @@
 
 
             <div class="form-group">
-                @Html.LabelFor(m => m.AcadamicDate, new { @class = "col-sm-3 control-label" })
+                @Html.LabelFor(m => m.DateComment, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-8">
-                    @Html.TextBoxFor(model => model.AcadamicDate, new { @class = "form-control", @placeholder = "Acadamic Date" })
-                    <span class="help-block m-b-none" id="AcadamicError"></span>
+                    @Html.TextBoxFor(model => model.DateComment, new { @class = "form-control", @placeholder = "Acadamic Date" })
+                    <span class="help-block m-b-none" id="DateCommentError"></span>
                 </div>
             </div>
 
@@ -69,11 +79,11 @@
                       @{
 
     if (Model.IsHoliday == "Y")
-    { <input id="Checkbox1" type="checkbox" name="IsHoliday1" value="Y"   checked />
+    { <input id="Checkbox1" type="checkbox" name="IsHoliday1" value="Y" style="height: 25px;"   checked />
     }
     else
     {
-        <input id="Checkbox1" type="checkbox" name="IsHoliday1" value="Y"  />
+        <input id="Checkbox1" type="checkbox" name="IsHoliday1" value="Y" style="height: 25px;"  />
     }
 }
                   
@@ -107,8 +117,8 @@
             var ToError = $('#ToError');
             var SpecialComment = $('#SpecialComment');
             var CommentError = $('#CommentError');
-            var AcadamicDate = $('#AcadamicDate');
-            var AcadamicError = $('#AcadamicError');
+            var DateComment = $('#DateComment');
+            var DateCommentError = $('#DateCommentError');
 
 
 
@@ -136,27 +146,16 @@
                 $("#ToError").text("");
             }
 
-            if (!SpecialComment.val()) {
-                // Add errors highlight
-                SpecialComment.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#CommentError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            } else {
-                SpecialComment.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#CommentError").text("");
-            }
-            if (!AcadamicDate.val()) {
+            if (!DateComment.val()) {
                 // Add errors highlight
                 AcadamicDate.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#AcadamicError").text("Required");
+                $("#DateCommentError").text("Required");
                 // Stop submission of the form
                 // e.preventDefault();
                 return;
             } else {
-                AcadamicDate.closest('.form-group').removeClass('has-error').addClass('has-success');
-                $("#AcadamicError").text("");
+                DateComment.closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#DateCommentError").text("");
             }
            
 

@@ -21,10 +21,8 @@ namespace GDWEBSolution.Models
         public string GradeName { get; set; }
         public string ClassId { get; set; }
         public string ClassName { get; set; }
-        public string HouseName { get; set; }
         public string Gender { get; set; }
         public string UserId { get; set; }
-        public string HouseId { get; set; }
         public string ImgUrl { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }

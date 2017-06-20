@@ -7,9 +7,9 @@
 <div class="row">
     <div class="col-md-12">
 
-        <h3>Teachers</h3>
+        <h3><a href="~/Teacher">Teacher</a>/Create</h3>
         <div class="panel panel-default">
-            <div class="panel-heading">Teacher Qualification | Extracurricular | Subject  </div>
+            <div class="panel-heading">New Teacher Creation  </div>
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New Teacher</a></li>
@@ -142,7 +142,54 @@
                                 </div>
                             </div>
                             <div class="hr-dashed"></div>
-
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.SchoolID, new { @class = "col-sm-2 control-label" })
+                                <div class="col-sm-7">
+                                     @Html.DropDownListFor(model => model.SchoolID, ViewBag.TScholls as SelectList, "", new { @class = "form-control"})
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.ValidationMessageFor(model => model.SchoolID, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                @Html.LabelFor(m => m.UserCategory, new { @class = "col-sm-2 control-label" })
+                                <div class="col-sm-7">
+                                    <div class="radio radio-inline">
+														@Html.RadioButtonFor(m => m.UserCategory, "M")
+														<label for="radio1">
+															Male
+														</label>
+													</div>
+                                    <div class="radio radio-inline">
+														@Html.RadioButtonFor(m => m.UserCategory, "F")
+														<label for="radio1">
+															Female
+														</label>
+													</div>
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.ValidationMessageFor(model => model.UserCategory, null, new { @class = "text-danger" })
+                                </div>
+                            </div>*@
+                            <div class="hr-dashed"></div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.LoginEmail, new { @class = "col-sm-2 control-label" })
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.LoginEmail, new { @class = "form-control", @placeholder = "Teacher Description" ,@maxlength = "500" })
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.ValidationMessageFor(model => model.LoginEmail, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, new { @class = "col-sm-2 control-label" })
+                                <div class="col-sm-7">
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Teacher Description" ,@maxlength = "500" })
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
 
                             <div class="hr-dashed"></div>
                             <div class="form-group">
@@ -267,6 +314,20 @@
             }
         });
     })
+
+    $('#LoginEmail').blur(function () {
+        var url = "/Teacher/IsLoginEmailExits";
+        var name = $('#LoginEmail').val();
+        debugger
+        $.get(url, { input: name }, function (data) {
+            if (data == "Have") {
+                $("#ErrorLable").text("This Email Is already assigned to a User");
+                $("#btnCreateTeacher").prop('value', 'Save');
+                $('#LoginEmail').val() = "";
+                $("#myModal").modal("show");
+            }
+        });
+    })
 </script>
 <script>
 
@@ -286,18 +347,23 @@
             success: function (result) {
                 $("#loaderDiv").hide();
                 if (result == "Success") {
-                    window.location.href = "/Teacher/Index";
+                    $("#btnCreateTeacher").prop('value', 'Saved Successfully');
+
+                    window.location.href = "/Teacher/Create?Msg= Saved Successfully";
                     //$('#qualification').load();
                     //$("#btnCreateTeacher").prop('value', 'Save');
                     //$('.nav-tabs a[href="#qualification"]').tab('show');                    
                 }
-                else if (result == "UserExits") {
-                    $("#ErrorLable").text("User Name Already Exits");
+                else if (result == "Error") {
+                    $("#ErrorLable").text("An Error Occoured while Completing the Request. Please Try Again Later");
                     $("#btnCreateTeacher").prop('value', 'Save');
                     $("#myModal").modal("show");
                 }
                 else {
 
+                    $("#ErrorLable").text("An Error Occoured while Completing the Request. Please Try Again Later !!");
+                    $("#btnCreateTeacher").prop('value', 'Save');
+                    $("#myModal").modal("show");
                 }
 
             }

@@ -1,32 +1,40 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Message;
 using GDWEBSolution.Models.Teacher;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
-
+/* ===============================
+ * AUTHOR     : G.M. Tharaka Madusanka
+ * CREATE DATE     : March 17 2017
+*/
 namespace GDWEBSolution.Controllers.Message
 {
     public class PSMessageController : Controller
     {
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        //
-        // GET: /PSMessage/
 
+        UserSession _session = new UserSession();
+
+        [UserFilter(Function_Id = "PSMSi")]
         public ActionResult Index()
         {
+            tblParent Parent = Connection.tblParents.Where(p => p.UserId == _session.User_Id).FirstOrDefault();
+            Session["PTSParentId"] = Parent.ParentId;
             Dropdowns();
-
             return View();
         }
 
+        [UserFilter(Function_Id = "PSMSs")]
         public ActionResult Sent()
         {
             Dropdowns();
-
             return View();
         }
 
@@ -37,7 +45,7 @@ namespace GDWEBSolution.Controllers.Message
                 List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
                 ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
 
-                var TeacherList = Connection.SMGTgetAllTeachers("CKC", "%", "Y").ToList(); // Order by teacher category
+                var TeacherList = Connection.SMGTgetAllTeachers(_session.School_Id, "%", "Y").ToList(); // Order by teacher category
                 List<TeacherModel> tcmlist = TeacherList.Select(x => new TeacherModel
                 {
                     TeacherCategoryId = x.TeacherCategoryId,
@@ -54,23 +62,17 @@ namespace GDWEBSolution.Controllers.Message
             }
         }
 
-        public ActionResult ShowInbox()
-        {
-            return PartialView("InboxView");
-        }
-
         public ActionResult ShowNewMessage()
         {
             try
             {
-                var TeacherList = Connection.SMGTgetAllTeachers("CKC", "%", "Y").ToList(); // Order by teacher category
+                var TeacherList = Connection.SMGTgetAllTeachers(_session.School_Id, "%", "Y").ToList(); // Order by teacher category
                 List<TeacherModel> tcmlist = TeacherList.Select(x => new TeacherModel
                 {
                     TeacherCategoryId = x.TeacherCategoryId,
                     UserId = x.UserId,
                     Name = x.Name,
                     TeacherId = x.TeacherId
-
                 }).ToList();
                 ViewBag.TeacherDropdown = new SelectList(tcmlist, "UserId", "Name");
 
@@ -90,68 +92,64 @@ namespace GDWEBSolution.Controllers.Message
             {
                 Errorlog.ErrorManager.LogError("ShowNewMessage() @PSMessageController", Ex);
             }
-
             return PartialView("NewMessage");
         }
 
         [HttpPost]
         public JsonResult SendParenttoSchoolMsg(PtoSMessageHeaderModel Model)
         {
-            string result = "Success";
-            try
+            string result = "Error";
+            using (SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString())
             {
-                tblParentToSchoolMessageHeader MsgHead = new tblParentToSchoolMessageHeader();
+                using (var scope = new TransactionScope())
+                {
+                    try
+                    {
+                        tblParentToSchoolMessageHeader MsgHead = new tblParentToSchoolMessageHeader();
+                        MsgHead.SchoolId = _session.School_Id;
+                        MsgHead.MessageId = Model.MessageId;
+                        MsgHead.ParentId = Convert.ToInt64(Session["PTSParentId"]);//session parent id
+                        MsgHead.Message = Model.Message.Replace("\r\n", "<br />");
+                        MsgHead.CreatedBy = _session.User_Id;
+                        MsgHead.CreatedDate = DateTime.Now;
+                        MsgHead.MessageType = Model.MessageType;
+                        MsgHead.IsActive = "Y";
+                        MsgHead.Status = "N";
+                        MsgHead.Subject = Model.Subject;
+                        MsgHead.Attachments = 0;
 
-                MsgHead.SchoolId = "CKC";
-                MsgHead.MessageId = Model.MessageId;
-                MsgHead.ParentId = 2;//session parent id
-                MsgHead.Message = Model.Message.Replace("\r\n", "<br />");
-                MsgHead.CreatedBy = "ADMIN";
-                MsgHead.CreatedDate = DateTime.Now;
-                MsgHead.MessageType = Model.MessageType;
-                MsgHead.IsActive = "Y";
-                MsgHead.Status = "N";
-                MsgHead.Subject = Model.Subject;
-                MsgHead.Attachments = 0;
+                        tblParentToSchoolMessageDetail MsgDetail = new tblParentToSchoolMessageDetail();
+                        MsgDetail.SchoolId = _session.School_Id;
+                        MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
+                        MsgDetail.RecepientUser = Model.RecepientUser;
+                        MsgDetail.IsActive = "Y";
+                        MsgDetail.Status = "N";
+                        MsgDetail.AuthorizationDate = DateTime.Now;
+                        MsgDetail.AuthorizedBy = _session.User_Id;
+                        MsgDetail.AuthStatus = "A";
+                        MsgDetail.CreatedBy = _session.User_Id;
+                        MsgDetail.CreatedDate = DateTime.Now;
+                        Connection.tblParentToSchoolMessageHeaders.Add(MsgHead);
 
-                tblParentToSchoolMessageDetail MsgDetail = new tblParentToSchoolMessageDetail();
-                MsgDetail.SchoolId = "CKC";
-                MsgDetail.MessageId = Convert.ToInt64(Model.MessageId); ;
-                MsgDetail.RecepientUser = Model.RecepientUser;
-                MsgDetail.IsActive = "Y";
-                MsgDetail.Status = "N";
-                MsgDetail.AuthorizationDate = DateTime.Now;
-                MsgDetail.AuthorizedBy = "ADMIN";
-                MsgDetail.AuthStatus = "A";
-                MsgDetail.CreatedBy = "ADMIN";
-                MsgDetail.CreatedDate = DateTime.Now;
-
-
-
-                Connection.tblParentToSchoolMessageHeaders.Add(MsgHead);
-                Connection.SaveChanges();
-                Connection.tblParentToSchoolMessageDetails.Add(MsgDetail);
-                Connection.SaveChanges();
-
-                //return View();
-
-                return Json(result, JsonRequestBehavior.AllowGet);
+                        Connection.tblParentToSchoolMessageDetails.Add(MsgDetail);
+                        Connection.SaveChanges();
+                        scope.Complete();
+                        result = "Success";
+                        
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", dbEx);
+                        result = "Validation";
+                    }
+                    catch (Exception Ex)
+                    {
+                        Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
+                        result = "Exception";
+                    }
+                }
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
-            {
-                Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", dbEx);
-                return Json("Validation", JsonRequestBehavior.AllowGet); 
-            }
-            catch (Exception Ex)
-            {
-                Errorlog.ErrorManager.LogError("SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
-                return Json("Exception", JsonRequestBehavior.AllowGet);
-            }
-            //catch (Exception Ex)
-            //{
-            //    Errorlog.ErrorManager.LogError("public JsonResult SendParenttoSchoolMsg(PtoSMessageHeaderModel Model) @ PSMessageController", Ex);
-            //    return Json("Error", JsonRequestBehavior.AllowGet);
-            //}
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -162,17 +160,13 @@ namespace GDWEBSolution.Controllers.Message
                 var file = Model.Attachment_File;
                 long AttachmentId = 0;
                 tblParentToSchollMessageAttachment Attachmentfile = new tblParentToSchollMessageAttachment();
-
                 if (file != null)
                 {
                     var Atid = Connection.tblParameters.Where(x => x.ParameterId == "PSMAS").Select(x => x.ParameterValue).SingleOrDefault();
                     AttachmentId = Convert.ToInt64(Atid);
                     long Next = AttachmentId + 1;
-
                     var fileName = Path.GetFileName(file.FileName);
                     var extention = Path.GetExtension(file.FileName);
-
-
                     Attachmentfile.AttachementName = file.FileName;
                     Attachmentfile.AttachementPath = "/UploadedFiles/" + file.FileName;
                     Attachmentfile.MessageId = Model.MessageId;
@@ -182,12 +176,9 @@ namespace GDWEBSolution.Controllers.Message
                     Connection.SaveChanges();
 
                     tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "PSMAS");
-
                     TCtable.ParameterValue = Next.ToString();
                     Connection.SaveChanges();
-
                     file.SaveAs(Server.MapPath("/UploadedFiles/" + file.FileName));
-
                 }
                 var result = new { FileName = file.FileName, SeqNo = AttachmentId };
                 return Json(result, JsonRequestBehavior.AllowGet);
@@ -197,20 +188,19 @@ namespace GDWEBSolution.Controllers.Message
                 Errorlog.ErrorManager.LogError("AttachmentUpload(PtoSMessageHeaderModel Model) @PSMessageController", Ex);
                 var result = new { FileName = "Error", SeqNo = "Error" };
                 return Json(result, JsonRequestBehavior.AllowGet);
-            }
-            
+            }   
         }
 
         public ActionResult ShowSentMessages()
         {
-            var STQlist = Connection.SMGTgetParentToSchoolSentMail(2).ToList(); //ParentId session
-
+            Int64 pid = Convert.ToInt64(Session["PTSParentId"]); 
+            var STQlist = Connection.SMGTgetParentToSchoolSentMail(pid).ToList(); //ParentId session
             List<PtoSMessageHeaderModel> List = STQlist.Select(x => new PtoSMessageHeaderModel
             {
                 SchoolId = x.SchoolId,
                 MessageId = x.MessageId,
                 MessageTypeDes = x.MessageTypeDescription,
-                //ParentId = x.ParentId, 
+                ParentId = x.ParentId, 
                 Message= x.Message.Replace("<br />", " "),  
                 Status = x.Status,   
                 IsActive = x.IsActive,
@@ -234,9 +224,7 @@ namespace GDWEBSolution.Controllers.Message
                 Connection.tblParentToSchollMessageAttachments.Remove(Tble);
                 Connection.SaveChanges();
                 System.IO.File.Delete(Server.MapPath(path));
-
                 return Json(Model.SeqNo, JsonRequestBehavior.AllowGet);
-                //return RedirectToAction("Index");
             }
             catch
             {
@@ -272,6 +260,7 @@ namespace GDWEBSolution.Controllers.Message
             }
             return PartialView("ViewMessage", M);
         }
+
         public ActionResult DownloadAttachment(long SeqNo)
         {
             var file = Connection.tblParentToSchollMessageAttachments.FirstOrDefault(x => x.SeqNo == SeqNo);
@@ -279,90 +268,57 @@ namespace GDWEBSolution.Controllers.Message
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file.AttachementName);
         }
 
-        //
-        // GET: /PSMessage/Details/5
-
-        public ActionResult Details(int id)
+        public ActionResult ShowInbox()
         {
-            return View();
+            Int64 pid = Convert.ToInt64(Session["PTSParentId"]); 
+            var STQlist = Connection.SMGT_getParentInbox(pid).ToList(); //ParentId session
+            List<StoPMessageHeaderModel> List = STQlist.Select(x => new StoPMessageHeaderModel
+            {
+                SchoolId = x.SchoolId,
+                MessageId = x.MessageId,
+                MessageType = x.MessageType,
+                ParentId = x.ParentId, 
+                Sender = x.Sender,
+                Message = x.Message.Replace("<br />", " "),
+                IsActive = x.IsActive,
+                SeqNo = x.SeqNo,
+                Subject = x.Subject,
+                CreatedDate = x.CreatedDate,
+
+            }).ToList();
+            return PartialView("InboxView", List);
         }
 
-        //
-        // GET: /PSMessage/Create
-
-        public ActionResult Create()
+        public ActionResult ViewInboxMessage(long MessageId)
         {
-            return View();
-        }
-
-        //
-        // POST: /PSMessage/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
+            StoPMessageHeaderModel M = new StoPMessageHeaderModel();
             try
             {
-                // TODO: Add insert logic here
+                var H = Connection.SMGT_getStoPMessageView(MessageId).SingleOrDefault();
+                M.MessageId = H.MessageId;
+                M.Message = H.Message.Replace("<br />", "\r\n");
+                M.MessageType = Convert.ToInt64(H.MessageType);
+                M.MessageTypeDes = H.MessageTypeDescription;
+                M.SchoolId = H.SchoolId;
+                M.SeqNo = H.SeqNo;
+                M.Subject = H.Subject;
+                M.Sender = H.Sender;
 
-                return RedirectToAction("Index");
+                List<tblSchoolToParentMessageAttachment> AList = Connection.tblSchoolToParentMessageAttachments.Where(x => x.MessageId == MessageId).ToList();
+                M.AttachmentList = AList;
             }
-            catch
+            catch (Exception Ex)
             {
-                return View();
+                Errorlog.ErrorManager.LogError("ActionResult ViewInboxMessage(long MessageId) @ PSMessageController", Ex);
             }
+            return PartialView("InboxMsgView", M);
         }
 
-        //
-        // GET: /PSMessage/Edit/5
-
-        public ActionResult Edit(int id)
+        public ActionResult DownloadAttachmentInbox(long SeqNo)
         {
-            return View();
-        }
-
-        //
-        // POST: /PSMessage/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /PSMessage/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /PSMessage/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var file = Connection.tblSchoolToParentMessageAttachments.FirstOrDefault(x => x.SeqNo == SeqNo);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(file.AttachmentPath));
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file.AttachmentName);
         }
     }
 }

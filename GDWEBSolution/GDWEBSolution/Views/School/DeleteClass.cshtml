@@ -1,0 +1,60 @@
+﻿@model GDWEBSolution.Models.Schools.SchoolModel
+
+
+<div>
+    <form id="FormQeeDelete" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5 class="modal-title">Are you sure you want to Delete this Class ? @Html.HiddenFor(m => m.SchoolId)</h5>
+            @Html.HiddenFor(m => m.GradeId)@Html.HiddenFor(m => m.ClassId)
+
+        </div>
+        <div class="modal-footer">
+
+            <a href="#" id="btnQqqDSubmit" class="btn btn-primary">YES</a>
+            <a href="#" id="btnNo" class="btn btn-default">NO</a>
+        </div>
+    </form>
+    @*    <div style="text-align: center; display: none" id="loaderDiv">
+            Loading
+        </div>*@
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnQqqDSubmit").click(function (e) {
+            debugger
+            var myformdata = $("#FormQeeDelete").serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/School/DeleteSchoolclasses",
+                data: myformdata,
+                success: function (result) {
+                    //$("#loaderDiv").hide();
+                    if (result != "Error") {
+                        debugger
+                        //window.location.href = "/Teacher/Create";
+                        // $("#TeacherID").val(result);
+                        //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                        $('#showclasses').load('/School/ShowSchooClasses?SchoolIdGradeId=' + result);
+                    }
+                    $("#deleteModel").modal("hide");
+
+
+                }
+
+            })
+        })
+
+        $("#btnNo").click(function (e) {
+            debugger
+            $("#deleteModel").modal("hide");
+        })
+
+    })
+
+
+</script>
+

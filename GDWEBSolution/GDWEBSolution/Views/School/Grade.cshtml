@@ -1,4 +1,4 @@
-﻿@model GDWEBSolution.Models.Schools.SchoolModel
+﻿@model GDWEBSolution.Models.Schools.SchoolGradeModel
 
 @{
     ViewBag.Title = "Grade";
@@ -10,21 +10,22 @@
 
 
 
-        @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+        @Html.LabelFor(m => m.SchoolNamel, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
             @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadGrades(this.value)" })
              
         @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
 
         </div>
-
-        @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-3">
-            @Html.DropDownListFor(model => model.GradeId, ViewBag.grdschooldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School " })
+        <div class="div123">
+            @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-3">
+                @Html.DropDownListFor(model => model.GradeId1, ViewBag.grdschooldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School " })
+            </div>
         </div>
       
         <div class="col-sm-2">
-            <button type="reset" id="btnAddQualification" onclick="AddGrade()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+            <button type="button" id="btnAddQualification" onclick="AddGrade()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
         </div>
     </div>
     <div class="hr-dashed"></div>

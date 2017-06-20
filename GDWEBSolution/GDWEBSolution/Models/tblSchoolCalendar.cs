@@ -17,9 +17,10 @@ namespace GDWEBSolution.Models
         public long CalenderSeqNo { get; set; }
         public string SchoolId { get; set; }
         public string AcadamicYear { get; set; }
-        public System.DateTime AcadamicDate { get; set; }
+        public Nullable<System.DateTime> AcadamicDate { get; set; }
         public string IsHoliday { get; set; }
         public string SpecialComment { get; set; }
+        public string DateComment { get; set; }
         public System.DateTime FromDate { get; set; }
         public System.DateTime ToDate { get; set; }
         public string CreatedBy { get; set; }

@@ -34,7 +34,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.CreatedDate)
                             </th>
-                            <th>
+                            @*<th>
                                 @Html.DisplayNameFor(model => model.ModifiedBy)
                             </th>
                             <th>
@@ -42,7 +42,7 @@
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.IsActive)
-                            </th>
+                            </th>*@
                             <th></th>
                         </tr>
                     </thead>
@@ -70,21 +70,15 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.CreatedDate)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ModifiedBy)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ModifiedDate)
-                                </td>
-                                @if(item.IsActive == "Y"){
+                               @* @if(item.IsActive == "Y"){
                                 <td>YES</td>
                                 }else{
                                 <td>
                                    NO
                                 </td>
-                                }
+                                }*@
                                 <td>
-                                   <a class="btn btn-danger" onclick='DeleteView("@(item.CategoryId)","@(item.FunctionId)");'><span class="fa fa-trash"></span> Delete</a>
+                                   <a href="#" class="hvr-buzz-out" onclick='DeleteView("@(item.CategoryId)","@(item.FunctionId)");'>Delete</a>
                                 </td>
                             </tr>
     

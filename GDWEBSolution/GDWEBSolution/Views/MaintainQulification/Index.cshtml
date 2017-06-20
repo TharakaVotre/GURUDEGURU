@@ -36,7 +36,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.ModifiedDate)
                             </th>
-                            <th></th>
+                            <th style="max-width:130px"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,9 +65,10 @@
                                     </td>
 
                                     <td>
-                                        <a href="#" class="hvr-buzz-out"  onclick='EditView(@item.QualificationId)'> Edit </a>|
-                                        <a href="#" class="hvr-buzz-out"  onclick='DeleteView(@item.QualificationId)'><span class="fa fa-trash"></span> Delete</a>
-                                    </td>
+                                        <center>
+                                        <a href="#" class="btn btn-info btn-sm" onclick='EditView(@item.QualificationId)'> <span class="fa fa-pencil"></span>Edit </a>
+                                        <a href="#" class="btn btn-danger btn-sm" onclick='DeleteView(@item.QualificationId)'><span class="fa fa-trash"></span> Delete</a>
+                                  </center> </td>
                                 </tr>
                             }
                         }

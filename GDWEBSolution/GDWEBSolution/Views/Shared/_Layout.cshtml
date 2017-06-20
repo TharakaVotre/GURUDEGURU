@@ -5,6 +5,7 @@
     <title>@ViewBag.Title</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9,chrome=1">
 
     <!-- Font awesome -->
     <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
@@ -13,14 +14,28 @@
     <!-- Bootstrap Datatables -->
     <link rel="stylesheet" href="~/Content/css/dataTables.bootstrap.min.css">
     <!-- Bootstrap file input -->
-    <link rel="stylesheet" href="~/Content/css/fileinput.min.css">
+    <link href="~/Content/css/bootstrap-timepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-year-calendar.min.css" rel="stylesheet" />
 
+
+    <link rel="stylesheet" href="~/Content/css/fileinput.min.css">
+    <link href="~/Content/css/rstyle.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     <link href="~/Content/css/hover.css" rel="stylesheet" />
     <link href="~/Content/css/select/select2.min.css" rel="stylesheet" />
-
+    <link href="~/Content/css/timepicki.css" rel="stylesheet" />
     <script src="~/Scripts/jquery.min.js"></script>
-    @* @Scripts.Render("~/bundles/modernizr")*@
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    <link href="~/Content/css/bootstrap-datepicker3.css" rel="stylesheet" />
+  @*   @Scripts.Render("~/bundles/modernizr")*@
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-ui-timepicker-addon.js"></script>
+    <link href="~/Content/css/css/jquery-ui-timepicker-addon.css" rel="stylesheet" />
+
+
 </head>
 <body>
     <div class="brand clearfix">
@@ -28,7 +43,8 @@
             <img src="~/img/logo_.png" class="img-responsive" alt=""></a>
         <span class="menu-btn"><i class="fa fa-bars"></i></span>
         <ul class="ts-profile-nav">
-            <li>@Html.ActionLink("Messages", "Sent", "PSMessage")</li>
+            <li>@Html.ActionLink("Parent Messages", "Index", "PSMessage")</li>
+            <li>@Html.ActionLink("School Messages", "Index", "SPMessage")</li>
             <li><a href="#">Settings</a></li>
             <li class="ts-account">
                 <a href="#">
@@ -37,7 +53,7 @@
                 <ul>
                     <li><a href="#">My Account</a></li>
                     <li><a href="#">Edit Account</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
                 </ul>
             </li>
         </ul>
@@ -65,87 +81,23 @@
 
     <div class="ts-main-content">
         <nav class="ts-sidebar">
-            <ul class="ts-sidebar-menu">
+           @* <ul class="ts-sidebar-menu">*@
                 <!--<li class="ts-label">Search</li>
 				<li>
 					<input type="text" class="ts-sidebar-search" placeholder="Search here...">
 				</li>-->
-                <li class="ts-label">Main</li>
-                <li><a href="index.html"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                <li><a href="#"><i class="fa fa-desktop"></i>Teacher</a>
-                    <ul>
-                        <li>@Html.ActionLink("Teacher Category", "Index", "TeacherCategory")</li>
-                        <li>@Html.ActionLink("New Teacher", "Index", "Teacher")</li>
-                        <li>@Html.ActionLink("Class Teacher", "Class", "Teacher")</li>
-                    </ul>
-                </li>
-                 <li>
-                    <a href="#"><i class="fa fa-desktop"></i>Maintain</a>
-                    <ul>
-                        <li><a href="~/MaintainApplicationStatus">Application Status</a></li>
-                        <li><a href="~/MaintainEventCategory">Event Category</a></li>
-                        <li><a href="~/MaintainExtraCurricularActivity">Extra Curricular Activity</a></li>
-                        <li><a href="~/MaintainFunction">Function</a></li>
-                        <li><a href="~/MaintainGrade">Grade</a></li>
-                        <li><a href="~/MaintainMessageType">Message Type</a></li>
-                        <li><a href="~/MaintainParentObservationType">Parent Observation Type</a></li>
-                        <li><a href="~/MaintainQulification">Qualification</a></li>
-                        <li><a href="~/MaintainSchoolCategory">School Category</a></li>
-                        <li><a href="~/MaintainSchoolGroup">School Group</a></li>
-                        <li><a href="~/MaintainSchoolRank">School Rank</a></li>
-                        <li><a href="~/MaintainStudentEvaluationType">Student Evaluation Type</a></li>
-                        <li><a href="~/MaintainSubject">Subject</a></li>
-                        <li><a href="~/MaintainSubjectCategory">Subject Category</a></li>
-                    </ul>
-                </li>
-
-                 <li><a href="#"><i class="fa fa-desktop"></i>School</a>
-                    <ul>
-                        <li>@Html.ActionLink("New School", "Index", "School")</li>
-                       
-                    </ul>
-                </li>
-                 <li>
-                    <a href="#"><i class="fa fa-desktop"></i>Configuration</a>
-                    <ul>
-                        <li><a href="~/Grade_Subject/Detail">Grade Subject </a></li>
-                    </ul>
-                </li>
-                 <li>
-                    <a href="#"><i class="fa fa-desktop"></i>Annual Function</a>
-                    <ul>
-                        <li><a href="~/StudentGradeAdvance">Student Grade Advance </a></li>
-                    </ul>
-                </li>
-                 <li>
-                    <a href="#"><i class="fa fa-desktop"></i>School Calender</a>
-                    <ul>
-                        <li><a href="~/SchoolCalender/Index">School Calender</a></li>
-                        <li><a href="~/SchoolCalender/ParentView">School Calender View</a></li>
-                    </ul>
-                </li>
+                @*<li class="ts-label">Main</li>
+                <li><a href="index.html"><i class="fa fa-dashboard"></i>Dashboard</a></li>*@
+                @Html.Action("Menu","Home")
+                
                 <!-- Account from above -->
-                <ul class="ts-profile-nav">
-                    <li><a href="#">Help</a></li>
-                    
-                    <li class="ts-account">
-                        <a href="#">
-                            <img src="~/img/ts-avatar.jpg" class="ts-avatar hidden-side" alt="">
-                            Account <i class="fa fa-angle-down hidden-side"></i></a>
-                        <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Edit Account</a></li>
-                            <li><a href="#">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
 
-            </ul>
+            @*</ul>*@
         </nav>
-                <div class="content-wrapper">
+        <div class="content-wrapper">
             <div class="container-fluid">
-        @*<div id="body">*@
-        @RenderSection("featured", required: false)
+                @*<div id="body">*@
+                @RenderSection("featured", required: false)
 
                 @RenderBody()
             </div>
@@ -162,18 +114,24 @@
 
     @* @Scripts.Render("~/bundles/jquery")*@
     <!-- Loading Scripts -->
-    
+
     <script src="~/Scripts/bootstrap-select.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
-    
+
     <script src="~/Scripts/jquery.validate.js"></script>
     @*<script src="~/Scripts/jquery.validate.min.js"></script>*@
     <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+    <script src="~/Scripts/select2.full.js"></script>
+    <script src="~/Scripts/timepicki.js"></script>
+    <script src="~/Scripts/bootstrap-timepicker.min.js"></script>
+    <script src="~/Scripts/bootstrap-year-calendar.min.js"></script>
+    <script src="~/Scripts/bootstrap-popover.js"></script>
 
     @Scripts.Render("~/Scripts/js")
-    <script src="~/Scripts/select2.full.js"></script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -7,7 +7,7 @@
         <h3>Teacher Category</h3>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span>Add New</button></div>
+                <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
             <div class="panel-body">
                 <table id="zctb" class="display table table-bordered table-hover">
                     <thead>
@@ -30,9 +30,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.ModifiedDate)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.IsActive)
-                            </th>
+                            
                             <th></th>
                         </tr>
                     </thead>
@@ -60,18 +58,12 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ModifiedDate)
                                 </td>
-                                @if (item.IsActive == "Y")
-                                {
-                                    <td>YES</td>
-                                }
-                                else
-                                {
-                                    <td>NO
-                                    </td>
-                                }
+                                
                                 <td>
-                                    <a class="btn btn-info" onclick="EditView(@item.TeacherCategoryId)"><span class="fa fa-pencil"></span>Edit </a>
-                                    <a class="btn btn-danger" onclick="DeleteView(@item.TeacherCategoryId)"><span class="fa fa-trash"></span>Delete</a>
+                                    <a href="#" class="hvr-buzz-out" onclick="EditView(@item.TeacherCategoryId)">Edit </a> |
+                                    <a href="#" class="hvr-buzz-out" onclick="DeleteView(@item.TeacherCategoryId)">Delete </a> 
+                                    @*<a class="hvr-buzz-out" onclick="EditView(@item.TeacherCategoryId)"><span class="fa fa-pencil"></span>Edit </a>
+                                    <a class="hvr-buzz-out" onclick="DeleteView(@item.TeacherCategoryId)"><span class="fa fa-trash"></span>Delete</a>*@
                                 </td>
                             </tr>
     

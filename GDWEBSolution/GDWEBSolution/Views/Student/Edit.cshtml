@@ -1,0 +1,129 @@
+﻿
+@model GDWEBSolution.Models.Student.StudentModel
+<div class="row">
+    <div class="col-md-12">
+        <h3>Student</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">Edit Student | Optional Subject |EXtra Curicular  </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">Edit Student</a></li>                 
+                    <li class=""><a href="#ExtraCuricular" data-toggle="tab" aria-expanded="false">EXtra Curicular</a></li>
+                    @*<li class="disabled"><a>Disabled</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                          Dropdown <span class="caret"></span>
+                        </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#dropdown1" data-toggle="tab">Action</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#dropdown2" data-toggle="tab">Another action</a></li>
+                            </ul>
+                        </li>*@
+                </ul>
+                <br>
+                <div id="myTabContent" class="tab-content">
+
+                     <div class="tab-pane fade active in" id="bio">
+                        @{ Html.RenderAction("ShowEditStudent", new { SchoolId = ViewBag.EditSchoolID, StudentId = ViewBag.EditStudentID }); }
+                    </div>
+                    
+
+                    
+                    <div class="tab-pane fade" id="qualification">
+
+
+                        <div id="showgrade">
+
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="ExtraCuricular">
+
+                        <div id="showHouse">
+
+
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="excactivity">
+
+                        <div id="showexactivity">
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="subjects">
+
+                        <div id="showSubjects">
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" id="MyModelBody">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Error !</h4>
+            </div>
+            <div class="modal-body">
+                <label id="ErrorLable" class="control-label" style="color: #e83a3a"></label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="SuccesModel" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" id="SuccessModelBody">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Successful !</h4>
+            </div>
+            <div class="modal-body">
+                <label id="SuccesLable" class="control-label" style="color: #3bc91f"></label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" id="DeleteModelBody">
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var loadSgrade = function (value) {
+        debugger
+        //     $('#myTabContent').load('/Student/Createe?SchoolId=' + value);
+
+        window.location.href = '@Url.Action("Create", "Student", new { SchoolId = "ID" })'.replace("ID", value);
+
+
+   }
+
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        // This will make every element with the class "date-picker" into a DatePicker element
+        $("#DateOfBirth").datepicker();
+    });
+</script>

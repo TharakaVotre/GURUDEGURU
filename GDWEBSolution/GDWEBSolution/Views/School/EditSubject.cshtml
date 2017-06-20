@@ -1,0 +1,140 @@
+﻿@model GDWEBSolution.Models.Schools.SchoolSubjectModel
+<form id="FrmSubject" class="form-horizontal">
+    <div class="form-group">
+        
+
+       
+   
+        @*@Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-4">
+                @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolfrhdrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @disabled = "disabled" })
+            </div>*@
+       
+          
+        </div>
+ 
+
+    @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-2 control-label" })
+    <div class="col-sm-3">
+        <label class="form-control">@ViewBag.EditSchoolName</label>
+        @Html.TextBoxFor(model => model.SchoolId, new { style = "display: none;" })
+    </div>
+
+     
+          <div class="form-group"></div>
+       
+   
+
+        @Html.LabelFor(m => m.SubjectName, new { @class = "col-sm-2 control-label" })
+
+        <div class="col-sm-4">
+            @Html.DropDownListFor(model => model.SubjectId, ViewBag.SubjectscldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+
+            @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
+
+        </div>
+   
+        @Html.LabelFor(m => m.SubjectCategoryId, new { @class = "col-sm-2 control-label" })
+
+        <div class="col-sm-4">
+            @Html.DropDownListFor(model => model.SubjectCategoryId, ViewBag.SubcatscldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
+
+            @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
+
+        </div>
+   
+      <br /><br /><br />
+      <div class="form-group">
+        <div class="col-sm-1" style=" margin-left:90%">
+            <button  type="button" id="btnAddSclSubjects" onclick="AddSclSubjects()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+        </div>
+        </div>
+        <div class="hr-dashed"></div>
+        @*     <h4 style="padding-left:120px;">Qualifications</h4>
+            <div class="hr-dashed"></div>*@
+
+</form>
+
+<script>
+
+    //$(document).ready(function () {
+
+    //    debugger
+    //    //$('#Housee').load('/School/Createe?schoolid=' + value);
+    //    //  $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + $('#SchoolId').val());
+    //    $('#showHouse').load('/School/ShowSchoolSubjects?SchoolId=' + $('#SchoolId').val()'&');
+
+
+
+    //})
+
+    var loadyrSub = function (value) {
+        debugger
+        var value = "2017";
+        var ssid = $('#SchoolId').val();
+        $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + value + '&SchoolId=' + ssid);
+    }
+
+
+    var AddSclSubjects = function () {
+
+        var ssid2 = $('#SchoolIds').val();
+        //debugger
+        var myformdata = $("#FrmSubject").serialize();
+
+        //if (!$("#FrmANT").valid()) {
+        //    return false;
+        //}
+
+        $.ajax({
+
+            type: "POST",
+            url: "/School/EAddSchoolSubjects",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                // $("#myModal").modal("hide");
+                if (result != "Exception" && result != "Exits") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+               
+
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    // $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + result + '&SchoolId=' + ssid2);
+
+                  
+                    $('#showSubjects').load('/School/ShowEditSchoolSubjects?SchoolId=' + result);
+                    $("#SuccesLable").text("Subject Added");
+                    // $("#btnAddQualification").prop('value', 'Save');
+                    $("#SuccesModel").modal("show");
+                }
+                else if (result == "Exception") {
+                    debugger
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Exception Error Occurd");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+                }
+                else if (result == "Exits") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("This Subject is Already Assigned to this Grade");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+             
+
+            }
+
+        })
+    }
+
+    var loadGradeses = function (value) {
+        debugger
+        //$('#Housee').load('/School/Createe?schoolid=' + value);
+        $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + value);
+
+    }
+</script>
+

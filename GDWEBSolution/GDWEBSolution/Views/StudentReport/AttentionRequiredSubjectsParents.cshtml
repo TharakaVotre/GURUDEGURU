@@ -1,0 +1,123 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Report.StudentReportModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>Student marks</h3>
+
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+@using (Html.BeginForm("ParentReport", "StudentReport", FormMethod.Post))
+{
+
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <lable class="col-sm-2 control-label"> Accedamic Year</lable>
+            <div class="col-sm-2">
+                @Html.TextBox("AccYear", "", new { @class = "form-control" })
+               
+            </div>
+            <lable class="col-sm-2 control-label">Evealuation Type</lable>
+            <div class="col-sm-2">
+                @Html.DropDownList("EveluationType", ViewBag.EveluationType as List<SelectListItem>, "All", new { @class = "form-control" })
+
+                
+            </div>
+
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+            </div>
+        </div>
+        </div>
+}
+    </div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    @if (Model != null)
+                    {
+                        string backgroundcolour = null;
+                        foreach (var item in Model)
+                        {
+
+
+                            decimal width = Convert.ToDecimal(item.Mark);
+                            if (width <= 35)
+                            {
+                                backgroundcolour = "red";
+                            }
+                            else if (width <= 65)
+                            {
+                                backgroundcolour = "yellow";
+                            }
+                            else
+                            {
+                                backgroundcolour = "green";
+                            }
+                            decimal remain = 100 - width;
+                            string stringwidth = width + "%";
+                            string stringremain = remain + "%";
+                            <div class="row">
+                                <span class="valueLable">@item.SubjectName</span>
+                                <div class="emptydiv">
+                                    <div class="valueLable" style="width:@stringwidth;background-color:@backgroundcolour ;padding-left:5px;color:white">Marks @Convert.ToDecimal(item.Mark).ToString("##.##")</div>
+                                    <div style="width: @stringremain"></div>
+                                </div>
+                            </div>
+                            <div class="valueLable"></div>
+
+
+
+                        }
+                    }
+                   
+                    <div class="row">
+                        <div style="border:solid 1px black"></div>
+                        <div class="row" style="margin: auto; ">
+                            <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                <p class="valueLable" style="float:right">100</p>
+                            </div>
+                            <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                <p style="float:right" class="valueLable"> 75</p>
+                            </div>
+                            <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                <p style="float:right" class="valueLable">50</p>
+                            </div>
+                            <div style="width: 25%; border-right: solid 1px black; float: right;height:5px">
+                                <p style="float:right" class="valueLable"> 25</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @@media screen and (max-width: 500px) {
+        .valueLable {
+            font-size: 10px;
+            height: 14px;
+        }
+
+        .emptydiv {
+            height: 2px;
+        }
+    }
+
+    @@media screen and (min-width: 500px) {
+        .emptydiv {
+            height: 25px;
+        }
+    }
+</style>

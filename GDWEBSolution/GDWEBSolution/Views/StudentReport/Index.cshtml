@@ -1,0 +1,482 @@
+﻿@{
+    IEnumerable<GDWEBSolution.Models.Report.SubjectWiseReportModel> Subject = ViewBag.Subject as IEnumerable<GDWEBSolution.Models.Report.SubjectWiseReportModel>;
+    IEnumerable<GDWEBSolution.Models.Report.GradeWiseReportModel> ClassWise = ViewData["Classs"] as IEnumerable<GDWEBSolution.Models.Report.GradeWiseReportModel>;  
+}
+@{
+     ViewBag.Title = "AttentionRequiredSubjectsSchool";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+ }
+<div class="row">
+    <div class="col-md-12">
+        <h3>School Marks Report</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading"><form id="myForm" method="post" action="~/StudentReport/Index" class="form-horizontal">
+    <div class="form-group">
+        <lable class="col-sm-2 control-label"> Accedamic Year</lable>
+        <div class="col-sm-2">
+            @Html.TextBox("AccYear", "", new { @class = "form-control",@type="number" })
+          
+        </div>
+        <lable class="col-sm-2 control-label">Evealuation</lable>
+        <div class="col-sm-2">
+            @Html.DropDownList("Eveluation", ViewBag.Eveluation as List<SelectListItem>,"", new { @class = "form-control",@Required="required" })
+        </div>
+        <div class="col-sm-2">
+            <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+        </div>
+    </div>
+</form>
+</div>
+     <div class="panel-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">Subject Wise</a></li>
+                    <li class=""><a href="#qualification" data-toggle="tab" aria-expanded="false">Grade Wise</a></li>
+                    <li class=""><a href="#Housee" data-toggle="tab" aria-expanded="false">Class</a></li>
+                    <li class=""><a href="#Student" data-toggle="tab" aria-expanded="false">Student</a></li>
+                    
+                  
+                </ul>
+                <br>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in" id="bio">
+                        <div class="panel-body">
+
+                            @if (Subject != null)
+                            {
+                                string backgroundcolour=null;
+                                foreach (var item in Subject)
+                                {
+
+
+                                    decimal width = Convert.ToDecimal(item.Avarage);
+                                    if (width <= 35)
+                                    {
+                                        backgroundcolour = "red";
+                                    }
+                                    else if (width<=65)
+                                    {
+                                        backgroundcolour="yellow";
+                                    }
+                                    else
+                                    {
+                                        backgroundcolour = "green";
+                                    }
+                                    decimal remain = 100 - width;
+                                    string stringwidth = width + "%";
+                                    string stringremain = remain + "%";
+                                    <div class="row">
+                                        <span class="valueLable">@item.Subject :-Max:@item.Maximum ,Min:@item.Minimun</span>
+                                        <div class="emptydiv">
+                                            <div class="valueLable" style="width:@stringwidth;background-color:@backgroundcolour ;padding-left:5px;color:black">AVG @Convert.ToDecimal(item.Avarage).ToString("##.##")</div>
+                                            <div style="width: @stringremain"></div>
+                                        </div>
+                                    </div>
+                                    <div class="valueLable"></div>
+
+
+
+                                }
+                            }
+
+                            <div class="row">
+                                <div style="border:solid 1px black"></div>
+                                <div class="row" style="margin: auto; ">
+                                    <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                        <p class="valueLable" style="float:right">100</p>
+                                    </div>
+                                    <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                        <p style="float:right" class="valueLable"> 75</p>
+                                    </div>
+                                    <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                        <p style="float:right" class="valueLable">50</p>
+                                    </div>
+                                    <div style="width: 25%; border-right: solid 1px black; float: right;height:5px">
+                                        <p style="float:right" class="valueLable"> 25</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="qualification">                       
+                        <div id="showgrade">
+                            <div class="panel-body">
+
+                                @if (ClassWise != null)
+                                {
+                                    string backgroundcolour = null;
+                                    string gradeid = null;
+                                    int count = 0;
+                                    foreach (var item in ClassWise)
+                                    {
+                                        count++;
+                                        if (count == 1)
+                                        {
+                                            <h5><b>@item.Grade</b></h5>
+                                            gradeid = item.Grade;
+                                        }
+                                        if (gradeid == item.Grade)
+                                        {
+                                            decimal width = Convert.ToDecimal(item.Avarage);
+                                            if (width <= 35)
+                                            {
+                                                backgroundcolour = "red";
+                                            }
+                                            else if (width <= 65)
+                                            {
+                                                backgroundcolour = "yellow";
+                                            }
+                                            else
+                                            {
+                                                backgroundcolour = "green";
+                                            }
+                                            decimal remain = 100 - width;
+                                            string stringwidth = width + "%";
+                                            string stringremain = remain + "%";
+                                            <div class="row">
+                                                <span class="valueLable">@item.Subject :-Max:@item.Maximum ,Min:@item.Minimun</span>
+                                                <div class="emptydiv">
+                                                    <div class="valueLable" style="width:@stringwidth;background-color:@backgroundcolour ;padding-left:5px;color:white">AVG @Convert.ToDecimal(item.Avarage).ToString("##.##")</div>
+                                                    <div style="width: @stringremain"></div>
+                                                </div>
+                                            </div>
+                                            <div class="valueLable"></div>
+                                            gradeid = item.Grade;
+                                        }
+                                        else
+                                        {
+                                            gradeid = item.Grade;
+                                            <div class="row">
+                                                <div style="border:solid 1px black"></div>
+                                                <div class="row" style="margin: auto; ">
+                                                    <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                                        <p class="valueLable" style="float:right">100</p>
+                                                    </div>
+                                                    <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                                        <p style="float:right" class="valueLable"> 75</p>
+                                                    </div>
+                                                    <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                                        <p style="float:right" class="valueLable">50</p>
+                                                    </div>
+                                                    <div style="width: 25%; border-right: solid 1px black; float: right;height:5px">
+                                                        <p style="float:right" class="valueLable"> 25</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <h5><b>@item.Grade</b></h5>
+                                            decimal width = Convert.ToDecimal(item.Avarage);
+                                            if (width <= 35)
+                                            {
+                                                backgroundcolour = "red";
+                                            }
+                                            else if (width <= 65)
+                                            {
+                                                backgroundcolour = "yellow";
+                                            }
+                                            else
+                                            {
+                                                backgroundcolour = "green";
+                                            }
+                                            decimal remain = 100 - width;
+                                            string stringwidth = width + "%";
+                                            string stringremain = remain + "%";
+                                            <div class="row">
+                                                <span class="valueLable">@item.Subject :-Max:@item.Maximum ,Min:@item.Minimun</span>
+                                                <div class="emptydiv">
+                                                    <div class="valueLable" style="width:@stringwidth;background-color:@backgroundcolour ;padding-left:5px;color:white">AVG @Convert.ToDecimal(item.Avarage).ToString("##.##")</div>
+                                                    <div style="width: @stringremain"></div>
+                                                </div>
+                                            </div>
+                                            <div class="valueLable"></div>
+                                        }
+                                    }
+                                }
+
+                                <div class="row">
+                                    <div style="border:solid 1px black"></div>
+                                    <div class="row" style="margin: auto; ">
+                                        <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                            <p class="valueLable" style="float:right">100</p>
+                                        </div>
+                                        <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                            <p style="float:right" class="valueLable"> 75</p>
+                                        </div>
+                                        <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+                                            <p style="float:right" class="valueLable">50</p>
+                                        </div>
+                                        <div style="width: 25%; border-right: solid 1px black; float: right;height:5px">
+                                            <p style="float:right" class="valueLable"> 25</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>        
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="Housee">
+                         <div id="showHouse">
+                             <div class="panel-body">
+                                
+                                 <div class="form-horizontal">
+                                     <div class="form-group">
+                                         <lable class="col-sm-2 control-label">Grade </lable>
+                                         <div class="col-sm-3">
+                                             @Html.DropDownList("GradeId", ViewBag.GradeId as List<SelectListItem>, "", new { @class = "form-control", required = "required" })
+                                         </div>
+
+                                         <lable class="col-sm-2 control-label">Class</lable>
+                                         <div class="col-sm-3">
+                                             @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })                       
+                                         </div>
+                                             <div class="col-sm-2">
+                                             <a class="btn btn-primary" style="float:right" onclick="ClassWise()"><span class="fa fa-search"></span> Find</a>
+                                         </div>
+
+                                     </div>
+                                 </div>
+                                 </div>
+                            
+                                    
+                                 <div id="myModalClass">
+                                     <div>
+
+                                         <!-- Modal content-->
+                                         <div id="MyModelBodyClass">
+
+                                         </div>
+
+                                     </div>
+                                 </div>
+                        </div>
+                        
+                    </div>
+                    <div class="tab-pane fade" id="Student">
+                        <div id="showStudent">
+                            <div class="panel-body">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <lable class="col-sm-2 control-label">Grade </lable>
+                                        <div class="col-sm-3">
+                                            @Html.DropDownList("stGradeId", ViewBag.GradeId as List<SelectListItem>, "", new { @class = "form-control", required = "required" })
+
+                                        </div>
+
+                                        <lable class="col-sm-2 control-label">Class</lable>
+                                        <div class="col-sm-3">
+                                            @Html.DropDownList("stClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
+
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group">
+                                        <lable class="col-sm-2 control-label">Student</lable>
+                                        <div class="col-sm-4">
+                                            @Html.DropDownList("StudentId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
+
+
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <a class="btn btn-primary" style="float:right" onclick="getStudent(1)"><span class="fa fa-search"></span> Find</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="myModal">
+                                <div>
+
+                                    <!-- Modal content-->
+                                    <div id="MyModelBody">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="excactivity">
+                      
+                        <div id="showexactivity">
+                           
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="subjects">
+                       
+                        <div id="showSubjects">
+                            @*@{Html.RenderAction("ShowSchooSubject", new { ShoolId = "0" });}*@
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+            
+
+                <style>
+
+                     @@media screen and (max-width: 500px) {
+                        .valueLable{
+                            font-size: 10px ;
+                            height: 14px;
+                        }
+                    .emptydiv{
+                        height:2px;
+                    }
+                    }
+                     @@media screen and (min-width: 500px) {
+                    .emptydiv{
+                        height:25px;
+                    }
+                    }
+
+                </style>
+<script>
+
+    var ClassWise = function () {
+        var b = document.getElementById("ClassId");
+        var ClassId = b.options[b.selectedIndex].value;
+        var c = document.getElementById("GradeId");
+        var GradeId = c.options[c.selectedIndex].value;
+        var Url = "/StudentReport/ClassReport?ClassId=" + ClassId + "&GradeId=" + GradeId;
+        $("#MyModelBodyClass").load(Url, function () {
+            $("#myModalClass").data("show");
+        })
+    }
+
+    var getStudent = function () {
+        var a = document.getElementById("StudentId");
+        var studentId = a.options[a.selectedIndex].value;
+       
+        var Url = "/StudentReport/StudantReport?studentId=" + studentId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").data("show");
+        })
+    }
+
+    $(document).ready(function () {
+
+        $("#GradeId").change(function () {
+            $("#ClassId").empty();
+            $("#StudentId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getClass")',
+
+                dataType: 'json',
+
+                data: { id: $("#GradeId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#ClassId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+        $("#ClassId").change(function () {
+            $("#StudentId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getStudent")',
+
+                dataType: 'json',
+
+                data: { id: $("#GradeId").val(), cId: $("#ClassId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#StudentId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+        $("#stGradeId").change(function () {
+            $("#stClassId").empty();
+            $("#StudentId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getClass")',
+
+                dataType: 'json',
+
+                data: { id: $("#stGradeId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#stClassId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+        $("#stClassId").change(function () {
+           
+            $("#StudentId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getStudent")',
+
+                dataType: 'json',
+
+                data: { id: $("#stGradeId").val(), cId: $("#stClassId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#StudentId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+    });
+
+</script>

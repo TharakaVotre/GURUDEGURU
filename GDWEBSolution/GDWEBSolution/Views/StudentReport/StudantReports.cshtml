@@ -1,0 +1,108 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Report.StudentReportModel>
+<hr />
+<div class="col-md-12">
+
+@if (Model != null)
+{
+    decimal markCouner = 0;
+    string backgroundcolour = null;
+    int count = 0;
+    decimal AVG=0;
+    foreach (var item in Model)
+    {
+        count++;
+        markCouner = markCouner+item.Mark;
+
+        decimal width = item.Mark;
+        if (width <= 35)
+        {
+            backgroundcolour = "red";
+        }
+        else if (width <= 65)
+        {
+            backgroundcolour = "yellow";
+        }
+        else
+        {
+            backgroundcolour = "green";
+        }
+        decimal remain = 100 - width;
+        string stringwidth = width + "%";
+        string stringremain = remain + "%";
+        <div class="row">
+            <span class="valueLable">@item.SubjectName</span>
+            <div class="emptydiv">
+                <div class="valueLable" style="width:@stringwidth;background-color:@backgroundcolour ;padding-left:5px;color:white">@item.Mark.ToString("##.##")</div>
+                <div style="width: @stringremain"></div>
+            </div>
+        </div>
+        <div class="valueLable"></div>
+
+
+
+    }
+    if (markCouner != 0)
+    {
+        AVG = markCouner / count;
+    }
+    else
+    {
+        AVG = 0;
+    }
+    
+    <div class="row">
+    <div style="border:solid 1px black"></div>
+    <div class="row" style="margin: auto; ">
+        <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+            <p class="valueLable" style="float:right">100</p>
+        </div>
+        <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+            <p style="float:right" class="valueLable"> 75</p>
+        </div>
+        <div style="width: 25%; border-right: solid 1px black; float: right; height: 5px">
+            <p style="float:right" class="valueLable">50</p>
+        </div>
+        <div style="width: 25%; border-right: solid 1px black; float: right;height:5px">
+            <p style="float:right" class="valueLable"> 25</p>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="tab-pane">
+            @{
+
+            }
+            Avarage Mark of Student=@AVG
+        </div>  
+    </div>
+     
+}
+
+
+                     
+    </div>
+   
+    
+
+
+
+
+
+        <style>
+
+                     @@media screen and (max-width: 500px) {
+                        .valueLable{
+                            font-size: 10px ;
+                            height: 14px;
+                        }
+                    .emptydiv{
+                        height:2px;
+                    }
+                    }
+                     @@media screen and (min-width: 500px) {
+                    .emptydiv{
+                        height:25px;
+                    }
+                    }
+
+                </style>

@@ -1,0 +1,83 @@
+﻿  @model GDWEBSolution.Models.TimeTable.TimeTableModel  
+@*<h4>Time Table Of Grade : @Model.GradeId Class @Model.ClassId</h4>*@
+   <div class="row">
+       
+            <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nospacing">
+                <div class="db-wrapper">
+                    <div class="db-pricing-seven">
+                        <ul>
+                            <li class="price">Monday</li>
+
+                            @{ Html.RenderAction("ShowTimeTblView", new { ClassId = Model.ClassId, GreadId = Model.GradeId, SchoolId = "CKC", Day = "MONDAY", ForEditDelte = false }); }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nospacing">
+                <div class="db-wrapper">
+                    <div class="db-pricing-seven">
+                        <ul>
+                            <li class="price">Tuesday</li>
+
+                            @{ Html.RenderAction("ShowTimeTblView", new { ClassId = Model.ClassId, GreadId = Model.GradeId, SchoolId = "CKC", Day = "TUESDAY", ForEditDelte = false }); }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nospacing">
+                <div class="db-wrapper">
+                    <div class="db-pricing-seven">
+                        <ul>
+                            <li class="price">Wednesday</li>
+
+                            @{ Html.RenderAction("ShowTimeTblView", new { ClassId = Model.ClassId, GreadId = Model.GradeId, SchoolId = "CKC", Day = "WEDNESDAY", ForEditDelte = false }); }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nospacing">
+                <div class="db-wrapper">
+                    <div class="db-pricing-seven">
+                        <ul>
+                            <li class="price">Thursday</li>
+
+                            @{ Html.RenderAction("ShowTimeTblView", new { ClassId = Model.ClassId, GreadId = Model.GradeId, SchoolId = "CKC", Day = "THURSEDAY", ForEditDelte = false }); }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nospacing">
+                <div class="db-wrapper">
+                    <div class="db-pricing-seven">
+                        <ul>
+                            <li class="price">Friday</li>
+
+                            @{ Html.RenderAction("ShowTimeTblView", new { ClassId = Model.ClassId, GreadId = Model.GradeId, SchoolId = "CKC", Day = "FRIDAY", ForEditDelte = false }); }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
+        </div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({ container: 'body' });
+    });
+</script>

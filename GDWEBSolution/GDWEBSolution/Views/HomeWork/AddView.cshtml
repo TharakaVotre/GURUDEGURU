@@ -1,0 +1,202 @@
+﻿@model GDWEBSolution.Models.HomeWork.HomeWorkModel
+<script>
+    $(function () {
+        $("#DueDate").datepicker({
+            minDate: new Date()
+        })
+    });
+    
+
+</script>
+
+<div>
+
+    <form id="upload" action="~/HomeWork/Create" method="post" enctype="multipart/form-data" style="color: #000;">
+       
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New Homework</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-horizontal" >
+                <div class="form-group">
+                    @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownList("GradeId", ViewBag.country as List<SelectListItem>, "", new { @class = "form-control", required = "required" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
+
+
+                        
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FilePath, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+
+                        <input type="file" id="uploadFile" name="File" required />
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DueDate, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.DueDate, new { @class = "form-control", @placeholder = "Due Date", required = "required" })
+                       
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AssignmentDescription, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextAreaFor(model => model.AssignmentDescription, new { @class = "form-control", @placeholder = "Description", required = "required" })
+                       
+                    </div>
+                </div>
+
+            
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SubjectId, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+
+                        @Html.DropDownList("SubjectId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
+                       
+                    </div>
+                </div>
+
+</div>
+
+
+            </div>
+
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" />
+            </div>
+
+    </form>
+   
+
+
+</div>
+
+
+
+
+
+
+<style>
+    #GradeId {
+       
+        width: 100% !important;
+ 
+    }
+
+
+   
+    </style >
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        $("#GradeId").change(function () {
+            $("#ClassId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getClass")',
+
+                dataType: 'json',
+
+                data: { id: $("#GradeId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#ClassId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+        $("#GradeId").change(function () {
+            $("#SubjectId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getSubject")',
+
+                dataType: 'json',
+
+                data: { id: $("#GradeId").val() },
+
+
+                success: function (states) {
+
+
+                    $.each(states, function (i, state) {
+                        $("#SubjectId").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+
+</script>
+@section scripts{
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script>
+        (function () {
+            var bar = $('.progress-bar');
+            var percent = $('.progress-bar');
+            var status = $('#status');
+
+            $('form').ajaxForm({
+                beforeSend: function () {
+                    status.empty();
+                    var percentValue = '0%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    var percentValue = percentComplete + '%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                },
+                success: function (d) {
+                    var percentValue = '100%';
+                    bar.width(percentValue);
+                    percent.html(percentValue);
+                    $('#fu1').val('');
+                    alert(d);
+                },
+                complete: function (xhr) {
+                    status.html(xhr.responseText);
+                }
+            });
+        })();
+    </script>
+
+}

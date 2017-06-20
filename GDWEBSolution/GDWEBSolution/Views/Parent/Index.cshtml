@@ -1,0 +1,133 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Parent.ParentModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Parent</h3>
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default">
+            <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
+            @*<div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView2(1)"><span class="fa fa-plus"></span> Add file</button></div>*@
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover" >
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ParentId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ParentName)
+                            </th>
+
+                           
+                          
+                            <th>
+                                @Html.DisplayNameFor(model => model.RelationshipName)
+                            </th>
+                           
+                              
+                             <th>
+                                @Html.DisplayNameFor(model => model.HomeTelephone)
+                            </th>
+                             <th>
+                                @Html.DisplayNameFor(model => model.PersonalEmail)
+                            </th>
+                            
+                            <th style="max-width:180px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                     <td>
+                                        @Html.DisplayFor(modelItem => item.ParentId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ParentName)
+                                    </td>
+                                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RelationshipName)
+                                    </td>
+                                     <td>
+                                        @Html.DisplayFor(modelItem => item.HomeTelephone)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PersonalEmail)
+                                    </td>
+
+                                    
+                               
+
+                                    <td>
+                                        <center>
+                                          <a class="btn btn-primary" onclick="DetailView('@item.ParentId')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
+                                         <a class="btn btn-info" onclick='EditView("@item.ParentId")'><span class="fa fa-pencil"></span> Edit </a>
+                                        <a class="btn btn-danger" onclick='DeleteView("@item.ParentId")'><span class="fa fa-trash"></span> Delete</a>
+
+                                        </center>
+
+                                     
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" id="MyModelBody">
+        </div>
+    </div>
+</div>
+@*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
+<script>
+    var ShowView = function (bookid) {
+        var Url = "/Parent/Create?id=" + bookid;
+        window.location.href = Url;
+    }
+
+    var ShowView2 = function (bookid) {
+        var Url = "/School/Create2?id=" + bookid;
+        window.location.href = Url;
+    }
+
+    var EditView = function (ParentId) {
+        var Url = "/Parent/EditParent?ParentId=" + ParentId;
+        //$("#MyModelBody").load(Url, function () {
+        //    $("#myModal").modal("show");
+        //})
+        window.location.href = Url;
+    }
+    var DetailView = function (ParentId) {
+        var Url = "/Parent/Details?ParentId=" + ParentId;
+        //$("#MyModelBody").load(Url, function () {
+        //    $("#myModal").modal("show");
+        //})
+        window.location.href = Url;
+    }
+
+    var DeleteView = function (CategoryId) {
+        var Url = "/Parent/Delete?ParentId=" + CategoryId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+</script>

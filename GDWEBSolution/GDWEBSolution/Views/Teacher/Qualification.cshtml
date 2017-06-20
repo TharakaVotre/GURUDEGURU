@@ -43,7 +43,7 @@
                 if (result != "Exception" && result != "Exits") {
                     $("#Teacher_Id").val(result);
                     $('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + result);
-                    $("#SuccesLable").text("Qualification Added");
+                    $("#SuccesLable").text("Teacher Qualification Added Successfully. ");
                     $("#SuccesModel").modal("show");
                 }
                 else if (result == "Exception") {

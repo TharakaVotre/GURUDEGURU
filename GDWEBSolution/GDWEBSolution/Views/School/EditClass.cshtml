@@ -1,0 +1,159 @@
+﻿@model GDWEBSolution.Models.Schools.SchoolModel
+@{
+    ViewBag.Title = "Class";
+}
+
+<form id="FrmAddclass" class="form-horizontal">
+    <div class="form-group">
+
+
+
+
+     @Html.LabelFor(m => m.SchoolId3, new { @class = "col-sm-2 control-label" })
+    <div class="col-sm-4">
+        <label class="form-control">@ViewBag.EditSchoolName</label>
+        @Html.TextBoxFor(model => model.SchoolId, new { style = "display: none;" })
+    </div>
+
+        @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.DropDownListFor(model => model.GradeId, ViewBag.grdschooldrpListl as SelectList, "", new { @class = "form-control", @placeholder = "School " , @onchange = "loadsclgradeclassess(this.value)" }) 
+        </div>
+        <br/><br />
+        @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+           @Html.TextBoxFor(model => model.ClassId, new { @class = "form-control", @placeholder = "Class Id",onkeypress="return RestrictSpace()" })
+        </div>
+
+        @Html.LabelFor(m => m.ClassName, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.TextBoxFor(model => model.ClassName, new { @class = "form-control", @placeholder = "Class Name" })
+        </div>
+        <br />
+        
+      
+    </div>
+
+    <div class="form-group">
+
+          <div class="col-sm-2" style="float:right">
+            <button type="button" id="btnAddQualification" onclick="AddClass()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+        </div>
+    </div>
+    <div class="hr-dashed"></div>
+    @*     <h4 style="padding-left:120px;">Qualifications</h4>
+        <div class="hr-dashed"></div>*@
+
+</form>
+
+<script>
+    function RestrictSpace() {
+        if (event.keyCode == 32) {
+            event.returnValue = false;
+            return false;
+        }
+    }
+    
+    var loadsclgradeclassess = function (value) {
+        var Schoolid = $('#SchoolId').val();
+
+        $('#showclasses').load('/School/EShowSchooClasses?SchoolIdGradeId='+Schoolid +"!"+ value);
+
+
+
+    }
+
+    var AddClass = function () {
+        //debugger
+        var myformdata = $("#FrmAddclass").serialize();
+
+        //if (!$("#FrmANT").valid()) {
+        //    return false;
+        //}
+
+        $.ajax({
+
+            type: "POST",
+            url: "/School/EAddSchoolClass",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                // $("#myModal").modal("hide");
+                if (result != "Exception" && result != "Exits") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+               
+
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $('#showclasses').load('/School/ShowSchooClasses?SchoolIdGradeId=' + result);
+                    $("#SuccesLable").text("Class Added");
+                    // $("#btnAddQualification").prop('value', 'Save');
+                    $("#SuccesModel").modal("show");
+                }
+                else if (result == "Exception") {
+                    debugger
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Exception Error Occurd");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+                }
+                else if (result == "Exits") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("This Grade is Already Assigned to this School");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+                else {
+
+                }
+
+            }
+
+        })
+    }
+
+    var loadGrades = function (value) {
+        debugger
+        $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + value);
+    }
+
+
+
+    var loadEXactivsess = function (value) {
+
+    //    $(".div123 *").prop('disabled', true);
+       
+        
+        var selectedItem = value;
+        
+        var ddlStates = $("#GradeId");
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("Studentgrade"))",
+            data: { "SchoolId": selectedItem },
+        success: function (data) {
+            ddlStates.html('');
+            ddlStates.append($('<option></option>').val("").html(""));
+            $.each(data, function (ActivityCode, option) {
+                ddlStates.append($('<option></option>').val(option.GradeId).html(option.GradeName));
+            });
+            
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('Failed to retrieve states.');
+                 
+        }
+    });
+    }
+
+
+
+
+
+
+</script>

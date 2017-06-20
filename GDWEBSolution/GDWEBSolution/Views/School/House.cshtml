@@ -2,14 +2,26 @@
 
 
 <form id="FrmHouse" class="form-horizontal">
-    <div class="form-group" >
-       
+    <div class="form-group">
+
         @Html.HiddenFor(model => model.HouseId)
-        @Html.Hidden("SchoolId")
+        @*@Html.Hidden("SchoolId")*@
         @*@Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-4">
-            @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolfrhdrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @disabled = "disabled" })
-        </div>*@
+            <div class="col-sm-4">
+                @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolfrhdrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @disabled = "disabled" })
+            </div>*@
+
+
+        @Html.LabelFor(m => m.SchoolNamel, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.DropDownListFor(model => model.SchoolId1, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadschoolHouses(this.value)" })
+
+            @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
+
+        </div>
+
+
+
 
         @Html.LabelFor(m => m.HouseName, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-4">
@@ -19,17 +31,17 @@
     <div class="form-group">
 
         @Html.LabelFor(m => m.HouseInchargeId, new { @class = "col-sm-2 control-label" })
-        
-            <div class="col-sm-4">
-                @Html.DropDownListFor(model => model.HouseInchargeId, ViewBag.houseteacherdrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
 
-                @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
+        <div class="col-sm-4">
+            @Html.DropDownListFor(model => model.HouseInchargeId, ViewBag.houseteacherdrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
 
-            </div>
-        
+            @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
+
+        </div>
+
 
         <div class="col-sm-2">
-            <button type="reset" id="btnAddQualification" onclick="AddHouse()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+            <button type="button" id="btnAddQualification" onclick="AddHouse()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
         </div>
     </div>
     <div class="hr-dashed"></div>
@@ -40,16 +52,16 @@
 
 <script>
 
-    $(document).ready(function () {
+    //$(document).ready(function () {
 
-        debugger
-        //$('#Housee').load('/School/Createe?schoolid=' + value);
-      //  $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + $('#SchoolId').val());
-        $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + $('#SchoolId').val());
-    
-    
-    
-    })
+    //    debugger
+    //    //$('#Housee').load('/School/Createe?schoolid=' + value);
+    //  //  $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + $('#SchoolId').val());
+    //    $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + $('#SchoolId').val());
+
+
+
+    //})
 
     var AddHouse = function () {
         //debugger
@@ -74,7 +86,7 @@
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
                     $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + result);
-                    $("#SuccesLable").text("SchoolHouse Added");
+                    $("#SuccesLable").text("House is  Added to the School");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
                 }
@@ -101,11 +113,70 @@
 
         })
     }
-   
-    var loadGradeses = function (value) {
+
+    var loadschoolHouses = function (value) {
         debugger
         //$('#Housee').load('/School/Createe?schoolid=' + value);
+        var selectedItem = value;
+
+        var ddlStates = $("#HouseInchargeId");
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("Houseincharge"))",
+            data: { "SchoolId": selectedItem },
+            success: function (data) {
+                ddlStates.html('');
+                ddlStates.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStates.append($('<option></option>').val(option.HouseInchargeId).html(option.HouseInchargeName));
+                });
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+
+            }
+        });
+
+
         $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + value);
 
     }
+
+
+
+    var loadEXactivsess = function (value) {
+
+        //    $(".div123 *").prop('disabled', true);
+
+
+        var selectedItem = value;
+
+        var ddlStates = $("#GradeId");
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("Studentgrade"))",
+            data: { "SchoolId": selectedItem },
+            success: function (data) {
+                ddlStates.html('');
+                ddlStates.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStates.append($('<option></option>').val(option.GradeId).html(option.GradeName));
+                });
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+
+            }
+        });
+      }
 </script>
+
+

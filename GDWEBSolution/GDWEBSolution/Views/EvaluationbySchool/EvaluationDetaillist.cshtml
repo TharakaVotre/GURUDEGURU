@@ -1,0 +1,119 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Evaluation.EvaluationModel>
+<div class="row">
+
+    
+    <div class="col-md-12">
+       
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default">
+            
+          
+            @*<div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView2(1)"><span class="fa fa-plus"></span> Add file</button></div>*@
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover" >
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EvaluationDescription)
+                            </th>
+                           
+                            <th>
+                                @Html.DisplayNameFor(model => model.TestPaperFee)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.GradeName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ClassName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ScheduledDates)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ScheduledTimeStartst)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ScheduledTimeEndst)
+                            </th>
+                      
+
+
+
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.HiddenFor(modelItem => item.EvaluationNo)
+                                        @Html.HiddenFor(modelItem => item.EvaluationDetailSeqNo)
+
+                                        @Html.DisplayFor(modelItem => item.EvaluationDescription)
+                                    </td>
+                                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TestPaperFee)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GradeName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ClassName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ScheduledDates)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ScheduledTimeStartst)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ScheduledTimeEndst)
+                                    </td>
+
+
+
+
+                                   
+                                   
+                                   
+
+
+
+
+
+                                    <td>
+
+                                        @*<a class="btn btn-primary" onclick="DetailView('@item.EvaluationNo')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
+                                        <a class="btn btn-info" onclick='EditView("@item.EvaluationNo")'><span class="fa fa-pencil"></span> Edit </a>*@
+                                        <a class="btn btn-danger" onclick='DeleteView("@item.EvaluationDetailSeqNo","@item.EvaluationNo")'><span class="fa fa-trash"></span> Delete</a>
+
+
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+  
+
+
+    var DeleteView = function (EvaluationDetailSeqNo, EvaluationNo) {
+        var Url = "/EvaluationbySchool/DeleteEvaluationDetail?EvaluationDetailSeqNo=" + EvaluationDetailSeqNo + "&EvaluationNo="+EvaluationNo;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+</script>

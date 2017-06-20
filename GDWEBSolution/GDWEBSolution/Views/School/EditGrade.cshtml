@@ -1,0 +1,95 @@
+﻿@model GDWEBSolution.Models.Schools.SchoolGradeModel
+
+@{
+    ViewBag.Title = "Grade";
+}
+
+<form id="FrmQA" class="form-horizontal">
+    <div class="form-group">
+        
+
+
+
+        @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.TextBoxFor(model => model.SchoolId, new { @class = "form-control", @placeholder = "School Id", @readonly = "readonly" })
+             
+        @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
+
+        </div>
+        <div class="div123">
+            @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-3">
+                @Html.DropDownListFor(model => model.GradeId1, ViewBag.grdschooldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School " })
+            </div>
+        </div>
+      
+        <div class="col-sm-2">
+            <button type="reset" id="btnAddQualification" onclick="AddGrade()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+        </div>
+    </div>
+    <div class="hr-dashed"></div>
+    @*     <h4 style="padding-left:120px;">Qualifications</h4>
+        <div class="hr-dashed"></div>*@
+
+</form>
+
+<script>
+
+    var AddGrade = function () {
+        //debugger
+        var myformdata = $("#FrmQA").serialize();
+
+        //if (!$("#FrmANT").valid()) {
+        //    return false;
+        //}
+
+        $.ajax({
+
+            type: "POST",
+            url: "/School/AddSchoolGrade",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                // $("#myModal").modal("hide");
+                if (result != "Exception" && result != "Exits") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+                    $("#SchoolId").val(result);
+
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + result);
+                    $("#SuccesLable").text("Grade Added");
+                    // $("#btnAddQualification").prop('value', 'Save');
+                    $("#SuccesModel").modal("show");
+                }
+                else if (result == "Exception") {
+                    debugger
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Exception Error Occurd");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+                }
+                else if (result == "Exits") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("This Grade is Already Assigned to this School");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+                else {
+
+                }
+
+            }
+
+        })
+    }
+
+    var loadGrades = function (value) {
+        debugger
+        $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + value);
+    }
+</script>
+

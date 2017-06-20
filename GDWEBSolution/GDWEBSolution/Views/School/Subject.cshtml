@@ -9,90 +9,31 @@
             <div class="col-sm-4">
                 @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolfrhdrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @disabled = "disabled" })
             </div>*@
-        @Html.LabelFor(m => m.AcademicYear, new { @class = "col-sm-2 control-label" })
-
-        @{
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
-                 {
-                     Text = "Year One",
-                     Value = "GD1"
-                 });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Year Two",
-                Value = "GD2"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Year Three",
-                Value = "GD3"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Year Four ",
-                Value = "GD4"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Year Five",
-                Value = "GD5"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Year Six",
-                Value = "GD6"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Year Seven",
-                Value = "GD7"
-            });
-
-            listItems.Add(new SelectListItem
-            {
-                Text = "Year Eight",
-                Value = "GD8"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Year Nine",
-                Value = "GD9"
-            }); listItems.Add(new SelectListItem
-            {
-                Text = "Year Ten",
-                Value = "GD10"
-            }); listItems.Add(new SelectListItem
-            {
-                Text = "Year Eleven",
-                Value = "GD11"
-            });
-
-            listItems.Add(new SelectListItem
-            {
-                Text = "Year Twelve",
-                Value = "GD12"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Year Thirteen",
-                Value = "GD13"
-            });
-
-
-
-
-
-        }
-        <div class="col-sm-4">
-            @Html.DropDownListFor(model => model.AcademicYear, listItems, "", new { @class = "form-control", @placeholder = "Academic Year", @onchange = "loadyrSub(this.value)"})
-
-            </div>
+       
           
         </div>
-    <div class="form-group">
+ 
 
-        @Html.LabelFor(m => m.SubjectName, new { @class = "col-sm-2 control-label" })
+     @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-2 control-label" })
+
+     <div class="col-sm-4">
+           
+             @Html.DropDownListFor(model => model.SchoolIds, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "Academic" })
+            </div>
+
+        @Html.LabelFor(m => m.AcademicYear, new { @class = "col-sm-2 control-label" })
+
+
+      
+        <div class="col-sm-4">
+           @* @Html.DropDownListFor(model => model.AcademicYear, listItems, "", new { @class = "form-control", @placeholder = "Academic Year", @onchange = "loadyrSub(this.value)"})*@
+             @Html.DropDownListFor(model => model.AcademicYear, ViewBag.AcademicYear as SelectList, "", new { @class = "form-control", @placeholder = "Academic" , @onchange = "loadyrSub(this.value)"})
+            </div>
+          <div class="form-group"></div>
+       
+   
+
+        @Html.LabelFor(m => m.SubjectNamel, new { @class = "col-sm-2 control-label" })
 
         <div class="col-sm-4">
             @Html.DropDownListFor(model => model.SubjectId, ViewBag.SubjectscldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
@@ -100,8 +41,7 @@
             @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
 
         </div>
-    </div>
-    <div class="form-group">
+   
         @Html.LabelFor(m => m.SubjectCategoryId, new { @class = "col-sm-2 control-label" })
 
         <div class="col-sm-4">
@@ -110,10 +50,11 @@
             @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
 
         </div>
-
-
-        <div class="col-sm-2">
-            <button  id="btnAddSclSubjects" onclick="AddSclSubjects()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+   
+      <br /><br /><br />
+      <div class="form-group">
+        <div class="col-sm-1" style=" margin-left:90%">
+            <button  type="button" id="btnAddSclSubjects" onclick="AddSclSubjects()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
         </div>
         </div>
         <div class="hr-dashed"></div>
@@ -138,14 +79,14 @@
     var loadyrSub = function (value) {
         debugger
 
-        var ssid = $('#SchoolId').val();
+        var ssid = $('#SchoolIds').val();
         $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + value + '&SchoolId=' + ssid);
     }
 
 
     var AddSclSubjects = function () {
 
-        var ssid2 = $('#SchoolId').val();
+        var ssid2 = $('#SchoolIds').val();
         //debugger
         var myformdata = $("#FrmSubject").serialize();
 
@@ -167,7 +108,10 @@
                
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + result + '&SchoolId=' + ssid2);
+                    // $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + result + '&SchoolId=' + ssid2);
+
+                    var res = result.split("!");
+                    $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + res[0] + '&SchoolId='+ res[1] );
                     $("#SuccesLable").text("Subject Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -187,9 +131,7 @@
 
 
                 }
-                else {
-
-                }
+             
 
             }
 

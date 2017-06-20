@@ -15,16 +15,12 @@ namespace GDWEBSolution.Controllers.Teacher
     public class TeacherCategoryController : Controller
     {
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        //
-        // GET: /TeacherCategory/
 
         public ActionResult Index()
         {
-
-            List<tblTeacherCategory> Categorylist = Connection.tblTeacherCategories.ToList();
-
+            var Category = Connection.GDgetAllTeacherCategory("Y");
+            List<GDgetAllTeacherCategory_Result> Categorylist = Category.ToList();
             TeacherCategoryModel tcm = new TeacherCategoryModel();
-
             List<TeacherCategoryModel> tcmlist = Categorylist.Select(x => new TeacherCategoryModel
             {
                 TeacherCategoryId = x.TeacherCategoryId,
@@ -36,36 +32,23 @@ namespace GDWEBSolution.Controllers.Teacher
                 ModifiedDate = x.ModifiedDate
 
             }).ToList();
-
-
-
             return View(tcmlist);
         }
-
-        //
-        // GET: /TeacherCategory/Details/5
 
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        //
-
         public ActionResult ShowAddCategoryModel(int TeacherCategoryID)
         {
             return PartialView("AddTeacherCategory");
         }
 
-        // GET: /TeacherCategory/Create
-
         public ActionResult Create()
         {
             return View();
         }
-
-        //
-        // POST: /TeacherCategory/Create
 
         [HttpPost]
         public ActionResult Create(TeacherCategoryModel Model)
@@ -73,21 +56,16 @@ namespace GDWEBSolution.Controllers.Teacher
             try
             {
                 
-
                 tblTeacherCategory TCategory = new tblTeacherCategory();
 
                 TCategory.CreatedBy = "ADMIN";
                 TCategory.CreatedDate = DateTime.Now;
-                if (Model.IsActiveBool == true){TCategory.IsActive = "Y";}
-                else { TCategory.IsActive = "N"; }
+                TCategory.IsActive = "Y";
                 TCategory.TeacherCategoryId = 0;
                 TCategory.TeacherCategoryName = Model.TeacherCategoryName;
 
                 Connection.tblTeacherCategories.Add(TCategory);
                 Connection.SaveChanges();
-
-                //return View();
-
                 return RedirectToAction("Index");
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
@@ -114,37 +92,30 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             return PartialView("AddTeacherCategory");
         }
-        //
-        // GET: /TeacherCategory/Edit/5
 
         public ActionResult Edit(int CategoryId)
         {
             TeacherCategoryModel TModel = new TeacherCategoryModel();
 
             tblTeacherCategory TCtable = Connection.tblTeacherCategories.SingleOrDefault(x =>x.TeacherCategoryId == CategoryId);
-            TModel.IsActive = TCtable.IsActive;
-            if(TCtable.IsActive.Equals("Y")){ TModel.IsActiveBool = true;}
-            else{TModel.IsActiveBool = false;}
+        
             TModel.TeacherCategoryName = TCtable.TeacherCategoryName;
             TModel.TeacherCategoryId = TCtable.TeacherCategoryId;
+            TModel.ModifiedBy = "ADMIN"; //User session needed
+            TModel.ModifiedDate = DateTime.Now;
 
             return PartialView("EditTeacherCategory",TModel);
         }
-
-        //
-        // POST: /TeacherCategory/Edit/5
 
         [HttpPost]
         public ActionResult Edit(TeacherCategoryModel Model)
         {
             try
-            {
-               
+            {              
                 tblTeacherCategory TCtable = Connection.tblTeacherCategories.SingleOrDefault(x => x.TeacherCategoryId == Model.TeacherCategoryId);
-
-                if (Model.IsActiveBool == true) { TCtable.IsActive = "Y"; }
-                else { TCtable.IsActive = "N"; }
                 TCtable.TeacherCategoryName = Model.TeacherCategoryName;
+                TCtable.ModifiedBy = "ADMIN"; ;
+                TCtable.ModifiedDate = DateTime.Now;
                 Connection.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -155,13 +126,10 @@ namespace GDWEBSolution.Controllers.Teacher
             }
         }
 
-
         public ActionResult ShowDeleteCategoryModel(int TeacherCategoryID)
         {
             return PartialView("AddTeacherCategory");
         }
-        //
-        // GET: /TeacherCategory/Delete/5
 
         public ActionResult Delete(int CategoryId)
         {
@@ -170,21 +138,19 @@ namespace GDWEBSolution.Controllers.Teacher
             return PartialView("DeleteTeacherCategory",TModel);
         }
 
-        //
-        // POST: /TeacherCategory/Delete/5
-
         [HttpPost]
         public ActionResult Delete(TeacherCategoryModel Model)
         {
             try
             {
-                tblTeacherCategory TCtable = Connection.tblTeacherCategories.Find(Model.TeacherCategoryId);
-                Connection.tblTeacherCategories.Remove(TCtable);
+                tblTeacherCategory TCtable = Connection.tblTeacherCategories.SingleOrDefault(x => x.TeacherCategoryId == Model.TeacherCategoryId);
+                TCtable.TeacherCategoryId = Model.TeacherCategoryId;
+                TCtable.ModifiedBy = "ADMIN"; ;
+                TCtable.IsActive = "N";
+                TCtable.ModifiedDate = DateTime.Now;
                 Connection.SaveChanges();
-
-                
+             
                 return Json(true,JsonRequestBehavior.AllowGet);
-                //return RedirectToAction("Index");
             }
             catch
             {
