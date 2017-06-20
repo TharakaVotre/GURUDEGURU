@@ -3251,5 +3251,31 @@ namespace GDWEBSolution.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTsetStudentOptionalSubject", schoolIdParameter, gradeIdParameter, createdByParameter, isActiveParameter, academicYearParameter, studentIdParameter, classIdParameter, subjectIdParameter);
         }
+    
+        public virtual ObjectResult<SMGT_getSchoolClassTeachers_Result> SMGT_getSchoolClassTeachers(string schoolid, string accademicYear)
+        {
+            var schoolidParameter = schoolid != null ?
+                new ObjectParameter("Schoolid", schoolid) :
+                new ObjectParameter("Schoolid", typeof(string));
+    
+            var accademicYearParameter = accademicYear != null ?
+                new ObjectParameter("AccademicYear", accademicYear) :
+                new ObjectParameter("AccademicYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchoolClassTeachers_Result>("SMGT_getSchoolClassTeachers", schoolidParameter, accademicYearParameter);
+        }
+    
+        public virtual ObjectResult<SMGT_getSchoolClassTeachersList_Result> SMGT_getSchoolClassTeachersList(string schoolid, string accademicYear)
+        {
+            var schoolidParameter = schoolid != null ?
+                new ObjectParameter("Schoolid", schoolid) :
+                new ObjectParameter("Schoolid", typeof(string));
+    
+            var accademicYearParameter = accademicYear != null ?
+                new ObjectParameter("AccademicYear", accademicYear) :
+                new ObjectParameter("AccademicYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchoolClassTeachersList_Result>("SMGT_getSchoolClassTeachersList", schoolidParameter, accademicYearParameter);
+        }
     }
 }

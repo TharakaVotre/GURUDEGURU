@@ -38,6 +38,105 @@
         </div>
     </div>
 </div>
+<div class ="row">
+    <div class ="col-md-12" id="classteacherview">
+           <div class="panel panel-default">
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            @*<th>
+                                @Html.DisplayNameFor(model => model.TeacherId)
+                            </th>*@
+@*                            <th>
+                                @Html.DisplayNameFor(model => model.UserId)
+                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.TeacherName)
+                            </th>
+                            @*<th>
+                                @Html.DisplayNameFor(model => model.Address1)
+                            </th>*@
+                            @*<th>
+                                @Html.DisplayNameFor(model => model.TeacherCategoryName)
+                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.GradeName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ClassName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AccedamicYear)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model.ClassTeacherList)
+                            {
+                            <tr>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.TeacherId)
+                                </td>*@
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.UserId)
+                                </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TeacherName)
+                                </td>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.Address1)
+                                    @Html.DisplayFor(modelItem => item.Address2)
+                                    @Html.DisplayFor(modelItem => item.Address3)
+                                </td>*@
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.TeacherCategoryName)
+                                </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.GradeName)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClassName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AccedamicYear)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                                </td>
+                                <td align="center">
+                                    @*<div class="btn-group">
+                                        <button type="button" class="btn btn-primary" onclick="DetailsView(@item.TeacherId)"><span class="fa fa-info"></span></button>
+                                        <button type="button" class="btn btn-primary" onclick='EditView(@item.TeacherId,"@item.Name")'><span class="fa fa-pencil"></span></button>
+                                        <button type="button" class="btn btn-primary" onclick="DeleteView(@item.TeacherId)"><span class="fa fa-trash"></span></button>
+                                    </div>*@
+@*                                    <a href="#" class="hvr-buzz-out" onclick="DetailsView(@item.TeacherId)">Detail </a> |
+                                    <a href="#" class="hvr-buzz-out" onclick='EditView(@item.TeacherId,"@item.Name")'>Edit </a> |*@
+                                    <a href="#" class="hvr-buzz-out" onclick="DeleteView(@item.TeacherId)">Delete</a>
+                                </td>
+                            </tr>
+    
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="myModal" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
     <div class="modal-dialog">
         <div class="modal-content" id="MyModelBody">
@@ -98,6 +197,7 @@
                     $("#SuccesLable").text("Class Teacher Added");
 
                     $("#SuccesModel").modal("show");
+                    //$('#classteacherview').load('/Teacher/ShowClassTeachers');
                 }
                 else if (result == "Exception") {
                     $("#ErrorLable").text("Exception Error Occurd");
@@ -129,5 +229,7 @@
               allowClear: true,
               width: '100%'
           });
+
+         // $('#classteacherview').load('/Teacher/ShowClassTeachers');
       });
   </script>

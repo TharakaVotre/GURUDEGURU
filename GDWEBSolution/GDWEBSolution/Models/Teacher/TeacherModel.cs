@@ -74,6 +74,7 @@ namespace GDWEBSolution.Models.Teacher
 
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Date of Birth *")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> DateOfBirth { get; set; }
 
         [Display(Name = "Created By")]

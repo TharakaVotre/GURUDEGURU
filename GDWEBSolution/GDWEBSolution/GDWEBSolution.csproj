@@ -512,6 +512,9 @@
     <Compile Include="Models\SMGT_getSchoolClassTeachersList_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMGT_getSchoolClassTeachers_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SMGT_getSchoolExactivityParent_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -1334,14 +1337,12 @@
     <Content Include="Views\MaintainSubject\EditView.cshtml" />
     <Content Include="Views\MaintainSubject\Index.cshtml" />
     <Content Include="Views\SPMessage\ViewMessage.cshtml" />
-    <Content Include="Views\Teacher\TeacherSchool.cshtml" />
     <Content Include="Views\SchoolCalender\AddView.cshtml" />
     <Content Include="Views\SchoolCalender\DeleteView.cshtml" />
     <Content Include="Views\SchoolCalender\EditView.cshtml" />
     <Content Include="Views\SchoolCalender\Index.cshtml" />
     <Content Include="Views\SchoolCalender\ParentView.cshtml" />
     <Content Include="Views\SPMessage\ViewMessage.cshtml" />
-    <Content Include="Views\Teacher\TeacherSchool.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\User\NewUser.cshtml" />
@@ -1441,6 +1442,37 @@
     <Content Include="Views\School\ShowSchoolsubjects.cshtml" />
     <Content Include="Views\School\Subject.cshtml" />
     <Content Include="Views\School\Success.cshtml" />
+    <Content Include="Views\Student\Create.cshtml" />
+    <Content Include="Views\Student\Delete.cshtml" />
+    <Content Include="Views\Student\Detail.cshtml" />
+    <Content Include="Views\Student\Edit.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Student\stdexclist.cshtml" />
+    <Content Include="Views\Student\StudentEXtra.cshtml" />
+    <Content Include="Views\StudentReport\AttentionRequiredSubjectsParents.cshtml" />
+    <Content Include="Views\StudentReport\ClassReports.cshtml" />
+    <Content Include="Views\StudentReport\Index.cshtml" />
+    <Content Include="Views\StudentReport\StudantReports.cshtml" />
+    <Content Include="Views\StudentReport\StudentInClasss.cshtml" />
+    <Content Include="Views\StudentReport\StudentInExtraCurriculerActivity.cshtml" />
+    <Content Include="Views\StudentReport\StudentInSubjects.cshtml" />
+    <Content Include="Views\StudentReport\StudentsSubjects.cshtml" />
+    <Content Include="Views\StudentReport\StudentSubjectIndex.cshtml" />
+    <Content Include="Views\StudentGradeAdvance\DeleteView.cshtml" />
+    <Content Include="Views\StudentGradeAdvance\Detail.cshtml" />
+    <Content Include="Views\StudentGradeAdvance\EditView.cshtml" />
+    <Content Include="Views\StudentGradeAdvance\Index.cshtml" />
+    <Content Include="Views\StudentGradeAdvance\UpdateAccedemicYear.cshtml" />
+    <Content Include="Views\Student\DeleteStudentEXactvity.cshtml" />
+    <Content Include="Views\Shared\Forbidden.cshtml" />
+    <Content Include="Views\Event\Calendar.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\Logout.cshtml" />
+    <Content Include="Views\Home\PasswordChange.cshtml" />
+    <Content Include="Views\Teacher\ExtraAcitvityDView.cshtml" />
+    <Content Include="Views\Teacher\TeacherSubjectDetails.cshtml" />
+    <Content Include="Views\Teacher\QualificationListDView.cshtml" />
+    <Content Include="Views\Teacher\ClassTeacherView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attachments\" />
