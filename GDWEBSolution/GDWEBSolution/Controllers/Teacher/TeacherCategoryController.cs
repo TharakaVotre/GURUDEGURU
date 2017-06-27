@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
@@ -16,6 +17,7 @@ namespace GDWEBSolution.Controllers.Teacher
     {
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
 
+        [UserFilter(Function_Id = "TCINX")]
         public ActionResult Index()
         {
             var Category = Connection.GDgetAllTeacherCategory("Y");
@@ -35,19 +37,9 @@ namespace GDWEBSolution.Controllers.Teacher
             return View(tcmlist);
         }
 
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         public ActionResult ShowAddCategoryModel(int TeacherCategoryID)
         {
             return PartialView("AddTeacherCategory");
-        }
-
-        public ActionResult Create()
-        {
-            return View();
         }
 
         [HttpPost]
@@ -87,7 +79,6 @@ namespace GDWEBSolution.Controllers.Teacher
             } 
         }
 
-
         public ActionResult ShowEditCategoryModel(int TeacherCategoryID)
         {
             return PartialView("AddTeacherCategory");
@@ -97,7 +88,8 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             TeacherCategoryModel TModel = new TeacherCategoryModel();
 
-            tblTeacherCategory TCtable = Connection.tblTeacherCategories.SingleOrDefault(x =>x.TeacherCategoryId == CategoryId);
+            tblTeacherCategory TCtable = Connection.tblTeacherCategories.SingleOrDefault(
+                                         x =>x.TeacherCategoryId == CategoryId);
         
             TModel.TeacherCategoryName = TCtable.TeacherCategoryName;
             TModel.TeacherCategoryId = TCtable.TeacherCategoryId;
@@ -112,7 +104,8 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             try
             {              
-                tblTeacherCategory TCtable = Connection.tblTeacherCategories.SingleOrDefault(x => x.TeacherCategoryId == Model.TeacherCategoryId);
+                tblTeacherCategory TCtable = Connection.tblTeacherCategories.SingleOrDefault(
+                                             x => x.TeacherCategoryId == Model.TeacherCategoryId);
                 TCtable.TeacherCategoryName = Model.TeacherCategoryName;
                 TCtable.ModifiedBy = "ADMIN"; ;
                 TCtable.ModifiedDate = DateTime.Now;
@@ -143,7 +136,8 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             try
             {
-                tblTeacherCategory TCtable = Connection.tblTeacherCategories.SingleOrDefault(x => x.TeacherCategoryId == Model.TeacherCategoryId);
+                tblTeacherCategory TCtable = Connection.tblTeacherCategories.SingleOrDefault(
+                                             x => x.TeacherCategoryId == Model.TeacherCategoryId);
                 TCtable.TeacherCategoryId = Model.TeacherCategoryId;
                 TCtable.ModifiedBy = "ADMIN"; ;
                 TCtable.IsActive = "N";

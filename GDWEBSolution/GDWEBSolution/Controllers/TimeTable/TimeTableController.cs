@@ -68,7 +68,8 @@ namespace GDWEBSolution.Controllers.TimeTable
 
         public ActionResult ShowGradeClasses(string GradeId)
         {
-            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" 
+                                                                    && r.GradeId == GradeId).ToList();
             ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
 
             List<tblDaysOfWeek> DayList = Connection.tblDaysOfWeeks.ToList();
@@ -89,7 +90,8 @@ namespace GDWEBSolution.Controllers.TimeTable
 
         public ActionResult ShowGradeClassesView(string GradeId)
         {
-            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" 
+                                                                    && r.GradeId == GradeId).ToList();
             ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
 
             return PartialView("LoadClass");

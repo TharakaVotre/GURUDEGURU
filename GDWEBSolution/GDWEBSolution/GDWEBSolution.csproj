@@ -784,6 +784,7 @@
     <Content Include="Content\css\dataTables.bootstrap.min.css" />
     <Content Include="Content\css\datatables.min.css" />
     <Content Include="Content\css\datepicker.css" />
+    <Content Include="Content\css\daterangepicker.css" />
     <Content Include="Content\css\fileinput.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\hover-min.css" />
@@ -1130,6 +1131,7 @@
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\chartData.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\fileinput.js" />
     <Content Include="Content\css\rstyle.css" />
     <EntityDeploy Include="Models\DBEntityModel.edmx">
@@ -1174,6 +1176,8 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\paginathing.js" />
     <Content Include="Scripts\select2.full.js" />
     <Content Include="Scripts\timepicki.js" />

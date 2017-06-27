@@ -13,7 +13,7 @@
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">New Teacher</a></li>
-                    <li class=""><a href="#school" data-toggle="tab" aria-expanded="false">Teacher School</a></li>
+                    @*<li class=""><a href="#school" data-toggle="tab" aria-expanded="false">Teacher School</a></li>*@
                     <li class=""><a href="#qualification" data-toggle="tab" aria-expanded="false">Qualification</a></li>
                     <li class=""><a href="#extra" data-toggle="tab" aria-expanded="false">Extra Curricular</a></li>
                     <li class=""><a href="#subjects" data-toggle="tab" aria-expanded="false">Subjects</a></li>
@@ -55,10 +55,10 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-sm-2 control-label" })
                                 <div class="col-sm-3">
-                                    @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", @type = "date", @placeholder = "mm/dd/yyyy" })
+                                    @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", @type = "date",@name="date", @placeholder = "mm/dd/yyyy" })
                                 </div>
                                 <div class="col-sm-3">
-                                    @Html.ValidationMessageFor(model => model.DateOfBirth, null, new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.DateOfBirth, null, new { @class = "text-danger"  })
                                 </div>
                             </div>
                             <div class="form-group">
@@ -142,6 +142,7 @@
                                 </div>
                             </div>
                             <div class="hr-dashed"></div>
+                            @if(@ViewBag._SeesionSchoolId == ""){
                             <div class="form-group">
                                 @Html.LabelFor(m => m.SchoolID, new { @class = "col-sm-2 control-label" })
                                 <div class="col-sm-7">
@@ -151,6 +152,10 @@
                                     @Html.ValidationMessageFor(model => model.SchoolID, null, new { @class = "text-danger" })
                                 </div>
                             </div>
+                            }
+                            else{
+                                @Html.HiddenFor(m => m.SchoolID, new { @Value = @ViewBag._SeesionSchoolId })
+                            }
                             @*<div class="form-group">
                                 @Html.LabelFor(m => m.UserCategory, new { @class = "col-sm-2 control-label" })
                                 <div class="col-sm-7">
@@ -202,11 +207,11 @@
 
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="school">
+                    @*<div class="tab-pane fade" id="school">*@
                        @* @{Html.RenderPartial("Qualification");}*@
 
                         @*@{Html.RenderPartial("Qualification", new { TeacherId = 0 });}*@
-                    </div>
+                    @*</div>*@
                     <div class="tab-pane fade" id="qualification">
                         @{Html.RenderPartial("Qualification");}
                         <div id="showqualification">
@@ -297,6 +302,13 @@
               allowClear: true,
               width: '100%'
           });
+          var date_input = $('input[name="date"]'); //our date input has the name "date"
+             date_input.datepicker({
+              format: 'mm/dd/yyyy',
+              todayHighlight: true,
+              autoclose: true,
+          })
+
       });
   </script>
 <!--Notification Modals Ends -->
@@ -371,5 +383,19 @@
         })
     }
 
-
+    $(document).ready(function () {
+        var date_input = $('input[name="     $(document).ready(function () {
+        var date_input = $('input[name="date"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
+    });"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
+    });
 </script>

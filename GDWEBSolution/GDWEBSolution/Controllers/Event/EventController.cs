@@ -20,7 +20,7 @@ namespace GDWEBSolution.Controllers.Event
 
         UserSession _session = new UserSession();
 
-        //[UserFilter(Function_Id = "EVENT2")]
+        [UserFilter(Function_Id = "EINDX")]
         public ActionResult Index()
         {
             List<tblEventcategory> EventList = Connection.tblEventcategories.ToList();
@@ -28,6 +28,7 @@ namespace GDWEBSolution.Controllers.Event
             return View();
         }
 
+        [UserFilter(Function_Id = "ECLEN")]
         public ActionResult Calendar()
         {
             return View();
@@ -64,6 +65,7 @@ namespace GDWEBSolution.Controllers.Event
             return View();
         }
 
+        [UserFilter(Function_Id = "ECRET")]
         [HttpPost]
         public ActionResult Create(EventModel Model)
         {
@@ -94,7 +96,8 @@ namespace GDWEBSolution.Controllers.Event
                 }
                 else
                 {
-                    tblEventCalendar Events = Connection.tblEventCalendars.SingleOrDefault(x => x.EventNo == Model.EventNo);
+                    tblEventCalendar Events = Connection.tblEventCalendars.SingleOrDefault(
+                                              x => x.EventNo == Model.EventNo);
 
                     Events.CreatedBy = _session.User_Id;
                     Events.CreatedDate = DateTime.Now;

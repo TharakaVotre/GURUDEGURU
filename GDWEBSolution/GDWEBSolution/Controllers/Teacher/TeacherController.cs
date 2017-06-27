@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Errorlog;
 using GDWEBSolution.Util;
 using System.Transactions;
+using GDWEBSolution.Models.User;
 /*
  * Created Date : 2017/2/23
  * Author : Tharaka Madusanka
@@ -22,6 +23,8 @@ namespace GDWEBSolution.Controllers.Teacher
         string TeacherCatID = System.Configuration.ConfigurationManager.AppSettings["Teacher"];
 
         string Password = DECKey.Substring(10);
+
+        UserSession _session = new UserSession();
 
         TeacherModel tcm = new TeacherModel();
 
@@ -111,13 +114,16 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             CQExCViewBags();
             SubjctViewBags();
+            ViewBag._SeesionSchoolId = _session.School_Id;
             return View();
         }
 
         private void CQExCViewBags()
         {
             List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
-            ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
+            ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist,
+                                                            "TeacherCategoryId",
+                                                            "TeacherCategoryName");
 
             List<tblQualification> TQlist = Connection.tblQualifications.ToList();
             ViewBag.QualificationList = new SelectList(TQlist, "QualificationId", "QualificationName");
@@ -263,7 +269,8 @@ namespace GDWEBSolution.Controllers.Teacher
 
         public ActionResult ShowGradeClasses(string GradeId)
         {
-            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && 
+                                         r.GradeId == GradeId).ToList();
             ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
 
             var GradeSubject = Connection.SMGTgetGradeSubjects(GradeId).ToList();//Need to Pass a Session Schoolid
@@ -281,7 +288,8 @@ namespace GDWEBSolution.Controllers.Teacher
 
         public ActionResult ShowGradeClassesForTC(string GradeId)
         {
-            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && 
+                                         r.GradeId == GradeId).ToList();
             ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
 
             return PartialView("GradeClasses");
@@ -385,7 +393,8 @@ namespace GDWEBSolution.Controllers.Teacher
             try
             {
                 string result = "Error";
-                var count = Connection.tblTeacherQualifications.Count(u => u.TeacherId == Model.Teacher_Id && u.QualificationId == Model.QualificationId);
+                var count = Connection.tblTeacherQualifications.Count(u => u.TeacherId == Model.Teacher_Id && 
+                            u.QualificationId == Model.QualificationId);
                 if (count == 0)
                 {
                     tblTeacherQualification NewQ = new tblTeacherQualification();
@@ -422,7 +431,9 @@ namespace GDWEBSolution.Controllers.Teacher
             try
             {
                 string result = "Error";
-                var count = Connection.tblTeacherExtraCurricularActivities.Count(u => u.TeacherId == Model.TeacherID && u.ActivityCode == Model.ActivityCode);
+                var count = Connection.tblTeacherExtraCurricularActivities.Count(
+                                            u => u.TeacherId == Model.TeacherID && 
+                                            u.ActivityCode == Model.ActivityCode);
                 if (count == 0)
                 {
 
@@ -460,8 +471,8 @@ namespace GDWEBSolution.Controllers.Teacher
             {
                 string result = "Error";
                 var count = Connection.tblTeacherSubjects.Count(
-                    u => u.ClassId == Model.ClassId &&
-                    u.GradeId == Model.GradeId && u.SubjectId == Model.SubjectId);
+                                        u => u.ClassId == Model.ClassId &&
+                                        u.GradeId == Model.GradeId && u.SubjectId == Model.SubjectId);
                 if (count == 0)
                 {
                     tblTeacherSubject NewQ = new tblTeacherSubject();
@@ -502,10 +513,12 @@ namespace GDWEBSolution.Controllers.Teacher
                 string result = "Error";
                 var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == "CKC").FirstOrDefault();
                // List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
-                int countt = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId && u.AccedamicYear == AY.AccadamicYear);
+                int countt = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId && 
+                             u.AccedamicYear == AY.AccadamicYear);
 
                 int Ccount = Connection.tblClassTeachers.Count(u => u.ClassId == Model.ClassId 
-                    && u.AccedamicYear == AY.AccadamicYear && u.GradeId == Model.GradeId && u.SchoolId == "CKC" );
+                             && u.AccedamicYear == AY.AccadamicYear && u.GradeId == Model.GradeId 
+                             && u.SchoolId == "CKC" );
 
                 if (countt != 0)
                 {
@@ -581,7 +594,10 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             try
             {
-                tblTeacherExtraCurricularActivity Tble = Connection.tblTeacherExtraCurricularActivities.Find(Model.TeacherID, Model.SchoolId, Model.ActivityCode);
+                tblTeacherExtraCurricularActivity Tble = Connection.tblTeacherExtraCurricularActivities.Find
+                                                         (Model.TeacherID,
+                                                          Model.SchoolId, 
+                                                          Model.ActivityCode);
                 Connection.tblTeacherExtraCurricularActivities.Remove(Tble);
                 Connection.SaveChanges();
                 return Json(Model.TeacherID, JsonRequestBehavior.AllowGet);
@@ -606,7 +622,10 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             try
             {
-                tblTeacherQualification Tble = Connection.tblTeacherQualifications.Find(Model.Teacher_Id, Model.SchoolId, Model.QualificationId);
+                tblTeacherQualification Tble = Connection.tblTeacherQualifications.Find
+                                               (Model.Teacher_Id, 
+                                                Model.SchoolId, 
+                                                Model.QualificationId);
                 Connection.tblTeacherQualifications.Remove(Tble);
                 Connection.SaveChanges();
                 return Json(Model.Teacher_Id, JsonRequestBehavior.AllowGet);
@@ -671,7 +690,9 @@ namespace GDWEBSolution.Controllers.Teacher
         public ActionResult ShowEditTeacher(long TeacherId)
         {
             List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
-            ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
+            ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, 
+                                                            "TeacherCategoryId", 
+                                                            "TeacherCategoryName");
 
             List<tblSchool> TSlist = Connection.tblSchools.ToList();
             ViewBag.ETSchools = new SelectList(TSlist, "SchoolId", "SchoolName");
@@ -697,7 +718,8 @@ namespace GDWEBSolution.Controllers.Teacher
             TModel.TeacherId = TCtable.TeacherId;
             TModel.TeacherCategoryId = TCtable.TeacherCategoryId;
 
-            tblTeacherSchool Tstbl = Connection.tblTeacherSchools.SingleOrDefault(x => x.TeacherId == TeacherId);
+            tblTeacherSchool Tstbl = Connection.tblTeacherSchools.SingleOrDefault(
+                                        x => x.TeacherId == TeacherId);
             TModel.SchoolID = Tstbl.SchoolId;
 
             return PartialView("EditTeacherDetailsView",TModel);
@@ -736,7 +758,8 @@ namespace GDWEBSolution.Controllers.Teacher
                 Newt.Name = Model.Name;
                 Newt.Passport = Model.Passport;
 
-                tblTeacherSchool Tstbl = Connection.tblTeacherSchools.SingleOrDefault(x => x.TeacherId == Model.TeacherId);
+                tblTeacherSchool Tstbl = Connection.tblTeacherSchools.SingleOrDefault(
+                                         x => x.TeacherId == Model.TeacherId);
                 Tstbl.SchoolId = Model.SchoolID;
 
                 Connection.SaveChanges();
@@ -804,7 +827,8 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             try
             {
-                tblClassTeacher TCtable = Connection.tblClassTeachers.SingleOrDefault(x => x.TeacherId == Model.TeacherId && 
+                tblClassTeacher TCtable = Connection.tblClassTeachers.SingleOrDefault(
+                                          x => x.TeacherId == Model.TeacherId && 
                     x.GradeId == Model.GradeId && 
                     x.ClassId == Model.ClassId && 
                     x.AccedamicYear == Model.AccedamicYear && 

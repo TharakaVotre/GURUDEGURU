@@ -24,7 +24,9 @@ namespace GDWEBSolution.Filters
 
             if (_session.User_Id != "" || _session.User_Category != "")
             {
-                var count = Connection.tblUserCategoryFunctions.Count(u => u.CategoryId == _session.User_Category && u.FunctionId == Function_Id);
+                var count = Connection.tblUserCategoryFunctions.Count(
+                                        u => u.CategoryId == _session.User_Category 
+                                        && u.FunctionId == Function_Id);
                 if (count == 0)
                 {
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary
@@ -42,7 +44,6 @@ namespace GDWEBSolution.Filters
                     {"controller", "Home"},
                     {"action", "Login"}
                 });
-
             }
             base.OnActionExecuting(filterContext);
         }

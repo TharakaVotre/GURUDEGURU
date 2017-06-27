@@ -45,14 +45,18 @@ namespace GDWEBSolution.Controllers.Message
 
             }).ToList();
             ViewBag.SchoolGrades = new SelectList(SchoolGradeList, "GradeId", "GradeName");
-            List<SMGT_getSchoolExactivity_Result> ex = Connection.SMGT_getSchoolExactivity(_session.School_Id).ToList();//Need to Pass a Session Schoolid
+            List<SMGT_getSchoolExactivity_Result> ex = Connection.SMGT_getSchoolExactivity(
+                                                       _session.School_Id).ToList();//Need to Pass a Session Schoolid
 
             ViewBag.SchoolExactivity = new SelectList(ex, "ActivityCode", "ActivityName");
 
             List<tblMessageType> MsgTypeList = Connection.tblMessageTypes.ToList();
-            ViewBag.MessageTypesDropdown = new SelectList(MsgTypeList, "MessageTypeId", "MessageTypeDescription");
+            ViewBag.MessageTypesDropdown = new SelectList(MsgTypeList, 
+                                                          "MessageTypeId", 
+                                                          "MessageTypeDescription");
 
-            var MsgId = Connection.tblParameters.Where(x => x.ParameterId == "PSMHS").Select(x => x.ParameterValue).SingleOrDefault();
+            var MsgId = Connection.tblParameters.Where(x => x.ParameterId == "PSMHS").Select(
+                                                       x => x.ParameterValue).SingleOrDefault();
             long a = Convert.ToInt64(MsgId) + 1;
 
             tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "PSMHS");
@@ -136,7 +140,8 @@ namespace GDWEBSolution.Controllers.Message
 
         public ActionResult ShowGradeClass(string GradeId)
         {
-            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == _session.School_Id && r.GradeId == GradeId).ToList();
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == _session.School_Id 
+                                                                     && r.GradeId == GradeId).ToList();
             ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
 
             return PartialView("loadClass");
@@ -144,7 +149,10 @@ namespace GDWEBSolution.Controllers.Message
 
         public ActionResult ShowParentByClass(string GradeId,string ClassId)
         {
-            List<SMGT_getSchoolGreadClassParent_Result> gcp = Connection.SMGT_getSchoolGreadClassParent(_session.School_Id, GradeId, ClassId).ToList();
+            List<SMGT_getSchoolGreadClassParent_Result> gcp = Connection.SMGT_getSchoolGreadClassParent(
+                                                              _session.School_Id,
+                                                              GradeId, 
+                                                              ClassId).ToList();
             ViewBag.GradeClassseParent = new MultiSelectList(gcp, "ParentId", "ParentName");
 
             return PartialView("loadParent");
@@ -152,7 +160,9 @@ namespace GDWEBSolution.Controllers.Message
 
         public ActionResult ShowParentByExActivity(string ExActivityId)
         {
-            List<SMGT_getSchoolExactivityParent_Result> exl = Connection.SMGT_getSchoolExactivityParent(_session.School_Id, ExActivityId).ToList();
+            List<SMGT_getSchoolExactivityParent_Result> exl = Connection.SMGT_getSchoolExactivityParent(
+                                                              _session.School_Id,
+                                                              ExActivityId).ToList();
             ViewBag.ExactParents = new MultiSelectList(exl, "ParentId", "ParentName");
 
             return PartialView("loadExParent");
@@ -273,7 +283,8 @@ namespace GDWEBSolution.Controllers.Message
                 tblSchoolToParentMessageAttachment Attachmentfile = new tblSchoolToParentMessageAttachment();
                 if (file != null)
                 {
-                    var Atid = Connection.tblParameters.Where(x => x.ParameterId == "SPMAS").Select(x => x.ParameterValue).SingleOrDefault();
+                    var Atid = Connection.tblParameters.Where(x => x.ParameterId == "SPMAS").Select(
+                                                              x => x.ParameterValue).SingleOrDefault();
                     AttachmentId = Convert.ToInt64(Atid);
                     long Next = AttachmentId + 1;
                     var fileName = Path.GetFileName(file.FileName);
@@ -286,7 +297,8 @@ namespace GDWEBSolution.Controllers.Message
                     Connection.tblSchoolToParentMessageAttachments.Add(Attachmentfile);
                     Connection.SaveChanges();
 
-                    tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "SPMAS");
+                    tblParameter TCtable = Connection.tblParameters.SingleOrDefault(
+                                           x => x.ParameterId == "SPMAS");
                     TCtable.ParameterValue = Next.ToString();
                     Connection.SaveChanges();
                     file.SaveAs(Server.MapPath("/Attachments/" + file.FileName));
@@ -307,7 +319,8 @@ namespace GDWEBSolution.Controllers.Message
         {
             try
             {
-                tblSchoolToParentMessageAttachment Tble = Connection.tblSchoolToParentMessageAttachments.Find(Model.SeqNo);
+                tblSchoolToParentMessageAttachment Tble = Connection.tblSchoolToParentMessageAttachments.Find(
+                                                          Model.SeqNo);
                 string path = Tble.AttachmentPath;
                 Connection.tblSchoolToParentMessageAttachments.Remove(Tble);
                 Connection.SaveChanges();
