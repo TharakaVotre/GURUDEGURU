@@ -37,6 +37,7 @@ namespace GDWEBSolution.Models
         public string ModifiedBy { get; set; }
         public int SchoolCategory { get; set; }
         public string IsActive { get; set; }
+        public string AccadamicYear { get; set; }
         public string SchoolCategoryName { get; set; }
     }
 }

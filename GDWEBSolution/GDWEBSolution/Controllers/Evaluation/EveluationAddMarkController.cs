@@ -1,6 +1,8 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Report;
 using GDWEBSolution.Models.Student;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +15,15 @@ namespace GDWEBSolution.Controllers.Evaluation
     {
         //
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string SchoolId = "Scl15241";
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string SchoolId = null;
+        string UserId = null;
         // GET: /EveluationAddMark/
-        
+
+      [UserFilter(Function_Id = "EvAdM")]
         public ActionResult Index()
         {
+            
             try
             {
 
@@ -38,8 +43,10 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         public JsonResult getSubject(string Gid, string cId)
         {
+            
             try
             {
+                SchoolId = USession.School_Id;
                 var states = Connection.GDgetGradeSubject(SchoolId, Gid, "Y");
                 List<SelectListItem> listates = new List<SelectListItem>();
                 listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -60,8 +67,10 @@ namespace GDWEBSolution.Controllers.Evaluation
         }
         public JsonResult getClassEveluation(string Gid, string cId)
         {
+            
             try
             {
+                SchoolId = USession.School_Id;
                 var states = Connection.GDgetClassEveluation(SchoolId, cId, Gid, "Y");
                 List<SelectListItem> listates = new List<SelectListItem>();
                 listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -82,7 +91,8 @@ namespace GDWEBSolution.Controllers.Evaluation
         }
         public JsonResult getClass(string id)
         {
-            try { 
+            try {
+                SchoolId = USession.School_Id;
             var states = Connection.GDgetGradeActiveClass(id, SchoolId, "Y");
             List<SelectListItem> listates = new List<SelectListItem>();
             listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -106,15 +116,16 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         private List<GDgetSchoolGrade_Result> GetGradeDropdown()
         {
-           
+            SchoolId = USession.School_Id;
             var Grade = Connection.GDgetSchoolGrade(SchoolId, "Y");
             List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
             return Gradelist;
            
         }
-
+         [UserFilter(Function_Id = "EvAdM")]
         public ActionResult AddStudentSubjectMark(string Eveluation,string GradeId,string ClassId,string SubjectId)
         {
+           
             try
             {
                 int subId = Convert.ToInt32(SubjectId);
@@ -146,11 +157,14 @@ namespace GDWEBSolution.Controllers.Evaluation
             }
         }
 
+         [UserFilter(Function_Id = "EvAdM")]
         public ActionResult Create(string[] Mark, string[] StudentId, string Eveluation, string SubjectId, string GradeId,string Comment)
-        { 
+        {
+           
             try
             {
-
+                SchoolId=USession.School_Id;
+                UserId = USession.User_Id;
                 long Eveluationseq=Convert.ToInt64(Eveluation);
                 int SubId=Convert.ToInt32(SubjectId);
                
@@ -179,10 +193,12 @@ namespace GDWEBSolution.Controllers.Evaluation
             }
         }
 
-
+         [UserFilter(Function_Id = "SubRe")]
         public ActionResult ShowResult(string Eveluation, string ClassId, string GradeId) {
+           
             try
             {
+                SchoolId = USession.School_Id;
                 var Subject = Connection.GDgetEveluationSubject(SchoolId, GradeId);
                 List<GDgetEveluationSubject_Result> Subjectlist = Subject.ToList();
 
@@ -228,10 +244,12 @@ namespace GDWEBSolution.Controllers.Evaluation
            
         }
 
-
+         [UserFilter(Function_Id = "EvAdM")]
         public ActionResult EditStudentResult(string EditEveluation, string EditClassId, string EditGradeId, string EditSubjectId)
         {
-            try { 
+           
+            try {
+                SchoolId = USession.School_Id;
             if (EditEveluation != null)
             {
                 Session["EditEveluation"] = EditEveluation;
@@ -274,8 +292,10 @@ namespace GDWEBSolution.Controllers.Evaluation
             }
         }
 
+         [UserFilter(Function_Id = "EvAdM")]
         public ActionResult Edit(string StudentId,string ResultId,string Mark)
         {
+           
             try
             {
                 StudentReportModel TModel = new StudentReportModel();
@@ -294,12 +314,15 @@ namespace GDWEBSolution.Controllers.Evaluation
 
             }
         }
-        
+
+         [UserFilter(Function_Id = "EvAdM")]
          [HttpPost]
         public ActionResult Edit(StudentReportModel Model)
         {
+            
             try
             {
+                UserId = USession.User_Id;
                 Connection.GDModifyStudentEveluationResult(Model.Seq, Model.Mark, UserId);
                 Connection.SaveChanges();
 
@@ -311,10 +334,11 @@ namespace GDWEBSolution.Controllers.Evaluation
                 return View();
             }
         }
-       
 
+         [UserFilter(Function_Id = "EvAdM")]
         public ActionResult Delete(int ResultId)
         {
+           
             try
             {
                 StudentReportModel TModel = new StudentReportModel();
@@ -331,12 +355,14 @@ namespace GDWEBSolution.Controllers.Evaluation
         
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "EvAdM")]
         [HttpPost]
         public ActionResult Delete(StudentReportModel Model)
         {
+            
             try
             {
+                UserId = USession.User_Id;
                 Connection.GDdeleteStudentEveluationResult(Model.Seq, UserId,"N");
                 Connection.SaveChanges();
 

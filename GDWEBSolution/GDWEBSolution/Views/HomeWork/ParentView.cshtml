@@ -50,6 +50,9 @@
                 <thead>
                     <tr>
                         <th>
+                            @Html.DisplayNameFor(model => model.CreatedDate)
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(model => model.GradeId)
                         </th>
                         <th>
@@ -62,7 +65,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.DueDate)
                         </th>
-                        
+                         
                         <th></th>
                     </tr>
                 </thead>
@@ -72,7 +75,9 @@
                         foreach (var item in Model)
                         {
                             <tr>
-                                
+                                 <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Grade)
                                 </td>

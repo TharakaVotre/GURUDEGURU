@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,33 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainFunction/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        string UserId = null;
+        UserSession USession = new UserSession();
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+               
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
+            }
+        }
+           [UserFilter(Function_Id = "MaFun")]
         public ActionResult Index()
         {
+             
             try{
             var Function = Connection.GDgetAllFunction("Y");
             List<GDgetAllFunction_Result> Functionlist = Function.ToList();
@@ -63,18 +89,21 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+         [UserFilter(Function_Id = "MaFun")]
         public ActionResult Create()
         {
+            
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+         [UserFilter(Function_Id = "MaFun")]
         [HttpPost]
         public ActionResult Create(tblFunction Model)
         {
+             
+            UserId = USession.User_Id;
             try
             {
 
@@ -85,23 +114,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception ex)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        Errorlog.ErrorManager.LogError(dbEx);
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
             }
         }
 
@@ -113,9 +129,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaFun")]
         public ActionResult Edit(string Code)
         {
+             
             try{
                 string url = Request.Url.AbsoluteUri;
             FunctionModel TModel = new FunctionModel();
@@ -138,10 +155,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaFun")]
         [HttpPost]
         public ActionResult Edit(FunctionModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
 
@@ -168,9 +187,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaFun")]
         public ActionResult Delete(string Code)
         {
+             
             try
             {
                 FunctionModel TModel = new FunctionModel();
@@ -187,10 +207,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaFun")]
         [HttpPost]
         public ActionResult Delete(FunctionModel Model)
         {
+           
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteFunction("N", Model.FunctionId, UserId);

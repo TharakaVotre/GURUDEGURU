@@ -28,6 +28,14 @@ namespace GDWEBSolution.Models.Schools
         public string AdminName{ get; set; }
 
 
+        [Display(Name = " Changing Name")]
+       
+
+        //[Required(ErrorMessage = "Please enter your full SchoolId")]
+        public string ChangeAdminName { get; set; }
+
+
+
 
         [Display(Name = "School")]
         //[Required(ErrorMessage = "Please enter your full SchoolId")]
@@ -87,6 +95,12 @@ namespace GDWEBSolution.Models.Schools
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string AdminPersonalEmail { get; set; }
 
+        [Display(Name = " Changing Email")]
+ 
+        public string CAdminPersonalEmail { get; set; }
+
+
+
         [Display(Name = "Password")]
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
@@ -110,6 +124,13 @@ namespace GDWEBSolution.Models.Schools
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public string PersonalMobile { get; set; }
+
+
+        [Display(Name = "Changing Contact No")]
+
+
+    
+        public string CPersonalMobile { get; set; }
 
 
         [Display(Name = "Address3")]

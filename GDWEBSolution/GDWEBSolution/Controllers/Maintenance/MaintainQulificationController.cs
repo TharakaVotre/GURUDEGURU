@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,13 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainQulification/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+
+      [UserFilter(Function_Id = "MaQul")]
         public ActionResult Index()
         {
+             
             try
             {
                 var Qualification = Connection.GDgetAllQualification("Y");
@@ -65,18 +71,21 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+ [UserFilter(Function_Id = "MaQul")]
         public ActionResult Create()
         {
+             
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+         [UserFilter(Function_Id = "MaQul")]
         [HttpPost]
         public ActionResult Create(tblQualification Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
 
@@ -115,9 +124,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaQul")]
         public ActionResult Edit(int Code)
         {
+            
             try{
             QulificationModel TModel = new QulificationModel();
 
@@ -139,10 +149,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaQul")]
         [HttpPost]
         public ActionResult Edit(QulificationModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
 
@@ -169,9 +181,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaQul")]
         public ActionResult Delete(int Code)
         {
+            
             try
             {
                 QulificationModel TModel = new QulificationModel();
@@ -188,10 +201,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaQul")]
         [HttpPost]
         public ActionResult Delete(QulificationModel Model)
         {
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteQualification("N", Model.QualificationId, UserId);

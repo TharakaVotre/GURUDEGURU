@@ -50,6 +50,10 @@
             <table id="zctb" class="display table table-bordered table-hover" >
                 <thead>
                     <tr>
+                         <th>
+                            @Html.DisplayNameFor(model => model.CreatedDate)
+
+                        </th>
                         <th>
                             @Html.DisplayNameFor(model => model.Grade)
 
@@ -78,6 +82,9 @@
                         foreach (var item in Model)
                     {
                             <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Grade)
                                     @Html.HiddenFor(modelItem => item.GradeId)

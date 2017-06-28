@@ -2,6 +2,8 @@
 using GDWEBSolution.Models.Parent;
 using GDWEBSolution.Models.Schools;
 using GDWEBSolution.Models.Student;
+using GDWEBSolution.Models.User;
+using GDWEBSolution.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,47 +17,123 @@ namespace GDWEBSolution.Controllers.Parent
     public class ParentController : Controller
     {
         string Sessparent="2";
-        string SessionSchool = "Scl11128";
+        string SessionSchool = "Scl13137";
+        static string DECKey = System.Configuration.ConfigurationManager.AppSettings["DecKey"];
+        string Password = DECKey.Substring(10);
+       
+
+        UserSession USession = new UserSession();
+      
 
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
+
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
+            }
+        }
+
         //
         // GET: /Parent/
         public ActionResult Index()
+
         {
-            var parent = Connection.SMGTGetParent("%", "%");
+            Authentication("PCF");
+            if (USession.User_Category == "SADMI") {
 
-            List<SMGTGetParent_Result> Parentlist = parent.Where(X=>X.ParentId !=-1).ToList();
-            StudentModel schl = new StudentModel();
+                var parent = Connection.SMGTGetParent("%", USession.School_Id);
 
-            List<ParentModel> Parenlist = Parentlist.Select(x => new ParentModel
+                List<SMGTGetParent_Result> Parentlist = parent.Where(X => X.ParentId != -1).ToList();
+                StudentModel schl = new StudentModel();
+
+                List<ParentModel> Parenlist = Parentlist.Select(x => new ParentModel
+                {
+                    ParentId = x.ParentId.ToString(),
+
+
+
+
+
+
+                    // ParentStudent=
+
+                    ParentName = x.ParentName,
+                    PersonalEmail = x.PersonalEmail,
+                    UserId = x.UserId,
+                    RelationshipId = x.RelationshipId,
+                    RelationshipName = x.RelashionshipName,
+                    HomeTelephone = x.HomeTelephone,
+
+                    IsActive = x.IsActive,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate
+
+                }).ToList();
+                return View(Parenlist);
+            
+            
+            
+            
+            }
+
+
+            else
             {
-                ParentId=x.ParentId.ToString(),
 
-               
+                var parent = Connection.SMGTGetParent("%", "%");
 
-                
+                List<SMGTGetParent_Result> Parentlist = parent.Where(X => X.ParentId != -1).ToList();
+                StudentModel schl = new StudentModel();
+
+                List<ParentModel> Parenlist = Parentlist.Select(x => new ParentModel
+                {
+                    ParentId = x.ParentId.ToString(),
 
 
-               // ParentStudent=
 
-                ParentName=x.ParentName,
-                PersonalEmail=x.PersonalEmail,
-                UserId=x.UserId,
-                RelationshipId=x.RelationshipId,
-               RelationshipName=x.RelashionshipName,
-               HomeTelephone=x.HomeTelephone,
 
-                IsActive = x.IsActive,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate
 
-            }).ToList();
-            return View(Parenlist);
+
+                    // ParentStudent=
+
+                    ParentName = x.ParentName,
+                    PersonalEmail = x.PersonalEmail,
+                    UserId = x.UserId,
+                    RelationshipId = x.RelationshipId,
+                    RelationshipName = x.RelashionshipName,
+                    HomeTelephone = x.HomeTelephone,
+
+                    IsActive = x.IsActive,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate
+
+                }).ToList();
+                return View(Parenlist);
+            }
         }
         //
         // GET: /Parent/Details/5
         public ActionResult Details(long ParentId)
         {
+
+            Authentication("PCF");
+
 
             ParentModel TModel = new ParentModel();
 
@@ -169,7 +247,12 @@ namespace GDWEBSolution.Controllers.Parent
         public ActionResult Create()
         {
 
-            List<tblParent> prntRlist = Connection.tblParents.OrderBy(X=>X.ParentName).Where(X => X.IsActive == "Y").ToList();
+            Authentication("PCF");
+
+          //  ViewBag.SchoolIDc = SessionSchool;
+
+            ViewBag.SchoolIDc = USession.School_Id;
+            List<tblParent> prntRlist = Connection.tblParents.OrderBy(X=>X.ParentName).Where(X => X.IsActive == "Y" && X.SchoolId==USession.School_Id).ToList();
             ViewBag.ParentlList = new SelectList(prntRlist, "ParentId", "ParentName");
 
             List<tblRelashionship> SRlist = Connection.tblRelashionships.Where(X=>X.IsActive=="Y").ToList();
@@ -198,6 +281,9 @@ namespace GDWEBSolution.Controllers.Parent
         [HttpPost]
         public ActionResult Create(ParentModel Model)
         {
+
+            Authentication("PCF");
+
             using (var scope = new TransactionScope())
             {
 
@@ -248,20 +334,23 @@ namespace GDWEBSolution.Controllers.Parent
 
 
 
-                        Connection.SMGTsetParent(Model.ParentName, Model.RelationshipId, Model.Address1, Model.Address2, Model.Address3, Model.HomeTelephone, Model.PersonalEmail, Model.PersonalMobile, Model.Occupation, Model.OfficeAddress1, Model.OfficeAddress2, Model.OfficeAddress3, Model.OfficePhone, Model.officeEmail, Model.NIC, Model.UserId, _path, Model.DateofBirth, Model.CreatedBy, Model.IsActive);
+                        Connection.SMGTsetParent(Model.ParentName, Model.RelationshipId, Model.Address1, Model.Address2, Model.Address3, Model.HomeTelephone, Model.PersonalEmail, Model.PersonalMobile, Model.Occupation, Model.OfficeAddress1, Model.OfficeAddress2, Model.OfficeAddress3, Model.OfficePhone, Model.officeEmail, Model.NIC, Model.UserId, _path, Model.DateofBirth, Model.CreatedBy, Model.IsActive, USession.School_Id);
                         Connection.SaveChanges();
                         var Count = Connection.tblUsers.Count(X => X.UserId == Model.UserId);
                         if (Count == 0)
                         {
                             tblUser usr = new tblUser();
-                            usr.CreatedBy = "Admin";
+                            usr.CreatedBy = USession.User_Id;
                             usr.CreatedDate = DateTime.Now;
                             usr.LoginEmail = Model.PersonalEmail;
                             usr.Mobile = Model.PersonalMobile;
                             usr.UserCategory = "PARNT";
                             usr.JobDescription = Model.Occupation;
-                            usr.SchoolId = SessionSchool;
-                            usr.Password = Model.Password;
+                            usr.SchoolId = USession.School_Id;
+
+                            string pass = Encrypt_Decrypt.Encrypt(Model.Password, Password);
+
+                            usr.Password = pass;
                             usr.UserId = Model.UserId;
                             usr.PersonName = Model.ParentName;
                             usr.IsActive = "Y";
@@ -284,7 +373,7 @@ namespace GDWEBSolution.Controllers.Parent
                             List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
                             ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
                             String parentid = "2";
-                            var STQlist = Connection.SMGTgetParentStudentadd(parentid,"%").ToList();
+                            var STQlist = Connection.SMGTgetParentStudentadd(parentid, "%").ToList();
                             List<ParentModel> List = STQlist.Select(x => new ParentModel
                             {
                                 StudentId = x.StudentId,
@@ -297,17 +386,18 @@ namespace GDWEBSolution.Controllers.Parent
 
 
 
-                          
-                          //  scope.Complete();
+
+                            //  scope.Complete();
 
 
                             scope.Complete();
                             result = "Success";
                             ModelState.Clear();
-                            return View();
+                            return Json(result, JsonRequestBehavior.AllowGet);
                         }
                         else
                         {
+                            result = "Exits";
 
                             List<tblParent> prntRlist = Connection.tblParents.Where(X => X.IsActive == "Y").ToList();
                             ViewBag.ParentlList = new SelectList(prntRlist, "ParentId", "ParentName");
@@ -323,7 +413,7 @@ namespace GDWEBSolution.Controllers.Parent
                             List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
                             ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
                             String parentid = "2";
-                            var STQlist = Connection.SMGTgetParentStudentadd(parentid,"%").ToList();
+                            var STQlist = Connection.SMGTgetParentStudentadd(parentid, "%").ToList();
                             List<ParentModel> List = STQlist.Select(x => new ParentModel
                             {
                                 StudentId = x.StudentId,
@@ -334,20 +424,24 @@ namespace GDWEBSolution.Controllers.Parent
 
                             Model.UserId = "Parent1";
 
-                           
+
 
 
                             scope.Dispose();
 
-                            return View(Model);
+                            return Json(result, JsonRequestBehavior.AllowGet);
                         }
                     }
+                    else
+                    {
 
-                   
-                    return View();
+
+                        return Json(result, JsonRequestBehavior.AllowGet);
+                    }
                 }
                 catch
                 {
+                  String  result = "Exception";
                     List<tblParent> prntRlist = Connection.tblParents.Where(X => X.IsActive == "Y").ToList();
                     ViewBag.ParentlList = new SelectList(prntRlist, "ParentId", "ParentName");
 
@@ -374,10 +468,109 @@ namespace GDWEBSolution.Controllers.Parent
                     Model.UserId = "Parent1";
 
 
-                    return View();
+                    return Json(result, JsonRequestBehavior.AllowGet);
                 }
             }
         }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult GetSchoolGrade(string SchoolId)
+        {
+           
+            //int id = 0;
+            //bool isValid = Int32.TryParse(SchoolId, out id);
+            //if (SchoolId == "") {
+
+            //    SchoolId = "asdas123err";
+            //}
+            if (SchoolId == null)
+            {
+
+
+            }
+
+
+
+            var SchoolGrade = Connection.SMGTgetSchoolGrade(USession.School_Id).OrderBy(X => X.GradeName).ToList();//Need to Pass a Session Schoolid
+
+
+
+
+
+            //  var StudentSextra = Connection.SMGTloadScholExtraCadd(SchoolId, "%").ToList();
+
+            var result2 = (from s in SchoolGrade
+                           select new
+                           {
+                               GradeId = s.GradeId,
+                               GradeName = s.GradeName
+
+
+                           }).ToList();
+
+
+
+            //   ViewBag.excdropdown = new SelectList(excList2, "ActivityCode", "ActivityName");
+
+            //var states = _repository.GetAllStatesByCountryId(id);
+            //var result = (from s in states
+            //              select new
+            //              {
+            //                  id = s.Id,
+            //                  name = s.Name
+            //              }).ToList();
+            return Json(result2, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult GetSchoolParent()
+        {
+
+            //int id = 0;
+            //bool isValid = Int32.TryParse(SchoolId, out id);
+            //if (SchoolId == "") {
+
+            //    SchoolId = "asdas123err";
+            //}
+           
+
+
+
+          //  var SchoolGrade = Connection.SMGTgetSchoolGrade(USession.School_Id).OrderBy(X => X.GradeName).ToList();//Need to Pass a Session Schoolid
+
+            var Parent = Connection.tblParents.OrderBy(X => X.ParentName).Where(X=>X.IsActive=="Y" && X.SchoolId==USession.School_Id).ToList();
+
+
+
+            //  var StudentSextra = Connection.SMGTloadScholExtraCadd(SchoolId, "%").ToList();
+
+            var result = (from s in Parent
+                           select new
+                           {
+                               ParentId = s.ParentId,
+                               ParentName = s.ParentName
+
+
+                           }).ToList();
+
+
+
+            //   ViewBag.excdropdown = new SelectList(excList2, "ActivityCode", "ActivityName");
+
+            //var states = _repository.GetAllStatesByCountryId(id);
+            //var result = (from s in states
+            //              select new
+            //              {
+            //                  id = s.Id,
+            //                  name = s.Name
+            //              }).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
         public ActionResult AddChildAc(ParentModel Model)
         {
 
@@ -429,33 +622,42 @@ namespace GDWEBSolution.Controllers.Parent
           
 
          //   var  item = Connection.tblParents.FirstOrDefault(i => i.UserId ==Model.UserId);
-           
-
-          //  long  parentId = item.ParentId;
-            long parentId = 2;
-       //     Model.ParentId = parentId.ToString();
-            long longP = long.Parse(Model.ParentId);
-            var count = Connection.tblParentStudents.Count(u => u.ParentId == longP && u.StudentId == Model.StudentId1);
-           
-            if (count == 0)
+            if (Model.ParentId != null && Model.StudentId1 != null)
             {
-                tblParentStudent tps = new tblParentStudent();
-                tps.CreatedBy = "User1";
-                tps.CreatedDate = DateTime.Today;
-                tps.IsActive = "Y";
-                //tps.ParentId = parentId;
-                tps.ParentId = long.Parse(Model.ParentId);
-                tps.SchoolId = Model.SchoolId;
-                tps.StudentId = Model.StudentId1;
-                Connection.tblParentStudents.Add(tps);
-                Connection.SaveChanges();
 
 
-                result = Model.ParentId + "!" + Model.SchoolId;
+
+                //  long  parentId = item.ParentId;
+                long parentId = 2;
+                //     Model.ParentId = parentId.ToString();
+                long longP = long.Parse(Model.ParentId);
+                var count = Connection.tblParentStudents.Count(u => u.ParentId == longP && u.StudentId == Model.StudentId1);
+
+                if (count == 0)
+                {
+                    tblParentStudent tps = new tblParentStudent();
+                    tps.CreatedBy = "User1";
+                    tps.CreatedDate = DateTime.Today;
+                    tps.IsActive = "Y";
+                    //tps.ParentId = parentId;
+                    tps.ParentId = long.Parse(Model.ParentId);
+                    tps.SchoolId = Model.SchoolId;
+                    tps.StudentId = Model.StudentId1;
+                    Connection.tblParentStudents.Add(tps);
+                    Connection.SaveChanges();
+
+
+                    result = Model.ParentId + "!" + Model.SchoolId;
+                }
+                else
+                {
+                    result = "Exits";
+                }
             }
-            else
-            {
-                result = "Exits";
+            else {
+
+                result = "fill";
+            
             }
             //ShowTeacherQualificatoin();
 
@@ -474,7 +676,7 @@ namespace GDWEBSolution.Controllers.Parent
            // ParentId = "2";
             
            // var STQlist = Connection.SMGTgetParentStudentadd("2").ToList();
-            var STQlist = Connection.SMGTgetParentStudentadd(ParentId,SessionSchool).ToList();
+            var STQlist = Connection.SMGTgetParentStudentadd(ParentId,USession.School_Id).ToList();
 
             List<ParentModel> List = STQlist.Select(x => new ParentModel
             {
@@ -656,6 +858,8 @@ namespace GDWEBSolution.Controllers.Parent
         public ActionResult Edit(int id, FormCollection collection)
         {
 
+            Authentication("PCF");
+
 
 
 
@@ -677,6 +881,8 @@ namespace GDWEBSolution.Controllers.Parent
         // GET: /Parent/Delete/5
         public ActionResult Delete(string ParentId)
         {
+            Authentication("PCF");
+
             ParentModel TModel = new ParentModel();
             TModel.ParentId = ParentId;
             TModel.IsActive = "N";

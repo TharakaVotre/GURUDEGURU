@@ -26,9 +26,7 @@
                 <br>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in" id="bio">
-                        @using (Html.BeginForm("Create", "Student",
-    FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
+                      <form enctype="multipart/form-data">
                             @Html.AntiForgeryToken()
                             @*<form id="FrmANT" class="form-horizontal">*@
                             <div class="form-horizontal">
@@ -195,13 +193,14 @@
                                             <div class="col-sm-8 col-sm-offset-2">
                                                 @*<button class="btn btn-default" type="submit">Cancel</button>*@
                                                 @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
-                                                <button type="submit" value="Save" id="btnSubmit" onclick="" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+                                               @* <button type="submit" value="Save" id="btnSubmit" onclick="" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>*@
+                                                 <input type="submit"  class="btn btn-primary" />
                                                  <a href="~/Student/Index" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span>Go Back</a>
                                             </div>
                                         </div>
                                     </div>
-                        }
-                        @*</form>*@
+                        
+                        </form>
                     </div>
                     <div class="tab-pane fade" id="qualification">
                       
@@ -223,7 +222,7 @@
                         @{Html.RenderPartial("StudentEXtra");}
                         <div id="showexactivity">
                            
-                            @*@{Html.RenderAction("ShowstudentExactivty", new { SchoolId = "0",StudentId="0" });}*@
+                            @{Html.RenderAction("ShowstudentExactivty", new { SchoolId = "0",StudentId="0" });}
 
                         </div>
 
@@ -338,27 +337,6 @@
 
         var selectedItem = value;
 
-        var ddlStates = $("#GradeId");
-        //var statesProgress = $("#states-loading-progress");
-        //statesProgress.show();
-        $.ajax({
-            cache: false,
-            type: "GET",
-            url: "@(Url.RouteUrl("Studentgrade"))",
-            data: { "SchoolId": selectedItem },
-            success: function (data) {
-                ddlStates.html('');
-                ddlStates.append($('<option></option>').val("").html(""));
-                $.each(data, function (ActivityCode, option) {
-                    ddlStates.append($('<option></option>').val(option.GradeId).html(option.GradeName));
-                });
-
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert('Failed to retrieve states.');
-
-            }
-        });
 
 
         var ddlStatess = $("#HouseId");
@@ -383,6 +361,32 @@
             }
         });
 
+
+
+        var ddlStates = $("#GradeId");
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("Studentgrade"))",
+            data: { "SchoolId": selectedItem },
+            success: function (data) {
+                ddlStates.html('');
+                ddlStates.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStates.append($('<option></option>').val(option.GradeId).html(option.GradeName));
+                });
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+
+            }
+        });
+
+
+    
 
 
        }
@@ -413,5 +417,97 @@
      
 
  
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+        // When your form is submitted
+        $("form").submit(function (e) {
+            // Prevent the default behavior
+            e.preventDefault();
+            var acl = this;
+
+
+
+
+            
+
+            // Serialize your form
+            var formData = new FormData($(this)[0]);
+
+            // Make your POST
+            $.ajax({
+
+                type: "POST",
+                url: "/Student/Create",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+
+                    //$("#loaderDiv").hide();
+                    // $("#myModal").modal("hide");
+                    if (result != "Exception" && result != "Exists" && result != "error" && result != "UExists") {
+                        debugger
+
+                        acl.reset();
+
+                        //window.location.href = "/Teacher/Create";
+                     
+                      
+
+
+
+                        // var res = result.split("!");
+                        //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                        // $('#showexactivity').load('/Student/ShowstudentExactivty?SchoolId=' + res[0] + '&StudentId=' + res[1]);
+
+                        //window.location.href = "/Parent/Create?id=1";
+                        //alert("gg");
+                        $("#SuccesLable").text("Student Created");
+                        // $("#btnAddQualification").prop('value', 'Save');
+                        $("#SuccesModel").modal("show");
+                    }
+                    else if (result == "Exception") {
+                        debugger
+                        //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                        $("#ErrorLable").text("Exception Error Occurd");
+                        //$("#btnAddQualification").prop('value', 'Save');
+                        $("#myModal").modal("show");
+                    }
+                    else if (result == "Exists") {
+                       
+                        //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                        $("#ErrorLable").text("There is already a User with this Student Id in this School");
+                        //$("#btnAddQualification").prop('value', 'Save');
+                        $("#myModal").modal("show");
+
+
+                    }
+
+                    else if (result == "UExists") {
+                     
+                        //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                        $("#ErrorLable").text("There is already a User with this User Id ");
+                        //$("#btnAddQualification").prop('value', 'Save');
+                        $("#myModal").modal("show");
+
+
+                    }
+
+                    else {
+
+                    }
+
+                }
+
+            })
+        });
+    })
+
+
+
 </script>
 

@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,13 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainParentObservationType/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+         [UserFilter(Function_Id = "MaPao")]
+       
         public ActionResult Index()
         {
+            
             try{
             var Observation = Connection.GDgetAllParentObservationType("Y");
             List<GDgetAllParentObservationType_Result> Observationlist = Observation.ToList();
@@ -63,18 +69,21 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+        [UserFilter(Function_Id = "MaPao")]
         public ActionResult Create()
         {
+            
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+        [UserFilter(Function_Id = "MaPao")]
         [HttpPost]
         public ActionResult Create(tblParentObservationType Model)
         {
+             
+            UserId = USession.User_Id;
             try
             {
 
@@ -113,9 +122,11 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaPao")]
         public ActionResult Edit(int Code)
         {
+           
+           
             try{
             ParentObservationTypeModel TModel = new ParentObservationTypeModel();
 
@@ -137,10 +148,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+[UserFilter(Function_Id = "MaPao")]
         [HttpPost]
         public ActionResult Edit(ParentObservationTypeModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
 
@@ -167,9 +180,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaPao")]
         public ActionResult Delete(int Code)
-        {
+        { 
+           
             try
             {
                 ParentObservationTypeModel TModel = new ParentObservationTypeModel();
@@ -186,10 +200,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaPao")]
         [HttpPost]
         public ActionResult Delete(ParentObservationTypeModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteParentObservationType("N", Model.ObTypeId, UserId);

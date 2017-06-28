@@ -1,7 +1,9 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
 using GDWEBSolution.Models.Report;
 using GDWEBSolution.Models.Student;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,26 +15,27 @@ namespace GDWEBSolution.Controllers.Report
     public class StudentReportController : Controller
     {
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string SchoolId = "Scl13140";
-        string UserId = "PARENT1";
+        UserSession USession = new UserSession();
+        string SchoolId = null;
+        string UserId = null;
        
 
         
         //
         // GET: /StudentReport/
-
-      
-         
-        public ActionResult Index(string AccYear, string Evealuation)
+     [UserFilter(Function_Id = "StReI")]
+        public ActionResult Index(string AccYear, string Eveluation)
         {
+            
+            SchoolId = USession.School_Id;
             try
             {
                 if (AccYear!=null)
                 {
                     Session["AccYear"] = AccYear;
-                    if (Evealuation != null && Evealuation != "")
+                    if (Eveluation != null && Eveluation != "")
                     {
-                        Session["Evealuation"] = Evealuation;
+                        Session["Evealuation"] = Eveluation;
                     }
                     else
                     {
@@ -90,6 +93,8 @@ namespace GDWEBSolution.Controllers.Report
 
         private void Dropdowns()
         {
+           
+            SchoolId = USession.School_Id;
             var Grade = Connection.GDgetSchoolGrade(SchoolId,"Y");
             List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
 
@@ -104,6 +109,7 @@ namespace GDWEBSolution.Controllers.Report
 
         public JsonResult getClass(string id)
         {
+            SchoolId = USession.School_Id;
             var states = Connection.GDgetGradeActiveClass(id, SchoolId, "Y");
             List<SelectListItem> listates = new List<SelectListItem>();
             listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -120,6 +126,7 @@ namespace GDWEBSolution.Controllers.Report
 
         public JsonResult getStudent(string id, string cId)
         {
+            SchoolId = USession.School_Id;
             var states = Connection.SMGTgetStudentforoptionalSubject(SchoolId,id,"%",cId);
             List<SelectListItem> listates = new List<SelectListItem>();
             listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -135,6 +142,7 @@ namespace GDWEBSolution.Controllers.Report
 
              public JsonResult getSubject(string Gid)
         {
+            SchoolId = USession.School_Id;
             var states = Connection.GDgetGradeSubject(SchoolId,Gid,"Y");
             List<SelectListItem> listates = new List<SelectListItem>();
             listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -147,9 +155,10 @@ namespace GDWEBSolution.Controllers.Report
             }
             return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
         }
-
+         [UserFilter(Function_Id = "StReI")]
         public ActionResult StudantReport(string studentId)
         {
+            
             try
             {
                 long EvealuationType= Convert.ToInt64(Session["EvealuationTypes"]);
@@ -171,9 +180,10 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-
+         [UserFilter(Function_Id = "StReI")]
         public ActionResult ClassReport(string ClassId,string GradeId)
         {
+            
             try
             {
                 string AccYear = Session["AccYear"].ToString();
@@ -201,16 +211,19 @@ namespace GDWEBSolution.Controllers.Report
         }
 
 
-
-        public ActionResult ParentReport(string AccYear, string EveluationType)
+         [UserFilter(Function_Id = "StReP")]
+        public ActionResult ParentReport(string AccYear, string Evealuation)
         {
+            
+            UserId = USession.User_Id;
             try
             {
                 Dropdowns();
-                if (EveluationType == "") {
-                    EveluationType = "0";
+                if (Evealuation == "")
+                {
+                    Evealuation = "0";
                 }
-                long EveluationTypes = Convert.ToInt64(EveluationType);
+                long EveluationTypes = Convert.ToInt64(Evealuation);
                 var StudentMark = Connection.GDgetParentAttentionRequiredSubject(AccYear, EveluationTypes, UserId);
                 List<GDgetParentAttentionRequiredSubject_Result> StudentMarklist = StudentMark.ToList();
 
@@ -234,6 +247,7 @@ namespace GDWEBSolution.Controllers.Report
 
         private void Dropdown2()
         {
+            SchoolId = USession.School_Id;
             var Grade = Connection.GDgetSchoolGrade(SchoolId, "Y");
             List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
 
@@ -247,90 +261,134 @@ namespace GDWEBSolution.Controllers.Report
 
             ViewBag.ExtraCurriculerActivity = new SelectList(ExtraCurriculerActivitylist, "ActivityCode", "ActivityName");
         }
+         [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentSubjectIndex()
         {
+             
+           
             Dropdown2();
             return View();
         }
+          [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentSubject(string AccYear,string GradeId, string StudentId)
         {
-            var Subject = Connection.GDgetStudentSubject(SchoolId, AccYear, GradeId, StudentId, "Y");
-            List<GDgetStudentSubject_Result> Subjectlist = Subject.ToList();
-
-            SubjectModel tcm = new SubjectModel();
-
-            List<SubjectModel> tcmlist = Subjectlist.Select(x => new SubjectModel
+           
+            SchoolId = USession.School_Id;
+            try
             {
-                SubjectId = x.SubjectId,
-                ShortName = x.ShortName,
-                SubjectName = x.SubjectName,
-                Optional=x.Optional
+                var Subject = Connection.GDgetStudentSubject(SchoolId, AccYear, GradeId, StudentId, "Y");
+                List<GDgetStudentSubject_Result> Subjectlist = Subject.ToList();
 
-            }).ToList();
+                SubjectModel tcm = new SubjectModel();
+
+                List<SubjectModel> tcmlist = Subjectlist.Select(x => new SubjectModel
+                {
+                    SubjectId = x.SubjectId,
+                    ShortName = x.ShortName,
+                    SubjectName = x.SubjectName,
+                    Optional = x.Optional
+
+                }).ToList();
 
 
 
-            return PartialView("StudentsSubjects", tcmlist);
+                return PartialView("StudentsSubjects", tcmlist);
+
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+            }
         }
-
+          [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInClass( string ClassId,string GradeId)
         {
-            if (ClassId == "")
+           
+            SchoolId = USession.School_Id;
+            try
             {
-                ClassId = "%";
+                if (ClassId == "")
+                {
+                    ClassId = "%";
+                }
+                var Student = Connection.GDgetStudentInClass(SchoolId, GradeId, ClassId, "Y");
+                List<GDgetStudentInClass_Result> Studentlist = Student.ToList();
+
+                StudentModel tcm = new StudentModel();
+
+                List<StudentModel> tcmlist = Studentlist.Select(x => new StudentModel
+                {
+                    StudentId = x.StudentId,
+                    StudentName = x.studentName,
+                    Gender = x.Gender,
+                    DateOfBirth = x.DateofBirth
+
+                }).ToList();
+                return PartialView("StudentInClasss", tcmlist);
             }
-            var Student = Connection.GDgetStudentInClass(SchoolId, GradeId, ClassId, "Y");
-            List<GDgetStudentInClass_Result> Studentlist = Student.ToList();
-
-            StudentModel tcm = new StudentModel();
-
-            List<StudentModel> tcmlist = Studentlist.Select(x => new StudentModel
+            catch (Exception ex)
             {
-                StudentId = x.StudentId,
-                StudentName = x.studentName,
-                Gender = x.Gender ,
-                DateOfBirth = x.DateofBirth
-
-            }).ToList();
-            return PartialView("StudentInClasss", tcmlist);
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+            }
         }
-
+          [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInExtraActivity(string ActivityId)
         {
-           
-            var Student = Connection.GDgetExtraCurriculerStudent(SchoolId, ActivityId, "Y");
-            List<GDgetExtraCurriculerStudent_Result> Studentlist = Student.ToList();
-
-            StudentModel tcm = new StudentModel();
-
-            List<StudentModel> tcmlist = Studentlist.Select(x => new StudentModel
+            
+            SchoolId = USession.School_Id;
+            try
             {
-                StudentId = x.StudentId,
-                StudentName = x.studentName,
-                Gender = x.Gender,
-                DateOfBirth = x.DateofBirth
+                var Student = Connection.GDgetExtraCurriculerStudent(SchoolId, ActivityId, "Y");
+                List<GDgetExtraCurriculerStudent_Result> Studentlist = Student.ToList();
 
-            }).ToList();
-            return PartialView("StudentInExtraCurriculerActivity", tcmlist);
+                StudentModel tcm = new StudentModel();
+
+                List<StudentModel> tcmlist = Studentlist.Select(x => new StudentModel
+                {
+                    StudentId = x.StudentId,
+                    StudentName = x.studentName,
+                    Gender = x.Gender,
+                    DateOfBirth = x.DateofBirth
+
+                }).ToList();
+                return PartialView("StudentInExtraCurriculerActivity", tcmlist);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+            }
         }
-
+          [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInSubject(string GradeId, string ClassId, string SubjectId)
         {
-            int subId = Convert.ToInt32(SubjectId);
-            var Student = Connection.GDgetSubjectStudent(SchoolId, GradeId, ClassId, subId,0);
-            List<GDgetSubjectStudent_Result> Studentlist = Student.ToList();
-
-            StudentModel tcm = new StudentModel();
-
-            List<StudentModel> tcmlist = Studentlist.Select(x => new StudentModel
+             
+            SchoolId = USession.School_Id;
+            try
             {
-                StudentId = x.StudentId,
-                StudentName = x.studentName,
-                Gender = x.Gender,
-                DateOfBirth = x.DateofBirth
+                int subId = Convert.ToInt32(SubjectId);
+                var Student = Connection.GDgetSubjectStudent(SchoolId, GradeId, ClassId, subId, 0);
+                List<GDgetSubjectStudent_Result> Studentlist = Student.ToList();
 
-            }).ToList();
-            return PartialView("StudentInSubjects", tcmlist);
+                StudentModel tcm = new StudentModel();
+
+                List<StudentModel> tcmlist = Studentlist.Select(x => new StudentModel
+                {
+                    StudentId = x.StudentId,
+                    StudentName = x.studentName,
+                    Gender = x.Gender,
+                    DateOfBirth = x.DateofBirth
+
+                }).ToList();
+                return PartialView("StudentInSubjects", tcmlist);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+            }
         }
     }
 }

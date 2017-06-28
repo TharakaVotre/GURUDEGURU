@@ -35,9 +35,7 @@
                 <br>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in" id="bio">
-@using (Html.BeginForm("Create", "School",
-    FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+ <form enctype="multipart/form-data">
     @Html.AntiForgeryToken()
                         @*<form id="FormNewdata" class="form-horizontal">*@
                             <div class="form-horizontal">
@@ -134,6 +132,10 @@
                                     @Html.LabelFor(m => m.Address1, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-6">
                                         @Html.TextBoxFor(model => model.Address1, new { @class = "form-control input-lg mb", @placeholder = "Address " })
+                                        <div class="col-sm-12">
+                                        @Html.ValidationMessageFor(model => model.Address1, null, new { @class = "text-danger" })
+                                    </div>
+
                                         @Html.TextBoxFor(model => model.Address2, new { @class = "form-control mb", @placeholder = "Address **" })
                                         @Html.TextBoxFor(model => model.Address3, new { @class = "form-control input-sm", @placeholder = "Address **" })
                                        
@@ -216,14 +218,16 @@
                                     <div class="col-sm-8 col-sm-offset-2">
                                         @*<button class="btn btn-default" type="submit">Cancel</button>*@
                                         @*<a href="#" id="btnCreateTeacher" class="btn btn-primary">Save</a>*@
-                                        <button type="submit" value="Save" id="btnSubmit" onsubmit="abc()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
-                                         <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="glyphicon glyphicon-step-backward"></span> Back</button>
+                                        <input type="submit" class="btn btn-primary" />
+                                     @*   <button type="submit" value="Save" id="btnSubmit" onsubmit="abc()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>*@
+                                        
+                                        <a href="~/School/Index" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span>Go Back</a>
 
                                     </div>
                                 </div>
                             </div>
-                            }
-                        @*</form>*@
+                            
+                        </form>
                     </div>
                     <div class="tab-pane fade" id="qualification">
                         @{Html.RenderPartial("Grade");}
@@ -408,175 +412,85 @@
 
     </script>
 
-@*<script>
-    $(function validateForm() {
 
-        debugger
-        var CategoryName = $('#SchoolId');
-        var CategoryNameError = $('#CategoryNameError');
+<script type="text/javascript">
 
-
-        //var e = document.getElementById("IsActive");
-
-        //var IsActive = e.options[e.selectedIndex].value;
-        //var IsActiveError = $('#IsActiveError');
-
-        // Check if there is an entered value
-        if (!CategoryName.val()) {
-            // Add errors highlight
-            CategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
-            $("#CategoryNameError").text("Requireeed");
-            // Stop submission of the form
-            // e.preventDefault();
-            return;
-        }
-
-    });
-
-    $(document).ready(function () {
-
-        $("#btnSubmit").click(function (e) {
-            debugger
-            var CategoryName = $('#SchoolId');
-            var CategoryNameError = $('#CategoryNameError');
+    $(function () {
+        // When your form is submitted
+        $("form").submit(function (e) {
+            // Prevent the default behavior
+            e.preventDefault();
+            var acl = this;
 
 
 
 
 
-            //var e = document.getElementById("IsActive");
 
-            //var IsActive = e.options[e.selectedIndex].value;
-            //var IsActiveError = $('#IsActiveError');
+            // Serialize your form
+            var formData = new FormData($(this)[0]);
 
-            // Check if there is an entered value
-            if (!CategoryName.val()) {
-                // Add errors highlight
-                CategoryName.closest('.form-group').removeClass('has-success').addClass('has-error');
-                $("#CategoryNameError").text("Required");
-                // Stop submission of the form
-                // e.preventDefault();
-                return;
-            }
-
-            var form = $('#form');
-            $.validator.unobtrusive.parse(form);
-            form.validate();
-
-            if (form.valid()) {
-             
-            }
-            //if (IsActive == "") {
-            //    // Add errors highlight
-            //  //  IsActive.closest('.form-group').removeClass('has-success').addClass('has-error');
-            //    $("#IsActiveError").text("Required");
-            //    // Stop submission of the form
-            //  //  e.preventDefault();
-            //    return;
-            //}
-
-            //$("#loaderDiv").show();
-
-            var myformdata = $("#FrmANT").serialize();
-            //if (!$("#myForm").valid()) {
-
-            //    return false;
-            //}
-
-
-
-
-
-            //})
-
-
-      
-
-
+            // Make your POST
             $.ajax({
 
                 type: "POST",
                 url: "/School/Create",
-                data: myformdata,
-
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
                 success: function (result) {
+
                     //$("#loaderDiv").hide();
                     // $("#myModal").modal("hide");
-                    if (result == "Success") {
+                    if (result != "Exception" && result != "Exists" && result != "error" && result != "UExists") {
                         debugger
+
+                        acl.reset();
+
                         //window.location.href = "/Teacher/Create";
-                        $('.nav-tabs a[href="#qualification"]').tab('show');
-                        $("#btnSubmit").prop('value', 'Save');
+
+
+
+
+
+                        // var res = result.split("!");
+                        //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                        // $('#showexactivity').load('/Student/ShowstudentExactivty?SchoolId=' + res[0] + '&StudentId=' + res[1]);
+
+                        //window.location.href = "/Parent/Create?id=1";
+                        //alert("gg");
+                        $("#SuccesLable").text("School Created");
+                        // $("#btnAddQualification").prop('value', 'Save');
+                        $("#SuccesModel").modal("show");
                     }
-                    else if (result == "UserExits") {
+                    else if (result == "Exception") {
                         debugger
                         //$("#ErrorUName").prop('value', 'User Name Already Exits');
-                        $("#ErrorLable").text("User Name Already Exits");
-                        $("#btnSubmit").prop('value', 'Save');
+                        $("#ErrorLable").text("Exception Error Occurd");
+                        //$("#btnAddQualification").prop('value', 'Save');
                         $("#myModal").modal("show");
                     }
-                    else {
+                    else if (result == "Exists") {
 
-                    }
-
-                }
-
-
-
-            })
-        })})
-
-</script>*@
-
-
-@*<script type="text/jscript">
-        submit
-        $('#UserId').blur(function () {
-            var url = "/Teacher/IsUserNameExits";
-            var name = $('#UserId').val();
-            debugger
-            $.get(url, { input: name }, function (data) {
-                if (data == "Have") {
-                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
-                    $("#ErrorLable").text("User Name Already Exits");
-                    $("#btnCreateTeacher").prop('value', 'Save');
-                    $("#myModal").modal("show");
-                }
-            });
-        })
-    </script>
-    <script>
-
-        var abc = function () {
-            //debugger
-            var myformdata = $("#FrmANT").serialize();
-
-            if (!$("#FrmANT").valid()) {
-                return;
-            }
-
-            $("#btnCreateTeacher").prop('value', 'Saving Details ...');
-            $.ajax({
-
-                type: "POST",
-                url: "/Teacher/CreateTeacher",
-                data: myformdata,
-                success: function (result) {
-                    //$("#loaderDiv").hide();
-                    // $("#myModal").modal("hide");
-                    if (result == "Success") {
-                        debugger
-                        //window.location.href = "/Teacher/Create";
-                        $('.nav-tabs a[href="#qualification"]').tab('show');
-                        $("#btnCreateTeacher").prop('value', 'Save');
-                    }
-                    else if (result == "UserExits") {
-                        debugger
                         //$("#ErrorUName").prop('value', 'User Name Already Exits');
-                        $("#ErrorLable").text("User Name Already Exits");
-                        $("#btnCreateTeacher").prop('value', 'Save');
+                        $("#ErrorLable").text("There is already a User with this Student Id in this School");
+                        //$("#btnAddQualification").prop('value', 'Save');
                         $("#myModal").modal("show");
+
+
                     }
+
+                    else if (result == "UExists") {
+
+                        //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                        $("#ErrorLable").text("There is already a User with this User Id ");
+                        //$("#btnAddQualification").prop('value', 'Save');
+                        $("#myModal").modal("show");
+
+
+                    }
+
                     else {
 
                     }
@@ -584,7 +498,14 @@
                 }
 
             })
-        }
+        });
+    })
 
 
-    </script>*@
+
+</script>
+
+
+
+
+

@@ -28,7 +28,7 @@ namespace GDWEBSolution.Models.Configuration
          [Display(Name = "Optional")]
         public string Optional { get; set; }
 
-        [Display(Name = "Created By")]
+        [Display(Name = "Category Name")]
          public int SubjectCategoryId { get; set; }
 
            [Display(Name = "Category Name")]

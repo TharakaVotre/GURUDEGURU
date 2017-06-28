@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +16,14 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainApplicationStatus/
 
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        //
+        UserSession USession = new UserSession();
         // GET: /TeacherCategory/
-        string UserId = "ADMIN";
+        string UserId = null;
+
+       [UserFilter(Function_Id = "MaAS")]
         public ActionResult Index()
         {
+            
             try
             {
                 var status = Connection.GDgetAllApplicationStatus("Y", 0);
@@ -65,18 +70,21 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+           [UserFilter(Function_Id = "MaAS")]
         public ActionResult Create()
         {
+            
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+           [UserFilter(Function_Id = "MaAS")]
         [HttpPost]
         public ActionResult Create(tblApplicationStatu Model)
         {
+           
+            UserId = USession.User_Id;
             try
             {
 
@@ -87,25 +95,12 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception ex)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        raise = new InvalidOperationException(message, raise);
-
-                        Errorlog.ErrorManager.LogError(dbEx);
-         
-                    }
-                }
-                throw raise;
+                
+                        Errorlog.ErrorManager.LogError(ex);
+                        return View();
+                   
             }
         }
 
@@ -116,9 +111,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+       [UserFilter(Function_Id = "MaAS")]
         public ActionResult Edit(long typeId)
         {
+           
             try
             {
                 ApplicationStatusModel TModel = new ApplicationStatusModel();
@@ -141,13 +137,14 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+           [UserFilter(Function_Id = "MaAS")]
         [HttpPost]
         public ActionResult Edit(ApplicationStatusModel Model)
         {
+           
             try
             {
-
+                UserId = USession.User_Id;
                 tblApplicationStatu TCtable = Connection.tblApplicationStatus.SingleOrDefault(x => x.StatusCode == Model.StatusCode);
 
                 
@@ -171,9 +168,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+           [UserFilter(Function_Id = "MaAS")]
         public ActionResult Delete(long CategoryId)
         {
+            
             try
             {
                 ApplicationStatusModel TModel = new ApplicationStatusModel();
@@ -190,12 +188,14 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+           [UserFilter(Function_Id = "MaAS")]
         [HttpPost]
         public ActionResult Delete(ApplicationStatusModel Model)
         {
+            
             try
             {
+                UserId = USession.User_Id;
                 Connection.GDdeleteAllApplicationStatus("N", Model.StatusCode, UserId);
                 Connection.SaveChanges();
 

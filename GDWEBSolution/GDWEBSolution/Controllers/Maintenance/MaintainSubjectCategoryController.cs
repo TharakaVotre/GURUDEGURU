@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +15,13 @@ namespace GDWEBSolution.Controllers
         //
         // GET: /MaintainSubjectCategory/
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+
+       [UserFilter(Function_Id = "MaSCa")]
         public ActionResult Index()
         {
+             
             try
             {
                 var Group = Connection.GDgetAllSubjectCategory("Y");
@@ -63,18 +69,21 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+[UserFilter(Function_Id = "MaSCa")]
         public ActionResult Create()
         {
+             
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+        [UserFilter(Function_Id = "MaSCa")]
         [HttpPost]
         public ActionResult Create(tblSubjectCategory Model)
         {
+             
+            UserId = USession.User_Id;
             try
             {
 
@@ -85,23 +94,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception ex)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException 
-                        Errorlog.ErrorManager.LogError(dbEx);
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
             }
         }
 
@@ -113,9 +109,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaSCa")]
         public ActionResult Edit(int Code)
         {
+             
             try{
             SubjectCategoryModel TModel = new SubjectCategoryModel();
 
@@ -137,10 +134,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaSCa")]
         [HttpPost]
         public ActionResult Edit(SubjectCategoryModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
 
@@ -167,9 +166,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaSCa")]
         public ActionResult Delete(int Code)
         {
+             
             try{
             SubjectCategoryModel TModel = new SubjectCategoryModel();
             TModel.SubjectCategoryId = Code;
@@ -185,10 +185,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaSCa")]
         [HttpPost]
         public ActionResult Delete(SubjectCategoryModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteSubjectCategory("N", Model.SubjectCategoryId, UserId);

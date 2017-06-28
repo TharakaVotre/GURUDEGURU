@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,13 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainSubject/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+
+      [UserFilter(Function_Id = "Masub")]
         public ActionResult Index()
         {
+            
             try
             {
                 var Group = Connection.GDgetAllSubject("Y");
@@ -65,18 +71,21 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+        [UserFilter(Function_Id = "Masub")]
         public ActionResult Create()
         {
+            
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+        [UserFilter(Function_Id = "Masub")]
         [HttpPost]
         public ActionResult Create(tblSubject Model)
         {
+           
+            UserId = USession.User_Id;
             try
             {
 
@@ -114,9 +123,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "Masub")]
         public ActionResult Edit(int Code)
         {
+            
             try{
             SubjectModel TModel = new SubjectModel();
 
@@ -139,10 +149,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "Masub")]
         [HttpPost]
         public ActionResult Edit(SubjectModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
 
@@ -169,9 +181,11 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "Masub")]
         public ActionResult Delete(int Code)
         {
+            
+
             try{
             SubjectModel TModel = new SubjectModel();
             TModel.SubjectId = Code;
@@ -187,10 +201,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "Masub")]
         [HttpPost]
         public ActionResult Delete(SubjectModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteSubject("N", Model.SubjectId, UserId);
