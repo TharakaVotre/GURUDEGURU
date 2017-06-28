@@ -43,7 +43,9 @@ namespace GDWEBSolution.Controllers.Message
             try
             {
                 List<tblTeacherCategory> TCategorylist = Connection.tblTeacherCategories.ToList();
-                ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, "TeacherCategoryId", "TeacherCategoryName");
+                ViewBag.TeacherCategoryDrpDown = new SelectList(TCategorylist, 
+                                                                "TeacherCategoryId", 
+                                                                "TeacherCategoryName");
 
                 var TeacherList = Connection.SMGTgetAllTeachers(_session.School_Id, "%", "Y").ToList(); // Order by teacher category
                 List<TeacherModel> tcmlist = TeacherList.Select(x => new TeacherModel
@@ -77,9 +79,12 @@ namespace GDWEBSolution.Controllers.Message
                 ViewBag.TeacherDropdown = new SelectList(tcmlist, "UserId", "Name");
 
                 List<tblMessageType> MsgTypeList = Connection.tblMessageTypes.ToList();
-                ViewBag.MessageTypesDropdown = new SelectList(MsgTypeList, "MessageTypeId", "MessageTypeDescription");
+                ViewBag.MessageTypesDropdown = new SelectList(MsgTypeList, 
+                                                             "MessageTypeId", 
+                                                             "MessageTypeDescription");
 
-                var MsgId = Connection.tblParameters.Where(x => x.ParameterId == "PSMHS").Select(x => x.ParameterValue).SingleOrDefault();
+                var MsgId = Connection.tblParameters.Where(x => x.ParameterId == "PSMHS").Select(
+                                                           x => x.ParameterValue).SingleOrDefault();
                 long a = Convert.ToInt64(MsgId) + 1;
 
                 tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "PSMHS");
@@ -162,23 +167,31 @@ namespace GDWEBSolution.Controllers.Message
                 tblParentToSchollMessageAttachment Attachmentfile = new tblParentToSchollMessageAttachment();
                 if (file != null)
                 {
-                    var Atid = Connection.tblParameters.Where(x => x.ParameterId == "PSMAS").Select(x => x.ParameterValue).SingleOrDefault();
+                    var Atid = Connection.tblParameters.Where(x => x.ParameterId == "PSMAS").Select(
+                                                              x => x.ParameterValue).SingleOrDefault();
                     AttachmentId = Convert.ToInt64(Atid);
                     long Next = AttachmentId + 1;
+                    var Attachement_Path = "/Attachments/PtS/" + DateTime.Now.ToString("yyyy") + "/" + 
+                        DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("dd") +"/"+ Model.MessageId;
                     var fileName = Path.GetFileName(file.FileName);
                     var extention = Path.GetExtension(file.FileName);
                     Attachmentfile.AttachementName = file.FileName;
-                    Attachmentfile.AttachementPath = "/UploadedFiles/" + file.FileName;
+                    Attachmentfile.AttachementPath = Attachement_Path + "/" + file.FileName;
                     Attachmentfile.MessageId = Model.MessageId;
                     Attachmentfile.SeqNo = AttachmentId;
 
                     Connection.tblParentToSchollMessageAttachments.Add(Attachmentfile);
                     Connection.SaveChanges();
 
-                    tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "PSMAS");
+                    tblParameter TCtable = Connection.tblParameters.SingleOrDefault(
+                                                                    x => x.ParameterId == "PSMAS");
                     TCtable.ParameterValue = Next.ToString();
                     Connection.SaveChanges();
-                    file.SaveAs(Server.MapPath("/UploadedFiles/" + file.FileName));
+                    if (!Directory.Exists(Server.MapPath(Attachement_Path)))
+                    {
+                        Directory.CreateDirectory(Server.MapPath(Attachement_Path));
+                    }
+                    file.SaveAs(Server.MapPath(Attachement_Path + "/" + file.FileName));
                 }
                 var result = new { FileName = file.FileName, SeqNo = AttachmentId };
                 return Json(result, JsonRequestBehavior.AllowGet);
@@ -219,7 +232,8 @@ namespace GDWEBSolution.Controllers.Message
         {
             try
             {
-                tblParentToSchollMessageAttachment Tble = Connection.tblParentToSchollMessageAttachments.Find(Model.SeqNo);
+                tblParentToSchollMessageAttachment Tble = Connection.tblParentToSchollMessageAttachments.Find(
+                                                          Model.SeqNo);
                 string path = Tble.AttachementPath;
                 Connection.tblParentToSchollMessageAttachments.Remove(Tble);
                 Connection.SaveChanges();
@@ -251,7 +265,8 @@ namespace GDWEBSolution.Controllers.Message
                 M.Subject = H.Subject;
                 M.TeacherName = H.PersonName;
          
-                List<tblParentToSchollMessageAttachment> AList = Connection.tblParentToSchollMessageAttachments.Where(x => x.MessageId == MessageId).ToList();
+                List<tblParentToSchollMessageAttachment> AList = Connection.tblParentToSchollMessageAttachments.Where(
+                                                                 x => x.MessageId == MessageId).ToList();
                 M.AttachmentList = AList;
             }
             catch (Exception Ex)
@@ -304,7 +319,8 @@ namespace GDWEBSolution.Controllers.Message
                 M.Subject = H.Subject;
                 M.Sender = H.Sender;
 
-                List<tblSchoolToParentMessageAttachment> AList = Connection.tblSchoolToParentMessageAttachments.Where(x => x.MessageId == MessageId).ToList();
+                List<tblSchoolToParentMessageAttachment> AList = Connection.tblSchoolToParentMessageAttachments.Where(
+                                                                 x => x.MessageId == MessageId).ToList();
                 M.AttachmentList = AList;
             }
             catch (Exception Ex)

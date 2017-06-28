@@ -121,7 +121,8 @@ namespace GDWEBSolution.Controllers
         {
             string result = "Error";
             long Code = Convert.ToInt64(login.Code);
-            tblUserCode Codex = Connection.tblUserCodes.Where(u => u.Code == Code & u.IsActive == "Y" ).FirstOrDefault();
+            tblUserCode Codex = Connection.tblUserCodes.Where(u => u.Code == Code &&
+                                                              u.IsActive == "Y" ).FirstOrDefault();
             if (Codex != null)
             {
                 Codex.IsActive = "U";

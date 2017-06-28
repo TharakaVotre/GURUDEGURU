@@ -176,7 +176,8 @@ namespace GDWEBSolution.Controllers.User
         {
             UserCategoryModel TModel = new UserCategoryModel();
 
-            tblUserCategory TCtable = Connection.tblUserCategories.SingleOrDefault(x => x.CategoryId == CategoryId);
+            tblUserCategory TCtable = Connection.tblUserCategories.SingleOrDefault(
+                                      x => x.CategoryId == CategoryId);
             TModel.IsActive = TCtable.IsActive;
             if (TCtable.IsActive.Equals("Y")) { TModel.Active = true; }
             else { TModel.Active = false; }
@@ -191,7 +192,8 @@ namespace GDWEBSolution.Controllers.User
         {
             try
             {
-                tblUserCategory TCtable = Connection.tblUserCategories.SingleOrDefault(x => x.CategoryId == Model.CategoryId);
+                tblUserCategory TCtable = Connection.tblUserCategories.SingleOrDefault(
+                                          x => x.CategoryId == Model.CategoryId);
 
                 if (Model.Active == true) { TCtable.IsActive = "Y"; }
                 else { TCtable.IsActive = "N"; }
@@ -252,7 +254,8 @@ namespace GDWEBSolution.Controllers.User
         {
             try
             {
-                tblUserCategoryFunction Tble = Connection.tblUserCategoryFunctions.Find(Model.CategoryId, Model.FunctionId);
+                tblUserCategoryFunction Tble = Connection.tblUserCategoryFunctions.Find(
+                                               Model.CategoryId, Model.FunctionId);
                 Connection.tblUserCategoryFunctions.Remove(Tble);
                 Connection.SaveChanges();
 
