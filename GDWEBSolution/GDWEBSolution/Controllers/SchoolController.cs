@@ -1183,6 +1183,7 @@ namespace GDWEBSolution.Controllers
 
              List<SchoolModel> List = STQlist.Select(x => new SchoolModel
              {
+                 GradeName=x.GradeName,
 
                 ClassId=x.ClassId,
                 ClassName=x.ClassName,
@@ -1268,7 +1269,8 @@ namespace GDWEBSolution.Controllers
                  tblSchoolGrade Tble = Connection.tblSchoolGrades.Find(Model.SchoolId, Model.GradeId);
                  Connection.tblSchoolGrades.Remove(Tble);
                  Connection.SaveChanges();
-
+                 Connection.SMGTModifyClassStatus(Model.SchoolId, "%", Model.GradeId);
+                 Connection.SaveChanges();
 
                  return Json(Model.SchoolId, JsonRequestBehavior.AllowGet);
                  //return RedirectToAction("Index");
@@ -2049,6 +2051,50 @@ namespace GDWEBSolution.Controllers
             return Json(result2, JsonRequestBehavior.AllowGet);
         }
 
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult Getloadschool()
+        {
+
+            if (USession.User_Category == "SADMI")
+            {
+                List<tblSchool> scldatalist = Connection.tblSchools.Where(X => X.SchoolId == USession.School_Id && X.IsActive=="Y").ToList();
+                var result2 = (from s in scldatalist
+                               select new
+                               {
+                                   SchoolId = s.SchoolId,
+                                   SchoolName = s.SchoolName
+                               }).ToList();
+
+
+                return Json(result2, JsonRequestBehavior.AllowGet);
+
+            }
+            else {
+
+                List<tblSchool> scldatalist = Connection.tblSchools.Where(X =>  X.IsActive=="Y").ToList();
+
+                var result2 = (from s in scldatalist
+                               select new
+                               {
+                                   SchoolId = s.SchoolId,
+                                   SchoolName = s.SchoolName
+                               }).ToList();
+
+
+                return Json(result2, JsonRequestBehavior.AllowGet);
+            
+            
+            }
+
+
+
+
+
+
+        }
+
+
+
         //edit Start
 
 
@@ -2465,6 +2511,15 @@ namespace GDWEBSolution.Controllers
                 return Json("Exception", JsonRequestBehavior.AllowGet);
 
             }
+        }
+
+
+        public ActionResult ShowSchooClassesnGrades(string SchoolId)
+        {
+
+            List<SchoolModel> List = LoadClasses(SchoolId, "%");
+            //    string username = result.Consignor.Split('<')[0];
+            return PartialView("gradeclassview", List);
         }
 
 

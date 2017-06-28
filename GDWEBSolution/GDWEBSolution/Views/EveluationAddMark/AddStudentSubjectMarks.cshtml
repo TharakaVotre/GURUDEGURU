@@ -33,12 +33,12 @@
             {
                 
                 int i = 0;
-                string SubjectStatus = ViewBag.SubjectStatus.ToString();
+               // string SubjectStatus = ViewBag.SubjectStatus.ToString();
                 
                 foreach (var item in Model)
                 {
                     i++;
-                    if (SubjectStatus == item.Optional) { 
+                  //  if (SubjectStatus == item.Optional) { 
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.StudentId)
@@ -56,7 +56,7 @@
                            <input type="text" name="Comment" class="form-control" />
                        </td>
                     </tr>
-            }
+            //}
                 }
             }
         </tbody>

@@ -12211,6 +12211,7 @@
         <ComplexType Name="SMGTgetSchoolClasses_Result">
           <Property Type="String" Name="ClassId" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="ClassName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="GradeName" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="SMGTgetSchoolExtraCadd_Result">
           <Property Type="String" Name="ActivityCode" Nullable="false" MaxLength="6" />
@@ -14586,6 +14587,7 @@
               <ComplexTypeMapping TypeName="SchoolMGTModel.SMGTgetSchoolClasses_Result">
                 <ScalarProperty Name="ClassId" ColumnName="ClassId" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="GradeName" ColumnName="GradeName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

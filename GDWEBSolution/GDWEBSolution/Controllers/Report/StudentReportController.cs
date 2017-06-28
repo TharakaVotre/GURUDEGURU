@@ -212,18 +212,18 @@ namespace GDWEBSolution.Controllers.Report
 
 
          [UserFilter(Function_Id = "StReP")]
-        public ActionResult ParentReport(string AccYear, string Evealuation)
+         public ActionResult ParentReport(string AccYear, string Eveluation)
         {
             
             UserId = USession.User_Id;
             try
             {
                 Dropdowns();
-                if (Evealuation == "")
+                if (Eveluation == "")
                 {
-                    Evealuation = "0";
+                    Eveluation = "0";
                 }
-                long EveluationTypes = Convert.ToInt64(Evealuation);
+                long EveluationTypes = Convert.ToInt64(Eveluation);
                 var StudentMark = Connection.GDgetParentAttentionRequiredSubject(AccYear, EveluationTypes, UserId);
                 List<GDgetParentAttentionRequiredSubject_Result> StudentMarklist = StudentMark.ToList();
 
