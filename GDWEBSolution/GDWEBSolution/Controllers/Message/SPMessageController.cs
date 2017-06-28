@@ -287,10 +287,12 @@ namespace GDWEBSolution.Controllers.Message
                                                               x => x.ParameterValue).SingleOrDefault();
                     AttachmentId = Convert.ToInt64(Atid);
                     long Next = AttachmentId + 1;
+                    var Attachement_Path = "/Attachments/StP/" + DateTime.Now.ToString("yyyy") + "/" +
+                       DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("dd") + "/" + Model.MessageId;
                     var fileName = Path.GetFileName(file.FileName);
                     var extention = Path.GetExtension(file.FileName);
                     Attachmentfile.AttachmentName = file.FileName;
-                    Attachmentfile.AttachmentPath = "/Attachments/" + file.FileName;
+                    Attachmentfile.AttachmentPath = Attachement_Path + "/" + file.FileName;
                     Attachmentfile.MessageId = Model.MessageId;
                     Attachmentfile.SeqNo = AttachmentId;
 
@@ -301,7 +303,11 @@ namespace GDWEBSolution.Controllers.Message
                                            x => x.ParameterId == "SPMAS");
                     TCtable.ParameterValue = Next.ToString();
                     Connection.SaveChanges();
-                    file.SaveAs(Server.MapPath("/Attachments/" + file.FileName));
+                    if (!Directory.Exists(Server.MapPath(Attachement_Path)))
+                    {
+                        Directory.CreateDirectory(Server.MapPath(Attachement_Path));
+                    }
+                    file.SaveAs(Server.MapPath(Attachement_Path + "/" + file.FileName));
                 }
                 var result = new { FileName = file.FileName, SeqNo = AttachmentId };
                 return Json(result, JsonRequestBehavior.AllowGet);
