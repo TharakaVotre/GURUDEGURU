@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.AnnualFunctions;
 using GDWEBSolution.Models.User;
 using System;
@@ -16,11 +17,11 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
         UserSession USession = new UserSession();
         string UserId =null;
         string SchoolId = null;        // GET: /StudentGradeAdvance/
-        
+        [UserFilter(Function_Id = "GAdv")]
         public ActionResult Index()
         {
-
-            Authentication("GAdv");
+            
+          
             try
             {
                 tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "AY");
@@ -39,35 +40,11 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
             }
         }
 
-        private void Authentication(string ControlerName)
-        {
-           
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId==CategoryId && a.IsActive=="Y");
 
-                if (AccessControl ==null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-                else
-                {
-                    UserId = USession.User_Id;
-                    SchoolId = USession.School_Id;
-                }
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
-
+       [UserFilter(Function_Id = "GAdv")]
         public ActionResult Detail(string GradeId, string ClassId, string AcedamicYear)
         {
-            Authentication("GAdDt");
+           
             try
             {
                 tblAccadamicYear Ttable = Connection.tblAccadamicYears.SingleOrDefault(x => x.SchoolId == SchoolId);
@@ -121,7 +98,7 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
                 return View();
             }
         }
-
+         [UserFilter(Function_Id = "GAdv")]
         private List<StudentGradeAdvanceModel> getdataForTable(string AcedamicYear,string GradeId,string ClassId)
         {
            
@@ -158,6 +135,7 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
                 return null;
             }
         }
+         [UserFilter(Function_Id = "GAdv")]
         private void Dropdownlistdata(string SchoolId)
         {
             SchoolId = USession.School_Id;
@@ -175,12 +153,12 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
             
         }
 
-       
 
+         [UserFilter(Function_Id = "GAdv")]
         [HttpPost]
         public ActionResult Update(string[] selectedNames, string GradeId, string ClassId, string ParameterAcedamicYear)
         {
-            Authentication("GAdUp");
+            
             try
             {
                 if (GradeId!="")
@@ -243,10 +221,10 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
         }
 
 
-
+         [UserFilter(Function_Id = "GAdv")]
         public ActionResult UpdateAccedemicYear()
         {
-            Authentication("UpYer");
+            
             try
             {
                 tblAccadamicYear Ttable = Connection.tblAccadamicYears.SingleOrDefault(x => x.SchoolId == SchoolId);
@@ -259,11 +237,13 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
                 return View();
             }
         }
+
+         [UserFilter(Function_Id = "GAdv")]
         [HttpPost]
 
         public ActionResult UpdateAccYear(string AccYear)
         {
-            Authentication("UpYrP");
+            
             try
             {
                 Connection.GDModifySchoolAccademicYear(SchoolId,AccYear);

@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
 using GDWEBSolution.Models.User;
 using System;
@@ -17,30 +18,10 @@ namespace GDWEBSolution.Controllers
         UserSession USession = new UserSession();
         string UserId = null;
 
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-               
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+       [UserFilter(Function_Id = "MaSCa")]
         public ActionResult Index()
         {
-            Authentication("MaSCa");
+             
             try
             {
                 var Group = Connection.GDgetAllSubjectCategory("Y");
@@ -88,20 +69,20 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+[UserFilter(Function_Id = "MaSCa")]
         public ActionResult Create()
         {
-            Authentication("MaSCa");
+             
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+        [UserFilter(Function_Id = "MaSCa")]
         [HttpPost]
         public ActionResult Create(tblSubjectCategory Model)
         {
-            Authentication("MaSCa");
+             
             UserId = USession.User_Id;
             try
             {
@@ -128,10 +109,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaSCa")]
         public ActionResult Edit(int Code)
         {
-            Authentication("MaSCa");
+             
             try{
             SubjectCategoryModel TModel = new SubjectCategoryModel();
 
@@ -153,11 +134,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaSCa")]
         [HttpPost]
         public ActionResult Edit(SubjectCategoryModel Model)
         {
-            Authentication("MaSCa");
+            
             UserId = USession.User_Id;
             try
             {
@@ -185,10 +166,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaSCa")]
         public ActionResult Delete(int Code)
         {
-            Authentication("MaSCa");
+             
             try{
             SubjectCategoryModel TModel = new SubjectCategoryModel();
             TModel.SubjectCategoryId = Code;
@@ -204,11 +185,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaSCa")]
         [HttpPost]
         public ActionResult Delete(SubjectCategoryModel Model)
         {
-            Authentication("MaSCa");
+            
             UserId = USession.User_Id;
             try
             {

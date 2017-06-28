@@ -14,9 +14,16 @@
 						</div>
 						<div class="row">
 					<div class="clearfix pt pb">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="row">
 						<div class="col-md-12">
                              <input class="form-control" id="date" name="date" style="width:200px" placeholder="MM/DD/YYYY" type="text"/>
 						</div>
+                            </div>
 					</div>
 				</div>
                         @if(Session["LoggedUserInfo"] != null){
@@ -29,11 +36,10 @@
 
 <script>
      $(document).ready(function () {
-         var date_input = $('input[name="date"]'); //our date input has the name "date"
-         date_input.datepicker({
-             format: 'mm/dd/yyyy',
-             todayHighlight: true,
-             autoclose: true,
+       
+         $('input[name="date"]').daterangepicker({
+             singleDatePicker: true,
+             showDropdowns: true
          })
      });
  </script>

@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
 using GDWEBSolution.Models.User;
 using System;
@@ -18,30 +19,10 @@ namespace GDWEBSolution.Controllers
         UserSession USession = new UserSession();
         string UserId = null;
 
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-               
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+      [UserFilter(Function_Id = "MaQul")]
         public ActionResult Index()
         {
-            Authentication("MaQul");
+             
             try
             {
                 var Qualification = Connection.GDgetAllQualification("Y");
@@ -90,20 +71,20 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+ [UserFilter(Function_Id = "MaQul")]
         public ActionResult Create()
         {
-            Authentication("MaQul");
+             
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+         [UserFilter(Function_Id = "MaQul")]
         [HttpPost]
         public ActionResult Create(tblQualification Model)
         {
-            Authentication("MaQul");
+            
             UserId = USession.User_Id;
             try
             {
@@ -143,10 +124,9 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaQul")]
         public ActionResult Edit(int Code)
         {
-            Authentication("MaQul");
             
             try{
             QulificationModel TModel = new QulificationModel();
@@ -169,11 +149,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaQul")]
         [HttpPost]
         public ActionResult Edit(QulificationModel Model)
         {
-            Authentication("MaQul");
+            
             UserId = USession.User_Id;
             try
             {
@@ -201,10 +181,9 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaQul")]
         public ActionResult Delete(int Code)
         {
-            Authentication("MaQul");
             
             try
             {
@@ -222,11 +201,10 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaQul")]
         [HttpPost]
         public ActionResult Delete(QulificationModel Model)
         {
-            Authentication("MaQul");
             UserId = USession.User_Id;
             try
             {

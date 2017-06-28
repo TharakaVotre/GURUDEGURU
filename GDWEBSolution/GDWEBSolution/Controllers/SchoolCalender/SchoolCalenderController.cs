@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.SchoolCalender;
 using GDWEBSolution.Models.User;
 using System;
@@ -20,30 +21,12 @@ namespace GDWEBSolution.Controllers.SchoolCalender
         string UserId = null;
         string AcademicYear = null;
 
-        private void Authentication(string ControlerName)
-        {
+       
 
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-               
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+         [UserFilter(Function_Id = "ScCal")]
         public ActionResult Index(string AcademicYear)
         {
-            Authentication("ScCal");
+          
             SchooId = USession.School_Id;
             try
             {
@@ -100,11 +83,11 @@ namespace GDWEBSolution.Controllers.SchoolCalender
             return PartialView("AddView");
         }
 
-
+         [UserFilter(Function_Id = "ScCal")]
         [HttpPost]
         public ActionResult Create(SchoolCalenderModel Model)
         {
-            Authentication("ScCal");
+            
             SchooId = USession.School_Id;
             UserId = USession.User_Id;
             try
@@ -158,10 +141,10 @@ namespace GDWEBSolution.Controllers.SchoolCalender
 
             ViewBag.IsHoliday = new SelectList(Selectlist, "Value", "Text");
         }
-
+         [UserFilter(Function_Id = "ScCal")]
         public ActionResult Edit(long SeqNo)
         {
-            Authentication("ScCal");
+            
             
             try
             {
@@ -188,11 +171,11 @@ namespace GDWEBSolution.Controllers.SchoolCalender
             }
         }
 
-
+         [UserFilter(Function_Id = "ScCal")]
         [HttpPost]
         public ActionResult Edit(SchoolCalenderModel Model, string IsHoliday1)
         {
-            Authentication("ScCal");
+            
             UserId = USession.User_Id;
             try
             {
@@ -215,10 +198,10 @@ namespace GDWEBSolution.Controllers.SchoolCalender
 
 
 
-
+         [UserFilter(Function_Id = "ScCal")]
         public ActionResult Delete(long SeqNo)
         {
-            Authentication("ScCal");
+           
             try
             {
                 SchoolCalenderModel TModel = new SchoolCalenderModel();
@@ -232,11 +215,11 @@ namespace GDWEBSolution.Controllers.SchoolCalender
             }
         }
 
-
+         [UserFilter(Function_Id = "ScCal")]
         [HttpPost]
         public ActionResult Delete(SchoolCalenderModel Model)
         {
-            Authentication("ScCal");
+
             UserId = USession.User_Id;
             try
             {
@@ -245,7 +228,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
 
 
                 return Json(true, JsonRequestBehavior.AllowGet);
-                //return RedirectToAction("Index");
+                
             }
             catch (Exception ex)
             {
@@ -257,10 +240,10 @@ namespace GDWEBSolution.Controllers.SchoolCalender
         }
 
 
-
+        [UserFilter(Function_Id = "ScClP")]
         public ActionResult ParentView(string AcademicYear)
         {
-            Authentication("ScClP");
+            
             SchooId = USession.School_Id;
             try
             {

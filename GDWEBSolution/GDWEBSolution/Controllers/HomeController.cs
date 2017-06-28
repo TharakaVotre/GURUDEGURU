@@ -57,6 +57,8 @@ namespace GDWEBSolution.Controllers
                 USession.User_Category = loggedU.UserCategory;
                 USession.User_Id = loggedU.UserId;
 
+                Session["User_Name"] = loggedU.UserId;
+
                 result = "Succes";
             }
             else

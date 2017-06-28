@@ -99,6 +99,15 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DCISgetSchool_Result>("DCISgetSchool");
         }
     
+        public virtual ObjectResult<DCISgetSchoolAdmin_Result> DCISgetSchoolAdmin(string schoolId)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DCISgetSchoolAdmin_Result>("DCISgetSchoolAdmin", schoolIdParameter);
+        }
+    
         public virtual int DCISgetSupportingDocumentDown(string status, string requestID, string reqstID)
         {
             var statusParameter = status != null ?
@@ -2793,9 +2802,13 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetStoPMessageView_Result>("SMGTgetStoPMessageView", messageIdParameter, parentIdParameter);
         }
     
-        public virtual ObjectResult<SMGTGetStudent_Result> SMGTGetStudent()
+        public virtual ObjectResult<SMGTGetStudent_Result> SMGTGetStudent(string schoolId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTGetStudent_Result>("SMGTGetStudent");
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTGetStudent_Result>("SMGTGetStudent", schoolIdParameter);
         }
     
         public virtual ObjectResult<SMGTgetStudentExtraCadd_Result> SMGTgetStudentExtraCadd(string schoolId, string studentId)
@@ -3089,7 +3102,7 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SMGTSchoolCount");
         }
     
-        public virtual int SMGTsetParent(string parentName, Nullable<int> relationshipId, string address1, string address2, string address3, string homeTelephone, string personalEmail, string personalMobile, string occupation, string officeAddress1, string officeAddress2, string officeAddress3, string officePhone, string officeEmail, string nIC, string userId, string imgUrl, Nullable<System.DateTime> dateofBirth, string createdBy, string isActive)
+        public virtual int SMGTsetParent(string parentName, Nullable<int> relationshipId, string address1, string address2, string address3, string homeTelephone, string personalEmail, string personalMobile, string occupation, string officeAddress1, string officeAddress2, string officeAddress3, string officePhone, string officeEmail, string nIC, string userId, string imgUrl, Nullable<System.DateTime> dateofBirth, string createdBy, string isActive, string schoolId)
         {
             var parentNameParameter = parentName != null ?
                 new ObjectParameter("ParentName", parentName) :
@@ -3171,7 +3184,11 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("IsActive", isActive) :
                 new ObjectParameter("IsActive", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTsetParent", parentNameParameter, relationshipIdParameter, address1Parameter, address2Parameter, address3Parameter, homeTelephoneParameter, personalEmailParameter, personalMobileParameter, occupationParameter, officeAddress1Parameter, officeAddress2Parameter, officeAddress3Parameter, officePhoneParameter, officeEmailParameter, nICParameter, userIdParameter, imgUrlParameter, dateofBirthParameter, createdByParameter, isActiveParameter);
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTsetParent", parentNameParameter, relationshipIdParameter, address1Parameter, address2Parameter, address3Parameter, homeTelephoneParameter, personalEmailParameter, personalMobileParameter, occupationParameter, officeAddress1Parameter, officeAddress2Parameter, officeAddress3Parameter, officePhoneParameter, officeEmailParameter, nICParameter, userIdParameter, imgUrlParameter, dateofBirthParameter, createdByParameter, isActiveParameter, schoolIdParameter);
         }
     
         public virtual int SMGTsetSchoolGrade(string schoolId, string gradeId, string createdBy, string isActive)

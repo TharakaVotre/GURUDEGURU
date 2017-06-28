@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.HomeWork;
 using GDWEBSolution.Models.User;
 using System;
@@ -21,37 +22,10 @@ namespace GDWEBSolution.Controllers
        
         long TeacherId = 0;
 
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-                else
-                {
-                    UserId = USession.User_Id;
-                    SchoolId = USession.School_Id; ;
-                    tblTeacher teacher=Connection.tblTeachers.SingleOrDefault(a=>a.UserId==UserId);
-                    if (teacher!=null)
-                    TeacherId = teacher.TeacherId;
-                }
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+          [UserFilter(Function_Id = "HomIn")]
         public ActionResult Index(string FromDate,string ToDate)
         {
-            Authentication("HomIn");
+            
             try
             {
 
@@ -115,10 +89,10 @@ namespace GDWEBSolution.Controllers
                 return View();
             }
         }
-
+        [UserFilter(Function_Id = "HomDe")]
         public ActionResult Details(long code, string dates)
         {
-            Authentication("HomDe");
+           
             try
             {
                 DropDownList("%");
@@ -149,9 +123,10 @@ namespace GDWEBSolution.Controllers
             }
         }
 
+         [UserFilter(Function_Id = "HomDo")]
         public FileResult Download(string path)
         {
-            Authentication("HomDo");
+          
             try
             {
                 string Filepath = Server.MapPath("~/Uploads/" + path);
@@ -166,10 +141,10 @@ namespace GDWEBSolution.Controllers
             }
         }
         //
-
+         [UserFilter(Function_Id = "HomIn")]
         public ActionResult ShowAddView(int id)
         {
-            Authentication("HomIn");
+           
             DropDownList("");
 
            
@@ -187,11 +162,11 @@ namespace GDWEBSolution.Controllers
           
         }
 
-       
+       [UserFilter(Function_Id = "HomIn")]
         [HttpPost]
         public ActionResult Create(HomeWorkModel Model)
         {
-            Authentication("HomIn");
+           
             string _path = "";
             
 
@@ -235,10 +210,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "HomIn")]
         public ActionResult Edit(long Code, string dates)
         {
-            Authentication("HomIn");
+         
             try
             {
                 HomeWorkModel TModel = new HomeWorkModel();
@@ -278,11 +253,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "HomIn")]
         [HttpPost]
         public ActionResult Edit(HomeWorkModel Model)
         {
-            Authentication("HomIn");
+           
             try
             {
                 long dueId = 0;
@@ -331,10 +306,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "HomIn")]
         public ActionResult Delete(long Code)
         {
-            Authentication("HomIn");
+           
             HomeWorkModel TModel = new HomeWorkModel();
             TModel.AssignmentNo = Code;
             return PartialView("DeleteView", TModel);
@@ -342,11 +317,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "HomIn")]
         [HttpPost]
         public ActionResult Delete(HomeWorkModel Model)
         {
-            Authentication("HomIn");
+            
             try
             {
                 Connection.GDDeleteHomeWork("N", Model.AssignmentNo, UserId);
@@ -364,10 +339,10 @@ namespace GDWEBSolution.Controllers
         }
 
 
-
+        [UserFilter(Function_Id = "HomPa")]
         public ActionResult ParentView(string FromDate, string ToDate)
         {
-            Authentication("HomPa");
+            
             try
             {
                 if (FromDate == null && ToDate == null && Session["FromDate"] != null)

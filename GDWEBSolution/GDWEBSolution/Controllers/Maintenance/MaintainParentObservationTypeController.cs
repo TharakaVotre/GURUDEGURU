@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
 using GDWEBSolution.Models.User;
 using System;
@@ -17,31 +18,11 @@ namespace GDWEBSolution.Controllers
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
         UserSession USession = new UserSession();
         string UserId = null;
-
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-               
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+         [UserFilter(Function_Id = "MaPao")]
+       
         public ActionResult Index()
         {
-            Authentication("MaPao");
+            
             try{
             var Observation = Connection.GDgetAllParentObservationType("Y");
             List<GDgetAllParentObservationType_Result> Observationlist = Observation.ToList();
@@ -88,20 +69,20 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+        [UserFilter(Function_Id = "MaPao")]
         public ActionResult Create()
         {
-            Authentication("MaPao");
+            
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+        [UserFilter(Function_Id = "MaPao")]
         [HttpPost]
         public ActionResult Create(tblParentObservationType Model)
         {
-            Authentication("MaPao");
+             
             UserId = USession.User_Id;
             try
             {
@@ -141,10 +122,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaPao")]
         public ActionResult Edit(int Code)
         {
-            Authentication("MaPao");
+           
            
             try{
             ParentObservationTypeModel TModel = new ParentObservationTypeModel();
@@ -167,11 +148,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+[UserFilter(Function_Id = "MaPao")]
         [HttpPost]
         public ActionResult Edit(ParentObservationTypeModel Model)
         {
-            Authentication("MaPao");
+            
             UserId = USession.User_Id;
             try
             {
@@ -199,10 +180,9 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaPao")]
         public ActionResult Delete(int Code)
-        {
-            Authentication("MaPao");
+        { 
            
             try
             {
@@ -220,11 +200,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaPao")]
         [HttpPost]
         public ActionResult Delete(ParentObservationTypeModel Model)
         {
-            Authentication("MaPao");
+            
             UserId = USession.User_Id;
             try
             {

@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Configuration;
 using GDWEBSolution.Models.User;
 using System;
@@ -22,30 +23,10 @@ namespace GDWEBSolution.Controllers.Configuration
         string Accyear = null;
         string gradeid = null;
 
-        private void Authentication(string ControlerName)
-        {
-           
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-               
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+        [UserFilter(Function_Id = "GSub")]
         public ActionResult Index()
         {
-            Authentication("GSub");
+           
             ViewBag.Message = false;
             if (Session["ErrorMessage"] != null) { 
             string msg=Session["ErrorMessage"].ToString();
@@ -144,11 +125,11 @@ namespace GDWEBSolution.Controllers.Configuration
            
             ViewBag.Optional = new SelectList(Optionallist, "Value", "Text");
         }
-
+        [UserFilter(Function_Id = "GSub")]
          [HttpPost]
         public ActionResult Create(int[] SubjectCategoryId, int[] selectedNames, string GradeId, string[] optional, string AcademicYear)
         {
-            Authentication("GSuC");
+            
             
             try
             {
@@ -246,12 +227,12 @@ namespace GDWEBSolution.Controllers.Configuration
             }
         }
 
-         
+         [UserFilter(Function_Id = "GSub")]
          public ActionResult Detail(string AcademicYear,string GradeId)
          {
              try
              {
-                 Authentication("GSubD");
+                 
                  Dropdownlistdata(AcademicYear, GradeId);
                  SchoolId = USession.School_Id;
                  var Group = Connection.GDgetAllGradeSubject(Accyear, SchoolId, gradeid, "Y");
@@ -291,10 +272,10 @@ namespace GDWEBSolution.Controllers.Configuration
              // return View();
          }
 
-         
+         [UserFilter(Function_Id = "GSub")]
          public ActionResult Edit(string AcademicYear, string GradeId, string SubjectId,string SubjectCategoryId,string Optional)
          {
-             Authentication("GSuEV");
+             
              Dropdownlistdata(AcademicYear, GradeId);
              int suid = Convert.ToInt32(SubjectId);
              Grade_SubjectModel TModel = new Grade_SubjectModel();
@@ -313,10 +294,11 @@ namespace GDWEBSolution.Controllers.Configuration
              return PartialView("Edit", TModel);
          }
 
+        [UserFilter(Function_Id = "GSub")]
          [HttpPost]
          public ActionResult Edit(Grade_SubjectModel Model)
          {
-             Authentication("GSubE");
+            
              try
              {
                  SchoolId = USession.School_Id;
@@ -334,10 +316,10 @@ namespace GDWEBSolution.Controllers.Configuration
          }
 
 
-
+        [UserFilter(Function_Id = "GSub")]
          public ActionResult Delete(string AcademicYear,string GradeId,string SubjectId)
          {
-             Authentication("GSuDV");
+             
              Grade_SubjectModel TModel = new Grade_SubjectModel();
              TModel.AcademicYear = AcademicYear;
              TModel.GradeId = GradeId;
@@ -347,11 +329,11 @@ namespace GDWEBSolution.Controllers.Configuration
 
          //
          // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "GSub")]
          [HttpPost]
          public ActionResult Delete(Grade_SubjectModel Model)
          {
-             Authentication("GSuDe");
+            
              try
              {
                  SchoolId = USession.School_Id;

@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Report;
 using GDWEBSolution.Models.Student;
 using GDWEBSolution.Models.User;
@@ -19,30 +20,10 @@ namespace GDWEBSolution.Controllers.Evaluation
         string UserId = null;
         // GET: /EveluationAddMark/
 
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-                
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+      [UserFilter(Function_Id = "EvAdM")]
         public ActionResult Index()
         {
-            Authentication("EvAdM");
+            
             try
             {
 
@@ -141,10 +122,10 @@ namespace GDWEBSolution.Controllers.Evaluation
             return Gradelist;
            
         }
-
+         [UserFilter(Function_Id = "EvAdM")]
         public ActionResult AddStudentSubjectMark(string Eveluation,string GradeId,string ClassId,string SubjectId)
         {
-            Authentication("AdSuM");
+           
             try
             {
                 int subId = Convert.ToInt32(SubjectId);
@@ -176,9 +157,10 @@ namespace GDWEBSolution.Controllers.Evaluation
             }
         }
 
+         [UserFilter(Function_Id = "EvAdM")]
         public ActionResult Create(string[] Mark, string[] StudentId, string Eveluation, string SubjectId, string GradeId,string Comment)
         {
-            Authentication("AdSMS");
+           
             try
             {
                 SchoolId=USession.School_Id;
@@ -211,9 +193,9 @@ namespace GDWEBSolution.Controllers.Evaluation
             }
         }
 
-
+         [UserFilter(Function_Id = "SubRe")]
         public ActionResult ShowResult(string Eveluation, string ClassId, string GradeId) {
-            Authentication("SubRe");
+           
             try
             {
                 SchoolId = USession.School_Id;
@@ -262,10 +244,10 @@ namespace GDWEBSolution.Controllers.Evaluation
            
         }
 
-
+         [UserFilter(Function_Id = "EvAdM")]
         public ActionResult EditStudentResult(string EditEveluation, string EditClassId, string EditGradeId, string EditSubjectId)
         {
-            Authentication("EdRes");
+           
             try {
                 SchoolId = USession.School_Id;
             if (EditEveluation != null)
@@ -310,9 +292,10 @@ namespace GDWEBSolution.Controllers.Evaluation
             }
         }
 
+         [UserFilter(Function_Id = "EvAdM")]
         public ActionResult Edit(string StudentId,string ResultId,string Mark)
         {
-            Authentication("ReSav");
+           
             try
             {
                 StudentReportModel TModel = new StudentReportModel();
@@ -331,11 +314,12 @@ namespace GDWEBSolution.Controllers.Evaluation
 
             }
         }
-        
+
+         [UserFilter(Function_Id = "EvAdM")]
          [HttpPost]
         public ActionResult Edit(StudentReportModel Model)
         {
-            Authentication("ReSav");
+            
             try
             {
                 UserId = USession.User_Id;
@@ -350,11 +334,11 @@ namespace GDWEBSolution.Controllers.Evaluation
                 return View();
             }
         }
-       
 
+         [UserFilter(Function_Id = "EvAdM")]
         public ActionResult Delete(int ResultId)
         {
-            Authentication("ReDe");
+           
             try
             {
                 StudentReportModel TModel = new StudentReportModel();
@@ -371,11 +355,11 @@ namespace GDWEBSolution.Controllers.Evaluation
         
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "EvAdM")]
         [HttpPost]
         public ActionResult Delete(StudentReportModel Model)
         {
-            Authentication("ReDe");
+            
             try
             {
                 UserId = USession.User_Id;

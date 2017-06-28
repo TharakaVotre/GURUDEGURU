@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
 using GDWEBSolution.Models.User;
 using System;
@@ -18,34 +19,10 @@ namespace GDWEBSolution.Controllers
         UserSession USession = new UserSession();
         string UserId = null;
 
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-                else
-                {
-                    UserId = USession.User_Id;
-
-                }
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+         [UserFilter(Function_Id = "MaGra")]
         public ActionResult Index()
         {
-            Authentication("MaGra");
+             
             try
             {
                 var Grade = Connection.GDgetAllGradeMaintenance("Y");
@@ -93,20 +70,20 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+        [UserFilter(Function_Id = "MaGra")]
         public ActionResult Create()
         {
-            Authentication("ADMIN");
+           
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+        [UserFilter(Function_Id = "MaGra")]
         [HttpPost]
         public ActionResult Create(tblGrade Model)
         {
-            Authentication("MaGra");
+           
             UserId = USession.User_Id;
             try
             {
@@ -135,10 +112,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaGra")]
         public ActionResult Edit(string Code)
         {
-            Authentication("MaGra");
+             
             try
             {
                 GradeModel TModel = new GradeModel();
@@ -161,11 +138,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaGra")]
         [HttpPost]
         public ActionResult Edit(GradeModel Model)
         {
-            Authentication("MaGra");
+            
             UserId = USession.User_Id;
             try
             {
@@ -193,10 +170,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaGra")]
         public ActionResult Delete(string Code)
         {
-            Authentication("MaGra");
+             
             try
             {
                 GradeModel TModel = new GradeModel();
@@ -213,11 +190,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaGra")]
         [HttpPost]
         public ActionResult Delete(GradeModel Model)
         {
-            Authentication("MaGra");
+             
             UserId = USession.User_Id;
             try
             {

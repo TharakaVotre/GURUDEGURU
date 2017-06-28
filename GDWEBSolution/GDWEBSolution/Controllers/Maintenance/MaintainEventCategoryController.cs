@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
 using GDWEBSolution.Models.User;
 using System;
@@ -18,9 +19,10 @@ namespace GDWEBSolution.Controllers
         UserSession USession = new UserSession();
         // GET: /TeacherCategory/
         string UserId = null;
+         [UserFilter(Function_Id = "MaECa")]
         public ActionResult Index()
         {
-            Authentication("MaECa");
+            
             try
             {
                 var Category = Connection.GDgetAllEventCategory("Y");
@@ -56,14 +58,14 @@ namespace GDWEBSolution.Controllers
 
         //
         // GET: /TeacherCategory/Details/5
-
+         [UserFilter(Function_Id = "MaECa")]
         public ActionResult Details(long id)
         {
             return View();
         }
 
         //
-
+         
         public ActionResult ShowAddEventCategory(long id)
         {
             
@@ -71,20 +73,20 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+         [UserFilter(Function_Id = "MaECa")]
         public ActionResult Create()
         {
-            Authentication("MaECa");
+          
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+         [UserFilter(Function_Id = "MaECa")]
         [HttpPost]
         public ActionResult Create(tblEventcategory Model)
         {
-            Authentication("MaECa");
+           
             try
             {
                 UserId = USession.User_Id;
@@ -104,7 +106,7 @@ namespace GDWEBSolution.Controllers
             }
         }
 
-
+         
         public ActionResult ShowEditEventCategory(long CategoryId)
         {
            
@@ -112,10 +114,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaECa")]
         public ActionResult Edit(long CategoryId)
         {
-            Authentication("MaECa");
+           
             try
             {
                 EventCategoryModel TModel = new EventCategoryModel();
@@ -140,11 +142,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaECa")]
         [HttpPost]
         public ActionResult Edit(EventCategoryModel Model)
         {
-            Authentication("MaECa");
+           
             UserId = USession.User_Id;
             try
             {
@@ -164,7 +166,7 @@ namespace GDWEBSolution.Controllers
             }
         }
 
-
+       
         public ActionResult ShowDeleteCategoryModel(long CategoryId)
         {
             
@@ -172,10 +174,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaECa")]
         public ActionResult Delete(long CategoryId)
         {
-            Authentication("MaECa");
+           
             try
             {
                 EventCategoryModel TModel = new EventCategoryModel();
@@ -192,11 +194,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaECa")]
         [HttpPost]
         public ActionResult Delete(EventCategoryModel Model)
         {
-            Authentication("MaECa");
+            
             try
             {
                 UserId = USession.User_Id;
@@ -215,26 +217,6 @@ namespace GDWEBSolution.Controllers
             }
         }
 
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-                
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+       
     }
 }

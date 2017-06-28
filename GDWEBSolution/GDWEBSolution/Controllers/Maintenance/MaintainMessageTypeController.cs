@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
 using GDWEBSolution.Models.User;
 using System;
@@ -17,30 +18,10 @@ namespace GDWEBSolution.Controllers
         UserSession USession = new UserSession();
         string UserId = null;
 
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-                
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+      [UserFilter(Function_Id = "MaMsg")]
         public ActionResult Index()
         {
-            Authentication("MaMsg");
+             
             try
             {
                 var msg = Connection.GDgetAllMassageType("Y");
@@ -88,20 +69,20 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+         [UserFilter(Function_Id = "MaMsg")]
         public ActionResult Create()
         {
-            Authentication("MaMsg");
+            
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+         [UserFilter(Function_Id = "MaMsg")]
         [HttpPost]
         public ActionResult Create(tblMessageType Model)
         {
-            Authentication("MaMsg");
+            
             UserId = USession.User_Id;
             try
             {
@@ -128,10 +109,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaMsg")]
         public ActionResult Edit(long Code)
         {
-            Authentication("MaMsg");
+             
            
             try{
             MessageTypeModel TModel = new MessageTypeModel();
@@ -154,11 +135,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaMsg")]
         [HttpPost]
         public ActionResult Edit(MessageTypeModel Model)
         {
-            Authentication("MaMsg");
+            
             UserId = USession.User_Id;
             try
             {
@@ -186,10 +167,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaMsg")]
         public ActionResult Delete(long Code)
         {
-            Authentication("MaMsg");
+             
             
             try{
             MessageTypeModel TModel = new MessageTypeModel();
@@ -206,11 +187,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaMsg")]
         [HttpPost]
         public ActionResult Delete(MessageTypeModel Model)
         {
-            Authentication("MaMsg");
+            
             UserId = USession.User_Id;
             try
             {

@@ -218,7 +218,7 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits") {
+                if (result != "Exception" && result != "Exits" && result != "fill") {
                     debugger
                     //window.location.href = "/Teacher/Create";
                   
@@ -239,6 +239,15 @@
                 else if (result == "Exits") {
                     //$("#ErrorUName").prop('value', 'User Name Already Exits');
                     $("#ErrorLable").text("This Activity is Already Assigned to this STudent");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+
+                else if (result == "fill") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Select every field");
                     //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
 

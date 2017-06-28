@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
 using GDWEBSolution.Models.Report;
 using GDWEBSolution.Models.Student;
@@ -22,32 +23,10 @@ namespace GDWEBSolution.Controllers.Report
         
         //
         // GET: /StudentReport/
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-               
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
-
-
+     [UserFilter(Function_Id = "StReI")]
         public ActionResult Index(string AccYear, string Eveluation)
         {
-            Authentication("StReI");
+            
             SchoolId = USession.School_Id;
             try
             {
@@ -176,11 +155,10 @@ namespace GDWEBSolution.Controllers.Report
             }
             return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
         }
-
+         [UserFilter(Function_Id = "StReI")]
         public ActionResult StudantReport(string studentId)
         {
-            Authentication("StReI");
-           
+            
             try
             {
                 long EvealuationType= Convert.ToInt64(Session["EvealuationTypes"]);
@@ -202,10 +180,10 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-
+         [UserFilter(Function_Id = "StReI")]
         public ActionResult ClassReport(string ClassId,string GradeId)
         {
-            Authentication("StReI");
+            
             try
             {
                 string AccYear = Session["AccYear"].ToString();
@@ -233,10 +211,10 @@ namespace GDWEBSolution.Controllers.Report
         }
 
 
-
+         [UserFilter(Function_Id = "StReP")]
         public ActionResult ParentReport(string AccYear, string Evealuation)
         {
-            Authentication("StReP");
+            
             UserId = USession.User_Id;
             try
             {
@@ -283,16 +261,18 @@ namespace GDWEBSolution.Controllers.Report
 
             ViewBag.ExtraCurriculerActivity = new SelectList(ExtraCurriculerActivitylist, "ActivityCode", "ActivityName");
         }
+         [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentSubjectIndex()
         {
-            Authentication("StReI");
+             
            
             Dropdown2();
             return View();
         }
+          [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentSubject(string AccYear,string GradeId, string StudentId)
         {
-            Authentication("StReI");
+           
             SchoolId = USession.School_Id;
             try
             {
@@ -321,10 +301,10 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-
+          [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInClass( string ClassId,string GradeId)
         {
-            Authentication("StReI");
+           
             SchoolId = USession.School_Id;
             try
             {
@@ -353,10 +333,10 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-
+          [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInExtraActivity(string ActivityId)
         {
-            Authentication("StReI");
+            
             SchoolId = USession.School_Id;
             try
             {
@@ -381,10 +361,10 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-
+          [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInSubject(string GradeId, string ClassId, string SubjectId)
         {
-            Authentication("StReI");
+             
             SchoolId = USession.School_Id;
             try
             {

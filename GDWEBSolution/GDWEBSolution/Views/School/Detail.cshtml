@@ -5,6 +5,34 @@
         <div class="panel panel-default">
             <div class="panel-heading">School Detail  </div>
             <div class="panel-body">
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true"> School</a></li>
+                    <li class=""><a href="#edgrade" data-toggle="tab" aria-expanded="false">Grade Details</a></li>
+                    <li class=""><a href="#eextra" data-toggle="tab" aria-expanded="false">Extra Curricular List</a></li>
+                    <li class=""><a href="#esubjects" data-toggle="tab" aria-expanded="false">Subjects List</a></li>
+                    <li class=""><a href="#eHouses" data-toggle="tab" aria-expanded="false">House List</a></li>
+                    @*<li class=""><a href="#eClass" data-toggle="tab" aria-expanded="false">Class</a></li>*@
+                    <li class=""><a href="#eadmin" data-toggle="tab" aria-expanded="false"> Admin List</a></li>
+                    @*<li class="disabled"><a>Disabled</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+              Dropdown <span class="caret"></span>
+            </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#dropdown1" data-toggle="tab">Action</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#dropdown2" data-toggle="tab">Another action</a></li>
+                </ul>
+            </li>*@
+                </ul>
+                <br>
+
+
+
+
+
+
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in" id="bio">
   
@@ -182,7 +210,8 @@
                      <div class="col-sm-3" style="float:right">
                         
                         
-                         <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="glyphicon glyphicon-step-backward"></span> Back</button>
+                         @*<button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="glyphicon glyphicon-step-backward"></span> Back</button>*@
+                         <a href="~/School/Index" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span>Go Back</a>
                     
                   
                   @* <a href="#" id="btnSubmit" class="btn btn-success btn-block">@if(Model.EmployeeId>0){<span>Update</span> }else{<span>Save</span>} </a>*@
@@ -218,6 +247,59 @@
                             
                         @*</form>*@
                     </div>
+
+
+                    <div class="tab-pane fade" id="edgrade">
+                      
+                        <div id="showgrade">
+                            @{ Html.RenderAction("ShowSchoolGradeDetails", new { SchoolId = @ViewBag.EditSChoolID }); }
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="eextra">
+                      
+                        <div id="showexactivity">
+                            @{ Html.RenderAction("ShowSchooEXActivityDetails", new { SchoolId = @ViewBag.EditSChoolID }); }
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="esubjects">
+                       
+                        <div id="showSubjects">
+                            @{ Html.RenderAction("ShowEditSchoolSubjectsDetails", new { SchoolId = @ViewBag.EditSChoolID }); }
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="eHouses">
+                       
+                        <div id="showHouse">
+                            @{ Html.RenderAction("ShowSchooHouseDetails", new { SchoolId = @ViewBag.EditSChoolID }); }
+                        </div>
+                    </div>
+
+
+
+                    @*<div class="tab-pane fade" id="eClass">
+                        @{Html.RenderPartial("EditClass");}
+                        <div id="showclasses">
+                            @{ Html.RenderAction("EShowSchooClasses", new { SchoolIdGradeId = "Scl!5" }); }
+                        </div>
+
+
+                    </div>*@
+
+
+
+                    <div class="tab-pane fade " id="eadmin">
+                      
+
+                        <div id="showEsadmin">
+                            @{ Html.RenderAction("ShowSchoolAdminsDetails", new { SchoolId = @ViewBag.EditSChoolID }); }
+                        </div>
+
+                    </div>
+
+
 
                 </div>
 </div>

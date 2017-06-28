@@ -223,6 +223,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DCISgetSchoolAdmin_Result.cs">
+      <DependentUpon>DBEntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DCISgetSchool_Result.cs">
       <DependentUpon>DBEntityModel.tt</DependentUpon>
     </Compile>
@@ -785,6 +788,7 @@
     <Content Include="Content\css\dataTables.bootstrap.min.css" />
     <Content Include="Content\css\datatables.min.css" />
     <Content Include="Content\css\datepicker.css" />
+    <Content Include="Content\css\daterangepicker.css" />
     <Content Include="Content\css\fileinput.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\hover-min.css" />
@@ -1141,6 +1145,7 @@
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\chartData.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\fileinput.js" />
     <Content Include="Content\css\rstyle.css" />
     <EntityDeploy Include="Models\DBEntityModel.edmx">
@@ -1175,6 +1180,8 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\paginathing.js" />
     <Content Include="Scripts\select2.full.js" />
     <Content Include="Scripts\timepicki.js" />
@@ -1391,7 +1398,6 @@
     <Content Include="Views\Parent\ChildrenList.cshtml" />
     <Content Include="Views\Parent\Childtest.cshtml" />
     <Content Include="Views\Parent\ChildtestList.cshtml" />
-    <Content Include="Views\Parent\Create.cshtml" />
     <Content Include="Views\Parent\DeleteChild.cshtml" />
     <Content Include="Views\Parent\DeleteParent.cshtml" />
     <Content Include="Views\Parent\Details.cshtml" />
@@ -1399,38 +1405,6 @@
     <Content Include="Views\Parent\EditParent.cshtml" />
     <Content Include="Views\Parent\EditParentDetailsView.cshtml" />
     <Content Include="Views\Parent\Index.cshtml" />
-    <Content Include="Views\School\AdminList.cshtml" />
-    <Content Include="Views\School\Class.cshtml" />
-    <Content Include="Views\School\ClassesList.cshtml" />
-    <Content Include="Views\School\Create.cshtml" />
-    <Content Include="Views\School\createdef.cshtml" />
-    <Content Include="Views\School\Delete.cshtml" />
-    <Content Include="Views\School\DeleteClass.cshtml" />
-    <Content Include="Views\School\DeleteSchoolEXactvity.cshtml" />
-    <Content Include="Views\School\DeleteSchoolGrade.cshtml" />
-    <Content Include="Views\School\DeleteSchoolHouse.cshtml" />
-    <Content Include="Views\School\DeleteSchoolSubjects.cshtml" />
-    <Content Include="Views\School\Detail.cshtml" />
-    <Content Include="Views\School\EditClass.cshtml" />
-    <Content Include="Views\School\EditGrade.cshtml" />
-    <Content Include="Views\School\EditHouses.cshtml" />
-    <Content Include="Views\School\EditSchoolExtra.cshtml" />
-    <Content Include="Views\School\EditSchoolView.cshtml" />
-    <Content Include="Views\School\EditSubject.cshtml" />
-    <Content Include="Views\School\ExcList.cshtml" />
-    <Content Include="Views\School\Grade.cshtml" />
-    <Content Include="Views\School\GradeList.cshtml" />
-    <Content Include="Views\School\House.cshtml" />
-    <Content Include="Views\School\HouseList.cshtml" />
-    <Content Include="Views\School\Index.cshtml" />
-    <Content Include="Views\School\SchoolAdminC.cshtml" />
-    <Content Include="Views\School\SchoolCreate.cshtml" />
-    <Content Include="Views\School\SchoolExtra.cshtml" />
-    <Content Include="Views\School\SchoolGradeEdit.cshtml" />
-    <Content Include="Views\School\SclSubList.cshtml" />
-    <Content Include="Views\School\ShowSchoolsubjects.cshtml" />
-    <Content Include="Views\School\Subject.cshtml" />
-    <Content Include="Views\School\Success.cshtml" />
     <Content Include="Views\StudentReport\AttentionRequiredSubjectsParents.cshtml" />
     <Content Include="Views\StudentReport\ClassReports.cshtml" />
     <Content Include="Views\StudentReport\Index.cshtml" />
@@ -1456,16 +1430,54 @@
     <Content Include="Views\Teacher\ClassTeacherView.cshtml" />
     <Content Include="Views\Teacher\DeleteClassTeacher.cshtml" />
     <Content Include="Views\Prohibited\Index.cshtml" />
-    <Content Include="Views\School\Edit.cshtml" />
-    <Content Include="Views\School\EditSchoolAdminC.cshtml" />
     <Content Include="Views\Student\Detail.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
-    <Content Include="Views\Student\Create.cshtml" />
     <Content Include="Views\Student\Edit.cshtml" />
     <Content Include="Views\Student\stdexclist.cshtml" />
     <Content Include="Views\Student\Delete.cshtml" />
     <Content Include="Views\Student\StudentEXtra.cshtml" />
     <Content Include="Views\Student\DeleteStudentEXactvity.cshtml" />
+    <Content Include="Views\Parent\Create.cshtml" />
+    <Content Include="Views\Student\Create.cshtml" />
+    <Content Include="Views\School\AdminList.cshtml" />
+    <Content Include="Views\School\Class.cshtml" />
+    <Content Include="Views\School\ClassesList.cshtml" />
+    <Content Include="Views\School\Create.cshtml" />
+    <Content Include="Views\School\createdef.cshtml" />
+    <Content Include="Views\School\DAdminList.cshtml" />
+    <Content Include="Views\School\Delete.cshtml" />
+    <Content Include="Views\School\DeleteClass.cshtml" />
+    <Content Include="Views\School\DeleteSchoolEXactvity.cshtml" />
+    <Content Include="Views\School\DeleteSchoolGrade.cshtml" />
+    <Content Include="Views\School\DeleteSchoolHouse.cshtml" />
+    <Content Include="Views\School\DeleteSchoolSubjects.cshtml" />
+    <Content Include="Views\School\Detail.cshtml" />
+    <Content Include="Views\School\DExcList.cshtml" />
+    <Content Include="Views\School\DGradeList.cshtml" />
+    <Content Include="Views\School\DHouseList.cshtml" />
+    <Content Include="Views\School\DSclSubList.cshtml" />
+    <Content Include="Views\School\Edit.cshtml" />
+    <Content Include="Views\School\EditClass.cshtml" />
+    <Content Include="Views\School\EditGrade.cshtml" />
+    <Content Include="Views\School\EditHouses.cshtml" />
+    <Content Include="Views\School\EditSchoolAdminC.cshtml" />
+    <Content Include="Views\School\EditSchoolExtra.cshtml" />
+    <Content Include="Views\School\EditSchoolView.cshtml" />
+    <Content Include="Views\School\EditSubject.cshtml" />
+    <Content Include="Views\School\ExcList.cshtml" />
+    <Content Include="Views\School\Grade.cshtml" />
+    <Content Include="Views\School\GradeList.cshtml" />
+    <Content Include="Views\School\House.cshtml" />
+    <Content Include="Views\School\HouseList.cshtml" />
+    <Content Include="Views\School\Index.cshtml" />
+    <Content Include="Views\School\SchoolAdminC.cshtml" />
+    <Content Include="Views\School\SchoolExtra.cshtml" />
+    <Content Include="Views\School\SchoolGradeEdit.cshtml" />
+    <Content Include="Views\School\SclSubList.cshtml" />
+    <Content Include="Views\School\ShowSchoolsubjects.cshtml" />
+    <Content Include="Views\School\Subject.cshtml" />
+    <Content Include="Views\School\Success.cshtml" />
+    <Content Include="Views\School\SchoolCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attachments\" />

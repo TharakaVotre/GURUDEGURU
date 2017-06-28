@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
 using GDWEBSolution.Models.User;
 using System;
@@ -19,30 +20,10 @@ namespace GDWEBSolution.Controllers
         // GET: /TeacherCategory/
         string UserId = null;
 
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-                
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+       [UserFilter(Function_Id = "MaAS")]
         public ActionResult Index()
         {
-            Authentication("MaAS");
+            
             try
             {
                 var status = Connection.GDgetAllApplicationStatus("Y", 0);
@@ -89,20 +70,20 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+           [UserFilter(Function_Id = "MaAS")]
         public ActionResult Create()
         {
-            Authentication("MaAS");
+            
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+           [UserFilter(Function_Id = "MaAS")]
         [HttpPost]
         public ActionResult Create(tblApplicationStatu Model)
         {
-            Authentication("MaAS");
+           
             UserId = USession.User_Id;
             try
             {
@@ -130,10 +111,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+       [UserFilter(Function_Id = "MaAS")]
         public ActionResult Edit(long typeId)
         {
-            Authentication("MaAS");
+           
             try
             {
                 ApplicationStatusModel TModel = new ApplicationStatusModel();
@@ -156,11 +137,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+           [UserFilter(Function_Id = "MaAS")]
         [HttpPost]
         public ActionResult Edit(ApplicationStatusModel Model)
         {
-            Authentication("MaAS");
+           
             try
             {
                 UserId = USession.User_Id;
@@ -187,10 +168,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+           [UserFilter(Function_Id = "MaAS")]
         public ActionResult Delete(long CategoryId)
         {
-            Authentication("MaAS");
+            
             try
             {
                 ApplicationStatusModel TModel = new ApplicationStatusModel();
@@ -207,11 +188,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+           [UserFilter(Function_Id = "MaAS")]
         [HttpPost]
         public ActionResult Delete(ApplicationStatusModel Model)
         {
-            Authentication("MaAS");
+            
             try
             {
                 UserId = USession.User_Id;

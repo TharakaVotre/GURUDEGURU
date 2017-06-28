@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
 using GDWEBSolution.Models.User;
 using System;
@@ -18,30 +19,10 @@ namespace GDWEBSolution.Controllers
         UserSession USession = new UserSession();
         string UserId = null;
 
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-               
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
+         [UserFilter(Function_Id = "MaStE")]
         public ActionResult Index()
         {
-            Authentication("MaStE");
+            
             try{
             var Group = Connection.GDgetAllEvaluationType("Y");
             List<GDgetAllEvaluationType_Result> Grouplist = Group.ToList();
@@ -88,20 +69,20 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+        [UserFilter(Function_Id = "MaStE")]
         public ActionResult Create()
         {
-            Authentication("MaStE");
+             
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+        [UserFilter(Function_Id = "MaStE")]
         [HttpPost]
         public ActionResult Create(tblEvaluationType Model)
         {
-            Authentication("MaStE");
+            
             UserId=USession.User_Id;
             try
             {
@@ -141,10 +122,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaStE")]
         public ActionResult Edit(long Code)
         {
-            Authentication("MaStE");
+             
             try{
             StudentEvaluationTypeModel TModel = new StudentEvaluationTypeModel();
 
@@ -166,11 +147,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaStE")]
         [HttpPost]
         public ActionResult Edit(StudentEvaluationTypeModel Model)
         {
-            Authentication("MaStE");
+             
             UserId = USession.User_Id;
             try
             {
@@ -198,10 +179,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaStE")]
         public ActionResult Delete(long Code)
         {
-            Authentication("MaStE");
+             
             try
             {
                 StudentEvaluationTypeModel TModel = new StudentEvaluationTypeModel();
@@ -218,11 +199,11 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaStE")]
         [HttpPost]
         public ActionResult Delete(StudentEvaluationTypeModel Model)
         {
-            Authentication("MaStE");
+             
             UserId = USession.User_Id;
             try
             {

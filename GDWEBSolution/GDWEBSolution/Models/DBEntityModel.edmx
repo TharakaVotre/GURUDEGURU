@@ -1383,6 +1383,7 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="20" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsActive" Type="varchar" Nullable="false" MaxLength="1" />
+          <Property Name="SchoolId" Type="varchar" MaxLength="14" />
         </EntityType>
         <EntityType Name="tblParentObservationType">
           <Key>
@@ -4574,6 +4575,9 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="DCISgetSchool" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="DCISgetSchoolAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="DCISgetSupportingDocumentDown" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Status" Type="varchar" Mode="In" />
           <Parameter Name="requestID" Type="varchar" Mode="In" />
@@ -5362,7 +5366,9 @@
           <Parameter Name="MessageId" Type="bigint" Mode="In" />
           <Parameter Name="ParentId" Type="bigint" Mode="In" />
         </Function>
-        <Function Name="SMGTGetStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SMGTGetStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SMGTgetStudentExtraCadd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
           <Parameter Name="StudentId" Type="varchar" Mode="In" />
@@ -5469,6 +5475,7 @@
           <Parameter Name="DateofBirth" Type="date" Mode="In" />
           <Parameter Name="CreatedBy" Type="varchar" Mode="In" />
           <Parameter Name="IsActive" Type="varchar" Mode="In" />
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SMGTsetSchoolGrade" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
@@ -6436,6 +6443,9 @@
             <End Role="tblUserCategoryFunction" EntitySet="tblUserCategoryFunctions" />
           </AssociationSet>
           <FunctionImport Name="DCISgetSchool" ReturnType="Collection(SchoolMGTModel.DCISgetSchool_Result)" />
+          <FunctionImport Name="DCISgetSchoolAdmin" ReturnType="Collection(SchoolMGTModel.DCISgetSchoolAdmin_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="DCISgetSupportingDocumentDown">
             <Parameter Name="Status" Mode="In" Type="String" />
             <Parameter Name="requestID" Mode="In" Type="String" />
@@ -7224,7 +7234,9 @@
             <Parameter Name="MessageId" Mode="In" Type="Int64" />
             <Parameter Name="ParentId" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="SMGTGetStudent" ReturnType="Collection(SchoolMGTModel.SMGTGetStudent_Result)" />
+          <FunctionImport Name="SMGTGetStudent" ReturnType="Collection(SchoolMGTModel.SMGTGetStudent_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SMGTgetStudentExtraCadd" ReturnType="Collection(SchoolMGTModel.SMGTgetStudentExtraCadd_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
             <Parameter Name="StudentId" Mode="In" Type="String" />
@@ -7331,6 +7343,7 @@
             <Parameter Name="DateofBirth" Mode="In" Type="DateTime" />
             <Parameter Name="CreatedBy" Mode="In" Type="String" />
             <Parameter Name="IsActive" Mode="In" Type="String" />
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTsetSchoolGrade">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
@@ -7936,6 +7949,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="SchoolId" Type="String" MaxLength="14" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="tblRelashionship" Relationship="SchoolMGTModel.FK_tblParent_tblRelashionship" FromRole="tblParent" ToRole="tblRelashionship" />
           <NavigationProperty Name="tblUser" Relationship="SchoolMGTModel.FK_tblParent_tblUser" FromRole="tblParent" ToRole="tblUser" />
           <NavigationProperty Name="tblUser1" Relationship="SchoolMGTModel.FK_tblParent_tblUser1" FromRole="tblParent" ToRole="tblUser" />
@@ -11460,6 +11474,34 @@
           <Property Type="String" Name="AccadamicYear" Nullable="true" MaxLength="4" />
           <Property Type="String" Name="SchoolCategoryName" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="DCISgetSchoolAdmin_Result">
+          <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
+          <Property Type="String" Name="SchoolName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Address1" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="Address2" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Address3" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Telephone" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WebUrl" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Fax" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Province" Nullable="true" />
+          <Property Type="Int32" Name="District" Nullable="true" />
+          <Property Type="Int32" Name="Division" Nullable="true" />
+          <Property Type="Int64" Name="SchoolGroup" Nullable="true" />
+          <Property Type="Int32" Name="SchoolRank" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="LogoPath" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ImagePath" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="MinuteforPeriod" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="SchoolCategory" Nullable="false" />
+          <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="AccadamicYear" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="SchoolCategoryName" Nullable="false" MaxLength="50" />
+        </ComplexType>
         <ComplexType Name="GDCheckStudentAccacdemicYear_Result">
           <Property Type="String" Name="SchoolId" Nullable="false" MaxLength="14" />
           <Property Type="String" Name="StudentId" Nullable="false" MaxLength="20" />
@@ -12116,6 +12158,7 @@
           <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="20" />
           <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="SchoolId" Nullable="true" MaxLength="14" />
           <Property Type="String" Name="RelashionshipName" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="SMGTGetParentschildern_Result">
@@ -12840,6 +12883,7 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -13409,6 +13453,38 @@
           <FunctionImportMapping FunctionImportName="DCISgetSchool" FunctionName="SchoolMGTModel.Store.DCISgetSchool">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SchoolMGTModel.DCISgetSchool_Result">
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address3" ColumnName="Address3" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WebUrl" ColumnName="WebUrl" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="SchoolGroup" ColumnName="SchoolGroup" />
+                <ScalarProperty Name="SchoolRank" ColumnName="SchoolRank" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LogoPath" ColumnName="LogoPath" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="MinuteforPeriod" ColumnName="MinuteforPeriod" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="SchoolCategory" ColumnName="SchoolCategory" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AccadamicYear" ColumnName="AccadamicYear" />
+                <ScalarProperty Name="SchoolCategoryName" ColumnName="SchoolCategoryName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DCISgetSchoolAdmin" FunctionName="SchoolMGTModel.Store.DCISgetSchoolAdmin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.DCISgetSchoolAdmin_Result">
                 <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
                 <ScalarProperty Name="Address1" ColumnName="Address1" />
@@ -14437,6 +14513,7 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="RelashionshipName" ColumnName="RelashionshipName" />
               </ComplexTypeMapping>
             </ResultMapping>
