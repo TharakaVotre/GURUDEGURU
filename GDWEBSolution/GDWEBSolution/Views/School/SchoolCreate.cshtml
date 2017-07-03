@@ -46,7 +46,7 @@
                 method="post"
                 >*@
                                 <br />
-                                @Html.HiddenFor(model => model.SchoolId)
+                              
                                 @*<div class="form-group">
                                    
                                     @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-2 control-label" })
@@ -422,7 +422,15 @@
             e.preventDefault();
             var acl = this;
 
+            var ddlStatesx = $("#SchoolIds"); 
 
+            var ddlStatesx2 = $("#SchoolId3");   
+
+            var ddlStatesx3 = $("#SchoolId1");
+            var ddlStatesx4 = $("#SchoolId");
+            var ddlStatesx5 = $("#SchoolId4");
+
+            var ddlStatesx6 = $("#SchoolIdEx");
 
 
 
@@ -445,6 +453,54 @@
                     // $("#myModal").modal("hide");
                     if (result != "Exception" && result != "Exists" && result != "error" && result != "UExists") {
                         debugger
+
+                        $.ajax({
+                            cache: false,
+                            type: "GET",
+                            url: "@(Url.RouteUrl("Schoolbindload"))",
+           
+            success: function (data) {
+                ddlStatesx.html('');
+                ddlStatesx.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStatesx.append($('<option></option>').val(option.SchoolId).html(option.SchoolName));
+                });
+                ddlStatesx2.html('');
+                ddlStatesx2.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStatesx2.append($('<option></option>').val(option.SchoolId).html(option.SchoolName));
+                });
+                ddlStatesx3.html('');
+                ddlStatesx3.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStatesx3.append($('<option></option>').val(option.SchoolId).html(option.SchoolName));
+                });
+                ddlStatesx4.html('');
+                ddlStatesx4.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStatesx4.append($('<option></option>').val(option.SchoolId).html(option.SchoolName));
+                });
+                ddlStatesx5.html('');
+                ddlStatesx5.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStatesx5.append($('<option></option>').val(option.SchoolId).html(option.SchoolName));
+                });
+
+                ddlStatesx6.html('');
+                ddlStatesx6.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStatesx6.append($('<option></option>').val(option.SchoolId).html(option.SchoolName));
+                });
+
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+
+            }
+                         });
+
+
 
                         acl.reset();
 

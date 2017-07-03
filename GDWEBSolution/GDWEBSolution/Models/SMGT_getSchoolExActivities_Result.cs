@@ -11,10 +11,9 @@ namespace GDWEBSolution.Models
 {
     using System;
     
-    public partial class SMGTgetSchoolClasses_Result
+    public partial class SMGT_getSchoolExActivities_Result
     {
-        public string ClassId { get; set; }
-        public string ClassName { get; set; }
-        public string GradeName { get; set; }
+        public string ActivityCode { get; set; }
+        public string ActivityName { get; set; }
     }
 }

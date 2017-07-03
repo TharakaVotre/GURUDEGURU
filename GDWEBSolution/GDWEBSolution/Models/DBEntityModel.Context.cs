@@ -1091,8 +1091,12 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetGradeActiveClass_Result>("GDgetGradeActiveClass", gradeIdParameter, schoolIdParameter, isActiveParameter);
         }
     
-        public virtual ObjectResult<GDgetGradeActiveSubject_Result> GDgetGradeActiveSubject(string gradeId, string isActive)
+        public virtual ObjectResult<GDgetGradeActiveSubject_Result> GDgetGradeActiveSubject(string schoolId, string gradeId, string isActive)
         {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
             var gradeIdParameter = gradeId != null ?
                 new ObjectParameter("GradeId", gradeId) :
                 new ObjectParameter("GradeId", typeof(string));
@@ -1101,7 +1105,7 @@ namespace GDWEBSolution.Models
                 new ObjectParameter("IsActive", isActive) :
                 new ObjectParameter("IsActive", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetGradeActiveSubject_Result>("GDgetGradeActiveSubject", gradeIdParameter, isActiveParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GDgetGradeActiveSubject_Result>("GDgetGradeActiveSubject", schoolIdParameter, gradeIdParameter, isActiveParameter);
         }
     
         public virtual ObjectResult<GDgetGradeSubject_Result> GDgetGradeSubject(string schoolId, string gradeId, string isActive)
@@ -2357,6 +2361,15 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchoolClassTeachersList_Result>("SMGT_getSchoolClassTeachersList", schoolidParameter, accademicYearParameter);
         }
     
+        public virtual ObjectResult<SMGT_getSchoolExActivities_Result> SMGT_getSchoolExActivities(string schoolId)
+        {
+            var schoolIdParameter = schoolId != null ?
+                new ObjectParameter("SchoolId", schoolId) :
+                new ObjectParameter("SchoolId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGT_getSchoolExActivities_Result>("SMGT_getSchoolExActivities", schoolIdParameter);
+        }
+    
         public virtual ObjectResult<SMGT_getSchoolExactivity_Result> SMGT_getSchoolExactivity(string schoolId)
         {
             var schoolIdParameter = schoolId != null ?
@@ -2630,13 +2643,17 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetGradeclassadd_Result>("SMGTgetGradeclassadd", schoolIdParameter, gradeIdParameter);
         }
     
-        public virtual ObjectResult<SMGTgetGradeSubjects_Result> SMGTgetGradeSubjects(string gradeId)
+        public virtual ObjectResult<SMGTgetGradeSubjects_Result> SMGTgetGradeSubjects(string gradeId, string schoolid)
         {
             var gradeIdParameter = gradeId != null ?
                 new ObjectParameter("GradeId", gradeId) :
                 new ObjectParameter("GradeId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetGradeSubjects_Result>("SMGTgetGradeSubjects", gradeIdParameter);
+            var schoolidParameter = schoolid != null ?
+                new ObjectParameter("Schoolid", schoolid) :
+                new ObjectParameter("Schoolid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SMGTgetGradeSubjects_Result>("SMGTgetGradeSubjects", gradeIdParameter, schoolidParameter);
         }
     
         public virtual ObjectResult<SMGTgetOptionalSubjectadd_Result> SMGTgetOptionalSubjectadd(string schoolId, string gradeId, string academicYear)

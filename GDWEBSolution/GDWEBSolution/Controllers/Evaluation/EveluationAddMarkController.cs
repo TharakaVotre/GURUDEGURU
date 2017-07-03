@@ -128,9 +128,10 @@ namespace GDWEBSolution.Controllers.Evaluation
            
             try
             {
+                SchoolId = USession.School_Id;
                 int subId = Convert.ToInt32(SubjectId);
-                tblGradeSubject subjectStatus = Connection.tblGradeSubjects.SingleOrDefault(x => x.SubjectId == subId && x.GradeId == GradeId);
-                ViewBag.SubjectStatus = subjectStatus.Optional;
+               // tblGradeSubject subjectStatus = Connection.tblGradeSubjects.SingleOrDefault(x => x.SubjectId == subId && x.GradeId == GradeId && x.SchoolId == SchoolId);
+                //ViewBag.SubjectStatus = subjectStatus.Optional;
                 ViewBag.SubjectId = SubjectId;
                 ViewBag.GradeId = GradeId;
                 ViewBag.Eveluation = Eveluation;
@@ -148,7 +149,7 @@ namespace GDWEBSolution.Controllers.Evaluation
                     DateOfBirth = x.DateofBirth,
                     Optional = x.Optional
                 }).ToList();
-                return PartialView("AddStudentSubjectMark", tcmlist);
+                return PartialView("AddStudentSubjectMarks", tcmlist);
             }
             catch (Exception ex)
             {
@@ -299,9 +300,9 @@ namespace GDWEBSolution.Controllers.Evaluation
             try
             {
                 StudentReportModel TModel = new StudentReportModel();
-
+                SchoolId = USession.School_Id;
                 TModel.Mark = Convert.ToDecimal(Mark);
-                tblStudent stu = Connection.tblStudents.SingleOrDefault(x => x.StudentId== StudentId);
+                tblStudent stu = Connection.tblStudents.SingleOrDefault(x => x.StudentId== StudentId && x.SchoolId==SchoolId);
                 TModel.StudentId = StudentId;
                 TModel.Seq =Convert.ToInt64(ResultId);
                 TModel.StudentName = stu.studentName;

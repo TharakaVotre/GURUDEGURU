@@ -75,7 +75,7 @@ namespace GDWEBSolution.Controllers.TimeTable
             List<tblDaysOfWeek> DayList = Connection.tblDaysOfWeeks.ToList();
             ViewBag.DayOfWeek = new SelectList(DayList, "DayName", "DayName");
 
-            var GradeSubject = Connection.SMGTgetGradeSubjects(GradeId).ToList();//Need to Pass a Session Schoolid
+            var GradeSubject = Connection.SMGTgetGradeSubjects(GradeId, "CKC").ToList();
             List<tblSubject> GradeSubjectList = GradeSubject.Select(x => new tblSubject
             {
                 SubjectId = x.SubjectId,
@@ -113,7 +113,7 @@ namespace GDWEBSolution.Controllers.TimeTable
             TModel.ClassId = TCtable.ClassId;
             TModel.SchoolId = TCtable.SchoolId;
 
-            var GradeSubject = Connection.SMGTgetGradeSubjects(TModel.GradeId).ToList();//Need to Pass a Session Schoolid
+            var GradeSubject = Connection.SMGTgetGradeSubjects(TModel.GradeId, "CKC").ToList();//Need to Pass a Session Schoolid
             List<tblSubject> EGradeSubjectList = GradeSubject.Select(x => new tblSubject
             {
                 SubjectId = x.SubjectId,

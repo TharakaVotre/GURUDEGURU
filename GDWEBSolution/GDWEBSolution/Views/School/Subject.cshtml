@@ -18,7 +18,7 @@
 
      <div class="col-sm-4">
            
-             @Html.DropDownListFor(model => model.SchoolIds, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "Academic" })
+             @Html.DropDownListFor(model => model.SchoolIds, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "Academic", @onchange = "loadschoolsub(this.value)" })
             </div>
 
         @Html.LabelFor(m => m.AcademicYear, new { @class = "col-sm-2 control-label" })
@@ -80,7 +80,15 @@
         debugger
 
         var ssid = $('#SchoolIds').val();
-        $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + value + '&SchoolId=' + ssid);
+        $('#showSubjects').load('/School/ShowSchoolSubjectsload?AcademicYear=' + value + '&SchoolId=' + ssid);
+    }
+
+
+    var loadschoolsub = function (value) {
+        debugger
+
+      
+        $('#showSubjects').load('/School/ShowSchoolSubjectsload?AcademicYear=%&SchoolId=' + value);
     }
 
 

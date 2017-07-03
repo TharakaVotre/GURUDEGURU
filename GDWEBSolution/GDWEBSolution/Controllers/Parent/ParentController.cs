@@ -263,7 +263,7 @@ namespace GDWEBSolution.Controllers.Parent
             ViewBag.SchoolGradeList = new SelectList(gradelist, "GradeId", "GradeName");
             List<tblClass> Classlist = Connection.tblClasses.Where(X => X.IsActive == "Y").ToList();
             ViewBag.classDrpDown = new SelectList(Classlist, "ClassId", "ClassName");
-            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
+            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y" && X.SchoolId == USession.School_Id).ToList();
             ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
             String parentid = "2";
             var STQlist = Connection.SMGTgetParentStudentadd(parentid,"%").ToList();
@@ -370,7 +370,7 @@ namespace GDWEBSolution.Controllers.Parent
                             ViewBag.SchoolGradeList = new SelectList(gradelist, "GradeId", "GradeName");
                             List<tblClass> Classlist = Connection.tblClasses.Where(X => X.IsActive == "Y").ToList();
                             ViewBag.classDrpDown = new SelectList(Classlist, "ClassId", "ClassName");
-                            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
+                            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y" &&X.SchoolId==USession.School_Id).ToList();
                             ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
                             String parentid = "2";
                             var STQlist = Connection.SMGTgetParentStudentadd(parentid, "%").ToList();
@@ -410,7 +410,7 @@ namespace GDWEBSolution.Controllers.Parent
                             ViewBag.SchoolGradeList = new SelectList(gradelist, "GradeId", "GradeName");
                             List<tblClass> Classlist = Connection.tblClasses.Where(X => X.IsActive == "Y").ToList();
                             ViewBag.classDrpDown = new SelectList(Classlist, "ClassId", "ClassName");
-                            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
+                            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y" && X.SchoolId == USession.School_Id).ToList();
                             ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
                             String parentid = "2";
                             var STQlist = Connection.SMGTgetParentStudentadd(parentid, "%").ToList();
@@ -453,7 +453,7 @@ namespace GDWEBSolution.Controllers.Parent
                     ViewBag.SchoolGradeList = new SelectList(gradelist, "GradeId", "GradeName");
                     List<tblClass> Classlist = Connection.tblClasses.Where(X => X.IsActive == "Y").ToList();
                     ViewBag.classDrpDown = new SelectList(Classlist, "ClassId", "ClassName");
-                    List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
+                    List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y" && X.SchoolId == USession.School_Id).ToList();
                     ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
                     String parentid = "2";
                     var STQlist = Connection.SMGTgetParentStudentadd(parentid,"%").ToList();
@@ -583,7 +583,7 @@ namespace GDWEBSolution.Controllers.Parent
             ViewBag.SchoolGradeList = new SelectList(gradelist, "GradeId", "GradeName");
             List<tblClass> Classlist = Connection.tblClasses.Where(X => X.IsActive == "Y").ToList();
             ViewBag.classDrpDown = new SelectList(Classlist, "ClassId", "ClassName");
-            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
+            List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y" && X.SchoolId == USession.School_Id).ToList();
             ViewBag.StudentIdList = new SelectList(Studentlist, "StudentId", "StudentName");
 
 

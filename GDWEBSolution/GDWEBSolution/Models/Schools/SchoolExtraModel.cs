@@ -11,6 +11,9 @@ namespace GDWEBSolution.Models.Schools
         [Display(Name = "School Name")]
         public string SchoolId { get; set; }
 
+        [Display(Name = "School")]
+        public string SchoolIdEx { get; set; }
+
         [Display(Name = "Activity Code")]
         public string ActivityCode { get; set; }
 

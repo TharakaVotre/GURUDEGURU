@@ -18,5 +18,7 @@ namespace GDWEBSolution.Models
         public string SchoolName { get; set; }
         public string IsActive { get; set; }
         public string SubjectName { get; set; }
+        public string SubjectCategoryName { get; set; }
+        public string ShortName { get; set; }
     }
 }

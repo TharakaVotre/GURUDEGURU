@@ -120,6 +120,10 @@ namespace GDWEBSolution.Models.Schools
 
         [Display(Name = "Grade")]
         public string GradeId { get; set; }
+
+
+            [Display(Name = "Grade")]
+        public string GradeName { get; set; }
         [Display(Name = "Class")]
         public string ClassId { get; set; }
 
