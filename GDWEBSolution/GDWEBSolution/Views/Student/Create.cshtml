@@ -95,7 +95,8 @@
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-sm-2 control-label" })
                                     <div class="col-sm-4">
-                                       @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control datepicker" })
+                                        
+                                       @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control" , @placeholder = "mm/dd/yyyy",@Value = "" })
                                         <span class="help-block m-b-none" id="CategoryNameError"></span>
                                     </div>
                                 </div>
@@ -395,28 +396,20 @@
     </script>
 
 <script >
-    $(function () {
-        // This will make every element with the class "date-picker" into a DatePicker element
-        $("#DateOfBirth").datepicker();
-    });
+    $(document).ready(function () {
+    
+    
+        $('#DateOfBirth').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true
+        })
+        $('#DateOfBirth').val("");
 
-
-
-
- 
-     //$(document).ready(function () {
-     //    var date_input = $('input[name="DateOfBirth"]'); //our date input has the name "date"
-     //    date_input.datepicker({
-     //        format: 'mm/dd/yyyy',
-     //        todayHighlight: true,
-     //        autoclose: true,
-             
-     //    })
-     //});
+  
 
      
 
- 
+    });
 </script>
 
 <script type="text/javascript">

@@ -1,0 +1,95 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Schools.SchoolSubjectModel>
+@{
+    ViewBag.Title = "gradeclassview";
+}
+
+
+<div class="row">
+
+
+    <div class="col-md-12">
+
+        <!-- Zero Configuration Table -->
+        <div class="panel panel-default">
+
+
+            @*<div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView2(1)"><span class="fa fa-plus"></span> Add file</button></div>*@
+            <div class="panel-body">
+                <table id="zctb" class="display table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                           
+                            <th>
+                                @Html.DisplayNameFor(model => model.SchoolName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AcademicYear)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SubjectName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SubjectCategoryId)
+                            </th>
+
+
+
+
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                       
+                                        @Html.DisplayFor(modelItem => item.SchoolName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AcademicYear)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SubjectName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SubjectCategoryId)
+                                    </td>
+
+                                    
+
+
+
+
+                                    <td>
+
+                                        @*<a class="btn btn-primary" onclick="DetailView('@item.EvaluationNo')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
+                                            <a class="btn btn-info" onclick='EditView("@item.EvaluationNo")'><span class="fa fa-pencil"></span> Edit </a>*@
+                                        @*<a class="btn btn-danger" onclick='DeleteView("@item.ClassId")'><span class="fa fa-trash"></span> Delete</a>*@
+
+
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+
+
+    var DeleteView = function (CategoryId) {
+        var Url = "/EvaluationbySchool/DeleteEvaluationHeader?EvaluationNo=" + CategoryId;
+        $("#MyModelBody").load(Url, function () {
+            $("#myModal").modal("show");
+        })
+    }
+</script>

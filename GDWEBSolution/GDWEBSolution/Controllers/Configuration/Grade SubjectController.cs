@@ -26,43 +26,50 @@ namespace GDWEBSolution.Controllers.Configuration
         [UserFilter(Function_Id = "GSub")]
         public ActionResult Index()
         {
-           
-            ViewBag.Message = false;
-            if (Session["ErrorMessage"] != null) { 
-            string msg=Session["ErrorMessage"].ToString();
-            if (msg == "True")
-            {
-                ViewBag.Message = true;
-                Session["ErrorMessage"] = false;
-            }
-            else
+            try
             {
                 ViewBag.Message = false;
+                if (Session["ErrorMessage"] != null)
+                {
+                    string msg = Session["ErrorMessage"].ToString();
+                    if (msg == "True")
+                    {
+                        ViewBag.Message = true;
+                        Session["ErrorMessage"] = false;
+                    }
+                    else
+                    {
+                        ViewBag.Message = false;
+                    }
+                }
+                Dropdownlistdata("", "");
+                SchoolId = USession.School_Id;
+                tblAccadamicYear tbacc = Connection.tblAccadamicYears.SingleOrDefault(a => a.SchoolId == SchoolId);
+                string AccYear = tbacc.AccadamicYear;
+                
+                var Group = Connection.SMGTgetSchoolSubadd(SchoolId, AccYear);
+                List<SMGTgetSchoolSubadd_Result> Grouplist = Group.ToList();
+
+                Grade_SubjectModel tcm = new Grade_SubjectModel();
+
+                List<Grade_SubjectModel> tcmlist = Grouplist.Select(x => new Grade_SubjectModel
+                {
+                    SubjectId = x.SubjectId,
+                    ShortName = x.ShortName,
+                    SubjectName = x.SubjectName,
+
+                    IsActive = x.IsActive,
+
+                }).ToList();
+
+
+
+                return PartialView(tcmlist);
             }
+            catch (Exception ex) {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
             }
-            Dropdownlistdata("","");
-
-            var Group = Connection.GDgetAllSubject("Y");
-            List<GDgetAllSubject_Result> Grouplist = Group.ToList();
-
-            Grade_SubjectModel tcm = new Grade_SubjectModel();
-
-            List<Grade_SubjectModel> tcmlist = Grouplist.Select(x => new Grade_SubjectModel
-            {
-                SubjectId = x.SubjectId,
-                ShortName = x.ShortName,
-                SubjectName = x.SubjectName,
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate,
-                IsActive = x.IsActive,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate
-
-            }).ToList();
-
-
-
-            return PartialView(tcmlist);
 
            // return View();
         }
@@ -94,6 +101,9 @@ namespace GDWEBSolution.Controllers.Configuration
                     gradeid = Session["gradeId"].ToString();
                 }
             }
+            tblAccadamicYear tbacc = Connection.tblAccadamicYears.SingleOrDefault(a => a.SchoolId == SchoolId);
+            string AccYear = tbacc.AccadamicYear;
+            ViewBag.AcademicYear = AccYear;
             List<SelectListItem> Optionallist = new List<SelectListItem>();
             Optionallist.Add(new SelectListItem
             {
@@ -114,7 +124,7 @@ namespace GDWEBSolution.Controllers.Configuration
             var SubjectCategory = Connection.GDgetAllSubjectCategory("Y");
             List<GDgetAllSubjectCategory_Result> SubjectCategorylist = SubjectCategory.ToList();
 
-            ViewBag.AcademicYear=("2017");
+           
             if (AcademicYear != "")
             {
                 ViewBag.GradeId = AcademicYear;

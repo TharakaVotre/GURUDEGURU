@@ -4866,6 +4866,7 @@
           <Parameter Name="IsActive" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GDgetGradeActiveSubject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
           <Parameter Name="GradeId" Type="varchar" Mode="In" />
           <Parameter Name="IsActive" Type="varchar" Mode="In" />
         </Function>
@@ -5227,6 +5228,9 @@
           <Parameter Name="Schoolid" Type="varchar" Mode="In" />
           <Parameter Name="AccademicYear" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SMGT_getSchoolExActivities" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SMGT_getSchoolExactivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
         </Function>
@@ -5313,6 +5317,7 @@
         </Function>
         <Function Name="SMGTgetGradeSubjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GradeId" Type="varchar" Mode="In" />
+          <Parameter Name="Schoolid" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SMGTgetOptionalSubjectadd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
@@ -6734,6 +6739,7 @@
             <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GDgetGradeActiveSubject" ReturnType="Collection(SchoolMGTModel.GDgetGradeActiveSubject_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
             <Parameter Name="GradeId" Mode="In" Type="String" />
             <Parameter Name="IsActive" Mode="In" Type="String" />
           </FunctionImport>
@@ -7095,6 +7101,9 @@
             <Parameter Name="Schoolid" Mode="In" Type="String" />
             <Parameter Name="AccademicYear" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SMGT_getSchoolExActivities" ReturnType="Collection(SchoolMGTModel.SMGT_getSchoolExActivities_Result)">
+            <Parameter Name="SchoolId" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SMGT_getSchoolExactivity" ReturnType="Collection(SchoolMGTModel.SMGT_getSchoolExactivity_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
           </FunctionImport>
@@ -7181,6 +7190,7 @@
           </FunctionImport>
           <FunctionImport Name="SMGTgetGradeSubjects" ReturnType="Collection(SchoolMGTModel.SMGTgetGradeSubjects_Result)">
             <Parameter Name="GradeId" Mode="In" Type="String" />
+            <Parameter Name="Schoolid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTgetOptionalSubjectadd" ReturnType="Collection(SchoolMGTModel.SMGTgetOptionalSubjectadd_Result)">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
@@ -11958,6 +11968,10 @@
           <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
         </ComplexType>
+        <ComplexType Name="SMGT_getSchoolExActivities_Result">
+          <Property Type="String" Name="ActivityCode" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="ActivityName" Nullable="false" MaxLength="50" />
+        </ComplexType>
         <ComplexType Name="SMGT_getSchoolExactivity_Result">
           <Property Type="String" Name="ActivityName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ActivityCode" Nullable="false" MaxLength="6" />
@@ -12245,6 +12259,8 @@
           <Property Type="String" Name="SchoolName" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="IsActive" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="SubjectName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SubjectCategoryName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ShortName" Nullable="true" MaxLength="20" />
         </ComplexType>
         <ComplexType Name="SMGTgetSchoolTeacher_Result">
           <Property Type="Int64" Name="TeacherId" Nullable="false" />
@@ -14235,6 +14251,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SMGT_getSchoolExActivities" FunctionName="SchoolMGTModel.Store.SMGT_getSchoolExActivities">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SchoolMGTModel.SMGT_getSchoolExActivities_Result">
+                <ScalarProperty Name="ActivityCode" ColumnName="ActivityCode" />
+                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SMGT_getSchoolExactivity" FunctionName="SchoolMGTModel.Store.SMGT_getSchoolExactivity">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SchoolMGTModel.SMGT_getSchoolExactivity_Result">
@@ -14641,6 +14665,8 @@
                 <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="SubjectCategoryName" ColumnName="SubjectCategoryName" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

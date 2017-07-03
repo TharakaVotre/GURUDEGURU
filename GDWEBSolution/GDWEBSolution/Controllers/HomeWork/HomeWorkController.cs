@@ -28,7 +28,10 @@ namespace GDWEBSolution.Controllers
             
             try
             {
-
+                SchoolId = USession.School_Id;
+                UserId = USession.User_Id;
+                tblTeacher tbtec = Connection.tblTeachers.SingleOrDefault(a => a.UserId == UserId);
+                TeacherId = tbtec.TeacherId;
                 if (FromDate == null && Session["FromDate"]==null) {
                     
                     ToDate = DateTime.Now.ToShortDateString();
@@ -95,6 +98,8 @@ namespace GDWEBSolution.Controllers
            
             try
             {
+                SchoolId = USession.School_Id;
+               
                 DropDownList("%");
                 HomeWorkModel TModel = new HomeWorkModel();
 
@@ -172,6 +177,10 @@ namespace GDWEBSolution.Controllers
 
             try
             {
+                SchoolId = USession.School_Id;
+                UserId=USession.User_Id;
+                tblTeacher tbtec = Connection.tblTeachers.SingleOrDefault(a => a.UserId == UserId);
+                TeacherId = tbtec.TeacherId;
                 long dueId=0;
                 if (ModelState.IsValid)
                 {
@@ -216,6 +225,8 @@ namespace GDWEBSolution.Controllers
          
             try
             {
+                SchoolId = USession.School_Id;
+               
                 HomeWorkModel TModel = new HomeWorkModel();
 
                 tblAssignmentHeader TCtable = Connection.tblAssignmentHeaders.SingleOrDefault(x => x.AssignmentNo == Code);
@@ -237,7 +248,7 @@ namespace GDWEBSolution.Controllers
 
 
                 DropDownList(TCtable.GradeId);
-                var Subject = Connection.GDgetGradeActiveSubject(TCtable.GradeId, "Y"); ;
+                var Subject = Connection.GDgetGradeActiveSubject(SchoolId,TCtable.GradeId, "Y"); ;
                 List<GDgetGradeActiveSubject_Result> Subjectlist = Subject.ToList();
                 ViewBag.SubjectId = new SelectList(Subjectlist, "SubjectId", "SubjectName");
                 ViewBag.SubjectIdtxt = TCtable.SubjectId;
@@ -263,13 +274,16 @@ namespace GDWEBSolution.Controllers
                 long dueId = 0;
                 if (ModelState.IsValid)
                 {
+                    SchoolId = USession.School_Id;
+                    UserId = USession.User_Id;
+                           
                     DateTime duedate = Convert.ToDateTime(Model.stringDueDate);
                     string _path = null;
                     if (Model.File != null)
                     {
                         if (Model.File.ContentLength > 0)
                         {
-
+                           
 
                             string _FileName = Path.GetFileName(Model.File.FileName); //;
                             string filename = TeacherId.ToString() + DateTime.Now.Date.ToString("yyyyMMddHHmmSS") + _FileName;
@@ -324,6 +338,9 @@ namespace GDWEBSolution.Controllers
             
             try
             {
+               
+                UserId = USession.User_Id;
+                           
                 Connection.GDDeleteHomeWork("N", Model.AssignmentNo, UserId);
                 Connection.SaveChanges();
 
@@ -345,6 +362,9 @@ namespace GDWEBSolution.Controllers
             
             try
             {
+                SchoolId = USession.School_Id;
+                UserId = USession.User_Id;
+                           
                 if (FromDate == null && ToDate == null && Session["FromDate"] != null)
                 {
                     FromDate = Session["FromDate"].ToString();
@@ -428,8 +448,8 @@ namespace GDWEBSolution.Controllers
       
         public JsonResult getSubject(string id)
         {
-           
-            var states = Connection.GDgetGradeActiveSubject(id,"Y"); ;
+            SchoolId = USession.School_Id;
+            var states = Connection.GDgetGradeActiveSubject(SchoolId,id, "Y");
             List<SelectListItem> listates = new List<SelectListItem>();
 
           

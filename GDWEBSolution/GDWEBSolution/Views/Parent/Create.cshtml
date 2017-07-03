@@ -423,14 +423,32 @@
 </script>
 
 <script >
-    $(document).ready(function () {
-        var date_input = $('input[name="DateofBirth"]'); //our date input has the name "date"
-        date_input.datepicker({
-            format: 'mm/dd/yyyy',
-            todayHighlight: true,
-            autoclose: true,
+    //$(document).ready(function () {
+    //    var date_input = $('input[name="DateofBirth"]'); //our date input has the name "date"
+    //    date_input.datepicker({
+    //        format: 'mm/dd/yyyy',
+    //        todayHighlight: true,
+    //        autoclose: true,
+    //    })
+    //});
+
+
+   
+    
+    
+    $('#DateofBirth').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true
         })
-    });
+    $('#DateofBirth').val("");
+
+  
+
+     
+
+  
+
+
 </script>
 
 <script>

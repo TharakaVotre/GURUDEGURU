@@ -18,11 +18,11 @@
     <div class="form-horizontal">
                 <div class="form-group">
                     <div class="row">
-                        <lable class="col-sm-2 control-label" style="font-size:14px;color:black">Academic Year</lable>
+                        <label class="col-sm-2 control-label" style="font-size:14px;color:black">Academic Year</label>
                         <div class="col-sm-2">
-                            @Html.TextBox("AcademicYear")
+                            @Html.TextBox("AcademicYear", (string)ViewBag.AcademicYear, new { @class="form-control",@type="number"})
                         </div>
-                        <lable class="col-sm-2 control-label" style="font-size:14px;color:black">Grade</lable>
+                        <label class="col-sm-2 control-label" style="font-size:14px;color:black">Grade</label>
                         <div class="col-sm-2">
 
                             @Html.DropDownList("GradeId", String.Empty)

@@ -11,14 +11,9 @@ namespace GDWEBSolution.Models
 {
     using System;
     
-    public partial class SMGTgetSchoolSubadd_Result
+    public partial class SMGT_getSchoolExActivities_Result
     {
-        public string SchoolId { get; set; }
-        public int SubjectId { get; set; }
-        public string SchoolName { get; set; }
-        public string IsActive { get; set; }
-        public string SubjectName { get; set; }
-        public string SubjectCategoryName { get; set; }
-        public string ShortName { get; set; }
+        public string ActivityCode { get; set; }
+        public string ActivityName { get; set; }
     }
 }

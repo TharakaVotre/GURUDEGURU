@@ -10,6 +10,7 @@ using GDWEBSolution.Models.Teacher;
 using GDWEBSolution.Models.Student;
 using GDWEBSolution.Util;
 using GDWEBSolution.Models.User;
+using System.Transactions;
 //DBEntityModel.edmx
 //SchoolMGTEntitiesConnectionString
 namespace GDWEBSolution.Controllers
@@ -54,10 +55,10 @@ namespace GDWEBSolution.Controllers
         public ActionResult Index()
         {
             Authentication("SCF");
-
+            ViewBag.BtnStatus = true;
             if (USession.User_Category == "SADMI")
             {
-
+                ViewBag.BtnStatus = false;
                 var school2 = Connection.DCISgetSchoolAdmin(USession.School_Id);
 
                 List<DCISgetSchoolAdmin_Result> Categorylist = school2.ToList();
@@ -823,10 +824,10 @@ namespace GDWEBSolution.Controllers
             {
                 string result = "Error";
 
-                if (Model.ActivityCode != null && Model.SchoolId != null)
+                if (Model.ActivityCode != null && Model.SchoolIdEx != null)
                 {
                     // Model.HouseId = count2.ToString();
-                    var count = Connection.tblSchoolExtraCurricularActivities.Count(u => u.ActivityCode == Model.ActivityCode && u.SchoolId == Model.SchoolId);
+                    var count = Connection.tblSchoolExtraCurricularActivities.Count(u => u.ActivityCode == Model.ActivityCode && u.SchoolId == Model.SchoolIdEx);
                     if (count == 0)
                     {
                         // Model.SchoolId = Schoold;
@@ -834,7 +835,7 @@ namespace GDWEBSolution.Controllers
 
                         newscg.CreatedBy = USession.User_Id;
                         newscg.CreatedDate = DateTime.Now;
-                        newscg.SchoolId = Model.SchoolId;
+                        newscg.SchoolId = Model.SchoolIdEx;
                         newscg.ActivityCode = Model.ActivityCode;
                         newscg.IsActive = "Y";
 
@@ -843,9 +844,9 @@ namespace GDWEBSolution.Controllers
 
                         Connection.SaveChanges();
 
-                        result = Model.SchoolId.ToString();
+                        result = Model.SchoolIdEx;
 
-                        ViewBag.SchoolId = Model.SchoolId.ToString();
+                        ViewBag.SchoolId = Model.SchoolIdEx;
 
                     }
                     else
@@ -974,6 +975,61 @@ namespace GDWEBSolution.Controllers
              }).ToList();
              return PartialView("SclSubList", List);
          }
+
+         public ActionResult ShowSchoolSubjectsload(string AcademicYear, string SchoolId)
+         {
+             if (AcademicYear == "%")
+             {
+
+                 int count = Connection.tblAccadamicYears.Count(X => X.SchoolId == SchoolId);
+                 if (count > 0)
+                 {
+
+                     tblAccadamicYear tbl = Connection.tblAccadamicYears.FirstOrDefault(X => X.SchoolId == SchoolId);
+
+                     AcademicYear = tbl.AccadamicYear;
+
+
+
+
+
+                 }
+                 else {
+                     AcademicYear = DateTime.Now.Year.ToString();
+                 
+                 
+                 }
+             }
+            
+                  var STQlist = Connection.SMGTgetSchoolSubadd(SchoolId, AcademicYear).ToList();
+                  if (SchoolId == null || SchoolId == "")
+
+                  {
+                      SchoolId = Schoold;
+
+                  }
+                  List<SchoolSubjectModel> List = STQlist.Select(x => new SchoolSubjectModel
+                  {
+
+                      SubjectCategoryId=x.SubjectCategoryName,
+                      SchoolId = x.SchoolId,
+                      SubjectName = x.SubjectName,
+                      SubjectId = x.SubjectId.ToString(),
+                      AcademicYear = AcademicYear,
+                     SchoolName=x.SchoolName,
+
+
+
+                      IsActive = x.IsActive,
+
+
+                  }).ToList();
+                  return PartialView("academicyrSubjects", List);
+
+              
+         }
+
+
          public ActionResult ShowSchooHouse(string SchoolId)
          {
              academicyear();
@@ -1565,14 +1621,26 @@ namespace GDWEBSolution.Controllers
                     var schoolcount = Connection.SMGTSchoolCount().FirstOrDefault();
                     string SchoolId = "Scl" + Model.Division.ToString() + Model.District.ToString() + Model.Province.ToString() + Model.SchoolGroup.ToString() + schoolcount.ToString();
 
+                    //using (var scope = new TransactionScope())
+                    //{
+                        Connection.DCISsetSchool(SchoolId, Model.SchoolGroup, Model.SchoolName, Model.SchoolRank, "Y", Model.Division,
+                            Model.District, Model.Description, UserId, Model.Address1, Model.Address2, Model.Address3, Model.Email, Model.Fax, _path1, Convert.ToInt16(Model.MinuteforPeriod), Model.Telephone, Model.SchoolCategory, Model.Province, Model.WebAddress, _pathL2
+                            );
+                        Connection.SaveChanges();
 
-                    Connection.DCISsetSchool(SchoolId, Model.SchoolGroup, Model.SchoolName, Model.SchoolRank, "Y", Model.Division,
-                        Model.District, Model.Description, UserId, Model.Address1, Model.Address2, Model.Address3, Model.Email, Model.Fax, _path1, Convert.ToInt16(Model.MinuteforPeriod), Model.Telephone, Model.SchoolCategory, Model.Province, Model.WebAddress, _pathL2
-                        );
-                    Connection.SaveChanges();
+                        tblAccadamicYear tblac = new tblAccadamicYear();
+                        tblac.SchoolId = SchoolId;
+                        tblac.AccadamicYear = DateTime.Now.Year.ToString();
+                        tblac.CreatedBy = USession.User_Id;
+                        tblac.CreatedDate = DateTime.Now;
+                        Connection.tblAccadamicYears.Add(tblac);
+                        Connection.SaveChanges();
 
+                       // scope.Complete();
 
-                    result = "Success";
+                  //  }
+
+                    result = SchoolId;
                     ModelState.Clear();
              
                     //return View();
@@ -2057,7 +2125,7 @@ namespace GDWEBSolution.Controllers
 
             if (USession.User_Category == "SADMI")
             {
-                List<tblSchool> scldatalist = Connection.tblSchools.Where(X => X.SchoolId == USession.School_Id && X.IsActive=="Y").ToList();
+                List<tblSchool> scldatalist = Connection.tblSchools.OrderBy(X=>X.SchoolName).Where(X => X.SchoolId == USession.School_Id && X.IsActive=="Y").ToList();
                 var result2 = (from s in scldatalist
                                select new
                                {
@@ -2071,7 +2139,7 @@ namespace GDWEBSolution.Controllers
             }
             else {
 
-                List<tblSchool> scldatalist = Connection.tblSchools.Where(X =>  X.IsActive=="Y").ToList();
+                List<tblSchool> scldatalist = Connection.tblSchools.OrderBy(X => X.SchoolName).Where(X => X.IsActive == "Y").ToList();
 
                 var result2 = (from s in scldatalist
                                select new
