@@ -81,7 +81,7 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits" && result != "fill") {
+                if (result != "Exception" && result != "Exits" && result != "fill" && result !="") {
                     debugger
                     //window.location.href = "/Teacher/Create";
                
@@ -110,7 +110,7 @@
 
                 else if (result == "fill") {
                     //$("#ErrorUName").prop('value', 'User Name Already Exits');
-                    $("#ErrorLable").text("Fill Every filed Properly");
+                    $("#ErrorLable").text("Please Fill Mandetory fields Properly");
                     //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
 

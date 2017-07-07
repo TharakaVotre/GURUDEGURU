@@ -23,34 +23,22 @@ namespace GDWEBSolution.Controllers.Report
         
         //
         // GET: /StudentReport/
-     [UserFilter(Function_Id = "StReI")]
+    // [UserFilter(Function_Id = "StReI")]
         public ActionResult Index(string AccYear, string Eveluation)
         {
-            
+
             SchoolId = USession.School_Id;
             try
             {
-                if (AccYear!=null)
-                {
-                    Session["AccYear"] = AccYear;
-                    if (Eveluation != null && Eveluation != "")
-                    {
-                        Session["Evealuation"] = Eveluation;
-                    }
-                    else
-                    {
-                        Session["Evealuation"] = "0";
-                    }
-
-                }
+               
                 Dropdowns();
 
-                if (Session["AccYear"] != null)
+                if (AccYear != null)
                 {
 
-                    long EvealuationType = Convert.ToInt64(Session["Evealuation"]);
+                    long EvealuationType = Convert.ToInt64(Eveluation);
 
-                    var Group = Connection.GDgetAttentionRequiredSubjectsSchool(SchoolId, Session["AccYear"].ToString(), EvealuationType, "");
+                    var Group = Connection.GDgetAttentionRequiredSubjectsSchool(SchoolId,"2017", EvealuationType, "");
                      
                      List<GDgetAttentionRequiredSubjectsSchool_Result> Grouplist = Group.ToList();
                     
@@ -93,7 +81,7 @@ namespace GDWEBSolution.Controllers.Report
 
         private void Dropdowns()
         {
-           
+
             SchoolId = USession.School_Id;
             var Grade = Connection.GDgetSchoolGrade(SchoolId,"Y");
             List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
@@ -101,15 +89,15 @@ namespace GDWEBSolution.Controllers.Report
             ViewBag.GradeId = new SelectList(Gradelist, "GradeId", "GradeName");
             ViewBag.stGradeId = new SelectList(Gradelist, "GradeId", "GradeName");
 
-            var Eveluation = Connection.GDgetClassEveluation(SchoolId, "%", "%", "Y");
-            List<GDgetClassEveluation_Result> Eveluationlist = Eveluation.ToList();
+            var Eveluation = Connection.GDgetEveluation(SchoolId, "Y");
+            List<GDgetEveluation_Result> Eveluationlist = Eveluation.ToList();
 
-            ViewBag.Eveluation = new SelectList(Eveluationlist, "EvaluationDetailSeqNo", "EvaluationDescription");
+            ViewBag.Eveluation = new SelectList(Eveluationlist, "EvaluationNo", "EvaluationDescription");
         }
 
         public JsonResult getClass(string id)
         {
-            SchoolId = USession.School_Id;
+            SchoolId =USession.School_Id;
             var states = Connection.GDgetGradeActiveClass(id, SchoolId, "Y");
             List<SelectListItem> listates = new List<SelectListItem>();
             listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -126,7 +114,7 @@ namespace GDWEBSolution.Controllers.Report
 
         public JsonResult getStudent(string id, string cId)
         {
-            SchoolId = USession.School_Id;
+            SchoolId =USession.School_Id;
             var states = Connection.SMGTgetStudentforoptionalSubject(SchoolId,id,"%",cId);
             List<SelectListItem> listates = new List<SelectListItem>();
             listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -142,7 +130,7 @@ namespace GDWEBSolution.Controllers.Report
 
              public JsonResult getSubject(string Gid)
         {
-            SchoolId = USession.School_Id;
+            SchoolId =USession.School_Id;
             var states = Connection.GDgetGradeSubject(SchoolId,Gid,"Y");
             List<SelectListItem> listates = new List<SelectListItem>();
             listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -155,14 +143,14 @@ namespace GDWEBSolution.Controllers.Report
             }
             return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
         }
-         [UserFilter(Function_Id = "StReI")]
-        public ActionResult StudantReport(string studentId)
+      //   [UserFilter(Function_Id = "StReI")]
+             public ActionResult StudantReport(string EveluationId, string AccYear, string studentId)
         {
             
             try
             {
-                long EvealuationType= Convert.ToInt64(Session["EvealuationTypes"]);
-                var student = Connection.GdgetStudentAttentionRequiredSubjects(Session["AccYear"].ToString(), studentId, EvealuationType);
+                long EvealuationType = Convert.ToInt64(EveluationId);
+                var student = Connection.GdgetStudentAttentionRequiredSubjects(AccYear, studentId, EvealuationType);
                 List<GdgetStudentAttentionRequiredSubjects_Result> studentlist = student.ToList();
 
                 StudentReportModel tcm = new StudentReportModel();
@@ -180,15 +168,15 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-         [UserFilter(Function_Id = "StReI")]
-        public ActionResult ClassReport(string ClassId,string GradeId)
+      //   [UserFilter(Function_Id = "StReI")]
+        public ActionResult ClassReport(string EveluationId,string AccYear,string ClassId,string GradeId)
         {
             
             try
             {
-                string AccYear = Session["AccYear"].ToString();
-                long EvealuationType = Convert.ToInt64(Session["EvealuationTypes"]);
-                var MarkInClass = Connection.GDgetClassAttentionRequiredSubjects(AccYear, GradeId, ClassId, EvealuationType);
+                SchoolId = USession.School_Id;
+                long EvealuationType = Convert.ToInt64(EveluationId);
+                var MarkInClass = Connection.GDgetClassAttentionRequiredSubjects(SchoolId,AccYear, GradeId, ClassId, EvealuationType);
                 List<GDgetClassAttentionRequiredSubjects_Result> MarkInClasslist = MarkInClass.ToList();
 
                 ClassReportModel tcm = new ClassReportModel();
@@ -211,7 +199,7 @@ namespace GDWEBSolution.Controllers.Report
         }
 
 
-         [UserFilter(Function_Id = "StReP")]
+       //  [UserFilter(Function_Id = "StReP")]
          public ActionResult ParentReport(string AccYear, string Eveluation)
         {
             
@@ -261,7 +249,7 @@ namespace GDWEBSolution.Controllers.Report
 
             ViewBag.ExtraCurriculerActivity = new SelectList(ExtraCurriculerActivitylist, "ActivityCode", "ActivityName");
         }
-         [UserFilter(Function_Id = "StReI")]
+       //  [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentSubjectIndex()
         {
              
@@ -269,10 +257,10 @@ namespace GDWEBSolution.Controllers.Report
             Dropdown2();
             return View();
         }
-          [UserFilter(Function_Id = "StReI")]
+       //   [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentSubject(string AccYear,string GradeId, string StudentId)
         {
-           
+
             SchoolId = USession.School_Id;
             try
             {
@@ -301,11 +289,11 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-          [UserFilter(Function_Id = "StReI")]
+     //     [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInClass( string ClassId,string GradeId)
         {
-           
-            SchoolId = USession.School_Id;
+
+            SchoolId =USession.School_Id;
             try
             {
                 if (ClassId == "")
@@ -333,11 +321,11 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-          [UserFilter(Function_Id = "StReI")]
+    //      [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInExtraActivity(string ActivityId)
         {
-            
-            SchoolId = USession.School_Id;
+
+            SchoolId =USession.School_Id;
             try
             {
                 var Student = Connection.GDgetExtraCurriculerStudent(SchoolId, ActivityId, "Y");
@@ -361,11 +349,11 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-          [UserFilter(Function_Id = "StReI")]
+    //      [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInSubject(string GradeId, string ClassId, string SubjectId)
         {
-             
-            SchoolId = USession.School_Id;
+
+            SchoolId =USession.School_Id;
             try
             {
                 int subId = Convert.ToInt32(SubjectId);

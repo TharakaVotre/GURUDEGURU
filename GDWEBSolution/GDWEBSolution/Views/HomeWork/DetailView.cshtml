@@ -1,9 +1,14 @@
 ﻿@model GDWEBSolution.Models.HomeWork.HomeWorkModel
 <script>
-    $(function () {
-        $("#DueDate").datepicker();
+    $(document).ready(function () {
+        var date_input = $('input[name="DueDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
-
+   
 
 </script>
 

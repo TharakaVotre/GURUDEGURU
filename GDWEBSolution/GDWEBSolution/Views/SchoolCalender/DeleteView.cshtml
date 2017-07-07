@@ -34,7 +34,10 @@
                 success: function () {
                     //$("#loaderDiv").hide();
                     $("#myModal").modal("hide");
-                    window.location.href = "/SchoolCalender/Index";
+                    var url_string = location.href;
+                    var url = new URL("url_string");
+                    var AcademicYear = url.searchParams.get("AcademicYear");
+                    window.location.href = "/SchoolCalender/Index?AcademicYear=" + AcademicYear;
 
                 }
 

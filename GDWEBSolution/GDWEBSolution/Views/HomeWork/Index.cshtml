@@ -6,12 +6,24 @@
 }
 
 <script>
-    $(function () {
-        $("#ToDate").datepicker();
+   
+    $(document).ready(function () {
+        var date_input = $('input[name="ToDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
-    $(function () {
-        $("#FromDate").datepicker();
+    $(document).ready(function () {
+        var date_input = $('input[name="FromDate"]'); //our date input has the name "date"
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+        })
     });
+   
 </script>
 
 <div class="form-horizontal">
@@ -21,20 +33,20 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-           @using (Html.BeginForm("Index", "HomeWork", FormMethod.Post))
+           @using (Html.BeginForm("Index", "HomeWork", FormMethod.Get))
 {
             <div class="form-group">
                 <div class="row">
                     <label class="col-sm-2 control-label" style="font-size:14px;color:black">From Date</label>
                     <div class="col-sm-3">
 
-                        @Html.TextBox("FromDate")
+                        @Html.TextBox("FromDate", (string)ViewBag.FromDate, new { @class="form-control"})
 
                     </div>
                     <label class="col-sm-2 control-label" style="font-size:14px;color:black">To Date</label>
                     <div class="col-sm-3">
                        
-                       @Html.TextBox("ToDate")
+                       @Html.TextBox("ToDate", (string)ViewBag.ToDate, new { @class = "form-control" })
 
                     </div>
                     <div>
@@ -111,11 +123,7 @@
                                     <a class="btn btn-info"  onclick='EditView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="fa fa-pencil"></span> Edit </a>
                                     <a class="btn btn-primary"  onclick='DetailView("@item.AssignmentNo","@item.DueDate.ToString("yyyy-MM-dd")")'><span class="glyphicon glyphicon-eye-open"></span> Detail</a>
                                     <a class="btn btn-danger" onclick='DeleteView("@item.AssignmentNo")'><span class="fa fa-trash"></span> Delete</a>
-                                    @{
-                        string path = "../Uploads/" + item.FilePath;
-                       
-                                    }
-                                    <a href="@path" class="btn btn-default"  download><span class="glyphicon glyphicon-cloud-download"></span> Download</a>
+                                      <a href="@Url.Action("Download", "HomeWork", new { path = @item.FilePath }) " class=" btn btn-default"><span class="glyphicon glyphicon-cloud-download"></span>Download</a>
                             </center>
 
                                 </td>
@@ -139,51 +147,6 @@
 
     </div>
 </div>
-
-<style>
-    #FromDate {
-        border: 1px solid #e0e0e0;
-        padding: 5px 8px;
-        color: #616161;
-        background: #fff;
-        box-shadow: none !important;
-        display: block;
-        width: 80%;
-        height: 32px;
-        font-size: 14px;
-        line-height: 1.45;
-        border-radius: 2px;
-        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    }
-    #ToDate {
-        border: 1px solid #e0e0e0;
-        padding: 5px 8px;
-        color: #616161;
-        background: #fff;
-        box-shadow: none !important;
-        display: block;
-        width: 80%;
-        height: 32px;
-        font-size: 14px;
-        line-height: 1.45;
-        border-radius: 2px;
-        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    }
-    #GradeId {
-        border: 1px solid #e0e0e0;
-        padding: 5px 8px;
-        color: #616161;
-        background: #fff;
-        box-shadow: none !important;
-        display: block;
-        width: 80%;
-        height: 32px;
-        font-size: 14px;
-        line-height: 1.45;
-        border-radius: 2px;
-        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    }
-</style>
 
 <script>
     var ShowView = function (id) {

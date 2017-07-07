@@ -32,22 +32,14 @@ namespace GDWEBSolution.Controllers
                 UserId = USession.User_Id;
                 tblTeacher tbtec = Connection.tblTeachers.SingleOrDefault(a => a.UserId == UserId);
                 TeacherId = tbtec.TeacherId;
-                if (FromDate == null && Session["FromDate"]==null) {
+                if (FromDate == null) {
                     
                     ToDate = DateTime.Now.ToShortDateString();
                     FromDate = DateTime.Now.AddMonths(-3).ToShortDateString();
                 }
-                else
-                if (FromDate == null && ToDate == null && Session["FromDate"]!=null)
-                {
-                   FromDate= Session["FromDate"].ToString();
-                   ToDate = Session["ToDate"].ToString();
-                }else
-                if (FromDate != null && ToDate != null)
-                {
-                     Session["FromDate"]=FromDate;
-                     Session["ToDate"]=ToDate;
-                }
+
+                ViewBag.FromDate = FromDate;
+                ViewBag.ToDate = ToDate;
                 if (FromDate != "" && ToDate!="")
                 {
                 DateTime StartDate = Convert.ToDateTime(FromDate);
@@ -186,8 +178,6 @@ namespace GDWEBSolution.Controllers
                 {
                     if (Model.File.ContentLength > 0)
                     {
-
-
                         string _FileName = Path.GetFileName(Model.File.FileName); //;
                         string filename= TeacherId.ToString() + DateTime.Now.Date.ToString("yyyyMMdd")+_FileName;
                         _path = Path.Combine(Server.MapPath("~/Uploads"), filename);
@@ -365,16 +355,7 @@ namespace GDWEBSolution.Controllers
                 SchoolId = USession.School_Id;
                 UserId = USession.User_Id;
                            
-                if (FromDate == null && ToDate == null && Session["FromDate"] != null)
-                {
-                    FromDate = Session["FromDate"].ToString();
-                    ToDate = Session["ToDate"].ToString();
-                }
-                if (FromDate != null && ToDate != null)
-                {
-                    Session["FromDate"] = FromDate;
-                    Session["ToDate"] = ToDate;
-                }
+               
                 if (FromDate != "" && ToDate != "")
                 {
                     FromDate = DateTime.Now.AddMonths(-3).ToShortDateString();

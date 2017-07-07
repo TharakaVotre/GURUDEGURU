@@ -1,0 +1,78 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Report.StudentReportModel>
+@{
+    ViewBag.Title = "ShowStudentResultToParent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Student Eveluation</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+            </div>
+            <div class="panel-body">
+                <form method="post" action="~/eveluationAddMark/ShowStudentResultToParent" class="form-horizontal">
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">Accademic Year</label>
+                        <div class="col-sm-3">
+                            @Html.TextBox("AccYear", (string)ViewBag.AccYear, new { @class = "form-control", @type = "number" })
+                            <span class="help-block m-b-none" id="GradeIdError" style="color:red"></span>
+                        </div>
+                        <label class="col-sm-2 control-label">Evaluation</label>
+                        <div class="col-sm-3">
+                            @Html.DropDownList("Eveluation", ViewBag.Evaluation as List<SelectListItem>, "", new { @class = "form-control" })
+                            <span class="help-block m-b-none" id="ClassIdError" style="color:red"></span>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" style="float:right" onclick="StudentResult()" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+                        </div>
+                    </div>
+
+                </form>   
+               <hr />
+                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" >
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShortName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SubjectName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Mark)
+                            </th>
+                            
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ShortName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SubjectName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Mark)
+                                    </td>
+                                   
+                                    
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+
+    </div>
