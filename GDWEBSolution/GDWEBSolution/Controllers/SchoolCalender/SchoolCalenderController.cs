@@ -23,28 +23,25 @@ namespace GDWEBSolution.Controllers.SchoolCalender
 
        
 
-         [UserFilter(Function_Id = "ScCal")]
+         //[UserFilter(Function_Id = "ScCal")]
         public ActionResult Index(string AcademicYear)
         {
-          
+
             SchooId = USession.School_Id;
             try
             {
-                if (AcademicYear == null & Session["AcademicYear"] == null)
+               
+                 if (AcademicYear == null)
                 {
-                    ViewBag.AcademicYear = DateTime.Now.Year.ToString();
-                    AcademicYear = DateTime.Now.Year.ToString();
-                }
-                else if (Session["AcademicYear"] != null & AcademicYear == null)
-                {
-                    ViewBag.AcademicYear = Session["AcademicYear"].ToString();
-                    AcademicYear = Session["AcademicYear"].ToString();
+                    tblAccadamicYear AccYear = Connection.tblAccadamicYears.SingleOrDefault(a => a.SchoolId == SchooId);
+                    ViewBag.AcademicYear=AccYear.AccadamicYear;
                 }
                 else
                 {
+
                     ViewBag.AcademicYear = AcademicYear;
                 }
-                Session["AcademicYear"] = AcademicYear;
+                
                 var Group = Connection.GDgetSchoolCalenderEvent(SchooId, AcademicYear, "Y");
                 List<GDgetSchoolCalenderEvent_Result> Grouplist = Group.ToList();
 
@@ -78,12 +75,15 @@ namespace GDWEBSolution.Controllers.SchoolCalender
            
         }
 
-        public ActionResult ShowAddView(int id)
+        public ActionResult ShowAddView(string id)
         {
-            return PartialView("AddView");
+            SchoolCalenderModel TModel = new SchoolCalenderModel();
+            TModel.AcadamicYear = id;
+            ViewBag.AccYear = id;
+            return PartialView("AddView", TModel);
         }
 
-         [UserFilter(Function_Id = "ScCal")]
+       //  [UserFilter(Function_Id = "ScCal")]
         [HttpPost]
         public ActionResult Create(SchoolCalenderModel Model)
         {
@@ -98,8 +98,8 @@ namespace GDWEBSolution.Controllers.SchoolCalender
                 {
                      holyday="Y";
                 }
-                AcademicYear = Session["AcademicYear"].ToString();
-                Connection.GDsetSchoolCalenderActivity(SchooId, AcademicYear, Model.DateComment, holyday, Model.SpecialComment, Model.FromDate, Model.ToDate, UserId, "Y");
+
+                Connection.GDsetSchoolCalenderActivity(SchooId, Model.AcadamicYear, Model.DateComment, holyday, Model.SpecialComment, Model.FromDate, Model.ToDate, UserId, "Y");
                 Connection.SaveChanges();
 
                 //return View();
@@ -247,21 +247,17 @@ namespace GDWEBSolution.Controllers.SchoolCalender
             SchooId = USession.School_Id;
             try
             {
-                if (AcademicYear == null & Session["AcademicYear"] == null)
+                if (AcademicYear == null)
                 {
-                    ViewBag.AcademicYear = DateTime.Now.Year.ToString();
-                    AcademicYear = DateTime.Now.Year.ToString();
-                }
-                else if (Session["AcademicYear"] != null & AcademicYear == null)
-                {
-                    ViewBag.AcademicYear = Session["AcademicYear"].ToString();
-                    AcademicYear = Session["AcademicYear"].ToString();
+                    tblAccadamicYear AccYear = Connection.tblAccadamicYears.SingleOrDefault(a => a.SchoolId == SchooId);
+                    ViewBag.AcademicYear=AccYear.AccadamicYear;
                 }
                 else
                 {
+
                     ViewBag.AcademicYear = AcademicYear;
                 }
-                Session["AcademicYear"] = AcademicYear;
+               
                 var Group = Connection.GDgetSchoolCalenderEvent(SchooId, AcademicYear, "Y");
                 List<GDgetSchoolCalenderEvent_Result> Grouplist = Group.ToList();
 

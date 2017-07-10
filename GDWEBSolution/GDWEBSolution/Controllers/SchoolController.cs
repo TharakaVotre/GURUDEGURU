@@ -11,6 +11,7 @@ using GDWEBSolution.Models.Student;
 using GDWEBSolution.Util;
 using GDWEBSolution.Models.User;
 using System.Transactions;
+using GDWEBSolution.Filters;
 //DBEntityModel.edmx
 //SchoolMGTEntitiesConnectionString
 namespace GDWEBSolution.Controllers
@@ -406,6 +407,8 @@ namespace GDWEBSolution.Controllers
          [AllowAnonymous]
         public JsonResult AddSchoolGrade(SchoolGradeModel Model)
         {
+
+            Authentication("SCF");
             try
 
 
@@ -463,6 +466,7 @@ namespace GDWEBSolution.Controllers
          [AllowAnonymous]
          public JsonResult AddSchoolClass(SchoolModel Model)
          {
+             Authentication("SCF");
              try
              {
                  string result = "Error";
@@ -524,6 +528,7 @@ namespace GDWEBSolution.Controllers
          [AllowAnonymous]
          public JsonResult AddSchoolAdmin(SchoolAdminModel Model)
          {
+             Authentication("SCF");
              try
              {
                  string result = "Error";
@@ -587,6 +592,7 @@ namespace GDWEBSolution.Controllers
          [AllowAnonymous]
          public JsonResult EAddSchoolClass(SchoolModel Model)
          {
+             Authentication("SCF");
              try
              {
                  string result = "Error";
@@ -703,6 +709,7 @@ namespace GDWEBSolution.Controllers
         [AllowAnonymous]
          public JsonResult AddSchoolHouse(SchoolHouseModel Model)
          {
+             Authentication("SCF");
              try
              {
                  string result = "Error";
@@ -762,6 +769,7 @@ namespace GDWEBSolution.Controllers
         [AllowAnonymous]
         public JsonResult AddSchoolSubjects(SchoolSubjectModel Model)
         {
+            Authentication("SCF");
             try
             {
                 string result = "Error";
@@ -818,8 +826,11 @@ namespace GDWEBSolution.Controllers
         }
 
         [AllowAnonymous]
+        [UserFilter(Function_Id = "SCF")]
+
         public JsonResult AddSchoolExcActivity(SchoolExtraModel Model)
         {
+            Authentication("SCF");
             try
             {
                 string result = "Error";
@@ -1972,6 +1983,7 @@ namespace GDWEBSolution.Controllers
         [HttpPost]
         public ActionResult Delete(SchoolModel TModel)
         {
+            Authentication("SCF");
             try
             {
                 // TODO: Add delete logic here
@@ -2270,6 +2282,7 @@ namespace GDWEBSolution.Controllers
         [AllowAnonymous]
         public JsonResult EAddSchoolHouse(SchoolHouseModel Model)
         {
+             Authentication("SCF");
             try
             {
                 string result = "Error";
@@ -2395,6 +2408,7 @@ namespace GDWEBSolution.Controllers
         [AllowAnonymous]
         public JsonResult EAddSchoolSubjects(SchoolSubjectModel Model)
         {
+            Authentication("SCF");
             try
 
             {

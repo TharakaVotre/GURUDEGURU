@@ -30,13 +30,13 @@
 
                         <div class="form-group">
                             <div class="row">
-                                <label class="col-sm-2 control-label" style="font-size:14px;color:black">Academic Year</label>
+                                <lable class="col-sm-2 control-label" style="font-size:14px;color:black">Academic Year</lable>
                                 <div class="col-sm-2">
-                                    @Html.TextBox("AcademicYear", (string)ViewBag.AcademicYear, new {@class="form-control",@type="number"})
+                                    @Html.TextBox("AcademicYear")
                                    
 
                                 </div>
-                                <label class="col-sm-2 control-label" style="font-size:14px;color:black">Grade</label>
+                                <lable class="col-sm-2 control-label" style="font-size:14px;color:black">Grade</lable>
                                 <div class="col-sm-2">
 
                                     @Html.DropDownList("GradeId", String.Empty)
@@ -48,7 +48,7 @@
 
                     </div>
                     <div class="panel-body">
-                        <table id="zctb" class="display table table-bordered table-hover">
+                        <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th class="col-md-1">

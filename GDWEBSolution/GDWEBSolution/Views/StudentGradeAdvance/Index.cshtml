@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("Detail", "StudentGradeAdvance", FormMethod.Post))
+@using (Html.BeginForm("Detail", "StudentGradeAdvance", FormMethod.Get))
 {
 
     
@@ -19,19 +19,19 @@
                
                 <div class="form-group">
                     <div class="row">
-                        <lable class="col-sm-2 control-label" style="font-size:14px;color:black"> Acadamic year</lable>
+                        <label class="col-sm-2 control-label" style="font-size:14px;color:black"> Acadamic year</label>
                         <div class="col-sm-3">
                             @Html.TextBox("AcedamicYear")
                         </div>
-                        <lable class="col-sm-2 control-label" style="font-size:14px;color:black"> Grade</lable>
+                        <label class="col-sm-2 control-label" style="font-size:14px;color:black"> Grade</label>
                         <div class="col-sm-3">
-                            @Html.DropDownList("GradeId", ViewBag.country as List<SelectListItem>, "", new { @class = "form-control" })
+                            @Html.DropDownList("GradeId", ViewBag.GradeId as List<SelectListItem>, "", new { @class = "form-control" })
                         </div>
                         </div>
                     </div>
                         <div class="form-group">
                             <div class="row">
-                                <lable class="col-sm-2 control-label" style="font-size:14px;color:black"> Class</lable>
+                                <label class="col-sm-2 control-label" style="font-size:14px;color:black"> Class</label>
                                 <div class="col-sm-3">
                                     @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
                                 </div>
@@ -44,7 +44,7 @@
 
                     </div>
               <div class="panel-body">
-                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
+                <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" >
                     <thead>
                         <tr>
                             <th>
@@ -56,6 +56,9 @@
 
                             <th>
                                 @Html.DisplayNameFor(model => model.StudentName)
+                            </th>
+                           <th>
+                                @Html.DisplayNameFor(model => model.ClassName)
                             </th>
                            
                             <th></th>
@@ -78,7 +81,10 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.StudentName)
                                     </td>
-                                   
+                                   <td>
+                                         @Html.DisplayFor(modelItem => item.ClassName)
+                                   </td>
+                                
                                     <td></td>
                                 </tr>
                             }

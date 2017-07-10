@@ -46,7 +46,7 @@ namespace GDWEBSolution.Controllers.Evaluation
             
             try
             {
-                SchoolId = USession.School_Id;
+                SchoolId =USession.School_Id;
                 var states = Connection.GDgetGradeSubject(SchoolId, Gid, "Y");
                 List<SelectListItem> listates = new List<SelectListItem>();
                 listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -70,7 +70,8 @@ namespace GDWEBSolution.Controllers.Evaluation
             
             try
             {
-                SchoolId = USession.School_Id;
+
+                SchoolId =USession.School_Id;
                 var states = Connection.GDgetClassEveluation(SchoolId, cId, Gid, "Y");
                 List<SelectListItem> listates = new List<SelectListItem>();
                 listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -92,7 +93,7 @@ namespace GDWEBSolution.Controllers.Evaluation
         public JsonResult getClass(string id)
         {
             try {
-                SchoolId = USession.School_Id;
+                SchoolId =USession.School_Id;
             var states = Connection.GDgetGradeActiveClass(id, SchoolId, "Y");
             List<SelectListItem> listates = new List<SelectListItem>();
             listates.Add(new SelectListItem { Text = "", Value = "" });
@@ -251,23 +252,7 @@ namespace GDWEBSolution.Controllers.Evaluation
            
             try {
                 SchoolId = USession.School_Id;
-            if (EditEveluation != null)
-            {
-                Session["EditEveluation"] = EditEveluation;
-                Session["EditClassId"] = EditClassId;
-                Session["EditGradeId"] = EditGradeId;
-                Session["EditSubjectId"] = EditSubjectId;
-            }
-            if (EditEveluation == null)
-            {
-                if (Session["EditEveluation"] != null)
-                {
-                    EditEveluation = Session["EditEveluation"].ToString();
-                    EditClassId = Session["EditClassId"].ToString();
-                    EditGradeId = Session["EditGradeId"].ToString();
-                    EditSubjectId = Session["EditSubjectId"].ToString();
-                }
-            }
+            
             List<GDgetSchoolGrade_Result> Gradelist = GetGradeDropdown();
             ViewBag.EditGradeId = new SelectList(Gradelist, "GradeId", "GradeName");
             long EveluationNo = Convert.ToInt64(EditEveluation);
@@ -294,18 +279,22 @@ namespace GDWEBSolution.Controllers.Evaluation
         }
 
          [UserFilter(Function_Id = "EvAdM")]
-        public ActionResult Edit(string StudentId,string ResultId,string Mark)
+        public ActionResult Edit(string StudentId, string ResultId, string Mark, string GradeId, string ClassId, string SubjectId, string Eveluation)
         {
            
             try
             {
                 StudentReportModel TModel = new StudentReportModel();
-                SchoolId = USession.School_Id;
+                SchoolId = SchoolId = USession.School_Id;
                 TModel.Mark = Convert.ToDecimal(Mark);
                 tblStudent stu = Connection.tblStudents.SingleOrDefault(x => x.StudentId== StudentId && x.SchoolId==SchoolId);
                 TModel.StudentId = StudentId;
                 TModel.Seq =Convert.ToInt64(ResultId);
                 TModel.StudentName = stu.studentName;
+                TModel.GradeId = GradeId;
+                TModel.ClassId = ClassId;
+                TModel.SubjectId = Convert.ToInt32(SubjectId);
+                TModel.Eveluation = Eveluation;
                 return PartialView("EditView", TModel);
             }
             catch (Exception ex)
@@ -316,18 +305,18 @@ namespace GDWEBSolution.Controllers.Evaluation
             }
         }
 
-         [UserFilter(Function_Id = "EvAdM")]
+      [UserFilter(Function_Id = "EvAdM")]
          [HttpPost]
         public ActionResult Edit(StudentReportModel Model)
         {
             
             try
             {
-                UserId = USession.User_Id;
+                UserId = SchoolId =USession.User_Id;
                 Connection.GDModifyStudentEveluationResult(Model.Seq, Model.Mark, UserId);
                 Connection.SaveChanges();
-
-                return RedirectToAction("Index");
+                ViewBag.UrlDetail = Model;
+                return Json(ViewBag.UrlDetail, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -378,5 +367,44 @@ namespace GDWEBSolution.Controllers.Evaluation
 
             }
         }
+         [UserFilter(Function_Id = "EvAdP")]
+        public ActionResult ShowStudentResultToParent(string Eveluation, string AccYear)
+        {
+
+            try
+            {
+                SchoolId = USession.School_Id;
+                UserId = USession.User_Id; ;
+                var Eveluations = Connection.GDgetEveluation(SchoolId, "Y");
+                List<GDgetEveluation_Result> Eveluationlist = Eveluations.ToList();
+
+                ViewBag.Eveluation = new SelectList(Eveluationlist, "EvaluationNo", "EvaluationDescription");
+
+                tblAccadamicYear Ttable = Connection.tblAccadamicYears.SingleOrDefault(x => x.SchoolId == SchoolId);
+                ViewBag.AccYear = Ttable.AccadamicYear;
+
+                var Student = Connection.GDgetStudentResult(SchoolId,Eveluation,AccYear,UserId, "Y");
+                List<GDgetStudentResult_Result> Studentlist = Student.ToList();
+
+                StudentModel Sm = new StudentModel();
+
+                List<StudentReportModel> Smlist = Studentlist.Select(x => new StudentReportModel
+                {
+                    Mark = x.Mark,
+                    SubjectName = x.SubjectName,
+                    ShortName=x.ShortName
+                }).ToList();
+                
+              
+                return View(Smlist);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+            }
+
+        }
+
     }
 }

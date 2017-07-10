@@ -24,9 +24,10 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
           
             try
             {
-                tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "AY");
-               
-                ViewBag.AcedamicYear = TCtable.ParameterValue;
+                SchoolId = USession.School_Id;
+                tblAccadamicYear TCtable = Connection.tblAccadamicYears.SingleOrDefault(x => x.SchoolId == SchoolId);
+
+                ViewBag.AcedamicYear = TCtable.AccadamicYear;
                 Dropdownlistdata(SchoolId);
                 List<StudentGradeAdvanceModel> tcmlist = getdataForTable("","","");
 
@@ -47,29 +48,21 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
            
             try
             {
+                SchoolId =USession.School_Id;
                 tblAccadamicYear Ttable = Connection.tblAccadamicYears.SingleOrDefault(x => x.SchoolId == SchoolId);
                 
                 Dropdownlistdata(SchoolId);
                
-                if (GradeId == null && Session["GroupId"] == null) {
+                if (GradeId == null) {
                     return RedirectToAction("Index");
                 }
-                if (GradeId != null & ClassId!=null)
-                {
-                    Session["GroupId"]=GradeId;
-                    Session["ClassId"] = ClassId;
-                    Session["AccYear"] = AcedamicYear;// = Ttable.ParameterValue;
-                }
-                else{
-                    GradeId=Session["GroupId"].ToString();
-                    ClassId = Session["classId"].ToString();
-                    AcedamicYear = Session["AccYear"].ToString();
-                }
+               
+              
                 ViewBag.CurentYear = AcedamicYear;
                 tblGrade TCtable = Connection.tblGrades.SingleOrDefault(x => x.GradeId == GradeId);
                 ViewBag.CurentGrade = TCtable.GradeName;
 
-                tblClass classtable = Connection.tblClasses.SingleOrDefault(x => x.ClassId == ClassId && x.GradeId==GradeId);
+                tblClass classtable = Connection.tblClasses.SingleOrDefault(x => x.ClassId == ClassId && x.GradeId==GradeId && x.SchoolId==SchoolId);
                 ViewBag.CurentClass = classtable.ClassName;
 
                
@@ -138,7 +131,7 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
          [UserFilter(Function_Id = "GAdv")]
         private void Dropdownlistdata(string SchoolId)
         {
-            SchoolId = USession.School_Id;
+            SchoolId =USession.School_Id;
             var Grade = Connection.GDgetSchoolGrade(SchoolId,"Y");
             List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
 
@@ -199,7 +192,7 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
 
         public JsonResult getstate(string id)
         {
-            SchoolId = USession.School_Id;
+            SchoolId =USession.School_Id;
             var states = Connection.GDgetGradeActiveClass(id,SchoolId,"Y");
             List<SelectListItem> listates = new List<SelectListItem>();
 

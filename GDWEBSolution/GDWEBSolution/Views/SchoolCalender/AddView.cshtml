@@ -35,6 +35,8 @@
         </div>
         <div class="modal-body">
             <div class="form-group">
+                @Html.HiddenFor(model=>model.AcadamicYear)
+
                 @Html.LabelFor(m => m.FromDate, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-8">
                     @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control", @placeholder = "From Date" })
@@ -148,7 +150,8 @@
                 success: function () {
                     
                     $("#myModal").modal("hide");
-                    window.location.href = "/SchoolCalender/Index";
+                    var year =@ViewBag.AccYear +""; 
+                    window.location.href = "/SchoolCalender/Index?AcademicYear="+year;
 
                 }
 
