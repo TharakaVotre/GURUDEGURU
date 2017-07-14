@@ -451,7 +451,9 @@
 
                     //$("#loaderDiv").hide();
                     // $("#myModal").modal("hide");
-                    if (result != "Exception" && result != "Exists" && result != "error" && result != "UExists") {
+                    //  if (result != "Exception" && result != "Exists" && result != "error" && result != "UExists") {
+                    if (result.split('!')[0] == "sessioncheck") {
+                        
                         debugger
 
                         $.ajax({
@@ -548,6 +550,11 @@
                     }
 
                     else {
+                        window.location.href = "/Home/Logout";
+                        //$("#ErrorLable").text("Please Login to Continue ");
+                        //$("#btnAddQualification").prop('value', 'Save');
+                      //  $("#myModal").modal("show");
+
 
                     }
 

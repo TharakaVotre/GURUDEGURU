@@ -110,8 +110,10 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits" && result != "fill") {
-                    debugger
+               // if (result != "Exception" && result != "Exits" && result != "fill") {
+                    if (result.split('!')[0] == "sessioncheck") {
+                        debugger
+                     
                     //window.location.href = "/Teacher/Create";
                
 
@@ -119,7 +121,7 @@
                     // $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + result + '&SchoolId=' + ssid2);
 
                     var res = result.split("!");
-                    $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + res[0] + '&SchoolId='+ res[1] );
+                    $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + res[1] + '&SchoolId='+ res[2] );
                     $("#SuccesLable").text("Subject Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -146,6 +148,11 @@
                     //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
 
+
+                }
+
+                else {
+                    window.location.href = "/Home/Logout";
 
                 }
              

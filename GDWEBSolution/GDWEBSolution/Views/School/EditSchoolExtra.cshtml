@@ -48,18 +48,18 @@
         $.ajax({
 
             type: "POST",
-            url: "/School/AddSchoolExcActivity",
+            url: "/School/AddSchoolExcActivityEdit",
             data: myformdata,
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits") {
+                if (result.split('!')[0] == "sessioncheck") {
                     debugger
                     //window.location.href = "/Teacher/Create";
-                    $("#SchoolId").val(result);
+                    $("#SchoolId").val(result.split('!')[1]);
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + result);
+                    $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + result.split('!')[1]);
                     $("#SuccesLable").text("Activity Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -80,6 +80,7 @@
 
                 }
                 else {
+                    window.location.href = "/Home/Logout";
 
                 }
 

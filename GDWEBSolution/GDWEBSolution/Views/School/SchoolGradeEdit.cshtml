@@ -50,13 +50,14 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits") {
+               // if (result != "Exception" && result != "Exits") {
+                    if (result.split('!')[0] == "sessioncheck") {
                     debugger
                     //window.location.href = "/Teacher/Create";
                     $("#SchoolId").val(result);
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + result);
+                    $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + result.split('!')[1]);
                     $("#SuccesLable").text("Grade Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -77,6 +78,7 @@
 
                 }
                 else {
+                    window.location.href = "/Home/Logout";
 
                 }
 
