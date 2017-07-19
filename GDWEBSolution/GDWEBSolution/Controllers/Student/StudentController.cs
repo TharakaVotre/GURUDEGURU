@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Schools;
 using GDWEBSolution.Models.Student;
 using GDWEBSolution.Models.User;
@@ -40,10 +41,10 @@ namespace GDWEBSolution.Controllers.Student
                 Response.Redirect("~/Home/Login");
             }
         }
-
+         [UserFilter(Function_Id = "STCF")]
         public ActionResult Index()
         {
-            Authentication("STCF");
+           // Authentication("STCF");
             if (USession.User_Category == "SADMI")
             {
 
@@ -114,7 +115,7 @@ namespace GDWEBSolution.Controllers.Student
 
         //
         // GET: /Student/Details/5
-
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult Details(string StudentId, string SchoolId)
         {
 
@@ -182,10 +183,10 @@ namespace GDWEBSolution.Controllers.Student
 
         //
         // GET: /Student/Create
-
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult Create(String SchoolId)
         {
-            Authentication("STCF");
+         //   Authentication("STCF");
 
             if (USession.User_Category == "SADMI")
             {
@@ -276,6 +277,7 @@ namespace GDWEBSolution.Controllers.Student
 
 
         [AcceptVerbs(HttpVerbs.Get)]
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult GetSchoolextracuricluar(string SchoolId)
         {
             if (String.IsNullOrEmpty(SchoolId))
@@ -321,9 +323,10 @@ namespace GDWEBSolution.Controllers.Student
         // POST: /Student/Create
 
         [HttpPost]
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult Create(StudentModel Model)
         {
-            Authentication("STCF");
+         //   Authentication("STCF");
 
             string _path = "";
             string _pathL = "";
@@ -341,6 +344,8 @@ namespace GDWEBSolution.Controllers.Student
                 {
                     if (Model.StudentImageFile == null)
                     {
+                       
+                       // ModelState.AddModelError("Email", "Email is not valid");
 
                     }
                     else
@@ -446,7 +451,7 @@ namespace GDWEBSolution.Controllers.Student
 
         //
         // GET: /Student/Edit/5
-
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult Edit(string StudentId,string SchoolId)
         {
             Authentication("STCF");
@@ -488,6 +493,7 @@ namespace GDWEBSolution.Controllers.Student
         // POST: /Student/Edit/5
 
         [HttpPost]
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult Edit(StudentModel Model)
         {
             Authentication("STCF");
@@ -659,7 +665,7 @@ namespace GDWEBSolution.Controllers.Student
 
         //
         // GET: /Student/Delete/5
-
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult Delete(String  StudentId)
         {
             StudentModel TModel = new StudentModel();
@@ -676,6 +682,7 @@ namespace GDWEBSolution.Controllers.Student
         // POST: /Student/Delete/5
 
         [HttpPost]
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult Delete(StudentModel TModel)
         {
             try
@@ -699,6 +706,7 @@ namespace GDWEBSolution.Controllers.Student
 
 
         [AllowAnonymous]
+        [UserFilter(Function_Id = "STCF")]
         public JsonResult AddStudentExcActivity(StudentExtraCModel Model)
         {
             try
@@ -727,7 +735,7 @@ namespace GDWEBSolution.Controllers.Student
 
                         Connection.SaveChanges();
 
-                        result = Model.SchoolIdE + "!" + Model.StudentIdE;
+                        result = "sessioncheck" + "!" + Model.SchoolIdE + "!" + Model.StudentIdE;
 
                         //  ViewBag.SchoolId = Model.SchoolId;
 
@@ -756,6 +764,7 @@ namespace GDWEBSolution.Controllers.Student
 
 
         [AllowAnonymous]
+        [UserFilter(Function_Id = "STCF")]
         public JsonResult EAddStudentExcActivity(StudentExtraCModel Model)
         {
             try
@@ -781,7 +790,7 @@ namespace GDWEBSolution.Controllers.Student
 
                     Connection.SaveChanges();
 
-                    result = Model.SchoolId + "!" + Model.StudentId;
+                    result = "sessioncheck" + "!" + Model.SchoolId + "!" + Model.StudentId;
 
                     //  ViewBag.SchoolId = Model.SchoolId;
 
@@ -802,7 +811,7 @@ namespace GDWEBSolution.Controllers.Student
             }
         }
 
-
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult ShowstudentExactivty(string SchoolId, string StudentId)
         {
 
@@ -858,6 +867,7 @@ namespace GDWEBSolution.Controllers.Student
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult HouseDropdown(string SchoolId)
         {
             var STQlist = Connection.SMGTgetSchoolHouseadd(SchoolId).ToList();
@@ -887,6 +897,7 @@ namespace GDWEBSolution.Controllers.Student
 
 
         [HttpPost]
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult DeleteStudentexcactivities(StudentExtraCModel Model)
         {
             try

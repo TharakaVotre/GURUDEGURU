@@ -1,4 +1,5 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Parent;
 using GDWEBSolution.Models.Schools;
 using GDWEBSolution.Models.Student;
@@ -51,10 +52,11 @@ namespace GDWEBSolution.Controllers.Parent
 
         //
         // GET: /Parent/
+        [UserFilter(Function_Id = "PCF")]
         public ActionResult Index()
 
         {
-            Authentication("PCF");
+          //  Authentication("PCF");
             if (USession.User_Category == "SADMI") {
 
                 var parent = Connection.SMGTGetParent("%", USession.School_Id);
@@ -129,10 +131,11 @@ namespace GDWEBSolution.Controllers.Parent
         }
         //
         // GET: /Parent/Details/5
+          [UserFilter(Function_Id = "PCF")]
         public ActionResult Details(long ParentId)
         {
 
-            Authentication("PCF");
+           // Authentication("PCF");
 
 
             ParentModel TModel = new ParentModel();
@@ -244,10 +247,11 @@ namespace GDWEBSolution.Controllers.Parent
         }
         //
         // GET: /Parent/Create
+          [UserFilter(Function_Id = "PCF")]
         public ActionResult Create()
         {
 
-            Authentication("PCF");
+           // Authentication("PCF");
 
           //  ViewBag.SchoolIDc = SessionSchool;
 
@@ -279,10 +283,10 @@ namespace GDWEBSolution.Controllers.Parent
         //
         // POST: /Parent/Create
         [HttpPost]
+        [UserFilter(Function_Id = "PCF")]
         public ActionResult Create(ParentModel Model)
         {
 
-            Authentication("PCF");
 
             using (var scope = new TransactionScope())
             {
@@ -474,6 +478,7 @@ namespace GDWEBSolution.Controllers.Parent
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
+        [UserFilter(Function_Id = "PCF")]
         public ActionResult GetSchoolGrade(string SchoolId)
         {
            
@@ -524,6 +529,7 @@ namespace GDWEBSolution.Controllers.Parent
 
 
         [AcceptVerbs(HttpVerbs.Get)]
+        [UserFilter(Function_Id = "PCF")]
         public ActionResult GetSchoolParent()
         {
 
@@ -570,7 +576,7 @@ namespace GDWEBSolution.Controllers.Parent
 
 
 
-
+          [UserFilter(Function_Id = "PCF")]
         public ActionResult AddChildAc(ParentModel Model)
         {
 
@@ -612,6 +618,7 @@ namespace GDWEBSolution.Controllers.Parent
         }
         // GET: /Parent/Edit/5
         [HttpPost]
+        [UserFilter(Function_Id = "PCF")]
         public ActionResult AddChild(ParentModel Model)
         {
             string result = "Error";
@@ -632,22 +639,31 @@ namespace GDWEBSolution.Controllers.Parent
                 //     Model.ParentId = parentId.ToString();
                 long longP = long.Parse(Model.ParentId);
                 var count = Connection.tblParentStudents.Count(u => u.ParentId == longP && u.StudentId == Model.StudentId1);
+                var countparent = Connection.tblParentStudents.Count(u => u.StudentId == Model.StudentId1);
 
                 if (count == 0)
                 {
-                    tblParentStudent tps = new tblParentStudent();
-                    tps.CreatedBy = "User1";
-                    tps.CreatedDate = DateTime.Today;
-                    tps.IsActive = "Y";
-                    //tps.ParentId = parentId;
-                    tps.ParentId = long.Parse(Model.ParentId);
-                    tps.SchoolId = Model.SchoolId;
-                    tps.StudentId = Model.StudentId1;
-                    Connection.tblParentStudents.Add(tps);
-                    Connection.SaveChanges();
+                    if (countparent < 3)
+                    {
+                        tblParentStudent tps = new tblParentStudent();
+                        tps.CreatedBy = "User1";
+                        tps.CreatedDate = DateTime.Today;
+                        tps.IsActive = "Y";
+                        //tps.ParentId = parentId;
+                        tps.ParentId = long.Parse(Model.ParentId);
+                        tps.SchoolId = Model.SchoolId;
+                        tps.StudentId = Model.StudentId1;
+                        Connection.tblParentStudents.Add(tps);
+                        Connection.SaveChanges();
 
 
-                    result = Model.ParentId + "!" + Model.SchoolId;
+                        result = "sessioncheck" + "!" + Model.ParentId + "!" + Model.SchoolId;
+
+                    }
+                    else {
+                        result = "maxp";
+                    
+                    }
                 }
                 else
                 {
@@ -667,6 +683,7 @@ namespace GDWEBSolution.Controllers.Parent
            
         
         }
+          [UserFilter(Function_Id = "PCF")]
         public ActionResult ShowchildAdd(string ParentId)
         {
             if (ParentId == null) { 
@@ -692,7 +709,7 @@ namespace GDWEBSolution.Controllers.Parent
             return PartialView("ChildrenList", List);
         }
 
-
+          [UserFilter(Function_Id = "PCF")]
         public ActionResult ShowchildAddn(string ParentId,string SchoolId)
         {
             if (ParentId == null)
@@ -720,7 +737,7 @@ namespace GDWEBSolution.Controllers.Parent
         }
 
 
-
+          [UserFilter(Function_Id = "PCF")]
         public ActionResult ShowchildAddt(string ParentId)
         {
             ParentId = "2";
@@ -741,6 +758,7 @@ namespace GDWEBSolution.Controllers.Parent
             }).ToList();
             return PartialView("ChildtestList", List);
         }
+          [UserFilter(Function_Id = "PCF")]
         public ActionResult EditParent(string ParentId)
         {
             ViewBag.EditParentID = ParentId;
@@ -753,7 +771,7 @@ namespace GDWEBSolution.Controllers.Parent
 
 
 
-
+          [UserFilter(Function_Id = "PCF")]
         public ActionResult ShowEditParent(string ParentId)
         {
 
@@ -795,6 +813,7 @@ namespace GDWEBSolution.Controllers.Parent
 
 
         [HttpPost]
+        [UserFilter(Function_Id = "PCF")]
         public JsonResult EditParentDetails(ParentModel TCtable)
         {
             try
@@ -855,10 +874,11 @@ namespace GDWEBSolution.Controllers.Parent
         //
         // POST: /Parent/Edit/5
         [HttpPost]
+        [UserFilter(Function_Id = "PCF")]
         public ActionResult Edit(int id, FormCollection collection)
         {
 
-            Authentication("PCF");
+          //  Authentication("PCF");
 
 
 
@@ -879,9 +899,10 @@ namespace GDWEBSolution.Controllers.Parent
         }
         //
         // GET: /Parent/Delete/5
+          [UserFilter(Function_Id = "PCF")]
         public ActionResult Delete(string ParentId)
         {
-            Authentication("PCF");
+            //Authentication("PCF");
 
             ParentModel TModel = new ParentModel();
             TModel.ParentId = ParentId;
@@ -895,6 +916,7 @@ namespace GDWEBSolution.Controllers.Parent
         //
         // POST: /Parent/Delete/5
         [HttpPost]
+        [UserFilter(Function_Id = "PCF")]
         public ActionResult Delete(ParentModel Model)
         {
             try
@@ -913,7 +935,7 @@ namespace GDWEBSolution.Controllers.Parent
         }
 
 
-
+          [UserFilter(Function_Id = "PCF")]
         public ActionResult DeleteChild(string ParentId, string StudentId)
         {
             ParentModel Model = new ParentModel();
@@ -924,6 +946,7 @@ namespace GDWEBSolution.Controllers.Parent
         }
 
         [HttpPost]
+        [UserFilter(Function_Id = "PCF")]
         public ActionResult DeleteChild(ParentModel Model)
         {
             try

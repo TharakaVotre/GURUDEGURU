@@ -161,7 +161,7 @@
                                             @Html.LabelFor(m => m.StudentImageFile, new { @class = "control-label col-md-2" })
                                             <div class="col-md-4">
                                                 @Html.TextBoxFor(m => m.StudentImageFile, new { type = "file", @class = "form-control" })
-                                                @Html.ValidationMessageFor(m => m.StudentImageFile, "", new { @class = "text-danger" })
+                                                @Html.ValidationMessageFor(model => model.StudentImageFile, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
 
@@ -442,7 +442,9 @@
 
                     //$("#loaderDiv").hide();
                     // $("#myModal").modal("hide");
-                    if (result != "Exception" && result != "Exists" && result != "error" && result != "UExists") {
+                  //  if (result != "Exception" && result != "Exists" && result != "error" && result != "UExists") {
+
+                    if (result == "Success") {
                         debugger
 
                         acl.reset();
@@ -490,7 +492,14 @@
 
                     }
 
+                    else if (result == "error") {
+                  
+
+
+                    }
+                    
                     else {
+                        window.location.href = "/Home/Logout";
 
                     }
 

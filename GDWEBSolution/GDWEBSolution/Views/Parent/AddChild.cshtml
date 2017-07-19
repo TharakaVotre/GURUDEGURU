@@ -101,19 +101,15 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits" && result != "fill") {
+                if (result.split('!')[0] == "sessioncheck") {
                     debugger
                     //window.location.href = "/Teacher/Create";
                    // $("#ParentId").val(result);
 
-                    @*var url = '@Url.Action("ShowchildAdd", "Parent")';
-                   
-                       
-                    $('#showchild').load(url, { ParentId: result });*@
                     
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showChild').load('/Parent/ShowchildAddn?ParentId=' + result.split('!')[0] + "&SchoolId="+result.split('!')[1] );
+                    $('#showChild').load('/Parent/ShowchildAddn?ParentId=' + result.split('!')[1] + "&SchoolId="+result.split('!')[2] );
                   
 
                   //  $('.nav-tabs a[href="#AddChild"]').tab('show');
@@ -140,11 +136,27 @@
 
                 }
 
+                else if (result == "maxp") {
+                //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("This child has already asigned for two parents");
+                //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+
                 else if (result == "fill") {
                     //$("#ErrorUName").prop('value', 'User Name Already Exits');
                     $("#ErrorLable").text("Select every filed to Continue");
                     //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
+
+
+                }
+
+                else if (result == "Error") {
+                }
+                else {
 
 
                 }
