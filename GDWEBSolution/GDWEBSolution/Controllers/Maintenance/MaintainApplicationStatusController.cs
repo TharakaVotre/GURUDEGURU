@@ -22,8 +22,7 @@ namespace GDWEBSolution.Controllers
 
        [UserFilter(Function_Id = "MaAS")]
         public ActionResult Index()
-        {
-            
+        {           
             try
             {
                 var status = Connection.GDgetAllApplicationStatus("Y", 0);
@@ -42,15 +41,12 @@ namespace GDWEBSolution.Controllers
                     ModifiedDate = x.ModifiedDate
 
                 }).ToList();
-
-
-
                 return View(tcmlist);
             }
             catch (Exception ex) {
+
                 Errorlog.ErrorManager.LogError(ex);
-                return View();
-                
+                return View();   
             }
         }
 
@@ -70,37 +66,29 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-           [UserFilter(Function_Id = "MaAS")]
+        [UserFilter(Function_Id = "MaAS")]
         public ActionResult Create()
-        {
-            
+        {      
             return View();
         }
 
         //
         // POST: /Application Status/Create
-           [UserFilter(Function_Id = "MaAS")]
+        [UserFilter(Function_Id = "MaAS")]
         [HttpPost]
         public ActionResult Create(tblApplicationStatu Model)
-        {
-           
+        {         
             UserId = USession.User_Id;
             try
             {
-
                 Connection.GDsetApplicationStatus(Model.StatusDescription, UserId, "Y");
                 Connection.SaveChanges();
-
-                //return View();
-
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
-            {
-                
-                        Errorlog.ErrorManager.LogError(ex);
-                        return View();
-                   
+            {   
+                Errorlog.ErrorManager.LogError(ex);
+                return View();    
             }
         }
 
@@ -137,7 +125,7 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-           [UserFilter(Function_Id = "MaAS")]
+        [UserFilter(Function_Id = "MaAS")]
         [HttpPost]
         public ActionResult Edit(ApplicationStatusModel Model)
         {
