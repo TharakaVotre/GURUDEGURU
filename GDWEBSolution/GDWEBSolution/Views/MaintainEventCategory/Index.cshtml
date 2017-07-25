@@ -12,7 +12,8 @@
 
         <!-- Zero Configuration Table -->
         <div class="panel panel-default">
-            <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
+            <div class="panel-heading">
+                <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span>Add New</button></div>
             <div class="panel-body">
                 <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
                     <thead>
@@ -26,8 +27,8 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.CreatedBy)
                             </th>
-                           
-                          
+
+
                             <th>
                                 @Html.DisplayNameFor(model => model.ParentApprovalNeeded)
                             </th>
@@ -40,50 +41,56 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.ModifiedDate)
                             </th>
-                            <th style="max-width:130px"></th>
+                            <th style="max-width: 130px"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (Model != null)
                         {
                             foreach (var item in Model)
-                        {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EventCategoryId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EventCategoryDesc)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedBy)
-                                    </td>
-                                   
-                                    <td>
-                                        @if (item.ParentApprovalNeeded=="Y") {<div>Yes</div>}else{<div>No</div>}
-                                        
-                                    </td>
-                                    <td>
-                                         @if (item.BroadcastMessage=="Y") {<div>Yes</div> }
-                                        else{
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EventCategoryId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EventCategoryDesc)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                                </td>
+
+                                <td>
+                                    @if (item.ParentApprovalNeeded == "Y")
+                                    {<div>Yes</div>}
+                                    else
+                                    {<div>No</div>}
+
+                                </td>
+                                <td>
+                                    @if (item.BroadcastMessage == "Y")
+                                    {<div>Yes</div> }
+                                    else
+                                    {
                                         <div>No</div>
-                                        }
-                                       
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ModifiedBy)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ModifiedDate)
-                                    </td>
-                                     <td><center>
-                    <a href="#" class="btn btn-info btn-sm" onclick="EditView(@item.EventCategoryId)"><span class="fa fa-pencil"></span> Edit </a>
-                    <a href="#" class="btn btn-danger btn-sm" onclick="DeleteView(@item.EventCategoryId)"><span class="fa fa-trash"></span> Delete</a>
-                </center></td>
-            </tr>
+                                    }
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModifiedBy)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                </td>
+                                <td>
+                                    <a href="#" class="hvr-buzz-out" onclick="EditView(@item.EventCategoryId)">Edit </a> |
+                                    <a href="#" class="hvr-buzz-out"  onclick="DeleteView(@item.EventCategoryId)">Delete</a>
+
+                                </td>
+                            </tr>
+                            }
                         }
-                        }
-                </tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -97,7 +104,6 @@
 
         <!-- Modal content-->
         <div class="modal-content" id="MyModelBody">
-
         </div>
 
     </div>

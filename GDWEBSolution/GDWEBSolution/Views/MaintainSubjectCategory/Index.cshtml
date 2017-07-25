@@ -65,10 +65,9 @@
                                         @Html.DisplayFor(modelItem => item.ModifiedDate)
                                     </td>
                                     <td>
-                                        <center>
-                                        <a class="btn btn-info" onclick='EditView("@item.SubjectCategoryId")'><span class="fa fa-pencil"></span> Edit </a>
-                                        <a class="btn btn-danger" onclick='DeleteView("@item.SubjectCategoryId")'><span class="fa fa-trash"></span> Delete</a>
-                                    </center></td>
+                                        <a href="#" class="hvr-buzz-out"  onclick='EditView("@item.SubjectCategoryId")'><span class="fa fa-pencil"></span> Edit </a>
+                                        <a href="#" class="hvr-buzz-out"  onclick='DeleteView("@item.SubjectCategoryId")'><span class="fa fa-trash"></span> Delete</a>
+                                    </td>
                                 </tr>
                             }
                         }

@@ -13,68 +13,67 @@
 
         <!-- Zero Configuration Table -->
         <div class="panel panel-default">
-            <div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button></div>
+            <div class="panel-heading">
+                <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span>Add New</button></div>
             <div class="panel-body">
                 <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" width="100%">
                     <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.StatusCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StatusDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </th>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StatusCode)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StatusDescription)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedDate)
+                            </th>
 
-        <th style="max-width:130px"></th>
-    </tr>
-</thead>
-<tbody>
-    @if (Model != null)
+                            <th style="max-width: 130px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
                         {
-        foreach (var item in Model)
-                        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StatusCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StatusDescription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedBy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModifiedBy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModifiedDate)
-                </td>
+                            foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StatusCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StatusDescription)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModifiedBy)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                </td>
 
-                <td>
-                   <center>
-                    <a href="#" class="btn btn-info"  onclick="EditView(@item.StatusCode)"><span class="fa fa-pencil"></span> Edit </a>
-                    <a href="#" class="btn btn-danger" onclick="DeleteView(@item.StatusCode)"><span class="fa fa-trash"></span> Delete</a>
-               </center>
-                        </td>
-            </tr>
+                                <td>
+                                    <a href="#" class="hvr-buzz-out"   onclick="EditView(@item.StatusCode)">Edit </a>|
+                                    <a href="#" class="hvr-buzz-out"  onclick="DeleteView(@item.StatusCode)">Delete</a>
+                                </td>
+                            </tr>
+                            }
                         }
-                        }
-                </tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -88,7 +87,6 @@
 
         <!-- Modal content-->
         <div class="modal-content" id="MyModelBody">
-
         </div>
 
     </div>
@@ -96,7 +94,7 @@
 
 @*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
 <script>
-  
+
     var ShowView = function (bookid) {
         var Url = "/MaintainApplicationStatus/ShowAddApplicationStatus?id=" + bookid;
         $("#MyModelBody").load(Url, function () {
