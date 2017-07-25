@@ -25,5 +25,9 @@ namespace GDWEBSolution.Models.User
         [Display(Name = "Is Active")]
         public string IsActive { get; set; }
         public bool Active { get; set; }
+
+        [Display(Name = "Is Application Side")]
+        public string Is_ApplicationSide { get; set; }
+        public bool IsApplicationSide { get; set; }
     }
 }

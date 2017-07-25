@@ -157,6 +157,9 @@ namespace GDWEBSolution.Controllers.User
                 Category.CreatedDate = DateTime.Now;
                 if (Model.Active == true) { Category.IsActive = "Y"; }
                 else { Category.IsActive = "N"; }
+
+                //if (Model.IsApplicationSide == true) { Category.IsActive = "Y"; }
+                //else { Category.IsActive = "N"; }
                 Category.CategoryId = Model.CategoryId;
                 Category.CategoryName = Model.CategoryName;
 
