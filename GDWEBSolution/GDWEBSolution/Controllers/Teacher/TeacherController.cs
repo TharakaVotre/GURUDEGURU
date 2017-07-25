@@ -69,7 +69,8 @@ namespace GDWEBSolution.Controllers.Teacher
             ClassTeacherModel Model = new ClassTeacherModel();
             SubjctViewBags();
             var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == _session.School_Id).FirstOrDefault();
-            var STQlist = Connection.SMGT_getSchoolClassTeachersList(_session.School_Id, AY.AccadamicYear).ToList();
+            var STQlist = Connection.SMGT_getSchoolClassTeachersList(_session.School_Id,
+                                                                    AY.AccadamicYear).ToList();
 
             Model.ClassTeacherList = STQlist.Select(x => new ClassTeacherModel
             {
@@ -136,7 +137,8 @@ namespace GDWEBSolution.Controllers.Teacher
 
             TeacherDrpList();
 
-            List<SMGT_getSchoolExActivities_Result> Exlist = Connection.SMGT_getSchoolExActivities(_session.School_Id).ToList();
+            List<SMGT_getSchoolExActivities_Result> Exlist = Connection.SMGT_getSchoolExActivities(
+                                                             _session.School_Id).ToList();
             ViewBag.ExtraActivityList = new SelectList(Exlist, "ActivityCode", "ActivityName");
         }
 
@@ -283,7 +285,8 @@ namespace GDWEBSolution.Controllers.Teacher
 
         public ActionResult ShowGradeClasses(string GradeId)
         {
-            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == _session.School_Id && r.GradeId == GradeId).ToList();
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == _session.School_Id 
+                                                                    && r.GradeId == GradeId).ToList();
             ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
 
             var GradeSubject = Connection.SMGTgetGradeSubjects(GradeId, _session.School_Id).ToList();
@@ -301,7 +304,8 @@ namespace GDWEBSolution.Controllers.Teacher
 
         public ActionResult ShowGradeClassesForTC(string GradeId)
         {
-            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == _session.School_Id && r.GradeId == GradeId).ToList();
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == _session.School_Id 
+                                                                    && r.GradeId == GradeId).ToList();
             ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
 
             return PartialView("GradeClasses");
@@ -526,7 +530,9 @@ namespace GDWEBSolution.Controllers.Teacher
                 string result = "Error";
                 var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == _session.School_Id).FirstOrDefault();
                // List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
-                int countt = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId && u.AccedamicYear == AY.AccadamicYear && u.IsActive == "Y");
+                int countt = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId 
+                                                                && u.AccedamicYear == AY.AccadamicYear 
+                                                                && u.IsActive == "Y");
 
                 int Ccount = Connection.tblClassTeachers.Count(u => u.ClassId == Model.ClassId
                     && u.AccedamicYear == AY.AccadamicYear && u.GradeId == Model.GradeId && u.SchoolId == _session.School_Id && u.IsActive == "Y");
@@ -825,11 +831,11 @@ namespace GDWEBSolution.Controllers.Teacher
             try
             {
                 tblClassTeacher TCtable = Connection.tblClassTeachers.SingleOrDefault(
-                                          x => x.TeacherId == Model.TeacherId && 
-                    x.GradeId == Model.GradeId && 
-                    x.ClassId == Model.ClassId && 
-                    x.AccedamicYear == Model.AccedamicYear && 
-                    x.SchoolId == Model.SchoolId);
+                                            x => x.TeacherId == Model.TeacherId && 
+                                            x.GradeId == Model.GradeId && 
+                                            x.ClassId == Model.ClassId && 
+                                            x.AccedamicYear == Model.AccedamicYear && 
+                                            x.SchoolId == Model.SchoolId);
 
                 TCtable.IsActive = "D";
                 Connection.SaveChanges();
