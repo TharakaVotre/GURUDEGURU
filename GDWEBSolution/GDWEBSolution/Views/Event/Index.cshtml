@@ -9,10 +9,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Event Calender</div>
     <div class="panel-body">
-        <div class="calendar" id="calendar">
-
-        </div>
-        <br />
+        <div class="calendar" id="calendar"></div><br />
     </div>
 </div>
 <div id="event-modal" class="modal fade" role="dialog">
@@ -76,11 +73,10 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
-
 </div>
+
 <script src="~/Scripts/formatDate.js"></script>
 <script>
 /**
@@ -90,13 +86,11 @@
  **/
     $(document).ready(function () {
         $('#calendar').calendar();
-
         $('#event-modal input[name="event-from-time"]').timepicker({
             template: false,
             showInputs: false,
             minuteStep: 5
         });
-
         $('#event-modal input[name="event-to-time"]').timepicker({
             template: false,
             showInputs: false,
@@ -156,7 +150,6 @@
 
     function deleteEvent(event) {
         var dataSource = $('#calendar').data('calendar').getDataSource();
-
         for (var i in dataSource) {
             if (dataSource[i].id == event.id) {
                 var data = new FormData;
@@ -170,12 +163,11 @@
                     contentType: false,
                     processData: false,
                     success: function () {
-                        load();
+                    load();
                     }
                 })
             }
         }
-
         $('#calendar').data('calendar').setDataSource(dataSource);
     }
     function saveEvent() {
@@ -190,7 +182,6 @@
             category: $('#EventCategoryId').val(),
             desc: $('#event-modal input[name="event-desc"]').val(),
         }
-
         var data = new FormData;
         data.append("EventNo", parseInt(event.id));
         data.append("EventName", event.name);
@@ -203,14 +194,13 @@
         data.append("SToTime", event.totime);
         data.append("EventOrganizer",event.organizer);
         data.append("EventCategoryId", event.category);
-
         $.ajax({
-
             type: "POST",
             url: "/Event/Create",
             data: data,
             contentType: false,
             processData: false,
+           // cache: false,//
             success: function () {
                 $('#event-modal').modal('hide');
                 load();
@@ -220,7 +210,6 @@
 
     $(function () {
         var currentYear = new Date().getFullYear();
-
         $('#calendar').calendar({
             enableContextMenu: true,
             enableRangeSelection: true,
@@ -238,20 +227,26 @@
                 editEvent({ startDate: e.startDate, endDate: e.endDate });
             },
             mouseOnDay: function (e) {
-
                 if (e.events.length > 0) {
                     var content = '';
-
                     for (var i in e.events) {
                         content += '<div class="event-tooltip-content">'
-                                        + '<div class="event-name" style="color:' + e.events[i].color + ';">--------------------------------------------------</div>'
-                                        + '<div class="event-name" style="color:' + e.events[i].color + ';">' + e.events[i].name + '</div>'
-                                        + '<div class="event-location" style="font-size:small; color:#395f64 ;"> From : ' + e.events[i].fromtime + " To : " + e.events[i].totime + '</div>'
-                                        + '<div class="event-location" style="font-size:small;"> Organized By : ' + e.events[i].organizer + '</div>'
-                                        + '<div class="event-name" style="color:' + e.events[i].color + '">--------------------------------------------------</div>'
+                                    + '<div class="event-name" style="color:'
+                                        + e.events[i].color
+                                        + ';">--------------------------------------------------</div>'
+                                    + '<div class="event-name" style="color:'
+                                        + e.events[i].color + ';">'
+                                        + e.events[i].name + '</div>'
+                                    + '<div class="event-location" style="font-size:small; color:#395f64 ;"> From : '
+                                        + e.events[i].fromtime + " To : "
+                                        + e.events[i].totime + '</div>'
+                                    + '<div class="event-location" style="font-size:small;"> Organized By : '
+                                        + e.events[i].organizer + '</div>'
+                                    + '<div class="event-name" style="color:'
+                                        + e.events[i].color
+                                        + '">--------------------------------------------------</div>'
                                     + '</div>';
                     }
-
                     $(e.element).popover({
                         trigger: 'manual',
                         container: 'body',
@@ -259,7 +254,6 @@
                         content: content,
                         placement: 'auto'
                     });
-
                     $(e.element).popover('show');
                 }
             },
@@ -271,14 +265,11 @@
             dayContextMenu: function (e) {
                 $(e.element).popover('hide');
             },
-
             dataSource: []
-
         });
         load();
         $('#save-event').click(function () {
             saveEvent();
         });
     });
-
 </script>

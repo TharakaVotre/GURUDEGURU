@@ -9,10 +9,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Event Calender</div>
     <div class="panel-body">
-        <div class="calendar" id="calendar">
-
-        </div>
-        <br />
+        <div class="calendar" id="calendar"></div><br />
     </div>
 </div>
 <script>
@@ -52,41 +49,35 @@
             });
     }
 
-
     $(function () {
         var currentYear = new Date().getFullYear();
-
         $('#calendar').calendar({
             enableContextMenu: true,
             enableRangeSelection: true,
-            //contextMenuItems: [
-            //    {
-            //        text: 'Edit',
-            //        click: editEvent
-            //    },
-            //    {
-            //        text: 'Remove',
-            //        click: deleteEvent
-            //    }
-            //],
             selectRange: function (e) {
                 editEvent({ startDate: e.startDate, endDate: e.endDate });
             },
             mouseOnDay: function (e) {
-
                 if (e.events.length > 0) {
                     var content = '';
-
                     for (var i in e.events) {
                         content += '<div class="event-tooltip-content">'
-                                        + '<div class="event-name" style="color:' + e.events[i].color + ';">--------------------------------------------------</div>'
-                                        + '<div class="event-name" style="color:' + e.events[i].color + ';">' + e.events[i].name + '</div>'
-                                        + '<div class="event-location" style="font-size:small; color:#395f64 ;"> From : ' + e.events[i].fromtime + " To : " + e.events[i].totime + '</div>'
-                                        + '<div class="event-location" style="font-size:small;"> Organized By : ' + e.events[i].organizer + '</div>'
-                                        + '<div class="event-name" style="color:' + e.events[i].color + '">--------------------------------------------------</div>'
+                                        + '<div class="event-name" style="color:'
+                                            + e.events[i].color
+                                            + ';">--------------------------------------------------</div>'
+                                        + '<div class="event-name" style="color:'
+                                            + e.events[i].color + ';">'
+                                            + e.events[i].name + '</div>'
+                                        + '<div class="event-location" style="font-size:small; color:#395f64 ;"> From : '
+                                            + e.events[i].fromtime + " To : "
+                                            + e.events[i].totime + '</div>'
+                                        + '<div class="event-location" style="font-size:small;"> Organized By : '
+                                            + e.events[i].organizer + '</div>'
+                                        + '<div class="event-name" style="color:'
+                                            + e.events[i].color
+                                            + '">--------------------------------------------------</div>'
                                     + '</div>';
                     }
-
                     $(e.element).popover({
                         trigger: 'manual',
                         container: 'body',
@@ -94,7 +85,6 @@
                         content: content,
                         placement: 'auto'
                     });
-
                     $(e.element).popover('show');
                 }
             },
@@ -106,11 +96,8 @@
             dayContextMenu: function (e) {
                 $(e.element).popover('hide');
             },
-
             dataSource: []
-
         });
         load();
     });
-
 </script>
