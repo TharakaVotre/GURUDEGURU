@@ -211,12 +211,12 @@
                                 <div class="form-horizontal">
                                     <div class="form-group">
 
-                                        <lable class="col-sm-2 control-label">Grade</lable>
+                                        <label class="col-sm-2 control-label">Grade</label>
                                         <div class="col-sm-3">
                                             @Html.DropDownList("ResultGradeId", ViewBag.ResultGradeId as List<SelectListItem>, "", new { @class = "form-control" })
                                             <span class="help-block m-b-none" id="GradeIdError" style="color:red"></span>
                                         </div>
-                                        <lable class="col-sm-2 control-label">Class</lable>
+                                        <label class="col-sm-2 control-label">Class</label>
                                         <div class="col-sm-3">
                                             @Html.DropDownList("ResultClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
                                             <span class="help-block m-b-none" id="ClassIdError" style="color:red"></span>
@@ -224,7 +224,7 @@
                                     </div>
                                     <div class="form-group">
 
-                                        <lable class="col-sm-2 control-label"> Eveluation</lable>
+                                        <label class="col-sm-2 control-label"> Eveluation</label>
                                         <div class="col-sm-3">
                                             @Html.DropDownList("ResultEveluation", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
                                             <span class="help-block m-b-none" style="color:red" id="EveluationError"></span>

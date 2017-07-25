@@ -111,6 +111,11 @@ namespace GDWEBSolution.Models.Teacher
         [Display(Name = "Password *")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Confirm Password Required")]
+        [Display(Name = "Confirm Password *")]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; }
+
         public List<QualificationModel> QualificationList { get; set; }
         public List<tblTeacherExtraCurricularActivity> ExCurricularList { get; set; }
         public List<tblTeacherSubject> SubjectList { get; set; }

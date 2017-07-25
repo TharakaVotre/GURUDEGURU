@@ -21,7 +21,7 @@
 <Child title="School Category" action="Index" controller="MaintainSchoolCategory" url="#"/>
 <Child title="School Group" action="Index" controller="MaintainSchoolGroup" url="#"/>
 <Child title="School Rank" action="Index" controller="MaintainSchoolRank" url="#"/>
-<Child title="MaintainStudentEvaluationType" action="Index" controller="Student Evaluation Type" url="#"/>
+<Child title="Student Evaluation Type" action="Index" controller="MaintainStudentEvaluationType" url="#"/>
 <Child title="MaintainSubject" action="Index" controller="Subject" url="#"/>
 <Child title="Subject Category" action="Index" controller="MaintainSubjectCategory" url="#"/>
   <Child title="Update Accdemic Year" action="UpdateAccedemicYear" controller="StudentGradeAdvance" url="#"/>
@@ -48,11 +48,13 @@
 <Child title="Attention required Subject" action="Index" controller="StudentReport" url="#"/>
 <Child title="Attention required Subject Parent View" action="ParentReport" controller="StudentReport" url="#"/>
   <Child title="Student Report" action="StudentSubjectIndex" controller="StudentReport" url="#"/>
+  <Child title="Extra Curriculer Activity" action="Index" controller="ExtraCurriculerActivity" url="#"/>
 </Navigation>
 <Navigation title="Evaluation" action="#" controller="#" url="#">
 <Child title="School Evaluation" action="Create" controller="EvaluationbySchool" url="#"/>
   <Child title="Evaluation Add/View" action="Index" controller="EveluationAddMark" url="#"/>
   <Child title="Evaluation Edit" action="EditStudentResult" controller="EveluationAddMark" url="#"/>
+  <Child title="Show Student Result To Parent" action="ShowStudentResultToParent" controller="EveluationAddMark" url="#"/>
 </Navigation>
 
 <Navigation title="User" action="#" controller="#" url="#">

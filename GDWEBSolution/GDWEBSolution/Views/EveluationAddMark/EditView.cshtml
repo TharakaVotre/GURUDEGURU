@@ -11,6 +11,10 @@
            <div class="form-horizontal">
                <div class="form-group">
                    @Html.HiddenFor(model=>model.Seq)
+                   @Html.HiddenFor(model=>model.GradeId)
+                   @Html.HiddenFor(model=>model.ClassId)
+                   @Html.HiddenFor(model=>model.Eveluation)
+                   @Html.HiddenFor(model=>model.SubjectId)
                    @Html.LabelFor(m => m.StudentId, new { @class = "col-sm-3 control-label" })
                    <div class="col-sm-8">
                        @Html.TextBoxFor(model => model.StudentId, new { @class = "form-control",disabled = "disabled" })
@@ -55,11 +59,11 @@
             var marks = document.getElementById("Mark").value;
 
             if (Mark == "") {
-            //    // Add errors highlight
+                //    // Add errors highlight
                 Mark.closest('.form-group').removeClass('has-success').addClass('has-error');
                 $("#MarkError").text("Required");
-            //    // Stop submission of the form
-            //  //  e.preventDefault();
+                //    // Stop submission of the form
+                //  //  e.preventDefault();
                 return;
             }
             if (marks > 100) {
@@ -82,10 +86,17 @@
                 type: "POST",
                 url: "/EveluationAddMark/Edit",
                 data: myformdata,
-                success: function () {
+                success: function (@ViewBag.UrlDetail) {
                     //$("#loaderDiv").hide();
                     $("#myModal").modal("hide");
-                    window.location.href = "/EveluationAddMark/EditStudentResult";
+                    var url_string = location.href;
+                    var url = new URL(url_string);
+                    var EditGradeId = url.searchParams.get("EditGradeId");
+                    var EditClassId = url.searchParams.get("EditClassId");
+                    var EditSubjectId = url.searchParams.get("EditSubjectId");
+                    var EditEveluation = url.searchParams.get("EditEveluation");
+                  
+                    window.location.href = "/EveluationAddMark/EditStudentResult?EditEveluation=" + EditEveluation + "&EditClassId=" + EditClassId + "&EditGradeId=" + EditGradeId + "&EditSubjectId=" + EditSubjectId;
 
                 }
 

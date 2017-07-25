@@ -1,0 +1,84 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Student.StudentModel>
+@{
+    ViewBag.Title = "AttentionRequiredSubjectsSchool";
+}
+<div>
+@using (Html.BeginForm("Create", "EveluationAddMark", FormMethod.Post))
+{
+    <div>
+                    <input type="text" value="@ViewBag.SubjectId" style="display:none" name="SubjectId" />
+                    <input type="text" value="@ViewBag.GradeId" style="display:none" name="GradeId" />
+                    <input type="text" value="@ViewBag.Eveluation" style="display:none" name="Eveluation" />
+                </div>
+    <table id="zctb" class="display table table-bordered table-hover" cellspacing="0" >
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentName)
+                </th>
+                <th>
+                    Marks
+                </th>
+              <th>
+                  Comments
+              </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                
+                int i = 0;
+               // string SubjectStatus = ViewBag.SubjectStatus.ToString();
+                
+                foreach (var item in Model)
+                {
+                    i++;
+                  //  if (SubjectStatus == item.Optional) { 
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StudentId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StudentName)
+                            <input type="text" name="StudentId" style="display:none" value="@item.StudentId" />
+                        </td>
+
+                       
+                        <td id="@i">
+                            <input type="number" name="Mark" class="form-control" max="100" min="0"/>
+                        </td>
+                       <td>
+                           <input type="text" name="Comment" class="form-control" />
+                       </td>
+                    </tr>
+            //}
+                }
+            }
+        </tbody>
+    </table>
+
+ <button type="submit" value="Create" class="btn btn-primary" >Save</button>
+}
+</div>
+<script>
+
+    function Enable(i) {
+        var id = document.getElementById(i).style.display;
+
+            var div = " #" + i;
+            var div1 = " #op" + i;
+            $(String(div)).load(document.URL + String(div));
+            $(String(div1)).load(document.URL + String(div1));
+
+        }
+
+    
+
+
+
+</script>

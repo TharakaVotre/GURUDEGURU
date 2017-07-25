@@ -13,16 +13,16 @@
         <div class="panel panel-default">
             <div class="panel-heading"></div>
             <div class="panel-body">
-                <form action="EditStudentResult" method="post">
+                <form action="EditStudentResult" method="get">
                     <div class="form-horizontal">
                         <div class="form-group">
 
-                            <lable class="col-sm-2 control-label">Grade</lable>
+                            <label class="col-sm-2 control-label">Grade</label>
                             <div class="col-sm-3">
                                 @Html.DropDownList("EditGradeId", ViewBag.EditGradeId as List<SelectListItem>, "", new { @class = "form-control" })
                                 <span class="help-block m-b-none" id="GradeIdError" style="color:red"></span>
                             </div>
-                            <lable class="col-sm-2 control-label">Class</lable>
+                            <label class="col-sm-2 control-label">Class</label>
                             <div class="col-sm-3">
                                 @Html.DropDownList("EditClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
                                 <span class="help-block m-b-none" id="EditClassIdError" style="color:red"></span>
@@ -30,12 +30,12 @@
                         </div>
                         <div class="form-group">
 
-                            <lable class="col-sm-2 control-label">Subject</lable>
+                            <label class="col-sm-2 control-label">Subject</label>
                             <div class="col-sm-3">
                                 @Html.DropDownList("EditSubjectId", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
                                 <span class="help-block m-b-none" id="EditSubjectIdError" style="color:red"></span>
                             </div>
-                            <lable class="col-sm-2 control-label"> Eveluation</lable>
+                            <label class="col-sm-2 control-label"> Eveluation</label>
                             <div class="col-sm-3">
                                 @Html.DropDownList("EditEveluation", new SelectList("", "Value", "Text"), "", new { @class = "form-control" })
                                 <span class="help-block m-b-none" style="color:red" id="EditEveluationError"></span>
@@ -117,16 +117,28 @@
                 <script>
 
 
-                    var EditView = function (StudentId,Mark,seq) {
-                      
-                        var Url = "/EveluationAddMark/Edit?StudentId=" + StudentId + "&ResultId=" + seq + "&Mark=" + Mark;
+                    var EditView = function (StudentId, Mark, seq) {
+                        var url_string = location.href;
+                        var url = new URL(url_string);
+                        var EditGradeId = url.searchParams.get("EditGradeId");
+                        var EditClassId = url.searchParams.get("EditClassId");
+                        var EditSubjectId = url.searchParams.get("EditSubjectId");
+                        var EditEveluation = url.searchParams.get("EditEveluation");
+
+                        var Url = "/EveluationAddMark/Edit?StudentId=" + StudentId + "&ResultId=" + seq + "&Mark=" + Mark + "&GradeId=" + EditGradeId + "&ClassId=" + EditClassId + "&SubjectId=" + EditSubjectId + "&Eveluation=" + EditEveluation;
                         $("#MyModelBody").load(Url, function () {
                             $("#myModal").modal("show");
                         })
                     }
 
                     var DeleteView = function (ResultSeq) {
-                        var Url = "/EveluationAddMark/Delete?ResultId=" + ResultSeq;
+                        var url_string = location.href;
+                        var url = new URL(url_string);
+                        var EditGradeId = url.searchParams.get("EditGradeId");
+                        var EditClassId = url.searchParams.get("EditClassId");
+                        var EditSubjectId = url.searchParams.get("EditSubjectId");
+                        var EditEveluation = url.searchParams.get("EditEveluation");
+                        var Url = "/EveluationAddMark/Delete?ResultId=" + ResultSeq + "&GradeId=" + EditGradeId + "&ClassId=" + EditClassId + "&SubjectId=" + EditSubjectId + "&Eveluation=" + EditEveluation;
                         $("#MyModelBody").load(Url, function () {
                             $("#myModal").modal("show");
                         })

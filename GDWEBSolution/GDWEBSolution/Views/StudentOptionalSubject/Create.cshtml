@@ -127,11 +127,11 @@
                 </div>
             </div>*@        
     <div style="text-align:center;">
-        <table class="table table-striped table-hover table-bordered" style="width:66%; margin: 0 auto; text-align:left;">
+        <table id="myTable"   class="table table-striped table-hover table-bordered" style="width:66%; margin: 0 auto; text-align:left;">
             <thead>
                 <tr>
 
-                    <th><input type="checkbox" name="chooseAllRecipient" id="chooseAllRecipient" /></th>
+                    <th><input type="checkbox"  name="chooseAllRecipient" id="chooseAllRecipient" /> <label>SelectAll</label></th>
                     <th class="center">Student Names</th>
 
                 </tr>
@@ -300,6 +300,25 @@
 
 
 <script type="text/javascript">
+
+    $('#chooseAllRecipient').click(function () {
+        var chk = $(this).is(':checked');
+        var cnt = $('input[type=checkbox]', "#myTable").length;
+        $('input[type=checkbox]', "#myTable").each(function () {
+            if (chk) {
+                $(this).attr('checked', 'checked');
+            }
+            else {
+                $(this).removeAttr('checked');
+            }
+        });
+
+
+
+    });
+
+
+
 
     $(function () {
         // This will make every element with the class "date-picker" into a DatePicker element

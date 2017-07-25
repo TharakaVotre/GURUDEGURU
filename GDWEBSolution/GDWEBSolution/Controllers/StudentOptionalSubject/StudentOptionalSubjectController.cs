@@ -2,6 +2,7 @@
 using GDWEBSolution.Models;
 using GDWEBSolution.Models.Schools;
 using GDWEBSolution.Models.Student;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,9 +17,34 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
         //
         // GET: /StudentOptionalSubject/
 
-        public ActionResult Index()
+        UserSession USession = new UserSession();
+
+        private void Authentication(string ControlerName)
         {
 
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
+            }
+        }
+
+
+        public ActionResult Index()
+        {
+            Authentication("STCF");
 
             var stpop = Connection.SMGTgetStudentOptionalSubjects("%", "%");
 
@@ -103,6 +129,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
 
         public ActionResult Details(string StudentId, string SchoolId)
         {
+            Authentication("STCF");
             StudentModel TModel = new StudentModel();
 
             tblStudent TCtable = Connection.tblStudents.SingleOrDefault(x => x.StudentId == StudentId && x.SchoolId == SchoolId);
@@ -342,10 +369,17 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
             }
             //int id = 0;
             //bool isValid = Int32.TryParse(SchoolId, out id);
-            if (SchoolId == "") {
+            //if (SchoolId == "") {
 
-                SchoolId = "asdas123err";
+            //    SchoolId = "asdas123err";
+            //}
+            if (SchoolId == null) {
+         
+            
             }
+
+
+
             var SchoolGrade = Connection.SMGTgetSchoolGrade(SchoolId).OrderBy(X=>X.GradeName).ToList();//Need to Pass a Session Schoolid
         
 
@@ -512,7 +546,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
            // string _pathL = "";
 
             Model.StudentId=chooseRecipient[0];
-            Model.CreatedBy = "User1";
+            Model.CreatedBy = USession.User_Id;
             Model.IsActive = "Y";
             int subjectid = Int32.Parse(Model.SubjectId);
 
@@ -962,7 +996,7 @@ namespace GDWEBSolution.Controllers.StudentOptionalSubject
                 stdmodel.SchoolId = tblstudnt.SchoolId;
                 stdmodel.StudentId = tblstudnt.StudentId;
                 stdmodel.StudentName = tblstudnt.studentName;
-                stdmodel.ModifiedBy = "User1";
+                stdmodel.ModifiedBy = USession.User_Id;
                 stdmodel.ModifiedDate = DateTime.Now;
                 stdmodel.GradeId = tblstudnt.GradeId;
                 stdmodel.HouseId = tblstudnt.HouseId;

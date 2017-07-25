@@ -1,0 +1,45 @@
+﻿@model IEnumerable<GDWEBSolution.Models.Report.StudentReportModel>
+    <hr />
+<div class="col-md-12">
+    <table id="zctb" class="display table table-bordered table-hover" >
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentName)
+                </th>
+               
+                <th>
+                    @Html.DisplayNameFor(model => model.GradeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClassName)
+                </th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StudentName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GradeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClassName)
+                        </td>
+                       
+                   
+
+                        
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</div>

@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.HomeWork;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,30 +16,30 @@ namespace GDWEBSolution.Controllers
         //
         // GET: /HomeWork/
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "Shirandie";
-        string SchoolId = "Scl11128";
+        UserSession USession = new UserSession();
+        string UserId = null;
+        string SchoolId = null;
        
-        long TeacherId = 1;
+        long TeacherId = 0;
+
+          [UserFilter(Function_Id = "HomIn")]
         public ActionResult Index(string FromDate,string ToDate)
         {
+            
             try
             {
-                if (FromDate == null && Session["FromDate"]==null) {
+                SchoolId = USession.School_Id;
+                UserId = USession.User_Id;
+                tblTeacher tbtec = Connection.tblTeachers.SingleOrDefault(a => a.UserId == UserId);
+                TeacherId = tbtec.TeacherId;
+                if (FromDate == null) {
                     
                     ToDate = DateTime.Now.ToShortDateString();
                     FromDate = DateTime.Now.AddMonths(-3).ToShortDateString();
                 }
-                else
-                if (FromDate == null && ToDate == null && Session["FromDate"]!=null)
-                {
-                   FromDate= Session["FromDate"].ToString();
-                   ToDate = Session["ToDate"].ToString();
-                }else
-                if (FromDate != null && ToDate != null)
-                {
-                     Session["FromDate"]=FromDate;
-                     Session["ToDate"]=ToDate;
-                }
+
+                ViewBag.FromDate = FromDate;
+                ViewBag.ToDate = ToDate;
                 if (FromDate != "" && ToDate!="")
                 {
                 DateTime StartDate = Convert.ToDateTime(FromDate);
@@ -82,33 +84,46 @@ namespace GDWEBSolution.Controllers
                 return View();
             }
         }
-
+        [UserFilter(Function_Id = "HomDe")]
         public ActionResult Details(long code, string dates)
         {
-            DropDownList("%");
-            HomeWorkModel TModel = new HomeWorkModel();
+           
+            try
+            {
+                SchoolId = USession.School_Id;
+               
+                DropDownList("%");
+                HomeWorkModel TModel = new HomeWorkModel();
 
-            tblAssignmentHeader TCtable = Connection.tblAssignmentHeaders.SingleOrDefault(x => x.AssignmentNo == code);
-            TModel.SubjectId = TCtable.SubjectId;
-            TModel.GradeId = TCtable.GradeId;
-            TModel.ClassId = TCtable.ClassId;
-            tblClass TClass = Connection.tblClasses.SingleOrDefault(x => x.ClassId == TCtable.ClassId && x.GradeId == TCtable.GradeId && x.SchoolId==SchoolId);
-            TModel.Class = TClass.ClassName;
-            tblGrade TGrade = Connection.tblGrades.SingleOrDefault(x => x.GradeId == TCtable.GradeId);
-            TModel.Grade = TGrade.GradeName;
-            tblSubject TSubject = Connection.tblSubjects.SingleOrDefault(x => x.SubjectId == TCtable.SubjectId);
-            TModel.Subject = TSubject.SubjectName;
-            TModel.stringDueDate = dates;
-            TModel.AssignmentDescription = TCtable.AssignmentDescription;
-            TModel.BatchNo = TCtable.BatchNo;
-            TModel.BatchDescription = TCtable.BatchDescription;
-            TModel.FilePath = TCtable.FilePath;
-            TModel.AssignmentNo = TCtable.AssignmentNo;
-            return PartialView("DetailView", TModel);
+                tblAssignmentHeader TCtable = Connection.tblAssignmentHeaders.SingleOrDefault(x => x.AssignmentNo == code);
+                TModel.SubjectId = TCtable.SubjectId;
+                TModel.GradeId = TCtable.GradeId;
+                TModel.ClassId = TCtable.ClassId;
+                tblClass TClass = Connection.tblClasses.SingleOrDefault(x => x.ClassId == TCtable.ClassId && x.GradeId == TCtable.GradeId && x.SchoolId == SchoolId);
+                TModel.Class = TClass.ClassName;
+                tblGrade TGrade = Connection.tblGrades.SingleOrDefault(x => x.GradeId == TCtable.GradeId);
+                TModel.Grade = TGrade.GradeName;
+                tblSubject TSubject = Connection.tblSubjects.SingleOrDefault(x => x.SubjectId == TCtable.SubjectId);
+                TModel.Subject = TSubject.SubjectName;
+                TModel.stringDueDate = dates;
+                TModel.AssignmentDescription = TCtable.AssignmentDescription;
+                TModel.BatchNo = TCtable.BatchNo;
+                TModel.BatchDescription = TCtable.BatchDescription;
+                TModel.FilePath = TCtable.FilePath;
+                TModel.AssignmentNo = TCtable.AssignmentNo;
+                return PartialView("DetailView", TModel);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+            }
         }
 
+         [UserFilter(Function_Id = "HomDo")]
         public FileResult Download(string path)
         {
+          
             try
             {
                 string Filepath = Server.MapPath("~/Uploads/" + path);
@@ -123,10 +138,10 @@ namespace GDWEBSolution.Controllers
             }
         }
         //
-
+         [UserFilter(Function_Id = "HomIn")]
         public ActionResult ShowAddView(int id)
         {
-
+           
             DropDownList("");
 
            
@@ -135,6 +150,7 @@ namespace GDWEBSolution.Controllers
 
         private void DropDownList(string id)
         {
+            SchoolId = USession.School_Id;
              var Grade = Connection.GDgetSchoolGrade(SchoolId,"Y");
              List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
 
@@ -143,22 +159,25 @@ namespace GDWEBSolution.Controllers
           
         }
 
-       
+       [UserFilter(Function_Id = "HomIn")]
         [HttpPost]
         public ActionResult Create(HomeWorkModel Model)
         {
+           
             string _path = "";
             
 
             try
             {
+                SchoolId = USession.School_Id;
+                UserId=USession.User_Id;
+                tblTeacher tbtec = Connection.tblTeachers.SingleOrDefault(a => a.UserId == UserId);
+                TeacherId = tbtec.TeacherId;
                 long dueId=0;
                 if (ModelState.IsValid)
                 {
                     if (Model.File.ContentLength > 0)
                     {
-
-
                         string _FileName = Path.GetFileName(Model.File.FileName); //;
                         string filename= TeacherId.ToString() + DateTime.Now.Date.ToString("yyyyMMdd")+_FileName;
                         _path = Path.Combine(Server.MapPath("~/Uploads"), filename);
@@ -175,22 +194,10 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception ex)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
             }
         }
 
@@ -202,56 +209,71 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "HomIn")]
         public ActionResult Edit(long Code, string dates)
         {
-           
-            HomeWorkModel TModel = new HomeWorkModel();
+         
+            try
+            {
+                SchoolId = USession.School_Id;
+               
+                HomeWorkModel TModel = new HomeWorkModel();
 
-            tblAssignmentHeader TCtable = Connection.tblAssignmentHeaders.SingleOrDefault(x => x.AssignmentNo == Code);
-            TModel.SubjectId = TCtable.SubjectId;
-            TModel.GradeId = TCtable.GradeId;
-            TModel.ClassId = TCtable.ClassId;
-            tblClass TClass = Connection.tblClasses.SingleOrDefault(x => x.ClassId == TCtable.ClassId && x.GradeId==TCtable.GradeId && x.SchoolId==SchoolId);
-            TModel.Class = TClass.ClassName;
-            tblGrade TGrade = Connection.tblGrades.SingleOrDefault(x => x.GradeId == TCtable.GradeId);
-            TModel.Grade = TGrade.GradeName;
-            tblSubject TSubject = Connection.tblSubjects.SingleOrDefault(x => x.SubjectId == TCtable.SubjectId);
-            TModel.Subject = TSubject.SubjectName;
-            TModel.stringDueDate = dates;
-            TModel.AssignmentDescription = TCtable.AssignmentDescription;
-            TModel.BatchNo = TCtable.BatchNo;
-            TModel.BatchDescription = TCtable.BatchDescription;
-            TModel.FilePath = TCtable.FilePath;
-           TModel.AssignmentNo=TCtable.AssignmentNo;
+                tblAssignmentHeader TCtable = Connection.tblAssignmentHeaders.SingleOrDefault(x => x.AssignmentNo == Code);
+                TModel.SubjectId = TCtable.SubjectId;
+                TModel.GradeId = TCtable.GradeId;
+                TModel.ClassId = TCtable.ClassId;
+                tblClass TClass = Connection.tblClasses.SingleOrDefault(x => x.ClassId == TCtable.ClassId && x.GradeId == TCtable.GradeId && x.SchoolId == SchoolId);
+                TModel.Class = TClass.ClassName;
+                tblGrade TGrade = Connection.tblGrades.SingleOrDefault(x => x.GradeId == TCtable.GradeId);
+                TModel.Grade = TGrade.GradeName;
+                tblSubject TSubject = Connection.tblSubjects.SingleOrDefault(x => x.SubjectId == TCtable.SubjectId);
+                TModel.Subject = TSubject.SubjectName;
+                TModel.stringDueDate = dates;
+                TModel.AssignmentDescription = TCtable.AssignmentDescription;
+                TModel.BatchNo = TCtable.BatchNo;
+                TModel.BatchDescription = TCtable.BatchDescription;
+                TModel.FilePath = TCtable.FilePath;
+                TModel.AssignmentNo = TCtable.AssignmentNo;
 
-   
-           DropDownList(TCtable.GradeId);
-           var Subject = Connection.GDgetGradeActiveSubject(TCtable.GradeId, "Y"); ;
-           List<GDgetGradeActiveSubject_Result> Subjectlist = Subject.ToList();
-            ViewBag.SubjectId = new SelectList(Subjectlist, "SubjectId", "SubjectName");
-            ViewBag.SubjectIdtxt = TCtable.SubjectId;
-            return PartialView("EditView", TModel);
+
+                DropDownList(TCtable.GradeId);
+                var Subject = Connection.GDgetGradeActiveSubject(SchoolId,TCtable.GradeId, "Y"); ;
+                List<GDgetGradeActiveSubject_Result> Subjectlist = Subject.ToList();
+                ViewBag.SubjectId = new SelectList(Subjectlist, "SubjectId", "SubjectName");
+                ViewBag.SubjectIdtxt = TCtable.SubjectId;
+                return PartialView("EditView", TModel);
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
+            }
+
         }
 
         //
         // POST: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "HomIn")]
         [HttpPost]
         public ActionResult Edit(HomeWorkModel Model)
         {
+           
             try
             {
                 long dueId = 0;
                 if (ModelState.IsValid)
                 {
+                    SchoolId = USession.School_Id;
+                    UserId = USession.User_Id;
+                           
                     DateTime duedate = Convert.ToDateTime(Model.stringDueDate);
                     string _path = null;
                     if (Model.File != null)
                     {
                         if (Model.File.ContentLength > 0)
                         {
-
+                           
 
                             string _FileName = Path.GetFileName(Model.File.FileName); //;
                             string filename = TeacherId.ToString() + DateTime.Now.Date.ToString("yyyyMMddHHmmSS") + _FileName;
@@ -288,9 +310,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "HomIn")]
         public ActionResult Delete(long Code)
         {
+           
             HomeWorkModel TModel = new HomeWorkModel();
             TModel.AssignmentNo = Code;
             return PartialView("DeleteView", TModel);
@@ -298,12 +321,16 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "HomIn")]
         [HttpPost]
         public ActionResult Delete(HomeWorkModel Model)
         {
+            
             try
             {
+               
+                UserId = USession.User_Id;
+                           
                 Connection.GDDeleteHomeWork("N", Model.AssignmentNo, UserId);
                 Connection.SaveChanges();
 
@@ -319,21 +346,16 @@ namespace GDWEBSolution.Controllers
         }
 
 
-
+        [UserFilter(Function_Id = "HomPa")]
         public ActionResult ParentView(string FromDate, string ToDate)
         {
+            
             try
             {
-                if (FromDate == null && ToDate == null && Session["FromDate"] != null)
-                {
-                    FromDate = Session["FromDate"].ToString();
-                    ToDate = Session["ToDate"].ToString();
-                }
-                if (FromDate != null && ToDate != null)
-                {
-                    Session["FromDate"] = FromDate;
-                    Session["ToDate"] = ToDate;
-                }
+                SchoolId = USession.School_Id;
+                UserId = USession.User_Id;
+                           
+               
                 if (FromDate != "" && ToDate != "")
                 {
                     FromDate = DateTime.Now.AddMonths(-3).ToShortDateString();
@@ -385,6 +407,7 @@ namespace GDWEBSolution.Controllers
 
         public JsonResult getClass(string id)
         {
+            SchoolId = USession.School_Id;
             var states = Connection.GDgetGradeActiveClass(id,SchoolId,"Y");
             List<SelectListItem> listates = new List<SelectListItem>();
 
@@ -406,8 +429,8 @@ namespace GDWEBSolution.Controllers
       
         public JsonResult getSubject(string id)
         {
-           
-            var states = Connection.GDgetGradeActiveSubject(id,"Y"); ;
+            SchoolId = USession.School_Id;
+            var states = Connection.GDgetGradeActiveSubject(SchoolId,id, "Y");
             List<SelectListItem> listates = new List<SelectListItem>();
 
           

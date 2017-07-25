@@ -127,12 +127,13 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits" && result != "notfilled") {
+               // if (result != "Exception" && result != "Exits" && result != "notfilled") {
+                    if (result.split('!')[0] == "sessioncheck") {
                     debugger
                     //window.location.href = "/Teacher/Create";
 
-                 
-                    $('#showadmins').load('/School/ShowSchoolAdmins?SchoolId=' + result);
+                    var res = result.split("!");
+                    $('#showadmins').load('/School/ShowSchoolAdmins?SchoolId=' + result.split('!')[1]);
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
                  //   $('#showclasses').load('/School/ShowSchooClasses?SchoolIdGradeId=' + result);
@@ -164,6 +165,7 @@
 
                 }
                 else {
+                    window.location.href = "/Home/Logout";
 
                 }
 

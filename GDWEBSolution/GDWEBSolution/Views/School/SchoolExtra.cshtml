@@ -9,7 +9,7 @@
 
         @Html.LabelFor(m => m.SchoolNamel, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
-            @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadexcd(this.value)" })
+            @Html.DropDownListFor(model => model.SchoolIdEx, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadexcd(this.value)" })
 
             @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
 
@@ -53,13 +53,15 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits") {
+              //  if (result != "Exception" && result != "Exits" && result != "fill") {
+                if (result.split('!')[0] == "sessioncheck") {
+                    var resultf = result.split('!')[1];
                     debugger
                     //window.location.href = "/Teacher/Create";
-                    $("#SchoolId").val(result);
+                    $("#SchoolId").val(resultf);
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + result);
+                    $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + resultf);
                     $("#SuccesLable").text("Activity Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -79,7 +81,17 @@
 
 
                 }
+
+                else if (result == "fill") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Select Every Filed");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
                 else {
+                    window.location.href = "/Home/Logout";
 
                 }
 

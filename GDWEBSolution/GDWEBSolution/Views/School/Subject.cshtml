@@ -18,7 +18,7 @@
 
      <div class="col-sm-4">
            
-             @Html.DropDownListFor(model => model.SchoolIds, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "Academic" })
+             @Html.DropDownListFor(model => model.SchoolIds, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "Academic", @onchange = "loadschoolsub(this.value)" })
             </div>
 
         @Html.LabelFor(m => m.AcademicYear, new { @class = "col-sm-2 control-label" })
@@ -80,7 +80,15 @@
         debugger
 
         var ssid = $('#SchoolIds').val();
-        $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + value + '&SchoolId=' + ssid);
+        $('#showSubjects').load('/School/ShowSchoolSubjectsload?AcademicYear=' + value + '&SchoolId=' + ssid);
+    }
+
+
+    var loadschoolsub = function (value) {
+        debugger
+
+      
+        $('#showSubjects').load('/School/ShowSchoolSubjectsload?AcademicYear=%&SchoolId=' + value);
     }
 
 
@@ -102,8 +110,10 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits") {
-                    debugger
+               // if (result != "Exception" && result != "Exits" && result != "fill") {
+                    if (result.split('!')[0] == "sessioncheck") {
+                        debugger
+                     
                     //window.location.href = "/Teacher/Create";
                
 
@@ -111,7 +121,7 @@
                     // $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + result + '&SchoolId=' + ssid2);
 
                     var res = result.split("!");
-                    $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + res[0] + '&SchoolId='+ res[1] );
+                    $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + res[1] + '&SchoolId='+ res[2] );
                     $("#SuccesLable").text("Subject Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -129,6 +139,20 @@
                     //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
 
+
+                }
+
+                else if (result == "fill") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Select Every Field");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+
+                else {
+                    window.location.href = "/Home/Logout";
 
                 }
              

@@ -13,5 +13,11 @@ namespace GDWEBSolution.Models.Report
         public string StudentId { get; set; }
         public long Seq { get; set; }
         public string StudentName { get; set; }
+        public string ShortName { get; set; }
+        public string GradeId { get; set; }
+        public string ClassId { get; set; }
+        public string Eveluation { get; set; }
+        public string GradeName { get; set; }
+        public string ClassName { get; set; }
     }
 }

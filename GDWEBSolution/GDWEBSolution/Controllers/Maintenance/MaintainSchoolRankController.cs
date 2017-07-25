@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,13 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainSchoolRank/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+
+        [UserFilter(Function_Id = "MaSRa")]
         public ActionResult Index()
         {
+         
             try
             {
                 var Group = Connection.GDgetAllSchoolRank("Y");
@@ -65,18 +71,21 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+          [UserFilter(Function_Id = "MaSRa")]
         public ActionResult Create()
         {
+          
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+          [UserFilter(Function_Id = "MaSRa")]
         [HttpPost]
         public ActionResult Create(tblSchoolRank Model)
         {
+           
+            UserId = USession.User_Id;
             try
             {
 
@@ -115,9 +124,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+          [UserFilter(Function_Id = "MaSRa")]
         public ActionResult Edit(int Code)
         {
+            
             try
             {
                 SchoolRankModel TModel = new SchoolRankModel();
@@ -140,10 +150,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+          [UserFilter(Function_Id = "MaSRa")]
         [HttpPost]
         public ActionResult Edit(SchoolRankModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
 
@@ -170,9 +182,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+          [UserFilter(Function_Id = "MaSRa")]
         public ActionResult Delete(int Code)
         {
+             
             try{
             SchoolRankModel TModel = new SchoolRankModel();
             TModel.SchoolRankId = Code;
@@ -188,10 +201,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+          [UserFilter(Function_Id = "MaSRa")]
         [HttpPost]
         public ActionResult Delete(SchoolRankModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteSchoolRank("N", Model.SchoolRankId, UserId);

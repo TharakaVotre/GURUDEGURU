@@ -15,13 +15,7 @@
                 <table id="zctb" class="display table table-bordered table-hover" >
                     <thead>
                         <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.SchoolId)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.SchoolName)
-                            </th>
-                            <th>
+                             <th>
                                 @Html.DisplayNameFor(model => model.StudentId)
                             </th>
                            
@@ -29,6 +23,13 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.StudentName)
                             </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SchoolId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SchoolName)
+                            </th>
+                           
                                
                                <th>
                                 @Html.DisplayNameFor(model => model.GradeId)
@@ -49,12 +50,6 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.SchoolId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SchoolName)
-                                    </td>
-                                    <td>
                                         @Html.DisplayFor(modelItem => item.StudentId)
                                     </td>
                                   
@@ -64,6 +59,14 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.StudentName)
                                     </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SchoolId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SchoolName)
+                                    </td>
+                                    
                                     <td>
                                         @Html.DisplayFor(modelItem => item.GradeId)
                                     </td>

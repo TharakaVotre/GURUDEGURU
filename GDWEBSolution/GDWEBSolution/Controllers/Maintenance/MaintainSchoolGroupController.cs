@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,13 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainSchoolGroup/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+
+        [UserFilter(Function_Id = "MaSGr")]
         public ActionResult Index()
         {
+             
             try{
             var Group = Connection.GDgetAllSchoolGroup("Y");
             List<GDgetAllSchoolGroup_Result> Grouplist = Group.ToList();
@@ -63,18 +69,21 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+         [UserFilter(Function_Id = "MaSGr")]
         public ActionResult Create()
         {
+           
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+         [UserFilter(Function_Id = "MaSGr")]
         [HttpPost]
         public ActionResult Create(tblSchoolGroup Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
 
@@ -113,9 +122,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaSGr")]
         public ActionResult Edit(long Code)
         {
+           
             try{
             SchoolGroupModel TModel = new SchoolGroupModel();
 
@@ -137,10 +147,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaSGr")]
         [HttpPost]
         public ActionResult Edit(SchoolGroupModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
 
@@ -167,9 +179,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaSGr")]
         public ActionResult Delete(long Code)
         {
+            
             try{
             SchoolGroupModel TModel = new SchoolGroupModel();
             TModel.GroupId = Code;
@@ -185,10 +198,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaSGr")]
         [HttpPost]
         public ActionResult Delete(SchoolGroupModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteSchoolGroup("N", Model.GroupId, UserId);

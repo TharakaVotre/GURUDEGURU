@@ -9,6 +9,7 @@ using Errorlog;
 using GDWEBSolution.Util;
 using System.Transactions;
 using GDWEBSolution.Models.User;
+using GDWEBSolution.Filters;
 /*
  * Created Date : 2017/2/23
  * Author : Tharaka Madusanka
@@ -28,9 +29,10 @@ namespace GDWEBSolution.Controllers.Teacher
 
         TeacherModel tcm = new TeacherModel();
 
+        [UserFilter(Function_Id = "TINDX")]
         public ActionResult Index()
         {          
-            var TeacherList = Connection.SMGTgetAllTeachers("%","%","Y").ToList();
+            var TeacherList = Connection.SMGTgetAllTeachers(_session.School_Id,"%","Y").ToList();
             List<TeacherModel> tcmlist = TeacherList.Select(x => new TeacherModel
             {
                 TeacherCategoryId = x.TeacherCategoryId,
@@ -61,13 +63,13 @@ namespace GDWEBSolution.Controllers.Teacher
 
             return View(tcmlist);
         }
-
+        [UserFilter(Function_Id = "TCLAS")]
         public ActionResult Class()
         {
             ClassTeacherModel Model = new ClassTeacherModel();
             SubjctViewBags();
-            var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == "CKC").FirstOrDefault();
-            var STQlist = Connection.SMGT_getSchoolClassTeachersList("CKC", AY.AccadamicYear).ToList();
+            var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == _session.School_Id).FirstOrDefault();
+            var STQlist = Connection.SMGT_getSchoolClassTeachersList(_session.School_Id, AY.AccadamicYear).ToList();
 
             Model.ClassTeacherList = STQlist.Select(x => new ClassTeacherModel
             {
@@ -110,6 +112,7 @@ namespace GDWEBSolution.Controllers.Teacher
            else{return "NO";}
        }
 
+        [UserFilter(Function_Id = "TCRET")]
         public ActionResult Create()
         {
             CQExCViewBags();
@@ -133,20 +136,31 @@ namespace GDWEBSolution.Controllers.Teacher
 
             TeacherDrpList();
 
-            List<tblExtraCurricularActivity> Exlist = Connection.tblExtraCurricularActivities.ToList();
+            List<SMGT_getSchoolExActivities_Result> Exlist = Connection.SMGT_getSchoolExActivities(_session.School_Id).ToList();
             ViewBag.ExtraActivityList = new SelectList(Exlist, "ActivityCode", "ActivityName");
         }
 
         private void TeacherDrpList()
         {
-            List<tblTeacher> Tlist = Connection.tblTeachers.ToList(); //Not By school
-            ViewBag.TeacherList = new SelectList(Tlist, "TeacherId", "Name");
-            ViewBag.TeacherListEx = new SelectList(Tlist, "TeacherId", "Name");
+            var SchoolTeacher = Connection.SMGTgetSchoolTeacher(_session.School_Id).ToList();//Need to Pass a Session Schoolid
+            List<TeacherModel> SchooTList = SchoolTeacher.Select(x => new TeacherModel
+            {
+                TeacherId = x.TeacherId,
+                Name = x.Name,
+                UserId = x.UserId,
+                IsActive = x.IsActive
+
+            }).ToList();
+
+            ViewBag.SchoolTeacher = new SelectList(SchooTList, "TeacherId", "Name");
+          //List<tblTeacher> Tlist = Connection.tblTeachers.ToList(); //Not By school
+            ViewBag.TeacherList = new SelectList(SchoolTeacher, "TeacherId", "Name");
+            ViewBag.TeacherListEx = new SelectList(SchoolTeacher, "TeacherId", "Name");
         }
 
         private void SubjctViewBags()
         {
-            var SchoolTeacher = Connection.SMGTgetSchoolTeacher("CKC").ToList();//Need to Pass a Session Schoolid
+            var SchoolTeacher = Connection.SMGTgetSchoolTeacher(_session.School_Id).ToList();//Need to Pass a Session Schoolid
             List<TeacherModel> SchooTList = SchoolTeacher.Select(x => new TeacherModel
             {
                 TeacherId = x.TeacherId,
@@ -158,7 +172,7 @@ namespace GDWEBSolution.Controllers.Teacher
 
             ViewBag.SchoolTeacher = new SelectList(SchooTList, "TeacherId", "Name");
 
-            var SchoolGrade = Connection.SMGTgetSchoolGrade("CKC").ToList();//Need to Pass a Session Schoolid
+            var SchoolGrade = Connection.SMGTgetSchoolGrade(_session.School_Id).ToList();//Need to Pass a Session Schoolid
             List<tblGrade> SchoolGradeList = SchoolGrade.Select(x => new tblGrade
             {
                 GradeId = x.GradeId,
@@ -269,11 +283,10 @@ namespace GDWEBSolution.Controllers.Teacher
 
         public ActionResult ShowGradeClasses(string GradeId)
         {
-            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && 
-                                         r.GradeId == GradeId).ToList();
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == _session.School_Id && r.GradeId == GradeId).ToList();
             ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
 
-            var GradeSubject = Connection.SMGTgetGradeSubjects(GradeId).ToList();//Need to Pass a Session Schoolid
+            var GradeSubject = Connection.SMGTgetGradeSubjects(GradeId, _session.School_Id).ToList();
             List<tblSubject> GradeSubjectList = GradeSubject.Select(x => new tblSubject
             {
                 SubjectId = x.SubjectId,
@@ -288,8 +301,7 @@ namespace GDWEBSolution.Controllers.Teacher
 
         public ActionResult ShowGradeClassesForTC(string GradeId)
         {
-            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && 
-                                         r.GradeId == GradeId).ToList();
+            List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == _session.School_Id && r.GradeId == GradeId).ToList();
             ViewBag.GradeClassse = new SelectList(ClassesList, "ClassId", "ClassName");
 
             return PartialView("GradeClasses");
@@ -307,7 +319,7 @@ namespace GDWEBSolution.Controllers.Teacher
                     {             
                         tblTeacher Newt = new tblTeacher();
 
-                        Newt.CreatedBy = "ADMIN";
+                        Newt.CreatedBy = _session.User_Id;
                         Newt.CreatedDate = DateTime.Now;
                         Newt.TeacherCategoryId = 0;
                         Newt.TeacherCategoryId = Model.TeacherCategoryId;
@@ -335,7 +347,7 @@ namespace GDWEBSolution.Controllers.Teacher
                         ts.SchoolId = Model.SchoolID;
                         ts.TeacherCategoryId = TID.TeacherCategoryId;
                         ts.TeacherId = TID.TeacherId;
-                        ts.CreatedBy = "ADMIN";
+                        ts.CreatedBy = _session.User_Id;
                         ts.CreatedDate = DateTime.Now;
                         ts.IsActive = "Y";
 
@@ -344,7 +356,7 @@ namespace GDWEBSolution.Controllers.Teacher
                         string pass = Encrypt_Decrypt.Encrypt(Model.Password, Password);
 
                         user.PersonName = Model.Name;
-                        user.CreatedBy = "ADMIN";
+                        user.CreatedBy = _session.User_Id;
                         user.CreatedDate = DateTime.Now;
                         user.IsActive = "Y";
                         user.JobDescription = "School Teacher";
@@ -398,11 +410,11 @@ namespace GDWEBSolution.Controllers.Teacher
                 if (count == 0)
                 {
                     tblTeacherQualification NewQ = new tblTeacherQualification();
-                    NewQ.CreatedBy = "ADMIN";
+                    NewQ.CreatedBy = _session.User_Id;
                     NewQ.CreatedDate = DateTime.Now;
                     NewQ.IsActive = "Y";
                     NewQ.QualificationId = Model.QualificationId;
-                    NewQ.SchoolId = "CKC";
+                    NewQ.SchoolId = _session.School_Id;
                     NewQ.TeacherId = Model.Teacher_Id;
 
                     Connection.tblTeacherQualifications.Add(NewQ);
@@ -439,11 +451,11 @@ namespace GDWEBSolution.Controllers.Teacher
 
                     tblTeacherExtraCurricularActivity NewQ = new tblTeacherExtraCurricularActivity();
 
-                    NewQ.CreatedBy = "ADMIN";
+                    NewQ.CreatedBy = _session.User_Id;
                     NewQ.CreatedDate = DateTime.Now;
                     NewQ.IsActive = "Y";
                     NewQ.ActivityCode = Model.ActivityCode;
-                    NewQ.SchoolId = "CKC";
+                    NewQ.SchoolId = _session.School_Id;
                     NewQ.TeacherId = Model.TeacherID;
 
                     Connection.tblTeacherExtraCurricularActivities.Add(NewQ);
@@ -475,13 +487,14 @@ namespace GDWEBSolution.Controllers.Teacher
                                         u.GradeId == Model.GradeId && u.SubjectId == Model.SubjectId);
                 if (count == 0)
                 {
+                    var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == _session.School_Id).FirstOrDefault();
                     tblTeacherSubject NewQ = new tblTeacherSubject();
 
-                    NewQ.CreatedBy = "ADMIN";
+                    NewQ.CreatedBy = _session.User_Id;
                     NewQ.CreatedDate = DateTime.Now;
                     NewQ.IsActive = "Y";
-                    NewQ.AcedemicYear = "2017";
-                    NewQ.SchoolIds = "CKC";
+                    NewQ.AcedemicYear = AY.AccadamicYear;
+                    NewQ.SchoolIds = _session.School_Id;
                     NewQ.GradeId = Model.GradeId;
                     NewQ.ClassId = Model.ClassId;
                     NewQ.TeacherId = Model.Teacher_ID;
@@ -511,14 +524,12 @@ namespace GDWEBSolution.Controllers.Teacher
             try
             {
                 string result = "Error";
-                var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == "CKC").FirstOrDefault();
+                var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == _session.School_Id).FirstOrDefault();
                // List<tblClass> ClassesList = Connection.tblClasses.Where(r => r.SchoolId == "CKC" && r.GradeId == GradeId).ToList();
-                int countt = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId && 
-                             u.AccedamicYear == AY.AccadamicYear);
+                int countt = Connection.tblClassTeachers.Count(u => u.TeacherId == Model.TeacherId && u.AccedamicYear == AY.AccadamicYear && u.IsActive == "Y");
 
-                int Ccount = Connection.tblClassTeachers.Count(u => u.ClassId == Model.ClassId 
-                             && u.AccedamicYear == AY.AccadamicYear && u.GradeId == Model.GradeId 
-                             && u.SchoolId == "CKC" );
+                int Ccount = Connection.tblClassTeachers.Count(u => u.ClassId == Model.ClassId
+                    && u.AccedamicYear == AY.AccadamicYear && u.GradeId == Model.GradeId && u.SchoolId == _session.School_Id && u.IsActive == "Y");
 
                 if (countt != 0)
                 {
@@ -533,7 +544,7 @@ namespace GDWEBSolution.Controllers.Teacher
                 {
                     tblClassTeacher NewQ = new tblClassTeacher();
 
-                    NewQ.CreatedBy = "ADMIN";
+                    NewQ.CreatedBy = _session.User_Id;
                     NewQ.CreatedDate = DateTime.Now;
                     NewQ.IsActive = "Y";
                     NewQ.AccedamicYear = AY.AccadamicYear;
@@ -558,8 +569,8 @@ namespace GDWEBSolution.Controllers.Teacher
 
         public ActionResult ShowClassTeachers()
         {
-            var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == "CKC").FirstOrDefault();
-            var STQlist = Connection.SMGT_getSchoolClassTeachersList("CKC",AY.AccadamicYear).ToList();
+            var AY = Connection.tblAccadamicYears.Where(u => u.SchoolId == _session.School_Id).FirstOrDefault();
+            var STQlist = Connection.SMGT_getSchoolClassTeachersList(_session.School_Id,AY.AccadamicYear).ToList();
 
             List<ClassTeacherModel> List = STQlist.Select(x => new ClassTeacherModel
             {
@@ -725,6 +736,7 @@ namespace GDWEBSolution.Controllers.Teacher
             return PartialView("EditTeacherDetailsView",TModel);
         }
 
+        [UserFilter(Function_Id = "TEDIT")]
         public ActionResult EditTeacher(long TeacherId,string Name)
         {
             ViewBag.EditTeacherID = TeacherId;
@@ -737,10 +749,9 @@ namespace GDWEBSolution.Controllers.Teacher
         [HttpPost]
         public JsonResult EditTeacherDetails(TeacherModel Model)
         {
+            string result = "Error";
             try
             {
-                string result = "Error";
-
                 tblTeacher Newt = Connection.tblTeachers.SingleOrDefault(x => x.TeacherId == Model.TeacherId);
                 Newt.ModifiedBy = "ADMIN";
                 Newt.ModifiedDate = DateTime.Now;
@@ -764,27 +775,13 @@ namespace GDWEBSolution.Controllers.Teacher
 
                 Connection.SaveChanges();
 
-                result = Model.TeacherId.ToString();
-
-                return Json(result, JsonRequestBehavior.AllowGet);
+                result = Model.TeacherId.ToString(); 
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                Errorlog.ErrorManager.LogError("Teacher Controller @EditTeacherDetails", dbEx);
             }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult DeleteTeacher(long TeacherId)
@@ -823,7 +820,7 @@ namespace GDWEBSolution.Controllers.Teacher
         }
 
         [HttpPost]
-        public ActionResult DeleteClassTeacher(ClassTeacherModel Model)
+        public JsonResult DeleteClassTeacher(ClassTeacherModel Model)
         {
             try
             {
@@ -837,11 +834,11 @@ namespace GDWEBSolution.Controllers.Teacher
                 TCtable.IsActive = "D";
                 Connection.SaveChanges();
 
-                return RedirectToAction("Class");
+                return Json("Sucses", JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return View();
+                return Json("Error", JsonRequestBehavior.AllowGet);
             }
         }
 

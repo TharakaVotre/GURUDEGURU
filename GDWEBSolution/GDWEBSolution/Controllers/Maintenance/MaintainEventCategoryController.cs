@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +16,13 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainEventCategory/
 
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        //
+        UserSession USession = new UserSession();
         // GET: /TeacherCategory/
-        string UserId = "ADMIN";
+        string UserId = null;
+         [UserFilter(Function_Id = "MaECa")]
         public ActionResult Index()
         {
+            
             try
             {
                 var Category = Connection.GDgetAllEventCategory("Y");
@@ -54,14 +58,14 @@ namespace GDWEBSolution.Controllers
 
         //
         // GET: /TeacherCategory/Details/5
-
+         [UserFilter(Function_Id = "MaECa")]
         public ActionResult Details(long id)
         {
             return View();
         }
 
         //
-
+         
         public ActionResult ShowAddEventCategory(long id)
         {
             
@@ -69,21 +73,23 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+         [UserFilter(Function_Id = "MaECa")]
         public ActionResult Create()
         {
-           
+          
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+         [UserFilter(Function_Id = "MaECa")]
         [HttpPost]
         public ActionResult Create(tblEventcategory Model)
         {
+           
             try
             {
+                UserId = USession.User_Id;
                 string Message = Request.Form["Message"];
                 string Approve = Request.Form["Approval"];
                 Connection.GDsetEventCategory(Model.EventCategoryDesc, Message, Approve, UserId, "Y");
@@ -93,27 +99,14 @@ namespace GDWEBSolution.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception ex)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        Errorlog.ErrorManager.LogError(dbEx);
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                Errorlog.ErrorManager.LogError(ex);
+                return View();
             }
         }
 
-
+         
         public ActionResult ShowEditEventCategory(long CategoryId)
         {
            
@@ -121,9 +114,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaECa")]
         public ActionResult Edit(long CategoryId)
         {
+           
             try
             {
                 EventCategoryModel TModel = new EventCategoryModel();
@@ -148,10 +142,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+         [UserFilter(Function_Id = "MaECa")]
         [HttpPost]
         public ActionResult Edit(EventCategoryModel Model)
         {
+           
+            UserId = USession.User_Id;
             try
             {
 
@@ -170,7 +166,7 @@ namespace GDWEBSolution.Controllers
             }
         }
 
-
+       
         public ActionResult ShowDeleteCategoryModel(long CategoryId)
         {
             
@@ -178,9 +174,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaECa")]
         public ActionResult Delete(long CategoryId)
         {
+           
             try
             {
                 EventCategoryModel TModel = new EventCategoryModel();
@@ -197,12 +194,14 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+         [UserFilter(Function_Id = "MaECa")]
         [HttpPost]
         public ActionResult Delete(EventCategoryModel Model)
         {
+            
             try
             {
+                UserId = USession.User_Id;
                 Connection.GDdeleteEventCategory("N", Model.EventCategoryId, UserId);
                 Connection.SaveChanges();
 
@@ -217,5 +216,7 @@ namespace GDWEBSolution.Controllers
                
             }
         }
+
+       
     }
 }

@@ -11,7 +11,7 @@
 
         @Html.LabelFor(m => m.SchoolNamel, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-4">
-            @Html.DropDownListFor(model => model.SchoolId3, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadEXactivsess(this.value)" })
+            @Html.DropDownListFor(model => model.SchoolId3, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @onchange = "loadEXactivsesse(this.value)" })
 
             @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
 
@@ -81,13 +81,16 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits") {
+              //  if (result != "Exception" && result != "Exits" && result != "fill") {
+
+                    if (result.split('!')[0] == "sessioncheck") {
+               
                     debugger
                     //window.location.href = "/Teacher/Create";
                
-
+                    var res = result.split("!");
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showclasses').load('/School/ShowSchooClasses?SchoolIdGradeId=' + result);
+                    $('#showclasses').load('/School/ShowSchooClasses?SchoolIdGradeId=' + res[1] + "!" + res[2]);
                     $("#SuccesLable").text("Class Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -107,7 +110,18 @@
 
 
                 }
+
+                else if (result == "fill") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Please Fill Mandetory fields Properly");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
                 else {
+
+                    window.location.href = "/Home/Logout";
 
                 }
 
@@ -153,6 +167,43 @@
         }
     });
     }
+
+
+    var loadEXactivsesse = function (value) {
+
+
+        $('#showclasses').load('/School/ShowSchooClassesnGrades?SchoolId=' + value);
+
+        var selectedItem = value;
+
+        var ddlStates = $("#GradeId");
+        ddlStates.append($('<option></option>').val("").html(""));
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("Studentgrade"))",
+            data: { "SchoolId": selectedItem },
+            success: function (data) {
+                ddlStates.html('');
+                ddlStates.append($('<option></option>').val("").html(""));
+                $.each(data, function (ActivityCode, option) {
+                    ddlStates.append($('<option></option>').val(option.GradeId).html(option.GradeName));
+                });
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+
+            }
+        });
+
+          
+
+
+
+       }
 
 
 

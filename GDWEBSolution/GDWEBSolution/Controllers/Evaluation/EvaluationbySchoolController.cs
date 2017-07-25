@@ -2,6 +2,7 @@
 using GDWEBSolution.Models.Evaluation;
 using GDWEBSolution.Models.Schools;
 using GDWEBSolution.Models.Student;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,41 @@ namespace GDWEBSolution.Controllers.Evaluation
     public class EvaluationbySchoolController : Controller
     {
 
+
         String SessionSchool = "Scl15241";
         //
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
+
+        UserSession USession = new UserSession();
+
+        private void Authentication(string ControlerName)
+        {
+
+            if (USession.User_Id != "")
+            {
+                string CategoryId = USession.User_Category;
+                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
+
+                if (AccessControl == null)
+                {
+                    //RedirectToAction("~/Prohibited");
+                    Response.Redirect("~/Prohibited");
+                }
+
+            }
+            else
+            {
+                // RedirectToAction();
+                Response.Redirect("~/Home/Login");
+            }
+        }
+
+
         // GET: /EvaluationbySchool/
 
         public ActionResult Index()
         {
+            Authentication("EVAF");
             List<tblSchool> Schoollist = Connection.tblSchools.Where(X=>X.IsActive=="Y").ToList();
             ViewBag.SchoolIdList = new SelectList(Schoollist, "SchoolId", "SchoolName");
             List<tblGrade> Gradelist = Connection.tblGrades.Where(X => X.IsActive == "Y").ToList();
@@ -39,6 +68,7 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         public ActionResult Details(int id)
         {
+            Authentication("EVAF");
             return View();
         }
 
@@ -47,7 +77,8 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         public ActionResult Create()
         {
-            ViewBag.SchoolId1 = SessionSchool;
+            Authentication("EVAF");
+            ViewBag.SchoolId1 = USession.School_Id;
             dropdowns();
 
 
@@ -57,13 +88,13 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         private void dropdowns()
         {
-            List<tblEvaluationHeader> evallist = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" &&X.SchoolId==SessionSchool).ToList();
+            List<tblEvaluationHeader> evallist = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" &&X.SchoolId==USession.School_Id).ToList();
 
             ViewBag.EvaluationDrpDown = new SelectList(evallist, "EvaluationNo", "EvaluationDescription");
 
 
 
-            String SchoolId = SessionSchool;
+            String SchoolId = USession.School_Id;
 
             List<tblStudent> Studentlist = Connection.tblStudents.Where(X => X.IsActive == "Y").ToList();
             ViewBag.StudentIdList = new SelectList(Studentlist, "", "");
@@ -207,6 +238,7 @@ namespace GDWEBSolution.Controllers.Evaluation
         [AllowAnonymous]
         public JsonResult AddSchoolEvaluations(EvaluationModel Model)
         {
+            Authentication("EVAF");
             try
             {
                 string result = "Error";
@@ -217,8 +249,8 @@ namespace GDWEBSolution.Controllers.Evaluation
 
                     tblEvaluationHeader newscg = new tblEvaluationHeader();
                     newscg.AccedamicYear = DateTime.Now.Year.ToString();
-                    newscg.CreatedBy = "User1";
-                    newscg.SchoolId = SessionSchool;
+                    newscg.CreatedBy = USession.User_Id;
+                    newscg.SchoolId = USession.School_Id;
                     newscg.EvaluationDescription = Model.EvaluationDescription;
                     newscg.isActive = "Y";
                     newscg.CreatedDate = DateTime.Now;
@@ -229,7 +261,7 @@ namespace GDWEBSolution.Controllers.Evaluation
                     Connection.tblEvaluationHeaders.Add(newscg);
                     Connection.SaveChanges();
 
-                    result = SessionSchool;
+                    result = USession.School_Id;
 
                  //   ViewBag.SchoolId = Model.SchoolId;
 
@@ -252,7 +284,7 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         public ActionResult ShowEvaluation(string SchoolId)
         {
-          
+            Authentication("EVAF");
 
             var evallist = Connection.SMGTgetAllEvaluationHdetail(SchoolId).ToList();
 
@@ -287,12 +319,12 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         public ActionResult ShowEvaluationI()
         {
-            string SchoolId = SessionSchool;
+            string SchoolId = USession.School_Id;
 
             var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
             var evallist = Connection.SMGTgetAllEvaluationHdetail(SchoolId).ToList();
 
-            var tableevaluation = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" && X.SchoolId == SessionSchool);
+            var tableevaluation = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" && X.SchoolId == USession.School_Id);
 
 
 
@@ -326,18 +358,19 @@ namespace GDWEBSolution.Controllers.Evaluation
         [HttpPost]
         public ActionResult Create(EvaluationModel Model)
         {
+            Authentication("EVAF");
             try
             {
                 tblEvaluationHeader tbl = new tblEvaluationHeader();
 
                 tbl.AccedamicYear = DateTime.Now.Year.ToString();
-                tbl.CreatedBy = "User1";
+                tbl.CreatedBy = USession.User_Id;
                 tbl.CreatedDate = DateTime.Today;
                 tbl.EvaluationDescription = Model.EvaluationDescription;
                 tbl.EvaluationType = Model.EvaluationType;
                 tbl.isActive = "Y";
                 tbl.TestPaperFee = Model.TestPaperFee;
-                tbl.SchoolId = SessionSchool;
+                tbl.SchoolId = USession.School_Id;
                 Connection.tblEvaluationHeaders.Add(tbl);
                
                 Connection.SaveChanges();
@@ -358,6 +391,7 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         public ActionResult Addevaluationdataforclass(EvaluationModel Model, string[] chooseRecipient)
         {
+            Authentication("EVAF");
             string b = "";
             string c = "";
             
@@ -436,7 +470,7 @@ namespace GDWEBSolution.Controllers.Evaluation
                             te.ScheduledDate = Model.ScheduledDate;
                             //  te.ScheduledTimeStart = Model.ScheduledTimeStart;
 
-                            te.SchoolId = SessionSchool;
+                            te.SchoolId = USession.School_Id;
                             te.IsActive = "Y";
                             Connection.tblEvaluationDetails.Add(te);
                             Connection.SaveChanges();
@@ -547,7 +581,7 @@ namespace GDWEBSolution.Controllers.Evaluation
                             te.ScheduledTimeStart = TimeSpan.Parse(b);
                             te.ScheduledTimeEnd = TimeSpan.Parse(c); ;
                             te.Class = classname;
-                            te.CreatedBy = "User1";
+                            te.CreatedBy = USession.User_Id;
                             te.CreatedDate = DateTime.Now;
                             te.Grade = Model.Grade;
                             te.EvaluationNo = Model.EvaluationNo;
@@ -555,7 +589,7 @@ namespace GDWEBSolution.Controllers.Evaluation
                             te.ScheduledDate = Model.ScheduledDate;
                             //  te.ScheduledTimeStart = Model.ScheduledTimeStart;
 
-                            te.SchoolId = SessionSchool;
+                            te.SchoolId = USession.School_Id;
                             te.IsActive = "Y";
                             Connection.tblEvaluationDetails.Add(te);
                             Connection.SaveChanges();
@@ -591,6 +625,7 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         public ActionResult Edit(int id)
         {
+            Authentication("EVAF");
             return View();
         }
 
@@ -600,6 +635,7 @@ namespace GDWEBSolution.Controllers.Evaluation
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            Authentication("EVAF");
             try
             {
                 // TODO: Add update logic here
@@ -693,10 +729,10 @@ namespace GDWEBSolution.Controllers.Evaluation
 
 
 
-          
 
 
-            List<tblEvaluationHeader> Scwwwllist = Connection.tblEvaluationHeaders.Where(X => X.isActive== "Y" && X.SchoolId==SessionSchool).ToList();
+
+            List<tblEvaluationHeader> Scwwwllist = Connection.tblEvaluationHeaders.Where(X => X.isActive == "Y" && X.SchoolId == USession.School_Id).ToList();
             //int id = 0;
             //bool isValid = Int32.TryParse(SchoolId, out id);
 
@@ -737,7 +773,7 @@ namespace GDWEBSolution.Controllers.Evaluation
         {
             EvaluationModel Model = new EvaluationModel();
             Model.EvaluationNo = long.Parse(EvaluationNo);
-            Model.SchoolId = SessionSchool;
+            Model.SchoolId = USession.School_Id;
             
 
             return PartialView("DeleteEvaluationHeader", Model);
@@ -749,7 +785,7 @@ namespace GDWEBSolution.Controllers.Evaluation
             EvaluationModel Model = new EvaluationModel();
             Model.EvaluationDetailSeqNo = long.Parse(EvaluationDetailSeqNo);
             Model.EvaluationNo = long.Parse(EvaluationNo);
-            Model.SchoolId = SessionSchool;
+            Model.SchoolId = USession.School_Id;
 
             return PartialView("DeleteEvaluationDetail", Model);
         }
@@ -790,7 +826,7 @@ namespace GDWEBSolution.Controllers.Evaluation
                 string evalNo = Model.EvaluationNo.ToString();
                 string evaldseq = Model.EvaluationDetailSeqNo.ToString();
 
-                Connection.SMGTModifyEvaluationDetailStatus(SessionSchool, evaldseq);
+                Connection.SMGTModifyEvaluationDetailStatus(USession.School_Id, evaldseq);
 
                 //  Connection.tblHouses.
                 Connection.SaveChanges();
@@ -809,7 +845,8 @@ namespace GDWEBSolution.Controllers.Evaluation
 
         public ActionResult ShowEvaluationDetail(string EvluationNo)
         {
-            string SchoolId = SessionSchool;
+            Authentication("EVAF");
+            string SchoolId = USession.School_Id;
 
 
          //   var evallist = Connection.SMGTgetAllEvaluationHdetail(SchoolId).ToList();

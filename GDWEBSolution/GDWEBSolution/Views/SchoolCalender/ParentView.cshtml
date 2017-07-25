@@ -161,14 +161,14 @@
         <!-- Zero Configuration Table -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                @using (Html.BeginForm("Index", "SchoolCalender", FormMethod.Post))
+                @using (Html.BeginForm("ParentView", "SchoolCalender", FormMethod.Get))
                 {
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="row">
-                                <lable class="col-sm-2 control-label">Academic Year</lable>
+                                <label class="col-sm-2 control-label">Academic Year</label>
                                 <div class="col-sm-2">
-                                    @Html.TextBox("AcademicYear")
+                                    @Html.TextBox("AcademicYear", (string)ViewBag.AcademicYear, new { @class = "form-control", @type = "number" })
 
 
                                 </div>
@@ -195,9 +195,9 @@
 
                     }
                     <h3>
-                        <a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(1,"janshow","djanshow")><b>January</b> <span id="janshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a>
+                        <button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(1,"janshow","djanshow")><b>January</b> <span id="janshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></button>
 
-                    </h3>
+</h3>
                     <div id="djanshow" style="padding-left:50px">
                         <ul>@TblDataDisplay(years, Janu, Jannextmonth, monthFirstDay, "H")</ul>
 
@@ -209,9 +209,9 @@
 
                     @TblDataDisplay(years, Janu, Jannextmonth, monthFirstDay, "B")
 
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(1,"janshow","djanshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(1,"janshow","djanshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></button>
 
-                </div>
+</div>
 
                 <div>
                     @{
@@ -221,7 +221,7 @@
                         string FEbmonthFirstDay = "02/01/";
 
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(2,"febshow","dfebshow")><b>February</b><span id="febshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(2,"febshow","dfebshow")><b>February</b><span id="febshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></button></h3>
                     <div id="dfebshow" style="padding-left:50px">
                         <ul>@TblDataDisplay(years, Feb, Febnextmonth, FEbmonthFirstDay, "H")</ul>
 
@@ -233,9 +233,9 @@
 
 
                     @TblDataDisplay(years, Feb, Febnextmonth, FEbmonthFirstDay, "B")
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(2,"febshow","dfebshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(2,"febshow","dfebshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></button>
 
-                </div>
+</div>
                 <div>
                     @{
 
@@ -244,7 +244,7 @@
                         string MarbmonthFirstDay = "03/01/";
 
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(3,"marshow","dmarshow")><b>March</b><span id="marshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(3,"marshow","dmarshow")><b>March</b><span id="marshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></button></h3>
                     <div id="dmarshow" style="padding-left:50px">
                         <ul>@TblDataDisplay(years, Mar, Marnextmonth, MarbmonthFirstDay, "H")</ul>
 
@@ -254,9 +254,9 @@
                 <div id="3" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
 
                     @TblDataDisplay(years, Mar, Marnextmonth, MarbmonthFirstDay, "B")
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(3,"marshow","dmarshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(3,"marshow","dmarshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></button>
 
-                </div>
+</div>
                 <div>
                     @{
 
@@ -264,7 +264,7 @@
                         string Aprnextmonth = "05/01/";
                         string ApimonthFirstDay = "04/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(4,"apishow","dapishow")><b>April</b><span id="apishow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(4,"apishow","dapishow")><b>April</b><span id="apishow" class="glyphicon glyphicon-hand-down" style="float:right"></span></button></h3>
                     <div id="dapishow" style="padding-left:50px">
                         <ul>@TblDataDisplay(years, Apr, Aprnextmonth, ApimonthFirstDay, "H")</ul>
 
@@ -274,9 +274,9 @@
                 <div id="4" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
 
                     @TblDataDisplay(years, Apr, Aprnextmonth, ApimonthFirstDay, "B")
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(4,"apishow","dapishow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(4,"apishow","dapishow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></button>
 
-                </div>
+</div>
                 <div>
                     @{
 
@@ -284,7 +284,7 @@
                         string Maynextmonth = "06/01/";
                         string MaymonthFirstDay = "05/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(5,"mayshow","dmayshow")><b>May</b><span id="mayshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(5,"mayshow","dmayshow")><b>May</b><span id="mayshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></button></h3>
                     <div id="dmayshow" style="padding-left:50px">
                         <ul>@TblDataDisplay(years, May, Maynextmonth, MaymonthFirstDay, "H")</ul>
 
@@ -294,9 +294,9 @@
                 <div id="5" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
 
                     @TblDataDisplay(years, May, Maynextmonth, MaymonthFirstDay, "B")
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(5,"mayshow","dmayshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(5,"mayshow","dmayshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></button>
 
-                </div>
+</div>
                 <div>
                     @{
 
@@ -304,7 +304,7 @@
                         string junnextmonth = "07/01/";
                         string junmonthFirstDay = "06/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(6,"junshow","djunshow")><b>June</b><span id="junshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(6,"junshow","djunshow")><b>June</b><span id="junshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></button></h3>
                     <div id="djunshow" style="padding-left:50px">
                         <ul>@TblDataDisplay(years, jun, junnextmonth, junmonthFirstDay, "H")</ul>
 
@@ -314,9 +314,9 @@
                 <div id="6" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
 
                     @TblDataDisplay(years, jun, junnextmonth, junmonthFirstDay, "B")
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(6,"junshow","djunshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(6,"junshow","djunshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></button>
 
-                </div>
+</div>
                 <div>
                     @{
 
@@ -324,7 +324,7 @@
                         string juynextmonth = "08/01/";
                         string juymonthFirstDay = "07/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(7,"juyshow","djuyshow")><b>July</b><span id="juyshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(7,"juyshow","djuyshow")><b>July</b><span id="juyshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></button></h3>
                     <div id="djuyshow" style="padding-left:50px">
                         <ul>@TblDataDisplay(years, juy, juynextmonth, juymonthFirstDay, "H")</ul>
 
@@ -334,10 +334,10 @@
                 <div id="7" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
 
                     @TblDataDisplay(years, juy, juynextmonth, juymonthFirstDay, "B")
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(7,"juyshow","djuyshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(7,"juyshow","djuyshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></button>
 
 
-                </div>
+</div>
                 <div>
                     @{
 
@@ -345,7 +345,7 @@
                         string Augnextmonth = "09/01/";
                         string AugmonthFirstDay = "08/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(8,"augshow","daugshow")><b>August</b><span id="augshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(8,"augshow","daugshow")><b>August</b><span id="augshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></button></h3>
                     <div id="daugshow" style="padding-left:50px">
                         <ul>@TblDataDisplay(years, Aug, Augnextmonth, AugmonthFirstDay, "H")</ul>
 
@@ -355,9 +355,9 @@
                 <div id="8" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
 
                     @TblDataDisplay(years, Aug, Augnextmonth, AugmonthFirstDay, "B")
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(8,"augshow","daugshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(8,"augshow","daugshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></button>
 
-                </div>
+</div>
                 <div>
                     @{
 
@@ -365,7 +365,7 @@
                         string Sepnextmonth = "10/01/";
                         string SepmonthFirstDay = "09/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(9,"sepshow","dsepshow")><b>September</b><span id="sepshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(9,"sepshow","dsepshow")><b>September</b><span id="sepshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></button></h3>
                     <div id="dsepshow" style="padding-left:50px">
                         <ul>@TblDataDisplay(years, Sep, Sepnextmonth, SepmonthFirstDay, "H")</ul>
 
@@ -375,9 +375,9 @@
                 <div id="9" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
 
                     @TblDataDisplay(years, Sep, Sepnextmonth, SepmonthFirstDay, "B")
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(9,"sepshow","dsepshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(9,"sepshow","dsepshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></button>
 
-                </div>
+</div>
                 <div>
                     @{
 
@@ -385,7 +385,7 @@
                         string OCnextmonth = "11/01/";
                         string OCmonthFirstDay = "10/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(10,"ocshow","docshow")><b>October</b> <span id="ocshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(10,"ocshow","docshow")><b>October</b> <span id="ocshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></button></h3>
                     <div id="docshow" style="padding-left:50px">
                         <ul>@TblDataDisplay(years, OC, OCnextmonth, OCmonthFirstDay, "H")</ul>
 
@@ -395,7 +395,7 @@
                 <div id="10" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
 
                     @TblDataDisplay(years, OC, OCnextmonth, OCmonthFirstDay, "B")
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(10,"ocshow","docshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(10,"ocshow","docshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></button>
 
                 </div>
                 <div>
@@ -405,7 +405,7 @@
                         string Nonextmonth = "12/01/";
                         string NomonthFirstDay = "10/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(11,"noshow","dnoshow")><b>November</b> <span id="noshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" onclick=Show(11,"noshow","dnoshow")><b>November</b> <span id="noshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
                     <div id="dnoshow" style="padding-left:50px">
                         <ul>@TblDataDisplay(years, No, Nonextmonth, NomonthFirstDay, "H")</ul>
 
@@ -415,9 +415,9 @@
                 <div id="11" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
 
                     @TblDataDisplay(years, No, Nonextmonth, NomonthFirstDay, "B")
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(11,"noshow","dnoshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(11,"noshow","dnoshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
 
-                </div>
+</div>
                 <div>
                     @{
 
@@ -426,7 +426,7 @@
                         int nextyear = years + 1;
                         string DemonthFirstDay = "12/01/";
                     }
-                    <h3><a href="#" class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" id="de" onclick=Show(12,"deshow","ddeshow")><b>December</b><span id="deshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></a></h3>
+                    <h3><button class="nav-tabs-dropdown btn btn-block btn-primary" style=" font-size: 16px; padding: 10px" id="de" onclick=Show(12,"deshow","ddeshow")><b>December</b><span id="deshow" class="glyphicon glyphicon-hand-down" style="float:right"></span></button></h3>
                     <div id="ddeshow" style="padding-left:50px">
                         <ul>@TblDataDisplay(nextyear, De, Denextmonth, DemonthFirstDay, "H")</ul>
 
@@ -436,7 +436,7 @@
                 <div id="12" style="display: none; border: 1px solid gray; padding: 3px; border-radius: 4px">
 
                     @TblDataDisplay(nextyear, De, Denextmonth, DemonthFirstDay, "B")
-                    <a href="#" class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(12,"deshow","ddeshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></a>
+                    <button class="nav-tabs-dropdown btn btn-block btn-dark" onclick=Hide(12,"deshow","ddeshow")>Hide Detail <span class="glyphicon glyphicon-hand-up" style="float:right"></span></button>
 
 
                 </div>
@@ -459,45 +459,11 @@
     </div>
 </div>
 
-<style>
-    #AcademicYear {
-        border: 1px solid #e0e0e0;
-        padding: 5px 8px;
-        color: #616161;
-        background: #fff;
-        box-shadow: none !important;
-        display: block;
-        width: 80%;
-        height: 32px;
-        font-size: 14px;
-        line-height: 1.45;
-        border-radius: 2px;
-        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    }
-</style>
+
 
 @*<script src="~/Scripts/jquery-3.1.1.min.js"></script>*@
 <script>
-    var ShowView = function (years) {
-        var Url = "/SchoolCalender/ShowAddView?id=" + years;
-        $("#MyModelBody").load(Url, function () {
-            $("#myModal").modal("show");
-        })
-    }
-
-    var EditView = function (SeqNo) {
-        var Url = "/SchoolCalender/Edit?SeqNo=" + SeqNo;
-        $("#MyModelBody").load(Url, function () {
-            $("#myModal").modal("show");
-        })
-    }
-
-    var DeleteView = function (SeqNo) {
-        var Url = "/SchoolCalender/Delete?SeqNo=" + SeqNo;
-        $("#MyModelBody").load(Url, function () {
-            $("#myModal").modal("show");
-        })
-    }
+ 
 
     function Show(Id, sid, did) {
         var id = Id;

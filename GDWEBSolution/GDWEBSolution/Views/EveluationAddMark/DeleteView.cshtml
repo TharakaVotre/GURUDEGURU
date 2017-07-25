@@ -31,7 +31,14 @@
                 success: function () {
                     //$("#loaderDiv").hide();
                     $("#myModal").modal("hide");
-                    window.location.href = "/EveluationAddMark/EditStudentResult";
+                    var url_string = location.href;
+                    var url = new URL(url_string);
+                    var EditGradeId = url.searchParams.get("EditGradeId");
+                    var EditClassId = url.searchParams.get("EditClassId");
+                    var EditSubjectId = url.searchParams.get("EditSubjectId");
+                    var EditEveluation = url.searchParams.get("EditEveluation");
+
+                    window.location.href = "/EveluationAddMark/EditStudentResult?EditEveluation=" + EditEveluation + "&EditClassId=" + EditClassId + "&EditGradeId=" + EditGradeId + "&EditSubjectId=" + EditSubjectId;
 
                 }
 

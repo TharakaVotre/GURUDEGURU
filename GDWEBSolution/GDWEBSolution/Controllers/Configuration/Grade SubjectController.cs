@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Configuration;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,25 +17,20 @@ namespace GDWEBSolution.Controllers.Configuration
         //
         // GET: /Grade Subject/
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "Shirandie";
-        string SchoolId = "Scl118743";
+        UserSession USession = new UserSession();
+        string UserId = null;
+        string SchoolId = null;
         string Accyear = null;
         string gradeid = null;
+
+        [UserFilter(Function_Id = "GSub")]
         public ActionResult Index()
         {
+           
             ViewBag.Message = false;
-            if (Session["ErrorMessage"] != null) { 
-            string msg=Session["ErrorMessage"].ToString();
-            if (msg == "True")
-            {
-                ViewBag.Message = true;
-                Session["ErrorMessage"] = false;
-            }
-            else
-            {
-                ViewBag.Message = false;
-            }
-            }
+          
+           
+           
             Dropdownlistdata("","");
 
             var Group = Connection.GDgetAllSubject("Y");
@@ -64,30 +61,9 @@ namespace GDWEBSolution.Controllers.Configuration
         private void Dropdownlistdata(string AcademicYear,string GradeId)
         {
 
-            if (AcademicYear != null)
-            {
-                Session["Accyear"] = AcademicYear;
-                Accyear = AcademicYear;
-            }
-            else
-            {
-                if (Session["Accyear"]!=null)
-                {
-                    Accyear = Session["Accyear"].ToString();
-                }
-            }
-            if (GradeId != null)
-            {
-                Session["gradeId"] = GradeId;
-                gradeid = GradeId;
-            }
-            else
-            {
-                if (Session["Accyear"] != null)
-                {
-                    gradeid = Session["gradeId"].ToString();
-                }
-            }
+            
+           
+           
             List<SelectListItem> Optionallist = new List<SelectListItem>();
             Optionallist.Add(new SelectListItem
             {
@@ -101,13 +77,13 @@ namespace GDWEBSolution.Controllers.Configuration
             });
 
 
-
+            SchoolId = USession.School_Id;
             var Grade = Connection.GDgetSchoolGrade(SchoolId,"Y");
             List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
 
             var SubjectCategory = Connection.GDgetAllSubjectCategory("Y");
             List<GDgetAllSubjectCategory_Result> SubjectCategorylist = SubjectCategory.ToList();
-
+            tblAccadamicYear acc = Connection.tblAccadamicYears.SingleOrDefault(a => a.SchoolId == SchoolId);
             ViewBag.AcademicYear=("2017");
             if (AcademicYear != "")
             {
@@ -119,14 +95,16 @@ namespace GDWEBSolution.Controllers.Configuration
            
             ViewBag.Optional = new SelectList(Optionallist, "Value", "Text");
         }
-
+        [UserFilter(Function_Id = "GSub")]
          [HttpPost]
         public ActionResult Create(int[] SubjectCategoryId, int[] selectedNames, string GradeId, string[] optional, string AcademicYear)
         {
-           
+            
             
             try
             {
+                SchoolId = USession.School_Id;
+                UserId = USession.User_Id;
                 int valCounter = 0;
                 int valCounter1 = 0;
                 int lenth = 0;
@@ -149,12 +127,13 @@ namespace GDWEBSolution.Controllers.Configuration
                 }
                 if (lenth != valCounter || valCounter1 != lenth || GradeId == "" || AcademicYear == "")
                 {
-                    Session["ErrorMessage"] = true;
+                   
                     return RedirectToAction("Index");
                    
                 }
                 else
                 {
+                    
                     ViewBag.Message = false;
                     Dropdownlistdata(AcademicYear, GradeId);
                     int count = -1;
@@ -218,45 +197,52 @@ namespace GDWEBSolution.Controllers.Configuration
             }
         }
 
-         
+         [UserFilter(Function_Id = "GSub")]
          public ActionResult Detail(string AcademicYear,string GradeId)
          {
-            
-             Dropdownlistdata(AcademicYear, GradeId);
-
-             var Group = Connection.GDgetAllGradeSubject(Accyear,SchoolId, gradeid, "Y");
-             List<GDgetAllGradeSubject_Result> Grouplist = Group.ToList();
-
-             Grade_SubjectModel tcm = new Grade_SubjectModel();
-
-             List<Grade_SubjectModel> tcmlist = Grouplist.Select(x => new Grade_SubjectModel
+             try
              {
-                 AcademicYear = x.AcademicYear,
-                 GradeId = x.GradeId,
-                 GradeName = x.GradeName,
-                 SubjectId = x.SubjectId,
-                 ShortName = x.ShortName,
-                 SubjectName = x.SubjectName,
-                 SubjectCategoryId = x.SubjectCategoryId,
-                 SubjectCategoryName = x.SubjectCategoryName,
-                  Optional=x.Optional,
-                 CreatedBy = x.CreatedBy,
-                 CreatedDate = x.CreatedDate,
-                 IsActive = x.IsActive,
-                 ModifiedBy = x.ModifiedBy,
-                 ModifiedDate = x.ModifiedDate
+                 
+                 Dropdownlistdata(AcademicYear, GradeId);
+                 SchoolId = USession.School_Id;
+                 var Group = Connection.GDgetAllGradeSubject(AcademicYear, SchoolId, GradeId, "Y");
+                 List<GDgetAllGradeSubject_Result> Grouplist = Group.ToList();
 
-             }).ToList();
+                 Grade_SubjectModel tcm = new Grade_SubjectModel();
 
-             return View("Create",tcmlist);
+                 List<Grade_SubjectModel> tcmlist = Grouplist.Select(x => new Grade_SubjectModel
+                 {
+                     AcademicYear = x.AcademicYear,
+                     GradeId = x.GradeId,
+                     GradeName = x.GradeName,
+                     SubjectId = x.SubjectId,
+                     ShortName = x.ShortName,
+                     SubjectName = x.SubjectName,
+                     SubjectCategoryId = x.SubjectCategoryId,
+                     SubjectCategoryName = x.SubjectCategoryName,
+                     Optional = x.Optional,
+                     CreatedBy = x.CreatedBy,
+                     CreatedDate = x.CreatedDate,
+                     IsActive = x.IsActive,
+                     ModifiedBy = x.ModifiedBy,
+                     ModifiedDate = x.ModifiedDate
 
+                 }).ToList();
 
+                 return View("Create", tcmlist);
+
+             }
+             catch (Exception ex) {
+                 Errorlog.ErrorManager.LogError(ex);
+                 return View();
+
+             }
             
 
              // return View();
          }
 
-         
+         [UserFilter(Function_Id = "GSub")]
          public ActionResult Edit(string AcademicYear, string GradeId, string SubjectId,string SubjectCategoryId,string Optional)
          {
              
@@ -278,12 +264,15 @@ namespace GDWEBSolution.Controllers.Configuration
              return PartialView("Edit", TModel);
          }
 
+        [UserFilter(Function_Id = "GSub")]
          [HttpPost]
          public ActionResult Edit(Grade_SubjectModel Model)
          {
+            
              try
              {
-
+                 SchoolId = USession.School_Id;
+                 UserId = USession.User_Id;
                  Connection.GDModifyGradeSubject(Model.AcademicYear,SchoolId, Model.GradeId, Model.SubjectId,Model.SubjectCategoryId,Model.Optional, UserId);
                  Connection.SaveChanges();
                  ViewBag.ShowDiv = false;
@@ -297,9 +286,10 @@ namespace GDWEBSolution.Controllers.Configuration
          }
 
 
-
+        [UserFilter(Function_Id = "GSub")]
          public ActionResult Delete(string AcademicYear,string GradeId,string SubjectId)
          {
+             
              Grade_SubjectModel TModel = new Grade_SubjectModel();
              TModel.AcademicYear = AcademicYear;
              TModel.GradeId = GradeId;
@@ -309,12 +299,15 @@ namespace GDWEBSolution.Controllers.Configuration
 
          //
          // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "GSub")]
          [HttpPost]
          public ActionResult Delete(Grade_SubjectModel Model)
          {
+            
              try
              {
+                 SchoolId = USession.School_Id;
+                UserId = USession.User_Id;
                  Connection.GDdeleteGradeSubject(Model.AcademicYear,SchoolId,Model.GradeId,Model.SubjectId,"N",UserId);
                  Connection.SaveChanges();
 

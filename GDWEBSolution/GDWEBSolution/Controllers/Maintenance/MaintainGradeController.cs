@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.Maintenance;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,13 @@ namespace GDWEBSolution.Controllers
         // GET: /MaintainGrade/
 
         private SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "ADMIN";
+        UserSession USession = new UserSession();
+        string UserId = null;
+
+         [UserFilter(Function_Id = "MaGra")]
         public ActionResult Index()
         {
+             
             try
             {
                 var Grade = Connection.GDgetAllGradeMaintenance("Y");
@@ -64,18 +70,21 @@ namespace GDWEBSolution.Controllers
         }
 
         // GET: /TeacherCategory/Create
-
+        [UserFilter(Function_Id = "MaGra")]
         public ActionResult Create()
         {
+           
             return View();
         }
 
         //
         // POST: /Application Status/Create
-
+        [UserFilter(Function_Id = "MaGra")]
         [HttpPost]
         public ActionResult Create(tblGrade Model)
         {
+           
+            UserId = USession.User_Id;
             try
             {
 
@@ -103,9 +112,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaGra")]
         public ActionResult Edit(string Code)
         {
+             
             try
             {
                 GradeModel TModel = new GradeModel();
@@ -128,10 +138,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Edit/5
-
+        [UserFilter(Function_Id = "MaGra")]
         [HttpPost]
         public ActionResult Edit(GradeModel Model)
         {
+            
+            UserId = USession.User_Id;
             try
             {
 
@@ -158,9 +170,10 @@ namespace GDWEBSolution.Controllers
         }
         //
         // GET: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaGra")]
         public ActionResult Delete(string Code)
         {
+             
             try
             {
                 GradeModel TModel = new GradeModel();
@@ -177,10 +190,12 @@ namespace GDWEBSolution.Controllers
 
         //
         // POST: /TeacherCategory/Delete/5
-
+        [UserFilter(Function_Id = "MaGra")]
         [HttpPost]
         public ActionResult Delete(GradeModel Model)
         {
+             
+            UserId = USession.User_Id;
             try
             {
                 Connection.GDdeleteGradeMaintenance("N", Model.GradeId, UserId);

@@ -52,13 +52,14 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits") {
+              //  if (result != "Exception" && result != "Exits" && result != "fill") {
+                    if (result.split('!')[0] == "sessioncheck") {
                     debugger
                     //window.location.href = "/Teacher/Create";
-                    $("#SchoolId").val(result);
+                       $("#SchoolId").val(result.split('!')[1]);
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + result);
+                    $('#showgrade').load('/School/ShowSchoolGrade?SchoolId=' + result.split('!')[1]);
                     $("#SuccesLable").text("Grade Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -78,7 +79,22 @@
 
 
                 }
+
+                else if (result == "fill") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Select Every Field");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
                 else {
+
+                    window.location.href = "/Home/Logout";
+
+                  //  $("#ErrorLable").text("There is an error in login");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                 //   $("#myModal").modal("show");
 
                 }
 

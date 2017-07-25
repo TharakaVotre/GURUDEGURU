@@ -1,5 +1,7 @@
-﻿using GDWEBSolution.Models;
+﻿using GDWEBSolution.Filters;
+using GDWEBSolution.Models;
 using GDWEBSolution.Models.AnnualFunctions;
+using GDWEBSolution.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +14,20 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
     {
         //
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        string UserId = "Shirandie";
-        string SchoolId = "Scl13137";
-        // GET: /StudentGradeAdvance/
-
+        UserSession USession = new UserSession();
+        string UserId =null;
+        string SchoolId = null;        // GET: /StudentGradeAdvance/
+        [UserFilter(Function_Id = "GAdv")]
         public ActionResult Index()
         {
+            
+          
             try
             {
-                tblParameter TCtable = Connection.tblParameters.SingleOrDefault(x => x.ParameterId == "AY");
-               
-                ViewBag.AcedamicYear = TCtable.ParameterValue;
+                SchoolId = USession.School_Id;
+                tblAccadamicYear TCtable = Connection.tblAccadamicYears.SingleOrDefault(x => x.SchoolId == SchoolId);
+
+                ViewBag.AcedamicYear = TCtable.AccadamicYear;
                 Dropdownlistdata(SchoolId);
                 List<StudentGradeAdvanceModel> tcmlist = getdataForTable("","","");
 
@@ -36,33 +41,28 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
             }
         }
 
+
+       [UserFilter(Function_Id = "GAdv")]
         public ActionResult Detail(string GradeId, string ClassId, string AcedamicYear)
         {
+           
             try
             {
+                SchoolId =USession.School_Id;
                 tblAccadamicYear Ttable = Connection.tblAccadamicYears.SingleOrDefault(x => x.SchoolId == SchoolId);
                 
                 Dropdownlistdata(SchoolId);
                
-                if (GradeId == null && Session["GroupId"] == null) {
+                if (GradeId == null) {
                     return RedirectToAction("Index");
                 }
-                if (GradeId != null & ClassId!=null)
-                {
-                    Session["GroupId"]=GradeId;
-                    Session["ClassId"] = ClassId;
-                    Session["AccYear"] = AcedamicYear;// = Ttable.ParameterValue;
-                }
-                else{
-                    GradeId=Session["GroupId"].ToString();
-                    ClassId = Session["classId"].ToString();
-                    AcedamicYear = Session["AccYear"].ToString();
-                }
+               
+              
                 ViewBag.CurentYear = AcedamicYear;
                 tblGrade TCtable = Connection.tblGrades.SingleOrDefault(x => x.GradeId == GradeId);
                 ViewBag.CurentGrade = TCtable.GradeName;
 
-                tblClass classtable = Connection.tblClasses.SingleOrDefault(x => x.ClassId == ClassId && x.GradeId==GradeId);
+                tblClass classtable = Connection.tblClasses.SingleOrDefault(x => x.ClassId == ClassId && x.GradeId==GradeId && x.SchoolId==SchoolId);
                 ViewBag.CurentClass = classtable.ClassName;
 
                
@@ -91,36 +91,47 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
                 return View();
             }
         }
-
+         [UserFilter(Function_Id = "GAdv")]
         private List<StudentGradeAdvanceModel> getdataForTable(string AcedamicYear,string GradeId,string ClassId)
         {
-            var Group = Connection.GDgetAllStudentInGrade(AcedamicYear, SchoolId, GradeId, ClassId, "Y");
-            List<GDgetAllStudentInGrade_Result> Grouplist = Group.ToList();
-
-            StudentGradeAdvanceModel tcm = new StudentGradeAdvanceModel();
-
-            List<StudentGradeAdvanceModel> tcmlist = Grouplist.Select(x => new StudentGradeAdvanceModel
+           
+            try
             {
+                SchoolId = USession.School_Id;
+                var Group = Connection.GDgetAllStudentInGrade(AcedamicYear, SchoolId, GradeId, ClassId, "Y");
+                List<GDgetAllStudentInGrade_Result> Grouplist = Group.ToList();
 
-                GradeId = x.GradeId,
-                GradeName = x.GradeName,
-                StudentId = x.StudentId,
-                StudentName = x.studentName,
-                ClassId = x.ClassId,
-                ClassName = x.ClassName,
-             
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate,
-                IsActive = x.IsActive,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate
+                StudentGradeAdvanceModel tcm = new StudentGradeAdvanceModel();
 
-            }).ToList();
-            return tcmlist;
+                List<StudentGradeAdvanceModel> tcmlist = Grouplist.Select(x => new StudentGradeAdvanceModel
+                {
+
+                    GradeId = x.GradeId,
+                    GradeName = x.GradeName,
+                    StudentId = x.StudentId,
+                    StudentName = x.studentName,
+                    ClassId = x.ClassId,
+                    ClassName = x.ClassName,
+
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    IsActive = x.IsActive,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate
+
+                }).ToList();
+                return tcmlist;
+            }
+            catch (Exception ex)
+            {
+                Errorlog.ErrorManager.LogError(ex);
+                return null;
+            }
         }
+         [UserFilter(Function_Id = "GAdv")]
         private void Dropdownlistdata(string SchoolId)
         {
-
+            SchoolId =USession.School_Id;
             var Grade = Connection.GDgetSchoolGrade(SchoolId,"Y");
             List<GDgetSchoolGrade_Result> Gradelist = Grade.ToList();
 
@@ -135,11 +146,12 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
             
         }
 
-       
 
+         [UserFilter(Function_Id = "GAdv")]
         [HttpPost]
         public ActionResult Update(string[] selectedNames, string GradeId, string ClassId, string ParameterAcedamicYear)
         {
+            
             try
             {
                 if (GradeId!="")
@@ -180,6 +192,7 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
 
         public JsonResult getstate(string id)
         {
+            SchoolId =USession.School_Id;
             var states = Connection.GDgetGradeActiveClass(id,SchoolId,"Y");
             List<SelectListItem> listates = new List<SelectListItem>();
 
@@ -201,9 +214,10 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
         }
 
 
-
+         [UserFilter(Function_Id = "GAdv")]
         public ActionResult UpdateAccedemicYear()
         {
+            
             try
             {
                 tblAccadamicYear Ttable = Connection.tblAccadamicYears.SingleOrDefault(x => x.SchoolId == SchoolId);
@@ -216,10 +230,13 @@ namespace GDWEBSolution.Controllers.AnnualFunctions
                 return View();
             }
         }
+
+         [UserFilter(Function_Id = "GAdv")]
         [HttpPost]
 
         public ActionResult UpdateAccYear(string AccYear)
         {
+            
             try
             {
                 Connection.GDModifySchoolAccademicYear(SchoolId,AccYear);

@@ -218,13 +218,13 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits") {
+                if (result.split('!')[0] == "sessioncheck") {
                     debugger
                     //window.location.href = "/Teacher/Create";
                   
                    var res = result.split("!");
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                   $('#showexactivity').load('/Student/ShowstudentExactivty?SchoolId=' +  res[0] + '&StudentId='+ res[1]);
+                   $('#showexactivity').load('/Student/ShowstudentExactivty?SchoolId=' +  res[1] + '&StudentId='+ res[2]);
                     $("#SuccesLable").text("Activity Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -238,13 +238,23 @@
                 }
                 else if (result == "Exits") {
                     //$("#ErrorUName").prop('value', 'User Name Already Exits');
-                    $("#ErrorLable").text("This Activity is Already Assigned to this STudent");
+                    $("#ErrorLable").text("This Activity is Already Assigned to this Student");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+
+                else if (result == "fill") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Select every field");
                     //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
 
 
                 }
                 else {
+                    window.location.href = "/Home/Logout";
 
                 }
 

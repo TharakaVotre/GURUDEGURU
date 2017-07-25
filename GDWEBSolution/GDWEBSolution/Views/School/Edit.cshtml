@@ -15,6 +15,7 @@
                     <li class=""><a href="#esubjects" data-toggle="tab" aria-expanded="false">Subjects</a></li>
                     <li class=""><a href="#eHouses" data-toggle="tab" aria-expanded="false">House</a></li>
                     <li class=""><a href="#eClass" data-toggle="tab" aria-expanded="false">Class</a></li>
+                    <li class=""><a href="#eadmin" data-toggle="tab" aria-expanded="false">Edit Admin</a></li>
                     @*<li class="disabled"><a>Disabled</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -69,6 +70,19 @@
                         <div id="showclasses">
                             @{ Html.RenderAction("EShowSchooClasses", new { SchoolIdGradeId = "Scl!5" }); }
                         </div>
+
+
+                    </div>
+
+
+
+                    <div class="tab-pane fade " id="eadmin">
+                        @{ Html.RenderAction("ShowEditSchooladmin", new { SchoolId = @ViewBag.EditSChoolID }); }
+
+                        <div id="showEsadmin">
+                            @{ Html.RenderAction("ShowSchoolAdmins", new { SchoolId = @ViewBag.EditSChoolID }); }
+                        </div>
+
                     </div>
 
 

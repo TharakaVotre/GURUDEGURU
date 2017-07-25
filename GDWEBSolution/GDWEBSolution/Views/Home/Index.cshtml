@@ -17,6 +17,12 @@
 						</div>
 						<div class="row">
 					<div class="clearfix pt pb">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="row">
 						<div class="col-md-12">
                              <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
 						</div>
@@ -24,6 +30,7 @@
                         <div class="col-md-12">
                              <input class="form-control" id="date1" name="date1" placeholder="MM/DD/YYYY" type="text"/>
 						</div>
+                            </div>
 					</div>
 				</div>
                         @if(Session["LoggedUserInfo"] != null){
@@ -40,6 +47,7 @@
 
 <script>
      $(document).ready(function () {
+
          var date_input = $('input[name="date"]'); //our date input has the name "date"
          date_input.datepicker({
              format: 'yyyy',

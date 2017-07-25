@@ -17,6 +17,9 @@ namespace GDWEBSolution.Models.Student
 
             [Display(Name = "Student ")]
             public string StudentId { get; set; }
+
+            [Display(Name = "Student ")]
+            public string StudentName { get; set; }
         
              [Display(Name = "Student ")]
             public string StudentIdE { get; set; }
@@ -35,7 +38,7 @@ namespace GDWEBSolution.Models.Student
 
 
 
-            [Display(Name = "School Name")]
+            [Display(Name = "School")]
             public string SchoolName { get; set; }
 
 

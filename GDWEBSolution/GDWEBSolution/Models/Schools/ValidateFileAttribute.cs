@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
+
+
+
 namespace GDWEBSolution.Models.Schools
 {
     public class ValidateFileAttribute : ValidationAttribute
@@ -22,6 +25,7 @@ namespace GDWEBSolution.Models.Schools
             else if (!AllowedFileExtensions.Contains(file.FileName.Substring(file.FileName.LastIndexOf('.'))))
             {
                 ErrorMessage = "Please upload Your Photo of type: " + string.Join(", ", AllowedFileExtensions);
+               
                 return false;
             }
             else if (file.ContentLength > MaxContentLength)

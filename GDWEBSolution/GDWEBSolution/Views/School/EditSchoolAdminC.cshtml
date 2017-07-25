@@ -1,0 +1,245 @@
+﻿@model GDWEBSolution.Models.Schools.SchoolAdminModel
+@{
+    ViewBag.Title = "Class";
+}
+
+<form id="FrmAddAdmin" class="form-horizontal">
+    <div class="form-group">
+
+
+
+
+        @Html.LabelFor(m => m.AdminName, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.HiddenFor(model => model.SchoolId)
+            @Html.DropDownListFor(model => model.AdminUserId, ViewBag.UseradminList as SelectList, "", new { @class = "form-control", @placeholder = "", @onchange = "loadAdmins(this.value)" })
+     
+
+            @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
+
+        </div>
+
+      
+     
+      
+        <br /><br />
+        @Html.LabelFor(m => m.ChangeAdminName, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(model => model.AdminName, new { @class = "form-control", @placeholder = "Class Name" })
+            @Html.ValidationMessageFor(model => model.AdminName, null, new { @class = "text-danger" })
+        </div>
+   
+
+      
+            @Html.LabelFor(m => m.CAdminPersonalEmail, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.AdminPersonalEmail, new { @class = "form-control", @placeholder = "Email Address" })
+                <div class="col-sm-12">
+                    @Html.ValidationMessageFor(model => model.AdminPersonalEmail, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+        <br /><br />
+
+       
+          
+           
+        
+
+
+    
+            @Html.LabelFor(m => m.Password, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Password", type = "Password" })
+                <div class="col-sm-12">
+                    @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger" })
+                </div>
+            </div>
+           
+      
+      
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control", @placeholder = "Password", type = "Password" })
+                <div class="col-sm-12">
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new { @class = "text-danger" })
+                </div>
+            </div>
+        <br/><br/>
+        @Html.LabelFor(m => m.CPersonalMobile, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-4">
+            @Html.TextBoxFor(model => model.PersonalMobile, new { @class = "form-control", @placeholder = "Telephone No" })
+            <div class="col-sm-12">
+                @Html.ValidationMessageFor(model => model.PersonalMobile, null, new { @class = "text-danger" })
+            </div>
+        </div>
+       
+
+        
+      
+    </div>
+
+ 
+
+          <div class="col-sm-6" style="float:right">
+            <button type="button" id="btnAddQualification" onclick="EditSchoolAdmin()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
+        </div>
+   
+    <div class="hr-dashed"></div>
+    @*     <h4 style="padding-left:120px;">Qualifications</h4>
+        <div class="hr-dashed"></div>*@
+
+</form>
+<script>
+
+    $(function(){
+
+        $("#AdminUserId").change(function () {
+
+            var v = $(this).val();
+            var url='@Url.Action("Admindetails","School")';
+            $.getJSON(url, { AdminUserId: v }, function (data) {
+
+                $("#AdminName").val(data.Name);
+                $("#AdminPersonalEmail").val(data.Email);
+                $("#PersonalMobile").val(data.Contact);
+
+            });
+
+        });
+
+    });
+
+
+</script>
+
+
+
+<script>
+    function RestrictSpace() {
+        if (event.keyCode == 32) {
+            event.returnValue = false;
+            return false;
+        }
+    }
+
+
+
+
+    
+    var loadsclgradeclassess = function (value) {
+        var Schoolid = $('#SchoolId3').val();
+
+        $('#showclasses').load('/School/ShowSchooClasses?SchoolIdGradeId='+Schoolid +"!"+ value);
+
+
+
+    }
+
+    var EditSchoolAdmin = function () {
+        //debugger
+        var myformdata = $("#FrmAddAdmin").serialize();
+
+        //if (!$("#FrmANT").valid()) {
+        //    return false;
+        //}
+
+        $.ajax({
+
+            type: "POST",
+            url: "/School/EditSchoolAdmin",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                // $("#myModal").modal("hide");
+               // if (result != "Exception" && result != "Exits" && result != "notfilled") {
+                    if (result.split('!')[0] == "sessioncheck") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+
+                 
+                    $('#showEsadmin').load('/School/ShowSchoolAdmins?SchoolId=' + result.split('!')[1]);
+
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                 //   $('#showclasses').load('/School/ShowSchooClasses?SchoolIdGradeId=' + result);
+                    $("#SuccesLable").text("Admin User Editted Successfully");
+                    // $("#btnAddQualification").prop('value', 'Save');
+                    $("#SuccesModel").modal("show");
+                }
+                else if (result == "Exception") {
+                    debugger
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Exception Error Occurd");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+                }
+
+                else if (result == "notfilled") {
+                    debugger
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("Fill every thing properly");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+                }
+                else if (result == "Exits") {
+                    //$("#ErrorUName").prop('value', 'User Name Already Exits');
+                    $("#ErrorLable").text("This User Id is Already in Use");
+                    //$("#btnAddQualification").prop('value', 'Save');
+                    $("#myModal").modal("show");
+
+
+                }
+                else {
+                    window.location.href = "/Home/Logout";
+
+                }
+
+            }
+
+        })
+    }
+
+    var loadAdmins = function (value) {
+        debugger
+        $('#showadmins').load('/School/ShowSchoolAdmins?SchoolId=' + value);
+    }
+
+
+
+    var loadEXactivsess = function (value) {
+
+    //    $(".div123 *").prop('disabled', true);
+       
+        
+        var selectedItem = value;
+        
+        var ddlStates = $("#GradeId");
+        ddlStates.append($('<option></option>').val("").html(""));
+        //var statesProgress = $("#states-loading-progress");
+        //statesProgress.show();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("Studentgrade"))",
+            data: { "SchoolId": selectedItem },
+        success: function (data) {
+            ddlStates.html('');
+            ddlStates.append($('<option></option>').val("").html(""));
+            $.each(data, function (ActivityCode, option) {
+                ddlStates.append($('<option></option>').val(option.GradeId).html(option.GradeName));
+            });
+            
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('Failed to retrieve states.');
+                 
+        }
+    });
+    }
+
+
+
+
+
+
+</script>
