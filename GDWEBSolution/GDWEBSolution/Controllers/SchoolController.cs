@@ -405,10 +405,11 @@ namespace GDWEBSolution.Controllers
 
 
          [AllowAnonymous]
+         [UserFilter(Function_Id = "SCF")]
         public JsonResult AddSchoolGrade(SchoolGradeModel Model)
         {
 
-            Authentication("SCF");
+          //  Authentication("SCF");
             try
 
 
@@ -436,7 +437,7 @@ namespace GDWEBSolution.Controllers
                         Connection.tblSchoolGrades.Add(newscg);
                         Connection.SaveChanges();
 
-                        result = Model.SchoolId.ToString();
+                        result = "sessioncheck"+"!"+Model.SchoolId;
 
                         ViewBag.SchoolId = Model.SchoolId.ToString();
 
@@ -496,7 +497,7 @@ namespace GDWEBSolution.Controllers
                          Connection.tblClasses.Add(cls);
                          Connection.SaveChanges();
 
-                         result = Model.SchoolId3 + "!" + Model.GradeId;
+                         result = "sessioncheck" + "!" + Model.SchoolId3 + "!" + Model.GradeId;
 
                          ViewBag.SchoolId = Model.SchoolId3.ToString();
 
@@ -565,7 +566,7 @@ namespace GDWEBSolution.Controllers
                          Connection.tblUsers.Add(usr);
                          Connection.SaveChanges();
 
-                         result = Model.SchoolId4 + "!" + Model.AdminUserId;
+                         result = "sessioncheck" + "!" + Model.SchoolId4 ;
 
 
 
@@ -590,9 +591,10 @@ namespace GDWEBSolution.Controllers
 
 
          [AllowAnonymous]
+         [UserFilter(Function_Id = "SCF")]
          public JsonResult EAddSchoolClass(SchoolModel Model)
          {
-             Authentication("SCF");
+           //  Authentication("SCF");
              try
              {
                  string result = "Error";
@@ -615,7 +617,7 @@ namespace GDWEBSolution.Controllers
                      Connection.tblClasses.Add(cls);
                      Connection.SaveChanges();
 
-                     result = Model.SchoolId + "!" + Model.GradeId;
+                     result = "sessioncheck" + "!" + Model.SchoolId + "!" + Model.GradeId;
 
                      ViewBag.SchoolId = Model.SchoolId.ToString();
 
@@ -707,9 +709,10 @@ namespace GDWEBSolution.Controllers
 
 
         [AllowAnonymous]
+        [UserFilter(Function_Id = "SCF")]
          public JsonResult AddSchoolHouse(SchoolHouseModel Model)
          {
-             Authentication("SCF");
+          
              try
              {
                  string result = "Error";
@@ -739,7 +742,7 @@ namespace GDWEBSolution.Controllers
 
                          Connection.SaveChanges();
 
-                         result = Model.SchoolId1;
+                         result = "sessioncheck" + "!" + Model.SchoolId1;
 
                          ViewBag.SchoolId = Model.SchoolId1;
 
@@ -767,9 +770,10 @@ namespace GDWEBSolution.Controllers
 
 
         [AllowAnonymous]
+        [UserFilter(Function_Id = "SCF")]
         public JsonResult AddSchoolSubjects(SchoolSubjectModel Model)
         {
-            Authentication("SCF");
+           // Authentication("SCF");
             try
             {
                 string result = "Error";
@@ -800,7 +804,7 @@ namespace GDWEBSolution.Controllers
 
                         Connection.SaveChanges();
 
-                        result = Model.AcademicYear + "!" + Model.SchoolIds;
+                        result = "sessioncheck" + "!" + Model.AcademicYear + "!" + Model.SchoolIds;
 
                         ViewBag.SchoolId = Model.SchoolIds;
 
@@ -830,7 +834,7 @@ namespace GDWEBSolution.Controllers
 
         public JsonResult AddSchoolExcActivity(SchoolExtraModel Model)
         {
-            Authentication("SCF");
+          //  Authentication("SCF");
             try
             {
                 string result = "Error";
@@ -855,7 +859,7 @@ namespace GDWEBSolution.Controllers
 
                         Connection.SaveChanges();
 
-                        result = Model.SchoolIdEx;
+                        result = "sessioncheck" + "!" + Model.SchoolIdEx;
 
                         ViewBag.SchoolId = Model.SchoolIdEx;
 
@@ -880,7 +884,62 @@ namespace GDWEBSolution.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [UserFilter(Function_Id = "SCF")]
+        public JsonResult AddSchoolExcActivityEdit(SchoolExtraModel Model)
+        {
+            //  Authentication("SCF");
+            try
+            {
+                string result = "Error";
 
+                if (Model.ActivityCode != null && Model.SchoolId != null)
+                {
+                    // Model.HouseId = count2.ToString();
+                    var count = Connection.tblSchoolExtraCurricularActivities.Count(u => u.ActivityCode == Model.ActivityCode && u.SchoolId == Model.SchoolId);
+                    if (count == 0)
+                    {
+                        // Model.SchoolId = Schoold;
+                        tblSchoolExtraCurricularActivity newscg = new tblSchoolExtraCurricularActivity();
+
+                        newscg.CreatedBy = USession.User_Id;
+                        newscg.CreatedDate = DateTime.Now;
+                        newscg.SchoolId = Model.SchoolId;
+                        newscg.ActivityCode = Model.ActivityCode;
+                        newscg.IsActive = "Y";
+
+
+                        Connection.tblSchoolExtraCurricularActivities.Add(newscg);
+
+                        Connection.SaveChanges();
+
+                        result = "sessioncheck" + "!" + Model.SchoolId;
+
+                        ViewBag.SchoolId = Model.SchoolId;
+
+                    }
+                    else
+                    {
+                        result = "Exits";
+                    }
+                    //ShowTeacherQualificatoin();
+                }
+                else
+                {
+
+                    result = "fill";
+                }
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)", Ex);
+                return Json("Exception", JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+         [UserFilter(Function_Id = "SCF")]
          public ActionResult ShowSchoolGrade(string SchoolId)
          {
              var STQlist = Connection.SMGTgetSchoolGradeadd(SchoolId).ToList();
@@ -1560,15 +1619,16 @@ namespace GDWEBSolution.Controllers
             //ViewBag.grdschooldrpList = new SelectList(GradeList, "GradeId", "GradeName");
 
         }
-
+           
         //
         // POST: /School/Create
 
         [HttpPost]
+        [UserFilter(Function_Id = "SCF")]
         public ActionResult Create(SchoolModel Model)
         {
 
-            Authentication("SCF");
+           // Authentication("SCF");
 
             string _path="";
             string _pathL = "";
@@ -1651,7 +1711,7 @@ namespace GDWEBSolution.Controllers
 
                   //  }
 
-                    result = SchoolId;
+                        result = "sessioncheck" + "!" + SchoolId;
                     ModelState.Clear();
              
                     //return View();
@@ -2307,7 +2367,7 @@ namespace GDWEBSolution.Controllers
 
                     Connection.SaveChanges();
 
-                    result = Model.SchoolId;
+                    result = "sessioncheck" + "!" + Model.SchoolId;
 
                     ViewBag.SchoolId = Model.SchoolId;
 
@@ -2451,9 +2511,9 @@ namespace GDWEBSolution.Controllers
 
                     Connection.SaveChanges();
 
-                    result =  Model.SchoolId;
+                    result = "sessioncheck" + "!" + Model.SchoolId;
 
-                    ViewBag.SchoolId = Model.SchoolIds;
+                    ViewBag.SchoolId =  Model.SchoolId;
 
                 }
                 else
@@ -2541,6 +2601,7 @@ namespace GDWEBSolution.Controllers
 
 
         [AllowAnonymous]
+        [UserFilter(Function_Id = "SCF")]
         public JsonResult EditSchoolAdmin(SchoolAdminModel Model)
         {
             try
@@ -2578,7 +2639,7 @@ namespace GDWEBSolution.Controllers
 
                     Connection.SaveChanges();
 
-                    result = Model.SchoolId;
+                    result = "sessioncheck" + "!" + Model.SchoolId;
 
 
 

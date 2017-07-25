@@ -19,7 +19,7 @@ namespace GDWEBSolution.Controllers
         UserSession USession = new UserSession();
         string UserId = null;
 
-         [UserFilter(Function_Id = "MaSGr")]
+        [UserFilter(Function_Id = "MaSGr")]
         public ActionResult Index()
         {
              

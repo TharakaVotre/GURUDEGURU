@@ -490,7 +490,7 @@
                    
                     //$("#loaderDiv").hide();
                     // $("#myModal").modal("hide");
-                    if (result != "Exception" && result != "Exits" && result != "error") {
+                    if (result == "Success") {
                         debugger
                      
                         acl.reset();
@@ -544,6 +544,7 @@
 
                     }
                     else {
+                        window.location.href = "/Home/Logout";
 
                     }
 

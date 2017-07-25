@@ -21,7 +21,7 @@
 <Child title="School Category" action="Index" controller="MaintainSchoolCategory" url="#"/>
 <Child title="School Group" action="Index" controller="MaintainSchoolGroup" url="#"/>
 <Child title="School Rank" action="Index" controller="MaintainSchoolRank" url="#"/>
-<Child title="MaintainStudentEvaluationType" action="Index" controller="Student Evaluation Type" url="#"/>
+<Child title="Student Evaluation Type" action="Index" controller="MaintainStudentEvaluationType" url="#"/>
 <Child title="MaintainSubject" action="Index" controller="Subject" url="#"/>
 <Child title="Subject Category" action="Index" controller="MaintainSubjectCategory" url="#"/>
   <Child title="Update Accdemic Year" action="UpdateAccedemicYear" controller="StudentGradeAdvance" url="#"/>

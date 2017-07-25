@@ -53,13 +53,15 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits" && result != "fill") {
+              //  if (result != "Exception" && result != "Exits" && result != "fill") {
+                if (result.split('!')[0] == "sessioncheck") {
+                    var resultf = result.split('!')[1];
                     debugger
                     //window.location.href = "/Teacher/Create";
-                    $("#SchoolId").val(result);
+                    $("#SchoolId").val(resultf);
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + result);
+                    $('#showexactivity').load('/School/ShowSchooEXActivity?SchoolId=' + resultf);
                     $("#SuccesLable").text("Activity Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -89,6 +91,7 @@
 
                 }
                 else {
+                    window.location.href = "/Home/Logout";
 
                 }
 

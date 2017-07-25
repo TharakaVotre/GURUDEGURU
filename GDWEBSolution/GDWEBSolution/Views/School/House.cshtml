@@ -79,13 +79,15 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits" && result != "Exits" && result != "fill") {
+                //if (result != "Exception" && result != "Exits" && result != "Exits" && result != "fill") {
+                if (result.split('!')[0] == "sessioncheck") {
+                    var resultf = result.split('!')[1];
                     debugger
                     //window.location.href = "/Teacher/Create";
-                    $("#SchoolId").val(result);
+                    $("#SchoolId").val(resultf);
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + result);
+                    $('#showHouse').load('/School/ShowSchooHouse?SchoolId=' + resultf);
                     $("#SuccesLable").text("House is  Added to the School");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -114,6 +116,8 @@
 
                 }
                 else {
+
+                    window.location.href = "/Home/Logout";
 
                 }
 

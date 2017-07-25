@@ -17,7 +17,7 @@
 
         @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
         <div class="col-sm-3">
-            @Html.DropDownListFor(model => model.GradeId, ViewBag.grdschooldrpListl as SelectList, "", new { @class = "form-control", @placeholder = "School " , @onchange = "loadsclgradeclassess(this.value)" }) 
+            @Html.DropDownListFor(model => model.GradeId, ViewBag.grdschooldrpListl as SelectList, "", new { @class = "form-control", @placeholder = "School " , @onchange = "loadsclgradefrclass(this.value)" }) 
         </div>
         <br/><br />
         @Html.LabelFor(m => m.ClassId, new { @class = "col-sm-2 control-label" })
@@ -54,7 +54,7 @@
         }
     }
     
-    var loadsclgradeclassess = function (value) {
+    var loadsclgradefrclass = function (value) {
         var Schoolid = $('#SchoolId').val();
 
         $('#showclasses').load('/School/EShowSchooClasses?SchoolIdGradeId='+Schoolid +"!"+ value);
@@ -79,13 +79,14 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-                if (result != "Exception" && result != "Exits") {
+              //  if (result != "Exception" && result != "Exits") {
+                    if (result.split('!')[0] == "sessioncheck") {
                     debugger
                     //window.location.href = "/Teacher/Create";
-               
+                    var res = result.split("!");
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
-                    $('#showclasses').load('/School/ShowSchooClasses?SchoolIdGradeId=' + result);
+                    $('#showclasses').load('/School/ShowSchooClasses?SchoolIdGradeId=' + res[1] + "!" + res[2]);
                     $("#SuccesLable").text("Class Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -106,6 +107,7 @@
 
                 }
                 else {
+                    window.location.href = "/Home/Logout";
 
                 }
 
