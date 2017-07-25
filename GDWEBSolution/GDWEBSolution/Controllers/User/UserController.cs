@@ -59,7 +59,7 @@ namespace GDWEBSolution.Controllers.User
 
         public ActionResult NewUser()
         {
-            List<tblUserCategory> UCategorylist = Connection.tblUserCategories.ToList();
+            List<tblUserCategory> UCategorylist = Connection.tblUserCategories.Where(u => u.IsApplicationSide == "Y").ToList();
             ViewBag.UCategoryNameList = new SelectList(UCategorylist, "CategoryId", "CategoryName");
 
             return View();
@@ -155,11 +155,13 @@ namespace GDWEBSolution.Controllers.User
 
                 Category.CreatedBy = "ADMIN";
                 Category.CreatedDate = DateTime.Now;
+
                 if (Model.Active == true) { Category.IsActive = "Y"; }
                 else { Category.IsActive = "N"; }
 
-                //if (Model.IsApplicationSide == true) { Category.IsActive = "Y"; }
-                //else { Category.IsActive = "N"; }
+                if (Model.IsApplicationSide == true) { Category.IsApplicationSide = "Y"; }
+                else { Category.IsApplicationSide = "N"; }
+
                 Category.CategoryId = Model.CategoryId;
                 Category.CategoryName = Model.CategoryName;
 
