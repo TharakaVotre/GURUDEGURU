@@ -40,21 +40,24 @@
             url: "/Teacher/AddQualification",
             data: myformdata,
             success: function (result) {
-                if (result != "Exception" && result != "Exits") {
-                    $("#Teacher_Id").val(result);
-                    $('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + result);
+                if (result.msg != "Exception" && result.msg != "Exits") {
+                    $("#Teacher_Id").val(result.Teacher_Id);
+                    $('#showqualification').load('/Teacher/ShowTeacherQualification?TeacherId=' + result.Teacher_Id);
                     $("#SuccesLable").text("Teacher Qualification Added Successfully. ");
                     $("#SuccesModel").modal("show");
                 }
-                else if (result == "Exception") {
+                else if (result.msg == "Exception") {
+                    $("#Teacher_Id").val(result.Teacher_Id);
                     $("#ErrorLable").text("Exception Error Occurd");
                     $("#myModal").modal("show");
                 }
-                else if (result == "Exits") {
+                else if (result.msg == "Exits") {
+                    $("#Teacher_Id").val(result.Teacher_Id);
                     $("#ErrorLable").text("This Qualification is Already Assigned to this Teacher");
                     $("#myModal").modal("show");
                 }
                 else {
+                    $("#Teacher_Id").val(result.Teacher_Id);
                     $("#ErrorLable").text("An Error Occured ! Please Try Again Later");
                     $("#myModal").modal("show");
                 }

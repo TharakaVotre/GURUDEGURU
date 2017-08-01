@@ -10,25 +10,28 @@
     <div class="col-md-12">
         <h3>School Marks Report</h3>
         <div class="panel panel-default">
-            <div class="panel-heading"><form id="myForm" method="post" action="~/StudentReport/Index" class="form-horizontal">
-    <div class="form-group">
-        <lable class="col-sm-2 control-label"> Accedamic Year</lable>
-        <div class="col-sm-2">
-            @Html.TextBox("AccYear", "", new { @class = "form-control",@type="number" })
-          
-        </div>
-        <lable class="col-sm-2 control-label">Evealuation</lable>
-        <div class="col-sm-2">
-            @Html.DropDownList("Eveluation", ViewBag.Eveluation as List<SelectListItem>,"", new { @class = "form-control",@Required="required" })
-        </div>
-        <div class="col-sm-2">
-            <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
-        </div>
-    </div>
-</form>
+            <div class="panel-heading">
+               
 </div>
      <div class="panel-body">
-                <ul class="nav nav-tabs">
+         <form id="myForm" method="post" action="~/StudentReport/Index" class="form-horizontal">
+             <div class="form-group">
+                 <label class="col-sm-2 control-label"> Accedamic Year</label>
+                 <div class="col-sm-3">
+                     @Html.TextBox("AccYear", "", new { @class = "form-control", @type = "number" })
+
+                 </div>
+                 <label class="col-sm-2 control-label">Evealuation</label>
+                 <div class="col-sm-3">
+                     @Html.DropDownList("Eveluation", ViewBag.Eveluation as List<SelectListItem>, "", new { @class = "form-control", @Required = "required" })
+                 </div>
+                 <div class="col-sm-2">
+                     <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+                 </div>
+             </div>
+         </form>
+
+<hr />                <ul class="nav nav-tabs">
                     <li class="active"><a href="#bio" data-toggle="tab" aria-expanded="true">Subject Wise</a></li>
                     <li class=""><a href="#qualification" data-toggle="tab" aria-expanded="false">Grade Wise</a></li>
                     <li class=""><a href="#Housee" data-toggle="tab" aria-expanded="false">Class</a></li>
@@ -220,12 +223,12 @@
                                 
                                  <div class="form-horizontal">
                                      <div class="form-group">
-                                         <lable class="col-sm-2 control-label">Grade </lable>
+                                         <label class="col-sm-2 control-label">Grade </label>
                                          <div class="col-sm-3">
                                              @Html.DropDownList("GradeId", ViewBag.GradeId as List<SelectListItem>, "", new { @class = "form-control", required = "required" })
                                          </div>
 
-                                         <lable class="col-sm-2 control-label">Class</lable>
+                                         <label class="col-sm-2 control-label">Class</label>
                                          <div class="col-sm-3">
                                              @Html.DropDownList("ClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })                       
                                          </div>
@@ -256,13 +259,13 @@
                             <div class="panel-body">
                                 <div class="form-horizontal">
                                     <div class="form-group">
-                                        <lable class="col-sm-2 control-label">Grade </lable>
+                                        <label class="col-sm-2 control-label">Grade </label>
                                         <div class="col-sm-3">
                                             @Html.DropDownList("stGradeId", ViewBag.GradeId as List<SelectListItem>, "", new { @class = "form-control", required = "required" })
 
                                         </div>
 
-                                        <lable class="col-sm-2 control-label">Class</lable>
+                                        <label class="col-sm-2 control-label">Class</label>
                                         <div class="col-sm-3">
                                             @Html.DropDownList("stClassId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
 
@@ -272,7 +275,7 @@
 
                                     </div>
                                     <div class="form-group">
-                                        <lable class="col-sm-2 control-label">Student</lable>
+                                        <label class="col-sm-2 control-label">Student</label>
                                         <div class="col-sm-4">
                                             @Html.DropDownList("StudentId", new SelectList("", "Value", "Text"), "", new { @class = "form-control", required = "required" })
 
@@ -345,21 +348,26 @@
 <script>
 
     var ClassWise = function () {
+        var a = document.getElementById("Eveluation");
+        var EveluationId = a.options[a.selectedIndex].value;
         var b = document.getElementById("ClassId");
         var ClassId = b.options[b.selectedIndex].value;
         var c = document.getElementById("GradeId");
         var GradeId = c.options[c.selectedIndex].value;
-        var Url = "/StudentReport/ClassReport?ClassId=" + ClassId + "&GradeId=" + GradeId;
+        var AccYear = document.getElementById("AccYear").value;
+        var Url = "/StudentReport/ClassReport?EveluationId=" + EveluationId + "&AccYear=" + AccYear + "&ClassId=" + ClassId + "&GradeId=" + GradeId;
         $("#MyModelBodyClass").load(Url, function () {
             $("#myModalClass").data("show");
         })
     }
 
     var getStudent = function () {
+        var b = document.getElementById("Eveluation");
+        var EveluationId = b.options[b.selectedIndex].value;
         var a = document.getElementById("StudentId");
         var studentId = a.options[a.selectedIndex].value;
-       
-        var Url = "/StudentReport/StudantReport?studentId=" + studentId;
+        var AccYear = document.getElementById("AccYear").value;
+        var Url = "/StudentReport/StudantReport?EveluationId="+EveluationId+"&AccYear="+AccYear+"&studentId=" + studentId;
         $("#MyModelBody").load(Url, function () {
             $("#myModal").data("show");
         })

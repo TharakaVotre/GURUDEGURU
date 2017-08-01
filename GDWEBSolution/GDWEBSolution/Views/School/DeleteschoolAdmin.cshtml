@@ -1,0 +1,64 @@
+﻿@model GDWEBSolution.Models.Schools.SchoolAdminModel
+
+<div>
+    <form id="FormHDeleteSA" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h5 class="modal-title">Are you sure you want to Delete this Admin ? </h5>
+            @Html.HiddenFor(m => m.SchoolId)
+            @Html.HiddenFor(m => m.AdminUserId)
+
+        </div>
+        <div class="modal-footer">
+
+            <a href="#" id="btnHDSubmits" onclick="vcbad()" class="btn btn-primary">YES</a>
+            <a href="#" id="btnNo" onclick="dshad()" class="btn btn-default">NO</a>
+        </div>
+    </form>
+    @*    <div style="text-align: center; display: none" id="loaderDiv">
+            Loading
+        </div>*@
+</div>
+<script>
+    var vcbad = function () {
+
+        debugger
+        var myformdata = $("#FormHDeleteSA").serialize();
+        $.ajax({
+
+            type: "POST",
+            url: "/School/DeleteSchoolAdmin",
+            data: myformdata,
+            success: function (result) {
+                //$("#loaderDiv").hide();
+                if (result != "Error") {
+                    debugger
+                    //window.location.href = "/Teacher/Create";
+                    // $("#TeacherID").val(result);
+                    //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
+                    $('#showadmins').load('/School/ShowSchoolAdmins?SchoolId=' + result);
+                }
+                $("#deleteModel").modal("hide");
+
+
+            }
+
+        })
+
+
+
+
+
+    }
+
+    var dshad = function () {
+        debugger
+        $("#deleteModel").modal("hide");
+
+
+    }
+
+   
+
+
+</script>

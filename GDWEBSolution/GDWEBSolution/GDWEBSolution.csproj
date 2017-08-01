@@ -193,7 +193,7 @@
     <Compile Include="Controllers\Message\SPMessageController.cs" />
     <Compile Include="Controllers\Parent\ParentController.cs" />
     <Compile Include="Controllers\Prohibited\ProhibitedController.cs" />
-    <Compile Include="Controllers\Report\ExtraCurriculerActivityController .cs" />
+    <Compile Include="Controllers\Report\ExtraCurriculerActivityController.cs" />
     <Compile Include="Controllers\Report\StudentReportController.cs" />
     <Compile Include="Controllers\SchoolCalender\SchoolCalenderController.cs" />
     <Compile Include="Controllers\SchoolController.cs" />
@@ -1138,6 +1138,16 @@
     <Content Include="img\login-bg.jpg" />
     <Content Include="img\logo.jpg" />
     <Content Include="img\wheel.gif" />
+    <Content Include="Models\DBEntityModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DBEntityModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBEntityModel.edmx</DependentUpon>
+      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-popover.js" />
     <Content Include="Scripts\bootstrap-select.js" />
@@ -1158,18 +1168,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBEntityModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\DBEntityModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\DBEntityModel.edmx.diagram">
       <DependentUpon>DBEntityModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\DBEntityModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBEntityModel.edmx</DependentUpon>
-      <LastGenOutput>DBEntityModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
@@ -1375,7 +1375,6 @@
     <Content Include="Views\EvaluationbySchool\Index.cshtml" />
     <Content Include="Views\EvaluationbySchool\DeleteEvaluationDetail.cshtml" />
     <Content Include="Views\Shared\Forbidden.cshtml" />
-    <Content Include="Views\Event\Calendar.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\Logout.cshtml" />
     <Content Include="Views\Home\PasswordChange.cshtml" />
@@ -1385,15 +1384,6 @@
     <Content Include="Views\Teacher\ClassTeacherView.cshtml" />
     <Content Include="Views\Teacher\DeleteClassTeacher.cshtml" />
     <Content Include="Views\Prohibited\Index.cshtml" />
-    <Content Include="Views\StudentReport\AttentionRequiredSubjectsParents.cshtml" />
-    <Content Include="Views\StudentReport\ClassReports.cshtml" />
-    <Content Include="Views\StudentReport\Index.cshtml" />
-    <Content Include="Views\StudentReport\StudantReports.cshtml" />
-    <Content Include="Views\StudentReport\StudentInClasss.cshtml" />
-    <Content Include="Views\StudentReport\StudentInExtraCurriculerActivity.cshtml" />
-    <Content Include="Views\StudentReport\StudentInSubjects.cshtml" />
-    <Content Include="Views\StudentReport\StudentsSubjects.cshtml" />
-    <Content Include="Views\StudentReport\StudentSubjectIndex.cshtml" />
     <Content Include="Views\EveluationAddMark\AddStudentSubjectMarks.cshtml" />
     <Content Include="Views\EveluationAddMark\DeleteView.cshtml" />
     <Content Include="Views\EveluationAddMark\EditStudentResults.cshtml" />
@@ -1486,6 +1476,16 @@
     <Content Include="Views\Parent\EditParent.cshtml" />
     <Content Include="Views\Parent\EditParentDetailsView.cshtml" />
     <Content Include="Views\Parent\Index.cshtml" />
+    <Content Include="Views\StudentReport\AttentionRequiredSubjectsParents.cshtml" />
+    <Content Include="Views\StudentReport\ClassReports.cshtml" />
+    <Content Include="Views\StudentReport\Index.cshtml" />
+    <Content Include="Views\StudentReport\StudantReports.cshtml" />
+    <Content Include="Views\StudentReport\StudentInClasss.cshtml" />
+    <Content Include="Views\StudentReport\StudentInExtraCurriculerActivity.cshtml" />
+    <Content Include="Views\StudentReport\StudentInSubjects.cshtml" />
+    <Content Include="Views\StudentReport\StudentsSubjects.cshtml" />
+    <Content Include="Views\StudentReport\StudentSubjectIndex.cshtml" />
+    <Content Include="Views\School\DeleteschoolAdmin.cshtml" />
     <Content Include="Views\SchoolCalender\Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>

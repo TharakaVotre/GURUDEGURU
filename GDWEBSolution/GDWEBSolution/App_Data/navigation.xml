@@ -9,6 +9,10 @@
 <Child title="New Teacher" action="Index" controller="Teacher" url="#"/>
 <Child title="Class Teacher" action="Class" controller="Teacher" url="#"/>
 </Navigation>
+  <Navigation title="School Event" action="#" controller="#" url="#">
+    <Child title="Event Calendar View" action="Calendar" controller="Event" url="#"/>
+    <Child title="Event Calendar Add/Edit/Delete" action="Index" controller="Event" url="#"/>
+  </Navigation>
 <Navigation title="Maintenance" action="#" controller="#" url="#" >
 <Child title="Application Status" action="Index" controller="MaintainApplicationStatus" url="#"/>
 <Child title="Event Category" action="Index" controller="MaintainEventCategory" url="#"/>
