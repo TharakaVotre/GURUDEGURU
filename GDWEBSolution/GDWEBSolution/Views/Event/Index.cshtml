@@ -143,6 +143,7 @@
         $('#event-modal input[name="event-organiser"]').val(event ? event.organizer : '');
         $('#event-modal input[name="event-category"]').val(event ? event.category : '');
         $('#EventCategoryId').val(event ? event.category : '');
+        debugger
         $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
         $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
         $('#event-modal').modal();

@@ -1,0 +1,230 @@
+﻿@{
+    ViewBag.Title = "Calendar";
+}
+
+<h4>School Calendar</h4>
+<link href="~/Content/css/fullcalendar.css" rel="stylesheet" />
+
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/fullcalendar.min.js"></script>
+<style>
+    .fc-event {
+        cursor: pointer;
+        border-radius: 0px;
+        background: #1ebd42;
+        border: #fff;
+    }
+</style>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">School Calendar</div>
+    <div class="panel-body">
+        <div id='calendar'></div>
+        <br />
+    </div>
+</div>
+
+<div id="event-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add/Edit Event</h4>
+            </div>
+            <div class="modal-body">
+                <input name="event-index" value="" type="hidden">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">Event Title</label>
+                        <div class="col-sm-7">
+                            <input name="event-name" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">Remarks </label>
+                        <div class="col-sm-7">
+                            <input name="event-remark" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">Is a Holliday</label>
+                        <div class="col-sm-7">
+                            <input name="event-isholliday" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">Dates</label>
+                        <div class="col-sm-7">
+                            <div class="input-group input-daterange" data-provide="datepicker">
+                                <input name="event-start-date" class="form-control" value="2012-04-05" type="text">
+                                <span class="input-group-addon">to</span>
+                                <input name="event-end-date" class="form-control" value="2012-04-19" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="save-event" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                        <button type="button" id="remove-event" class="btn btn-default" style="display: none" data-dismiss="modal">Remove</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('#event-modal input[name="event-start-date"]').datepicker({
+            format: 'yyyy/mm/dd',
+            todayHighlight: true,
+            autoclose: true,
+        });
+        $('#event-modal input[name="event-end-date"]').datepicker({
+            format: 'yyyy/mm/dd',
+            todayHighlight: true,
+            autoclose: true,
+        });
+
+
+        function editEvent(event) {
+            $('#event-modal input[name="event-name"]').val(event ? event.name : '');
+            $('#event-modal input[name="event-index"]').val(event ? event.id : '');
+            $('#event-modal input[name="event-remark"]').val(event ? event.remark : '');
+            $('#event-modal input[name="event-isholliday"]').val(event ? event.isholliday : '');
+            $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
+            $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
+            debugger
+            if (event.id != "0") { $("#remove-event").show(); }
+            $('#event-modal').modal();
+        }
+
+
+        $('#calendar').fullCalendar({
+            selectable: true,
+            select: function (start, end, jsEvent, view) {
+                debugger
+                editEvent({ startDate: moment(start).format('YYYY-MM-DD'), endDate: moment(end).format('YYYY-MM-DD'), id: '0' });
+            },
+            //Header Section Including Previous,Next and Today
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+            //<!--Default Date-->
+            defaultDate: moment(Date()).format('YYYY-MM-DD'),
+            editable: false,
+            //<!--Event Section-->
+            eventLimit: true, // allow "more" link when too many events
+            events: [],
+
+
+            eventClick: function (calEvent, jsEvent, view) {
+                debugger
+                editEvent(
+                    {
+                        id: calEvent.id,
+                        name: calEvent.title,
+                        desc: calEvent.remark,
+                        remark: calEvent.remark,
+                        startDate: moment(calEvent.start).format('YYYY-MM-DD'),
+                        endDate: moment(calEvent.todate).format('YYYY-MM-DD'),
+                        isholliday: calEvent.isholliday,
+                    });
+                $(this).css('border-color', 'yellow');
+
+            },
+        });
+        load();
+    });
+    function saveEvent() {
+        var event = {
+            id: $('#event-modal input[name="event-index"]').val(),
+            name: $('#event-modal input[name="event-name"]').val(),
+            start: $('#event-modal input[name="event-start-date"]').val(),
+            end: $('#event-modal input[name="event-end-date"]').val(),
+            remark: $('#event-modal input[name="event-remark"]').val(),
+            isholliday: $('#event-modal input[name="event-isholliday"]').val(),
+        }
+        var data = new FormData;
+        data.append("CalenderSeqNo", parseInt(event.id));
+        data.append("AcadamicYear", "2017");
+        data.append("DateComment", event.name);
+        data.append("SpecialComment", event.remark);
+        data.append("FromDate", event.start);
+        data.append("ToDate", event.end);
+        data.append("IsHoliday", event.isholliday);
+
+        $.ajax({
+            type: "POST",
+            url: "/SchoolCalender/Create",
+            data: data,
+            contentType: false,
+            processData: false,
+            // cache: false,//
+            success: function () {
+                $('#event-modal').modal('hide');
+                load();
+            }
+        })
+    }
+
+    function removeEvent() {
+        var event = {
+            id: $('#event-modal input[name="event-index"]').val(),
+        }
+        var data = new FormData;
+        data.append("CalenderSeqNo", parseInt(event.id));
+        $.ajax({
+            type: "POST",
+            url: "/SchoolCalender/Delete",
+            data: data,
+            contentType: false,
+            processData: false,
+            // cache: false,//
+            success: function () {
+                $('#event-modal').modal('hide');
+                load();
+            }
+        })
+    }
+
+    $('#save-event').click(function () {
+        debugger
+        saveEvent();
+    });
+    $('#remove-event').click(function () {
+        debugger
+        removeEvent();
+    });
+    function load() {
+        var events = [];
+        $.ajax({
+            url: '/SchoolCalender/getSchoolCalendar',
+            contentType: 'application/json; charset=utf-8',
+            datatype: 'json',
+            type: "GET",
+            success: function (result) {
+                debugger
+                for (var i = 0; i < result.length; i++) {
+                    events.push({
+                        id: result[i].CalenderSeqNo,
+                        title: result[i].DateComment,
+                        desc: result[i].SpecialComment,
+                        remark: result[i].SpecialComment,
+                        start: moment(result[i].FromDate).format('YYYY-MM-DD'),
+                        end: moment(result[i].ToDate).format('YYYY-MM-DD'),
+                        todate: moment(result[i].ToDate).format('YYYY-MM-DD'),
+                        isholliday: result[i].IsHoliday,
+                    });
+                }
+                //$('#calendar').data('calendar').setDataSource(events);
+                $('#calendar').fullCalendar('removeEvents');
+                $('#calendar').fullCalendar('addEventSource', events);
+                $('#calendar').fullCalendar('rerenderEvents');
+            }
+        });
+    }
+</script>
+

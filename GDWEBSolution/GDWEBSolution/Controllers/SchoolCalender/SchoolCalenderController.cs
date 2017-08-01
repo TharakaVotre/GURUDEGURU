@@ -75,6 +75,34 @@ namespace GDWEBSolution.Controllers.SchoolCalender
            
         }
 
+
+        public ActionResult getSchoolCalendar()
+        {
+
+            var Group = Connection.GDgetSchoolCalenderEvent("CKC", "2017", "Y");
+            List<GDgetSchoolCalenderEvent_Result> Grouplist = Group.ToList();
+
+            List<SchoolCalenderModel> List = Grouplist.Select(x => new SchoolCalenderModel
+            {
+                CalenderSeqNo=x.CalenderSeqNo,
+                SchoolId=x.SchoolId,
+                AcadamicYear=x.AcadamicYear,
+                DateComment = x.DateComment,
+                IsHoliday=x.IsHoliday,
+                SpecialComment=x.SpecialComment,
+                FromDate = x.FromDate,
+                ToDate = x.ToDate,
+                IsActive=x.IsActive
+
+            }).ToList();
+            return Json(List, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Calendar()
+        {
+            return View();
+        }
+
         public ActionResult ShowAddView(string id)
         {
             SchoolCalenderModel TModel = new SchoolCalenderModel();
@@ -87,42 +115,40 @@ namespace GDWEBSolution.Controllers.SchoolCalender
         [HttpPost]
         public ActionResult Create(SchoolCalenderModel Model)
         {
-            
-            SchooId = USession.School_Id;
-            UserId = USession.User_Id;
+            string _resutl = "Error";
             try
             {
-                
-                string holyday="N";
-                if (Model.IsHoliday == "on")
+                if (Model.CalenderSeqNo == 0)
                 {
-                     holyday="Y";
+                    Connection.GDsetSchoolCalenderActivity("CKC", 
+                                                            Model.AcadamicYear, 
+                                                            Model.DateComment, 
+                                                            "N",
+                                                            Model.SpecialComment, 
+                                                            Model.FromDate,
+                                                            Model.ToDate,
+                                                            "Azi@",
+                                                            "Y");
                 }
-
-                Connection.GDsetSchoolCalenderActivity(SchooId, Model.AcadamicYear, Model.DateComment, holyday, Model.SpecialComment, Model.FromDate, Model.ToDate, UserId, "Y");
+                else
+                {
+                    Connection.GDModifySchoolCalenderActivity(Model.CalenderSeqNo,
+                                                                Model.ToDate,
+                                                                Model.FromDate, 
+                                                                Model.SpecialComment,
+                                                                Model.DateComment,
+                                                                "N",
+                                                                "Azi@");   
+                }
                 Connection.SaveChanges();
-
-                //return View();
-
-                return RedirectToAction("Index");
+                _resutl = "Success";   
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception Ex)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                Errorlog.ErrorManager.LogError("@SchoolCalender Create(SchoolCalenderModel Model)", Ex);
+                _resutl = "Exception";
             }
+            return Json(_resutl, JsonRequestBehavior.AllowGet);
         }
 
         private void drplist()
@@ -198,7 +224,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
 
 
 
-         [UserFilter(Function_Id = "ScCal")]
+        // [UserFilter(Function_Id = "ScCal")]
         public ActionResult Delete(long SeqNo)
         {
            
@@ -215,7 +241,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
             }
         }
 
-         [UserFilter(Function_Id = "ScCal")]
+        // [UserFilter(Function_Id = "ScCal")]
         [HttpPost]
         public ActionResult Delete(SchoolCalenderModel Model)
         {
@@ -223,20 +249,18 @@ namespace GDWEBSolution.Controllers.SchoolCalender
             UserId = USession.User_Id;
             try
             {
-                Connection.GDDeleteSchoolCalenderActivity(Model.CalenderSeqNo, UserId,"N");
+                Connection.GDDeleteSchoolCalenderActivity(Model.CalenderSeqNo, "Azi@","N");
                 Connection.SaveChanges();
-
-
                 return Json(true, JsonRequestBehavior.AllowGet);
-                
             }
             catch (Exception ex)
             {
 
                 Errorlog.ErrorManager.LogError(ex);
-                return View();
+                return Json(false, JsonRequestBehavior.AllowGet);
 
             }
+            
         }
 
 

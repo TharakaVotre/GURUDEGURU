@@ -804,6 +804,9 @@
     <Content Include="Content\css\daterangepicker.css" />
     <Content Include="Content\css\fileinput.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\fullcalendar.css" />
+    <Content Include="Content\css\fullcalendar.min.css" />
+    <Content Include="Content\css\fullcalendar.print.css" />
     <Content Include="Content\css\hover-min.css" />
     <Content Include="Content\css\hover.css" />
     <Content Include="Content\css\jquery.dataTables.min.css" />
@@ -1169,6 +1172,7 @@
       <LastGenOutput>DBEntityModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -1482,6 +1486,7 @@
     <Content Include="Views\Parent\EditParent.cshtml" />
     <Content Include="Views\Parent\EditParentDetailsView.cshtml" />
     <Content Include="Views\Parent\Index.cshtml" />
+    <Content Include="Views\SchoolCalender\Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attachments\" />
