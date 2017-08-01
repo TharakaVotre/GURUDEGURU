@@ -1,5 +1,4 @@
-﻿using GDWEBSolution.Filters;
-using GDWEBSolution.Models;
+﻿using GDWEBSolution.Models;
 using GDWEBSolution.Models.Report;
 using GDWEBSolution.Models.User;
 using System;
@@ -16,8 +15,7 @@ namespace GDWEBSolution.Controllers.ExtraCurriculerActivity
         UserSession USession = new UserSession();
         //
         // GET: /ExtraCurriculerActivity/
-        string SchoolId = null;
-          [UserFilter(Function_Id = "ExRe")]
+        string SchoolId = null; 
         public ActionResult Index()
         {
             try
@@ -57,7 +55,7 @@ namespace GDWEBSolution.Controllers.ExtraCurriculerActivity
             }
             return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
         }
-         [UserFilter(Function_Id = "ExRe")]
+
         public ActionResult StudantReport(string Activity, string GradeId, string ClassId)
         {
             

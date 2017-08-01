@@ -5447,6 +5447,9 @@
           <Parameter Name="LoginEmail" Type="varchar" Mode="In" />
           <Parameter Name="Modifiedby" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SMGTModifyADminuserStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SMGTModifyClassStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchoolId" Type="varchar" Mode="In" />
           <Parameter Name="ClassId" Type="varchar" Mode="In" />
@@ -7338,6 +7341,9 @@
             <Parameter Name="Password" Mode="In" Type="String" />
             <Parameter Name="LoginEmail" Mode="In" Type="String" />
             <Parameter Name="Modifiedby" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SMGTModifyADminuserStatus">
+            <Parameter Name="UserId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SMGTModifyClassStatus">
             <Parameter Name="SchoolId" Mode="In" Type="String" />
@@ -14992,6 +14998,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SMGTModifyAdminUser" FunctionName="SchoolMGTModel.Store.SMGTModifyAdminUser" />
+          <FunctionImportMapping FunctionImportName="SMGTModifyADminuserStatus" FunctionName="SchoolMGTModel.Store.SMGTModifyADminuserStatus" />
           <FunctionImportMapping FunctionImportName="SMGTModifyClassStatus" FunctionName="SchoolMGTModel.Store.SMGTModifyClassStatus" />
           <FunctionImportMapping FunctionImportName="SMGTModifyEvaluationDetailStatus" FunctionName="SchoolMGTModel.Store.SMGTModifyEvaluationDetailStatus" />
           <FunctionImportMapping FunctionImportName="SMGTModifyEvaluationHeaderStatus" FunctionName="SchoolMGTModel.Store.SMGTModifyEvaluationHeaderStatus" />

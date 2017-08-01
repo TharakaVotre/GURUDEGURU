@@ -3072,6 +3072,15 @@ namespace GDWEBSolution.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTModifyAdminUser", schoolIdParameter, adminidParameter, personNameParameter, mobileParameter, passwordParameter, loginEmailParameter, modifiedbyParameter);
         }
     
+        public virtual int SMGTModifyADminuserStatus(string userId)
+        {
+            var userIdParameter = userId != null ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMGTModifyADminuserStatus", userIdParameter);
+        }
+    
         public virtual int SMGTModifyClassStatus(string schoolId, string classId, string gradeId)
         {
             var schoolIdParameter = schoolId != null ?

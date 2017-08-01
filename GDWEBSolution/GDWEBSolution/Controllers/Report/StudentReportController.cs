@@ -23,7 +23,7 @@ namespace GDWEBSolution.Controllers.Report
         
         //
         // GET: /StudentReport/
-    // [UserFilter(Function_Id = "StReI")]
+    [UserFilter(Function_Id = "StReI")]
         public ActionResult Index(string AccYear, string Eveluation)
         {
 
@@ -143,7 +143,7 @@ namespace GDWEBSolution.Controllers.Report
             }
             return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
         }
-      //   [UserFilter(Function_Id = "StReI")]
+         [UserFilter(Function_Id = "StReI")]
              public ActionResult StudantReport(string EveluationId, string AccYear, string studentId)
         {
             
@@ -168,7 +168,7 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-      //   [UserFilter(Function_Id = "StReI")]
+        [UserFilter(Function_Id = "StReI")]
         public ActionResult ClassReport(string EveluationId,string AccYear,string ClassId,string GradeId)
         {
             
@@ -199,7 +199,7 @@ namespace GDWEBSolution.Controllers.Report
         }
 
 
-       //  [UserFilter(Function_Id = "StReP")]
+         [UserFilter(Function_Id = "StReP")]
          public ActionResult ParentReport(string AccYear, string Eveluation)
         {
             
@@ -249,7 +249,7 @@ namespace GDWEBSolution.Controllers.Report
 
             ViewBag.ExtraCurriculerActivity = new SelectList(ExtraCurriculerActivitylist, "ActivityCode", "ActivityName");
         }
-       //  [UserFilter(Function_Id = "StReI")]
+         [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentSubjectIndex()
         {
              
@@ -257,7 +257,7 @@ namespace GDWEBSolution.Controllers.Report
             Dropdown2();
             return View();
         }
-       //   [UserFilter(Function_Id = "StReI")]
+          [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentSubject(string AccYear,string GradeId, string StudentId)
         {
 
@@ -289,7 +289,7 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-     //     [UserFilter(Function_Id = "StReI")]
+         [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInClass( string ClassId,string GradeId)
         {
 
@@ -321,7 +321,7 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-    //      [UserFilter(Function_Id = "StReI")]
+         [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInExtraActivity(string ActivityId)
         {
 
@@ -349,7 +349,7 @@ namespace GDWEBSolution.Controllers.Report
                 return View();
             }
         }
-    //      [UserFilter(Function_Id = "StReI")]
+          [UserFilter(Function_Id = "StReI")]
         public ActionResult StudentInSubject(string GradeId, string ClassId, string SubjectId)
         {
 

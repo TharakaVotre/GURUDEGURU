@@ -32,7 +32,7 @@
 
     function DeleteSchoolAdmin(SchoolId, AdminUserId) {
         debugger
-        var Url = "/School/DeleteGrade?SchoolId=" + SchoolId + "&GradeId=" + GradeId;
+        var Url = "/School/DeleteAdmin?SchoolId=" + SchoolId + "&AdminUserId=" + AdminUserId;
         $("#DeleteModelBody").load(Url, function () {
             $("#deleteModel").modal("show");
         })

@@ -408,7 +408,6 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             try
             {
-                string result = "Error";
                 var count = Connection.tblTeacherQualifications.Count(u => u.TeacherId == Model.Teacher_Id && 
                             u.QualificationId == Model.QualificationId);
                 if (count == 0)
@@ -424,20 +423,24 @@ namespace GDWEBSolution.Controllers.Teacher
                     Connection.tblTeacherQualifications.Add(NewQ);
                     Connection.SaveChanges();
 
-                    result = Model.Teacher_Id.ToString();
+                    //result = Model.Teacher_Id.ToString();
 
                     ViewBag.TeacherId = Model.Teacher_Id.ToString();
+                    var result = new { Teacher_Id = Model.Teacher_Id, msg = "Success" };
+                    return Json(result, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    result = "Exits";
+                    var result = new { Teacher_Id = Model.Teacher_Id, msg = "Exits" };
+                    return Json(result, JsonRequestBehavior.AllowGet);
                 }
-                return Json(result, JsonRequestBehavior.AllowGet);
+               
             }
             catch (Exception Ex)
             {
                 Errorlog.ErrorManager.LogError("Teacher Controller - AddQualification(QualificationModel Model)",Ex);
-                return Json("Exception", JsonRequestBehavior.AllowGet);
+                var result = new { Teacher_Id = Model.Teacher_Id, msg = "Exception" };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -446,7 +449,6 @@ namespace GDWEBSolution.Controllers.Teacher
         {
             try
             {
-                string result = "Error";
                 var count = Connection.tblTeacherExtraCurricularActivities.Count(
                                             u => u.TeacherId == Model.TeacherID && 
                                             u.ActivityCode == Model.ActivityCode);
@@ -465,18 +467,20 @@ namespace GDWEBSolution.Controllers.Teacher
                     Connection.tblTeacherExtraCurricularActivities.Add(NewQ);
                     Connection.SaveChanges();
 
-                    result = Model.TeacherID.ToString();
+                    var result = new { Teacher_Id = Model.TeacherID, msg = "Success" };
+                    return Json(result, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    result = "Exits";
+                    var result = new { Teacher_Id = Model.TeacherID, msg = "Exits" };
+                    return Json(result, JsonRequestBehavior.AllowGet);
                 }
-                return Json(result, JsonRequestBehavior.AllowGet);
             }
             catch (Exception Ex)
             {
                 Errorlog.ErrorManager.LogError("Teacher Controller - AddExtraActivity(ExtraActivityModel Model)", Ex);
-                return Json("Exception", JsonRequestBehavior.AllowGet);
+                var result = new { Teacher_Id = Model.TeacherID, msg = "Exception" };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
         }
 

@@ -1386,6 +1386,41 @@ namespace GDWEBSolution.Controllers
              return PartialView("DeleteSchoolHouse", Model);
          }
 
+         public ActionResult DeleteAdmin(string SchoolId, string AdminUserId)
+         {
+             SchoolAdminModel Model = new SchoolAdminModel();
+             Model.SchoolId = Schoold;
+             Model.AdminUserId = AdminUserId;
+             return PartialView("DeleteSchoolAdmin", Model);
+         }
+
+         [HttpPost]
+         public ActionResult DeleteSchoolAdmin(SchoolAdminModel Model)
+         {
+             try
+             {
+                 tblUser usr = new tblUser();
+
+                 Connection.SMGTModifyADminuserStatus(Model.AdminUserId);
+                 Connection.SaveChanges();
+
+                 //tblSchoolGrade Tble = Connection.tblSchoolGrades.Find(Model.SchoolId, Model.GradeId);
+                 //Connection.tblSchoolGrades.Remove(Tble);
+                 //Connection.SaveChanges();
+                 //Connection.SMGTModifyClassStatus(Model.SchoolId, "%", Model.GradeId);
+                 //Connection.SaveChanges();
+
+                 return Json(Model.SchoolId, JsonRequestBehavior.AllowGet);
+                 //return RedirectToAction("Index");
+             }
+             catch
+             {
+                 return Json("Error", JsonRequestBehavior.AllowGet);
+             }
+         }
+
+
+
          [HttpPost]
          public ActionResult DeleteSchoolgrades(SchoolGradeModel Model)
          {
