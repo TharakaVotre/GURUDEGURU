@@ -253,3 +253,4 @@ paket-files/
 GDWEBSolution/GDWEBSolution/UploadedFiles/CORegistryReport.pdf
 *.jpg
 *.docx
+GDWEBSolution/GDWEBSolution/Controllers/SchoolCalender/SchoolCalenderController.cs
