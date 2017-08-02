@@ -123,7 +123,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
                     Connection.GDsetSchoolCalenderActivity("CKC", 
                                                             Model.AcadamicYear, 
                                                             Model.DateComment, 
-                                                            "N",
+                                                            Model.IsHoliday,
                                                             Model.SpecialComment, 
                                                             Model.FromDate,
                                                             Model.ToDate,
@@ -137,7 +137,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
                                                                 Model.FromDate, 
                                                                 Model.SpecialComment,
                                                                 Model.DateComment,
-                                                                "N",
+                                                                Model.IsHoliday,
                                                                 "Azi@");   
                 }
                 Connection.SaveChanges();

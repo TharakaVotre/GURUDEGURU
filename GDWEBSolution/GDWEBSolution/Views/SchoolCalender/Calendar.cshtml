@@ -50,7 +50,15 @@
                     <div class="form-group">
                         <label for="min-date" class="col-sm-3 control-label">Is a Holliday</label>
                         <div class="col-sm-7">
-                            <input name="event-isholliday" class="form-control" type="text">
+                            @*<input name="event-isholliday" class="form-control" type="text" maxlength="1" style="text-transform:uppercase" >*@
+   
+                            <div class="checkbox">
+														<input name="event-isholliday" id="isHoli" type="checkbox">
+														<label for="checkbox1">
+															Y/N
+														</label>
+													</div>
+                        
                         </div>
                     </div>
                     <div class="form-group">
@@ -90,12 +98,16 @@
         function editEvent(event) {
             $('#event-modal input[name="event-name"]').val(event ? event.name : '');
             $('#event-modal input[name="event-index"]').val(event ? event.id : '');
+            debugger
+            if (event.isholliday == "Y") { $('#isHoli').prop('checked', true); }
+            else { $('#isHoli').prop('checked', false);}
             $('#event-modal input[name="event-remark"]').val(event ? event.remark : '');
-            $('#event-modal input[name="event-isholliday"]').val(event ? event.isholliday : '');
+            
             $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
             $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
             debugger
             if (event.id != "0") { $("#remove-event").show(); }
+            else { $("#remove-event").hide(); }
             $('#event-modal').modal();
         }
 
@@ -145,7 +157,7 @@
             start: $('#event-modal input[name="event-start-date"]').val(),
             end: $('#event-modal input[name="event-end-date"]').val(),
             remark: $('#event-modal input[name="event-remark"]').val(),
-            isholliday: $('#event-modal input[name="event-isholliday"]').val(),
+            isholliday: $('#isHoli').is(':checked'),
         }
         var data = new FormData;
         data.append("CalenderSeqNo", parseInt(event.id));
@@ -154,7 +166,7 @@
         data.append("SpecialComment", event.remark);
         data.append("FromDate", event.start);
         data.append("ToDate", event.end);
-        data.append("IsHoliday", event.isholliday);
+        data.append("IsHoliday", event.isholliday ? 'Y' : 'N');
 
         $.ajax({
             type: "POST",
