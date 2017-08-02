@@ -43,6 +43,7 @@
 <Navigation title="School Calender" action="#" controller="#" url="#">
 <Child title="School Calender" action="Index" controller="SchoolCalender" url="#"/>
 <Child title="School Calender View" action="ParentView" controller="SchoolCalender" url="#"/>
+  <Child title="School Calender New" action="Calendar" controller="SchoolCalender" url="#"/>
 </Navigation>
 <Navigation title="Report" action="#" controller="#" url="#">
 <Child title="Attention required Subject" action="Index" controller="StudentReport" url="#"/>
