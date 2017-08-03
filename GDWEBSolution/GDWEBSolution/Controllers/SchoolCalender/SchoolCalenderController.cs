@@ -127,7 +127,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
                                                             Model.SpecialComment, 
                                                             Model.FromDate,
                                                             Model.ToDate,
-                                                            "Azi@",
+                                                            "SchoolAdmin",
                                                             "Y");
                 }
                 else
@@ -138,7 +138,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
                                                                 Model.SpecialComment,
                                                                 Model.DateComment,
                                                                 Model.IsHoliday,
-                                                                "Azi@");   
+                                                                "SchoolAdmin");   
                 }
                 Connection.SaveChanges();
                 _resutl = "Success";   
@@ -249,7 +249,7 @@ namespace GDWEBSolution.Controllers.SchoolCalender
             UserId = USession.User_Id;
             try
             {
-                Connection.GDDeleteSchoolCalenderActivity(Model.CalenderSeqNo, "Azi@","N");
+                Connection.GDDeleteSchoolCalenderActivity(Model.CalenderSeqNo, "SchoolAdmin","N");
                 Connection.SaveChanges();
                 return Json(true, JsonRequestBehavior.AllowGet);
             }

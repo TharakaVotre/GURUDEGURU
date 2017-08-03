@@ -18,7 +18,7 @@
 
         </div>
         <div class="div123">
-            @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-2 control-label" })
+            @Html.LabelFor(m => m.GradeId, new { @class = "col-sm-1 control-label" })
             <div class="col-sm-3">
                 @Html.DropDownListFor(model => model.GradeId1, ViewBag.grdschooldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School " })
             </div>
@@ -82,7 +82,7 @@
 
                 else if (result == "fill") {
                     //$("#ErrorUName").prop('value', 'User Name Already Exits');
-                    $("#ErrorLable").text("Select Every Field");
+                    $("#ErrorLable").text("Please fillout all the fields before saving");
                     //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
 

@@ -29,7 +29,7 @@
                                 <div class="col-sm-7">
                                     @Html.DropDownListFor(model => model.TeacherCategoryId, ViewBag.TeacherCategoryDrpDown as SelectList, "", new { @class = "form-control"})
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 errormsg">
                                     @Html.ValidationMessageFor(model => model.TeacherCategoryId, null, new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -39,17 +39,17 @@
                                 <div class="col-sm-7">
                                     @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name of the Teacher" ,@maxlength = "100" })
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 errormsg">
                                     @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-sm-2 control-label" })
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 errormsg">
                                     @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", @placeholder = "mm/dd/yyyy",@Value = "" })
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 errormsg">
                                     @Html.ValidationMessageFor(model => model.DateOfBirth, null, new { @class = "text-danger"  })
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                                     @Html.TextBoxFor(model => model.Address2, new { @class = "form-control mb", @placeholder = "Address Line 2" ,@maxlength = "150" })
                                     @Html.TextBoxFor(model => model.Address3, new { @class = "form-control input-sm", @placeholder = "Address Line 3" ,@maxlength = "150" })
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 errormsg">
                                     @Html.ValidationMessageFor(model => model.Address1, null, new { @class = "text-danger" })
                                     @Html.ValidationMessageFor(model => model.Address2, null, new { @class = "text-danger" })
                                     @Html.ValidationMessageFor(model => model.Address3, null, new { @class = "text-danger" })
@@ -72,7 +72,7 @@
                                 <div class="col-sm-7">
                                     @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control", @placeholder = "Telephone Number",@maxlength = "20" })
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 errormsg">
                                     @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
 														</label>
 													</div>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 errormsg">
                                     @Html.ValidationMessageFor(model => model.Gender, null, new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                 <div class="col-sm-7">
                                     @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Teacher Description" ,@maxlength = "500" })
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 errormsg">
                                     @Html.ValidationMessageFor(model => model.Description, null, new { @class = "text-danger" })
                                 </div>
                             </div>

@@ -9,8 +9,9 @@
         <!-- Zero Configuration Table -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                @if(ViewBag.BtnStatus!=false){
-                    <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span> Add New</button>
+                @if (ViewBag.BtnStatus != false)
+                {
+                    <button type="button" class="btn btn-primary" onclick="ShowView(1)"><span class="fa fa-plus"></span>Add New</button>
                 }
             </div>
             @*<div class="panel-heading"><button type="button" class="btn btn-primary" onclick="ShowView2(1)"><span class="fa fa-plus"></span> Add file</button></div>*@
@@ -25,24 +26,19 @@
                                 @Html.DisplayNameFor(model => model.SchoolName)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Addresst)
+                                @*@Html.DisplayNameFor(model => model.Addresst)*@ Address
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Address2)
-                            </th>
-                             <th>
-                                @Html.DisplayNameFor(model => model.Address3)
-                            </th>
+                            
                             <th>
                                 @Html.DisplayNameFor(model => model.Telephone)
                             </th>
-                           @* <th>
+                             <th>
                                 @Html.DisplayNameFor(model => model.WebAddress)
-                            </th>*@
-                          
-                           
-                           
-                            <th style="max-width:800px"></th>
+                            </th>
+
+
+
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,43 +46,35 @@
                         {
                             foreach (var item in Model)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SchoolId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SchoolName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Address1)
-                                    </td>
-                                      <td>
-                                        @Html.DisplayFor(modelItem => item.Address2)
-                                    </td>
-                                      <td>
-                                        @Html.DisplayFor(modelItem => item.Address3)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Telephone)
-                                    </td>
-                                    @*<td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SchoolId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SchoolName)
+                                </td>
+                                <td>
+                                    @*@Html.DisplayFor(modelItem => item.Address1)
+                                    @Html.DisplayFor(modelItem => item.Address2)*@
+                                    @Html.DisplayFor(modelItem => item.Address3)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Telephone)
+                                </td>
+                                <td>
                                         @Html.DisplayFor(modelItem => item.WebAddress)
-                                    </td>*@
-                                   
-                                 
-
-                                   
-                                  
-                                    <td style="width:30%">
-                                        <center>
-                                       
-                                         <a class="btn btn-primary"  onclick="DetailView('@item.SchoolId')"><span class="glyphicon glyphicon-eye-open"></span> Detail </a>
-                                         <a class="btn btn-info" onclick='EditView("@item.SchoolId")'><span class="fa fa-pencil"></span> Edit </a>
-                                        <a class="btn btn-danger" onclick='DeleteView("@item.SchoolId")'><span class="fa fa-trash"></span> Delete</a>
-
-                                       </center>
                                     </td>
-                                </tr>
+
+
+
+
+
+                                <td>
+                                    <a href="#" class="hvr-buzz-out"  onclick="DetailView('@item.SchoolId')">Detail</a> |
+                                         <a href="#" class="hvr-buzz-out"  onclick='EditView("@item.SchoolId")'>Edit</a> |
+                                        <a href="#" class="hvr-buzz-out"  onclick='DeleteView("@item.SchoolId")'>Delete</a>
+                                </td>
+                            </tr>
                             }
                         }
                     </tbody>

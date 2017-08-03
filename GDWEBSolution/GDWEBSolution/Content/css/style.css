@@ -1477,3 +1477,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
     padding-right: 5px;
 }
 
+.errormsg {
+    font-size:small; 
+    padding-top:8px;
+}

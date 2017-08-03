@@ -2,21 +2,11 @@
 <form id="FrmSubject" class="form-horizontal">
     <div class="form-group">
         
-
-       
-        @Html.Hidden("SchoolId")
-        @*@Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-4">
-                @Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolfrhdrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", @disabled = "disabled" })
-            </div>*@
-       
-          
-        </div>
- 
+     @Html.Hidden("SchoolId")
 
      @Html.LabelFor(m => m.SchoolId, new { @class = "col-sm-2 control-label" })
 
-     <div class="col-sm-4">
+     <div class="col-sm-3">
            
              @Html.DropDownListFor(model => model.SchoolIds, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "Academic", @onchange = "loadschoolsub(this.value)" })
             </div>
@@ -25,17 +15,17 @@
 
 
       
-        <div class="col-sm-4">
+        <div class="col-sm-3">
            @* @Html.DropDownListFor(model => model.AcademicYear, listItems, "", new { @class = "form-control", @placeholder = "Academic Year", @onchange = "loadyrSub(this.value)"})*@
              @Html.DropDownListFor(model => model.AcademicYear, ViewBag.AcademicYear as SelectList, "", new { @class = "form-control", @placeholder = "Academic" , @onchange = "loadyrSub(this.value)"})
             </div>
-          <div class="form-group"></div>
        
    
-
+        </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.SubjectNamel, new { @class = "col-sm-2 control-label" })
 
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             @Html.DropDownListFor(model => model.SubjectId, ViewBag.SubjectscldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
 
             @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
@@ -44,19 +34,17 @@
    
         @Html.LabelFor(m => m.SubjectCategoryId, new { @class = "col-sm-2 control-label" })
 
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             @Html.DropDownListFor(model => model.SubjectCategoryId, ViewBag.SubcatscldrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group" })
 
             @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
 
         </div>
-   
-      <br /><br /><br />
-      <div class="form-group">
-        <div class="col-sm-1" style=" margin-left:90%">
+        <div class="col-sm-2">
             <button  type="button" id="btnAddSclSubjects" onclick="AddSclSubjects()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
         </div>
-        </div>
+   </div>
+        
         <div class="hr-dashed"></div>
         @*     <h4 style="padding-left:120px;">Qualifications</h4>
             <div class="hr-dashed"></div>*@
@@ -87,7 +75,7 @@
     var loadschoolsub = function (value) {
         debugger
 
-      
+
         $('#showSubjects').load('/School/ShowSchoolSubjectsload?AcademicYear=%&SchoolId=' + value);
     }
 
@@ -110,18 +98,18 @@
             success: function (result) {
                 //$("#loaderDiv").hide();
                 // $("#myModal").modal("hide");
-               // if (result != "Exception" && result != "Exits" && result != "fill") {
-                    if (result.split('!')[0] == "sessioncheck") {
-                        debugger
-                     
+                // if (result != "Exception" && result != "Exits" && result != "fill") {
+                if (result.split('!')[0] == "sessioncheck") {
+                    debugger
+
                     //window.location.href = "/Teacher/Create";
-               
+
 
                     //  $('#ResultDIV').load('/Teacher/ShowTeacherQualificatoin', ShowTeacherQualificatoinAction);
                     // $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + result + '&SchoolId=' + ssid2);
 
                     var res = result.split("!");
-                    $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + res[1] + '&SchoolId='+ res[2] );
+                    $('#showSubjects').load('/School/ShowSchoolSubjects?AcademicYear=' + res[1] + '&SchoolId=' + res[2]);
                     $("#SuccesLable").text("Subject Added");
                     // $("#btnAddQualification").prop('value', 'Save');
                     $("#SuccesModel").modal("show");
@@ -144,7 +132,7 @@
 
                 else if (result == "fill") {
                     //$("#ErrorUName").prop('value', 'User Name Already Exits');
-                    $("#ErrorLable").text("Select Every Field");
+                    $("#ErrorLable").text("Please fillout all the fields before saving");
                     //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
 
@@ -155,7 +143,7 @@
                     window.location.href = "/Home/Logout";
 
                 }
-             
+
 
             }
 
