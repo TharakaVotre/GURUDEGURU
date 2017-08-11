@@ -5,39 +5,39 @@
         @Html.HiddenFor(model => model.SchoolId)
         @Html.HiddenFor(model => model.ActivityName)
         @Html.LabelFor(m => m.SchoolName, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             @Html.DropDownListFor(model => model.SchoolIdE, ViewBag.SchoolDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadEXactivsewe(this.value)" })
             </div>
         @Html.LabelFor(m => m.GradeIdE, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             @Html.DropDownListFor(model => model.GradeIdE, ViewBag.SGradeDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadClassse(this.value)" })
         </div>
-        <br/><br />
+        </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.ClassIdE, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             @Html.DropDownListFor(model => model.ClassIdE, ViewBag.classDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadStudentsse(this.value)" })
         </div>
 
         @Html.LabelFor(m => m.StudentIdE, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             @Html.DropDownListFor(model => model.StudentIdE, ViewBag.classDrpDown as SelectList, "", new { @class = "form-control", @placeholder = "Student", @onchange = "loadEXactivsescl(this.value)" })
         </div>
-        <br /><br />
-
+        </div>
+       <div class="form-group">
             @Html.LabelFor(m => m.ActivityName, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-4">
+        <div class="col-sm-3">
                 @Html.DropDownListFor(model => model.ActivityCode, ViewBag.excdropdown as SelectList, "", new { @class = "form-control", @placeholder = "Activity" })
 
                 @*@Html.DropDownListFor(model => model.SchoolId, ViewBag.SchoolgrddrpList as SelectList, "", new { @class = "form-control", @placeholder = "School Group", onchange = "document.location.href = '/School/ShowSchoolGrade?SchoolId=' + this.options[this.selectedIndex].value;" })*@
 
         </div>
-
-
-
-            <div class="col-sm-2">
+           <div class="col-sm-4"></div>
+           <div class="col-sm-2">
                 <button type="button" id="btnAddQualification" onclick="AddActivity()" class="btn btn-primary"><span class="fa fa-bookmark"></span> Save</button>
             </div>
-        </div>
+
+</div>
     <div class="hr-dashed"></div>
     @*     <h4 style="padding-left:120px;">Qualifications</h4>
         <div class="hr-dashed"></div>*@
@@ -247,7 +247,7 @@
 
                 else if (result == "fill") {
                     //$("#ErrorUName").prop('value', 'User Name Already Exits');
-                    $("#ErrorLable").text("Select every field");
+                    $("#ErrorLable").text("Please fillout all the fields before saving");
                     //$("#btnAddQualification").prop('value', 'Save');
                     $("#myModal").modal("show");
 
