@@ -1017,9 +1017,10 @@ li {
 .ts-sidebar-menu a {
     display: block;
     text-decoration: none;
-    text-transform: uppercase;
     font-size: 14px;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
+    font-size: 12px;
+    /*text-transform: uppercase;*/
     font-weight: 500;
     letter-spacing: .24px;
     padding: 12px 15px;
@@ -1074,7 +1075,7 @@ li {
 
 .more i {
     color: #fff;
-    padding: 15px;
+    padding: 11.5px;
     transition: transform 0.3s;
 }
 
@@ -1091,12 +1092,12 @@ li {
 
 @media only screen and (min-width: 992px) {
     .ts-main-content .ts-sidebar {
-        width: 250px;
+        width: 200px;
         float: left;
     }
 
     .ts-main-content .content-wrapper {
-        margin-left: 250px;
+        margin-left: 200px;
     }
 }
 /* Login page */
