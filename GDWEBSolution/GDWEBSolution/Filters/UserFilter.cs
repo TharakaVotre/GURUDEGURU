@@ -17,7 +17,7 @@ namespace GDWEBSolution.Filters
         public string Function_Id { get; set; }
 
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
-        
+
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             UserSession _session = new UserSession();
@@ -25,7 +25,7 @@ namespace GDWEBSolution.Filters
             if (_session.User_Id != "" || _session.User_Category != "")
             {
                 var count = Connection.tblUserCategoryFunctions.Count(
-                                        u => u.CategoryId == _session.User_Category 
+                                        u => u.CategoryId == _session.User_Category
                                         && u.FunctionId == Function_Id);
                 if (count == 0)
                 {

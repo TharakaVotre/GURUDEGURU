@@ -20,106 +20,35 @@ namespace GDWEBSolution.Controllers.Student
         SchoolMGTEntitiesConnectionString Connection = new SchoolMGTEntitiesConnectionString();
         UserSession USession = new UserSession();
 
-        private void Authentication(string ControlerName)
-        {
-
-            if (USession.User_Id != "")
-            {
-                string CategoryId = USession.User_Category;
-                tblUserCategoryFunction AccessControl = Connection.tblUserCategoryFunctions.SingleOrDefault(a => a.FunctionId == ControlerName && a.CategoryId == CategoryId && a.IsActive == "Y");
-
-                if (AccessControl == null)
-                {
-                    //RedirectToAction("~/Prohibited");
-                    Response.Redirect("~/Prohibited");
-                }
-
-            }
-            else
-            {
-                // RedirectToAction();
-                Response.Redirect("~/Home/Login");
-            }
-        }
-         [UserFilter(Function_Id = "STCF")]
+        [UserFilter(Function_Id = "STCF")]
         public ActionResult Index()
         {
-           // Authentication("STCF");
-            if (USession.User_Category == "SADMI")
+            var student = Connection.SMGTGetStudent(USession.School_Id);
+
+            List<SMGTGetStudent_Result> Categorylist = student.ToList();
+            List<StudentModel> tcmlist = Categorylist.Select(x => new StudentModel
             {
+                SchoolId = x.SchoolId,
+                SchoolName = x.SchoolName,
+                DateOfBirth = x.DateofBirth,
+                CreatedDate = x.CreatedDate,
+                StudentId = x.StudentId,
+                StudentName = x.studentName,
+                ClassId = x.ClassName,
+                GradeId = x.GradeName,
+                IsActive = x.IsActive,
+                ModifiedBy = x.ModifiedBy,
+                ModifiedDate = x.ModifiedDate
 
-                var student = Connection.SMGTGetStudent(USession.School_Id);
-
-                List<SMGTGetStudent_Result> Categorylist = student.ToList();
-                StudentModel schl = new StudentModel();
-                List<StudentModel> tcmlist = Categorylist.Select(x => new StudentModel
-                {
-
-                    SchoolId = x.SchoolId,
-                    SchoolName = x.SchoolName,
-                    DateOfBirth = x.DateofBirth,
-                    CreatedDate = x.CreatedDate,
-                    StudentId = x.StudentId,
-                    StudentName = x.studentName,
-                    ClassId = x.ClassName,
-                    GradeId = x.GradeName,
-
-
-
-                    IsActive = x.IsActive,
-                    ModifiedBy = x.ModifiedBy,
-                    ModifiedDate = x.ModifiedDate
-
-                }).ToList();
-
-
-
-
-                return View(tcmlist);
-
-
-            }
-            else
-            {
-
-                var student = Connection.SMGTGetStudent("%");
-
-                List<SMGTGetStudent_Result> Categorylist = student.ToList();
-                StudentModel schl = new StudentModel();
-                List<StudentModel> tcmlist = Categorylist.Select(x => new StudentModel
-                {
-
-                    SchoolId = x.SchoolId,
-                    SchoolName = x.SchoolName,
-                    DateOfBirth = x.DateofBirth,
-                    CreatedDate = x.CreatedDate,
-                    StudentId = x.StudentId,
-                    StudentName = x.studentName,
-                    ClassId = x.ClassName,
-                    GradeId = x.GradeName,
-
-
-
-                    IsActive = x.IsActive,
-                    ModifiedBy = x.ModifiedBy,
-                    ModifiedDate = x.ModifiedDate
-
-                }).ToList();
-
-
-
-
-                return View(tcmlist);
-            }
+            }).ToList();
+            return View(tcmlist);
         }
 
-        //
-        // GET: /Student/Details/5
+
+
         [UserFilter(Function_Id = "STCF")]
         public ActionResult Details(string StudentId, string SchoolId)
         {
-
-            Authentication("STCF");
             StudentModel TModel = new StudentModel();
 
             tblStudent TCtable = Connection.tblStudents.SingleOrDefault(x => x.StudentId == StudentId && x.SchoolId == SchoolId);
@@ -454,7 +383,6 @@ namespace GDWEBSolution.Controllers.Student
         [UserFilter(Function_Id = "STCF")]
         public ActionResult Edit(string StudentId,string SchoolId)
         {
-            Authentication("STCF");
 
             var StudentSextra = Connection.SMGTloadScholExtraCadd(SchoolId, "%").ToList();
 
@@ -496,7 +424,6 @@ namespace GDWEBSolution.Controllers.Student
         [UserFilter(Function_Id = "STCF")]
         public ActionResult Edit(StudentModel Model)
         {
-            Authentication("STCF");
             string _path = "";
 
           //  string _pathL = "";
