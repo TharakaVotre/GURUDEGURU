@@ -785,6 +785,8 @@
     <Content Include="App_Data\navigation.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\parentnavigation.xml" />
+    <Content Include="App_Data\teachernavigation.xml" />
     <Content Include="Content\css\awesome-bootstrap-checkbox.css" />
     <Content Include="Content\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\css\bootstrap-datepicker3.css" />

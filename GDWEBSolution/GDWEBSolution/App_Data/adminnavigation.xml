@@ -23,7 +23,7 @@
 <Child title="School Group" action="Index" controller="MaintainSchoolGroup" url="#"/>
 <Child title="School Rank" action="Index" controller="MaintainSchoolRank" url="#"/>
 <Child title="Student Evaluation Type" action="Index" controller="MaintainStudentEvaluationType" url="#"/>
-<Child title="MaintainSubject" action="Index" controller="Subject" url="#"/>
+<Child title="MaintainSubject" action="Index" controller="MaintainSubject" url="#"/>
 <Child title="Subject Category" action="Index" controller="MaintainSubjectCategory" url="#"/>
 </Navigation>
   <Navigation title="School" action="#" controller="#" url="School/Index" ></Navigation>

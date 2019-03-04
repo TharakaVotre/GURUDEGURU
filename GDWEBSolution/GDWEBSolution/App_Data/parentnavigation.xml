@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Navigations>
+  <Navigation title="School Event" action="#" controller="#" url="#">
+    <Child title="Event Calendar View" action="Calendar" controller="Event" url="#"/>
+  </Navigation>
+  <Navigation title="School Calender" action="#" controller="#" url="#">
+    <Child title="School Calender View" action="ParentView" controller="SchoolCalender" url="#"/>
+  </Navigation>
+  <Navigation title="Report" action="#" controller="#" url="#">
+    <Child title="Attention required Subject Parent View" action="ParentReport" controller="StudentReport" url="#"/>
+    <Child title="Student Report" action="StudentSubjectIndex" controller="StudentReport" url="#"/>
+    <Child title="Extra Curriculer Activity" action="Index" controller="ExtraCurriculerActivity" url="#"/>
+  </Navigation>
+  <Navigation title="Evaluation" action="#" controller="#" url="#">
+    <Child title="Show Student Result To Parent" action="ShowStudentResultToParent" controller="EveluationAddMark" url="#"/>
+  </Navigation>
+  <Navigation title="Home Work" action="#" controller="#" url="#">
+    <Child title="View" action="ParentView" controller="HomeWork" url="#"/>
+  </Navigation>
+</Navigations>

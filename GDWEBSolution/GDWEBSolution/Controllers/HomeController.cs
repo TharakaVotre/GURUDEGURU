@@ -194,10 +194,19 @@ namespace GDWEBSolution.Controllers
             {
                 naviga = "~/App_Data/adminnavigation.xml";
             }
-            else
+            else if (USession.User_Category == "Teach")
             {
-                naviga = "~/App_Data/navigation.xml";
+                naviga = "~/App_Data/teachernavigation.xml";
             }
+            else if (USession.User_Category == "PARNT")
+            {
+                naviga = "~/App_Data/parentnavigation.xml";
+            }
+            else if (USession.User_Category == "SADMI")
+            {
+                naviga = "~/App_Data/teachernavigation.xml";
+            }
+            else { naviga = "~/App_Data/adminnavigation.xml"; }
           
             var xmlData = System.Web.HttpContext.Current.Server.MapPath(naviga);
             if (xmlData == null)

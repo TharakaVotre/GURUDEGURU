@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Navigations>
+  <Navigation title="School Event" action="#" controller="#" url="#">
+    <Child title="Event Calendar View" action="Calendar" controller="Event" url="#"/>
+    <Child title="Event Calendar Add/Edit/Delete" action="Index" controller="Event" url="#"/>
+  </Navigation>
+
+  <Navigation title="School Calender" action="#" controller="#" url="#">
+    <Child title="School Calender" action="Index" controller="SchoolCalender" url="#"/>
+    <Child title="School Calender View" action="ParentView" controller="SchoolCalender" url="#"/>
+    <Child title="School Calender New" action="Calendar" controller="SchoolCalender" url="#"/>
+  </Navigation>
+
+  <Navigation title="Report" action="#" controller="#" url="#">
+    <Child title="Attention required Subject" action="Index" controller="StudentReport" url="#"/>
+    <Child title="Attention required Subject Parent View" action="ParentReport" controller="StudentReport" url="#"/>
+    <Child title="Student Report" action="StudentSubjectIndex" controller="StudentReport" url="#"/>
+    <Child title="Extra Curriculer Activity" action="Index" controller="ExtraCurriculerActivity" url="#"/>
+  </Navigation>
+
+  <Navigation title="Evaluation" action="#" controller="#" url="#">
+    <Child title="School Evaluation" action="Create" controller="EvaluationbySchool" url="#"/>
+    <Child title="Evaluation Add/View" action="Index" controller="EveluationAddMark" url="#"/>
+    <Child title="Evaluation Edit" action="EditStudentResult" controller="EveluationAddMark" url="#"/>
+    <Child title="Show Student Result To Parent" action="ShowStudentResultToParent" controller="EveluationAddMark" url="#"/>
+  </Navigation>
+
+  <Navigation title="School" action="#" controller="#" url="School/Index" ></Navigation>
+  <Navigation title="Student" action="#" controller="#" url="Student/Index" ></Navigation>
+  <Navigation title="Parent" action="#" controller="#" url="Parent/Index" ></Navigation>
+  <Navigation title="Optional Subjects" action="#" controller="#" url="StudentOptionalSubject/Index" ></Navigation>
+  <Navigation title="Home Work" action="#" controller="#" url="#">
+    <Child title="Home Work" action="Index" controller="HomeWork" url="#"/>
+    <Child title="View" action="ParentView" controller="HomeWork" url="#"/>
+  </Navigation>
+  
+
+  <Navigation title="Annual Function" action="#" controller="#" url="#">
+    <Child title="Student Grade Advance" action="Index" controller="StudentGradeAdvance" url="#"/>
+  </Navigation>
+  <Navigation title="Configuration" action="#" controller="#" url="#">
+    <Child title="Grade Subject " action="Detail" controller="Grade_Subject" url="#"/>
+  </Navigation>  
+</Navigations>
+
