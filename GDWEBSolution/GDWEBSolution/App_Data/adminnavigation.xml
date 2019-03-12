@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <Navigations>
-<Navigation title="Administrator Navigation" action="#" controller="#" url="#" ></Navigation>
 <Navigation title="Teacher" action="#" controller="#" url="#">
 <Child title="Teacher Category" action="Index" controller="TeacherCategory" url="#"/>
-<Child title="New Teacher" action="Index" controller="Teacher" url="#"/>
-<Child title="Class Teacher" action="Class" controller="Teacher" url="#"/>
+<!--<Child title="New Teacher" action="Index" controller="Teacher" url="#"/>
+<Child title="Class Teacher" action="Class" controller="Teacher" url="#"/>-->
 </Navigation>
-  <Navigation title="School Event" action="#" controller="#" url="#">
+  <!--<Navigation title="School Event" action="#" controller="#" url="#">
     <Child title="Event Calendar View" action="Calendar" controller="Event" url="#"/>
     <Child title="Event Calendar Add/Edit/Delete" action="Index" controller="Event" url="#"/>
-  </Navigation>
+  </Navigation>-->
 <Navigation title="Maintenance" action="#" controller="#" url="#" >
 <Child title="Application Status" action="Index" controller="MaintainApplicationStatus" url="#"/>
 <Child title="Event Category" action="Index" controller="MaintainEventCategory" url="#"/>
@@ -27,7 +26,7 @@
 <Child title="Subject Category" action="Index" controller="MaintainSubjectCategory" url="#"/>
 </Navigation>
   <Navigation title="School" action="#" controller="#" url="School/Index" ></Navigation>
-  <Navigation title="Student" action="#" controller="#" url="Student/Index" ></Navigation>
+  <!--<Navigation title="Student" action="#" controller="#" url="Student/Index" ></Navigation>
   <Navigation title="Parent" action="#" controller="#" url="Parent/Index" ></Navigation>
   <Navigation title="Optional Subjects" action="#" controller="#" url="StudentOptionalSubject/Index" ></Navigation>
 <Navigation title="Home Work" action="#" controller="#" url="#">
@@ -51,5 +50,5 @@
 </Navigation>
 <Navigation title="Evaluation" action="#" controller="#" url="#">
 <Child title="Evaluation By School" action="Create" controller="EvaluationbySchool" url="#"/>
-</Navigation>
+</Navigation>-->
 </Navigations>

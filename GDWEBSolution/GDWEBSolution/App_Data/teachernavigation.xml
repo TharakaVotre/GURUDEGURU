@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Navigations>
+  <Navigation title="Teacher" action="#" controller="#" url="#">
+    <Child title="New Teacher" action="Index" controller="Teacher" url="#"/>
+    <Child title="Class Teacher" action="Class" controller="Teacher" url="#"/>
+</Navigation>
   <Navigation title="School Event" action="#" controller="#" url="#">
     <Child title="Event Calendar View" action="Calendar" controller="Event" url="#"/>
     <Child title="Event Calendar Add/Edit/Delete" action="Index" controller="Event" url="#"/>
